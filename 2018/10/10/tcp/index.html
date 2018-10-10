@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="RTT(往返时延)RTT的估计和超时 tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题 估计往返时延segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算 显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRT">
+<meta name="keywords" content="tcp,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tcp中的一些细节">
+<meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/10/tcp/index.html">
+<meta property="og:site_name" content="当然要记笔记啊">
+<meta property="og:description" content="RTT(往返时延)RTT的估计和超时 tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题 估计往返时延segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算 显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRT">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-10T15:06:46.695Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tcp中的一些细节">
+<meta name="twitter:description" content="RTT(往返时延)RTT的估计和超时 tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题 估计往返时延segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算 显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRT">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tipwheal.github.io/blog/2018/10/10/tcp/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>tcp中的一些细节 | 当然要记笔记啊</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">当然要记笔记啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">嗯……总之欢迎啊</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/blog/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/blog/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/10/10/tcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="当然要记笔记啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tcp中的一些细节
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 19:20:14 / 修改时间：23:06:46" itemprop="dateCreated datePublished" datetime="2018-10-10T19:20:14+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="RTT-往返时延"><a href="#RTT-往返时延" class="headerlink" title="RTT(往返时延)"></a>RTT(往返时延)</h2><p>RTT的估计和超时</p>
+<p>tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题</p>
+<h3 id="估计往返时延"><a href="#估计往返时延" class="headerlink" title="估计往返时延"></a>估计往返时延</h3><p>segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算</p>
+<p>显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRTT:</p>
+<p>$$<br>\mathtt{EstimatedRTT}=(1-\alpha)·\mathtt{EstimatedRTT}+\alpha·\mathtt{SampleRTT}<br>$$</p>
+<p>其中常用的$\alpha$值为$0.125$</p>
+<h3 id="DevRTT"><a href="#DevRTT" class="headerlink" title="DevRTT"></a>DevRTT</h3><p>DevRTT是用来衡量SampleRTT波动程度的值，公式如下：</p>
+<p>$$<br>\mathtt{DevRTT}=(1-\beta)·\mathtt{DevRTT}+\beta·\mid\mathtt{SampleRTT}-\mathtt{EstimatedRTT}\mid<br>$$</p>
+<p>EstimatedRTT和DevRTT都是一个EWMA(指数加权移动平均值)</p>
+<h3 id="计算重发间隔"><a href="#计算重发间隔" class="headerlink" title="计算重发间隔"></a>计算重发间隔</h3><p>有了EstimateRTT和DevRTT，超时时间应当如何计算？首先它需要不小于EstimateRTT，但是又不能太大，防止延迟过高。<br>所以设置方式通常是在EstimateRTT上加一个margin，这个margin的值需要根据SampleRTT的波动情况来设置。因此TCP采用的方式是:</p>
+<p>$$<br>\mathtt{TimeoutInterval}=\mathtt{EstimatedRTT}+4·\mathtt{DevRTT}<br>$$</p>
+<p>推荐使用的初始值则是1秒，当发生超时时，TimeoutInterval会倍增，直到它被重新计算。</p>
+<h2 id="可靠的数据传输"><a href="#可靠的数据传输" class="headerlink" title="可靠的数据传输"></a>可靠的数据传输</h2><p>TCP在IP协议的基础上提供了可靠的数据传输，解决了数据错误，丢包，重复和顺序错乱的问题。</p>
+<p>TCP推荐只维护一个重发的计时器，尽管可能有很多还没有收到ACK的包</p>
+<h3 id="一个简化的模型"><a href="#一个简化的模型" class="headerlink" title="一个简化的模型"></a>一个简化的模型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">NextSeqNum=InitialSeqNumber</span><br><span class="line">SendBase=InitialSeqNumber</span><br><span class="line"></span><br><span class="line">loop (forever) &#123;</span><br><span class="line">	switch(event)</span><br><span class="line">	</span><br><span class="line">		event: data received from application above</span><br><span class="line">			create TCP segment with sequence number NextSeqNum</span><br><span class="line">			if (timer currently not running)</span><br><span class="line">				start timer</span><br><span class="line">			pass segment to IP</span><br><span class="line">			NextSeqNum=NextSeqNum+length(data)</span><br><span class="line">			break;</span><br><span class="line">			</span><br><span class="line">		event: timer timeout</span><br><span class="line">			retransmit not-yet-acknowledged segment with</span><br><span class="line">				smallest sequence number</span><br><span class="line">			start timer</span><br><span class="line">			break;</span><br><span class="line">			</span><br><span class="line">		event: ACK received, with ACK field value of y</span><br><span class="line">			if (y &gt; SendBase) &#123;</span><br><span class="line">				SendBase = y</span><br><span class="line">				if (there are currently any not-yet-acknowledged segments) &#123;</span><br><span class="line">					start timer</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了上述的简化模型我们就可以进行一些场景模拟了</p>
+<h4 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h4><ol>
+<li>Host A向Host B发了一个包，seq=92, length=8 bytes,</li>
+<li>Host B向Host A发了一个ack=100,但是丢了</li>
+<li>timer时间到了，Host A重发了这个包</li>
+<li>Host B发现是收过的，直接给Host A发了ack=100</li>
+<li>Host A收到，继续正常工作</li>
+</ol>
+<h4 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h4><ol>
+<li>Host A向Host B发了一个包，seq=92,length=8 bytes</li>
+<li>Host A向Host B发了一个包, seq=100,length=20 bytes</li>
+<li>Host B收到seq=92的包，发了一个ack=100</li>
+<li>Host B收到seq=100的包，发了一个ack=120</li>
+<li>两个ack包没能在超时前收到，Host A重发了seq=92的包</li>
+<li>Host B收到seq=92的包，发了一个ack=120</li>
+<li>Host A开始发seq=120的包，继续正常工作</li>
+</ol>
+<h4 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h4><ol>
+<li>Host A向Host B发了上述1.2.中的两个包</li>
+<li>Host B发了一个ack=100，丢了</li>
+<li>Host B发了一个ack=120</li>
+<li>Host A在超时前收到了sck=120</li>
+<li>Host A发送seq=120，继续正常工作</li>
+</ol>
+<h3 id="添加翻倍机制"><a href="#添加翻倍机制" class="headerlink" title="添加翻倍机制"></a>添加翻倍机制</h3><p>在上述的简化模型中，加入如下机制：</p>
+<p>每当timeout重发时，将TimeoutInterval翻倍，可以在网络拥塞时产生一些效果</p>
+<p>在CSMA/CD中你会看到类似的做法。</p>
+<h3 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h3><p>在简单的模型上进行修改，已达到如下效果：</p>
+<ol>
+<li>Host A向Host B连发了5个包</li>
+<li>Host B收到了第一个包，并发送了ack=100</li>
+<li>第二个包丢了</li>
+<li>Host B在收到3,4,5时连发了三个ack=100</li>
+<li>Host A的timer还没有超时，但收到三个duplicated ack了</li>
+<li>Host A重发seq=100 </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">event: ACK received, with ACK field value of y</span><br><span class="line">	if (y &gt; SendBase) &#123;</span><br><span class="line">		SendBase=y</span><br><span class="line">		if (there are currently any not yet acknowledged segments) &#123;</span><br><span class="line">			start timer</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		increment number of duplicate ACKs received for y</span><br><span class="line">		if (number of duplicate ACKs received for y==3) &#123;</span><br><span class="line">			resend segment with sequence number y</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	break;</span><br></pre></td></tr></table></figure>
+<h2 id="流控制-暂时略过"><a href="#流控制-暂时略过" class="headerlink" title="流控制(暂时略过)"></a>流控制(暂时略过)</h2><h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><p>这部分关注的是TCP连接的建立和断开</p>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><h4 id="Step1"><a href="#Step1" class="headerlink" title="Step1"></a>Step1</h4><p>客户端向服务端发起请求，带有SYN，并且随机选择一个Seq值x，把报文段发到服务端</p>
+<h4 id="Step2"><a href="#Step2" class="headerlink" title="Step2"></a>Step2</h4><p>服务端收到报文段，分配TCP连接的缓冲区，初始化一些变量。<br>服务端发送一个SYN报文给客户端，ack=x+1，seq为随机值y<br>此报文称为<strong>SYNACK</strong>报文</p>
+<h4 id="Step3"><a href="#Step3" class="headerlink" title="Step3"></a>Step3</h4><p>客户端收到SYNACK，分配缓冲区，初始化一些变量。<br>向服务端发送ack=y+1,seq=x+1</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><h4 id="Step1-1"><a href="#Step1-1" class="headerlink" title="Step1"></a>Step1</h4><p>客户端向服务端发送FIN报文</p>
+<h4 id="Step2-1"><a href="#Step2-1" class="headerlink" title="Step2"></a>Step2</h4><p>服务端向客户端发送ACK报文</p>
+<h4 id="Step3-1"><a href="#Step3-1" class="headerlink" title="Step3"></a>Step3</h4><p>服务端向客户端发送FIN报文</p>
+<h4 id="Step4"><a href="#Step4" class="headerlink" title="Step4"></a>Step4</h4><p>客户端向服务端发送ACK报文。<br>服务端收到ACK后将关闭，客户端等待一段时间后关闭</p>
+<h2 id="TCP的生命周期"><a href="#TCP的生命周期" class="headerlink" title="TCP的生命周期"></a>TCP的生命周期</h2><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/tcp/" rel="tag"># tcp</a>
+          
+            <a href="/blog/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/10/10/sort/" rel="next" title="常见排序算法及应用">
+                <i class="fa fa-chevron-left"></i> 常见排序算法及应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/avatar.jpg"
+                alt="红色鲱鱼" />
+            
+              <p class="site-author-name" itemprop="name">红色鲱鱼</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RTT-往返时延"><span class="nav-number">1.</span> <span class="nav-text">RTT(往返时延)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#估计往返时延"><span class="nav-number">1.1.</span> <span class="nav-text">估计往返时延</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DevRTT"><span class="nav-number">1.2.</span> <span class="nav-text">DevRTT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算重发间隔"><span class="nav-number">1.3.</span> <span class="nav-text">计算重发间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可靠的数据传输"><span class="nav-number">2.</span> <span class="nav-text">可靠的数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简化的模型"><span class="nav-number">2.1.</span> <span class="nav-text">一个简化的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景一"><span class="nav-number">2.1.1.</span> <span class="nav-text">场景一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#场景二"><span class="nav-number">2.1.2.</span> <span class="nav-text">场景二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#场景三"><span class="nav-number">2.1.3.</span> <span class="nav-text">场景三</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加翻倍机制"><span class="nav-number">2.2.</span> <span class="nav-text">添加翻倍机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速重传"><span class="nav-number">2.3.</span> <span class="nav-text">快速重传</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流控制-暂时略过"><span class="nav-number">3.</span> <span class="nav-text">流控制(暂时略过)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接管理"><span class="nav-number">4.</span> <span class="nav-text">TCP连接管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手"><span class="nav-number">4.1.</span> <span class="nav-text">三次握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step1"><span class="nav-number">4.1.1.</span> <span class="nav-text">Step1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step2"><span class="nav-number">4.1.2.</span> <span class="nav-text">Step2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step3"><span class="nav-number">4.1.3.</span> <span class="nav-text">Step3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手"><span class="nav-number">4.2.</span> <span class="nav-text">四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step1-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">Step1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step2-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">Step2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step3-1"><span class="nav-number">4.2.3.</span> <span class="nav-text">Step3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step4"><span class="nav-number">4.2.4.</span> <span class="nav-text">Step4</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的生命周期"><span class="nav-number">5.</span> <span class="nav-text">TCP的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">5.1.</span> <span class="nav-text">客户端</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">红色鲱鱼</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
