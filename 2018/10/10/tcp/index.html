@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="RTT(往返时延)RTT的估计和超时 tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题 估计往返时延segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算 显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRT">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-10T15:06:46.695Z">
+<meta property="og:updated_time" content="2018-10-18T09:04:08.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcp中的一些细节">
 <meta name="twitter:description" content="RTT(往返时延)RTT的估计和超时 tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题 估计往返时延segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算 显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRT">
@@ -329,12 +329,24 @@
                 
               
 
-              <time title="创建时间：2018-10-10 19:20:14 / 修改时间：23:06:46" itemprop="dateCreated datePublished" datetime="2018-10-10T19:20:14+08:00">2018-10-10</time>
+              <time title="创建时间：2018-10-10 19:20:14" itemprop="dateCreated datePublished" datetime="2018-10-10T19:20:14+08:00">2018-10-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-18 17:04:08" itemprop="dateModified" datetime="2018-10-18T17:04:08+08:00">2018-10-18</time>
               
             
           </span>
@@ -373,6 +385,7 @@
 <p>显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRTT:</p>
 <p>$$<br>\mathtt{EstimatedRTT}=(1-\alpha)·\mathtt{EstimatedRTT}+\alpha·\mathtt{SampleRTT}<br>$$</p>
 <p>其中常用的$\alpha$值为$0.125$</p>
+<a id="more"></a>
 <h3 id="DevRTT"><a href="#DevRTT" class="headerlink" title="DevRTT"></a>DevRTT</h3><p>DevRTT是用来衡量SampleRTT波动程度的值，公式如下：</p>
 <p>$$<br>\mathtt{DevRTT}=(1-\beta)·\mathtt{DevRTT}+\beta·\mid\mathtt{SampleRTT}-\mathtt{EstimatedRTT}\mid<br>$$</p>
 <p>EstimatedRTT和DevRTT都是一个EWMA(指数加权移动平均值)</p>
@@ -472,6 +485,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/2018/10/16/learning-py3/" rel="prev" title="learning-py3">
+                learning-py3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -544,7 +561,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -589,7 +606,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
