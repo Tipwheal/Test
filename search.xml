@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Arduino怎么写呢]]></title>
+    <url>%2Fblog%2F2018%2F10%2F21%2Farduino%2F</url>
+    <content type="text"><![CDATA[但是这里是空的呀…… 空的就空的，这个东西好无聊的]]></content>
+      <categories>
+        <category>编程</category>
+        <category>arduino</category>
+      </categories>
+      <tags>
+        <tag>aruduino</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[在c++中使用opengl]]></title>
     <url>%2Fblog%2F2018%2F10%2F21%2Fopengl%2F</url>
-    <content type="text"><![CDATA[Shaders哪里放more,这里放more 如何偷懒，如何不偷懒关键字in和out是一个Shaders文件的输入和输出 vertex和fragment shader有一些不同 123in type in_variable_name;out type out_variable_name; 我们惊奇地发现，这个主题还支持glsl uniform是全局变量，后面的shader可以使用 1uniform type variable_name; Sampler通常在fragment shader中定义，是一个uniform类型的变量，但我不是很懂uniform了 取整和插值texelFetch1texelFetch(Sampler, vec2, lod); textureSizelod是什么意思呢level of detail, 有机会试试 百度百科： 多细节层次 LOG技术根据物体模型的节点在显示环境中所处的位置和重要度 给人一种放大缩小的感觉 12345uniform sampler2D texSlot;void main() &#123; vec2 texSize = textureSize(texSlot, 1);&#125;]]></content>
+    <content type="text"><![CDATA[Shaders哪里放more,这里放more 如何偷懒，如何不偷懒关键字in和out是一个Shaders文件的输入和输出 vertex和fragment shader有一些不同 123in type in_variable_name;out type out_variable_name; 我们惊奇地发现，这个主题还支持glsl uniform是全局变量，后面的shader可以使用 1uniform type variable_name; Sampler通常在fragment shader中定义，是一个uniform类型的变量，但我不是很懂uniform了 取整和插值texelFetch1texelFetch(Sampler, vec2, lod); textureSizelod是什么意思呢level of detail, 有机会试试 百度百科： 多细节层次 LOG技术根据物体模型的节点在显示环境中所处的位置和重要度 给人一种放大缩小的感觉 12345uniform sampler2D texSlot;void main() &#123; vec2 texSize = textureSize(texSlot, 1);&#125; opengl很强]]></content>
       <categories>
         <category>编程</category>
         <category>c++</category>
@@ -92,8 +104,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
     <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法]]></content>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
@@ -115,8 +127,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fback-end-learning%2F</url>
     <content type="text"><![CDATA[我需要学习这些东西有时间做一个思维导图 数据库 hibernate redis 分布式 中间件 linux 网络协议 jvm 设计模式 消息队列]]></content>
       <tags>
-        <tag>后端</tag>
         <tag>学习</tag>
+        <tag>后端</tag>
       </tags>
   </entry>
   <entry>
