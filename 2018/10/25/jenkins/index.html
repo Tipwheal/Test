@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="1docker pull jenkins">
+  <meta name="description" content="记录一下在CentOS7中使用docker运行一个jenkins…">
 <meta name="keywords" content="jenkins,持续集成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用docker搭建jenkins">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/25/jenkins/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="1docker pull jenkins">
+<meta property="og:description" content="记录一下在CentOS7中使用docker运行一个jenkins…">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-25T05:32:57.528Z">
+<meta property="og:updated_time" content="2018-10-25T12:21:37.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用docker搭建jenkins">
-<meta name="twitter:description" content="1docker pull jenkins">
+<meta name="twitter:description" content="记录一下在CentOS7中使用docker运行一个jenkins…">
 
 
 
@@ -376,7 +376,7 @@
                 
               
 
-              <time title="创建时间：2018-10-25 13:30:31 / 修改时间：13:32:57" itemprop="dateCreated datePublished" datetime="2018-10-25T13:30:31+08:00">2018-10-25</time>
+              <time title="创建时间：2018-10-25 13:30:31 / 修改时间：20:21:37" itemprop="dateCreated datePublished" datetime="2018-10-25T13:30:31+08:00">2018-10-25</time>
             
 
             
@@ -432,7 +432,22 @@
       
 
       
-        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins</span><br></pre></td></tr></table></figure>
+        <p>记录一下在CentOS7中使用docker运行一个jenkins…</p>
+<a id="more"></a>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>使用CentOS7</p>
+<h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><ol>
+<li>需要有tomcat</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins</span><br><span class="line">mkdir /home/jenkins</span><br><span class="line">docker run -d --name myjenkins -p 15000:50000 -p 18080:8080 -v /home/jenkins:/home/jenkins jenkins</span><br></pre></td></tr></table></figure>
+<p>然后需要找密码了，访问服务器的10080端口可以看到jenkins的登陆界面。<br>该界面会告诉我们密码放在<code>/var/jenkins_home/secrets/initialAdminPassword</code>里面，<br>但我们的jenkins是在docker容器中启动的，所以我们需要到容器内对应的路径去找。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it myjenkins /bin/bash <span class="comment"># 进入容器</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+<p>拿到密码<code>a704538e730d4acda43343383718377c</code></p>
+<p>退出容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">logout</span></span><br></pre></td></tr></table></figure>
+<p>登陆进去选插件，发现有一堆安装失败了<br>pipeline</p>
+<p>后续操作并没有学会……</p>
+<p>自己写一个吧</p>
+
       
     </div>
 
@@ -467,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/10/24/springngcloud/" rel="next" title="Spring Cloud">
-                <i class="fa fa-chevron-left"></i> Spring Cloud
+              <a href="/blog/2018/10/24/springngcloud/" rel="next" title="学习Spring Cloud">
+                <i class="fa fa-chevron-left"></i> 学习Spring Cloud
               </a>
             
           </div>
@@ -520,8 +535,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -561,7 +585,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -616,7 +642,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -665,6 +693,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前置条件"><span class="nav-number">2.</span> <span class="nav-text">前置条件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

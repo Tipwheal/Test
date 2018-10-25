@@ -108,17 +108,18 @@
 
 
 
-  <meta name="description" content="eureka bus zuul 持续集成持续发布 配置中心 spring cloud config/ zoo keeper redis 断路器">
+  <meta name="description" content="Eureka结构有服务注册中心、服务生产者和服务消费者 流程 服务生产者启动时，向服务注册中心注册服务 服务消费者(启动时？)向服务注册中心订阅服务 服务注册中心向服务消费者返回服务生产者的地址 服务消费者调用所需服务">
+<meta name="keywords" content="学习,SpringCloud">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Cloud">
+<meta property="og:title" content="学习Spring Cloud">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/24/springngcloud/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="eureka bus zuul 持续集成持续发布 配置中心 spring cloud config/ zoo keeper redis 断路器">
+<meta property="og:description" content="Eureka结构有服务注册中心、服务生产者和服务消费者 流程 服务生产者启动时，向服务注册中心注册服务 服务消费者(启动时？)向服务注册中心订阅服务 服务注册中心向服务消费者返回服务生产者的地址 服务消费者调用所需服务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-24T06:47:13.988Z">
+<meta property="og:updated_time" content="2018-10-25T12:48:13.508Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Cloud">
-<meta name="twitter:description" content="eureka bus zuul 持续集成持续发布 配置中心 spring cloud config/ zoo keeper redis 断路器">
+<meta name="twitter:title" content="学习Spring Cloud">
+<meta name="twitter:description" content="Eureka结构有服务注册中心、服务生产者和服务消费者 流程 服务生产者启动时，向服务注册中心注册服务 服务消费者(启动时？)向服务注册中心订阅服务 服务注册中心向服务消费者返回服务生产者的地址 服务消费者调用所需服务">
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>Spring Cloud | 当然要记笔记啊</title>
+  <title>学习Spring Cloud | 当然要记笔记啊</title>
   
 
 
@@ -350,7 +351,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring Cloud
+          <h1 class="post-title" itemprop="name headline">学习Spring Cloud
               
             
           </h1>
@@ -375,16 +376,53 @@
                 
               
 
-              <time title="创建时间：2018-10-24 14:11:57 / 修改时间：14:47:13" itemprop="dateCreated datePublished" datetime="2018-10-24T14:11:57+08:00">2018-10-24</time>
+              <time title="创建时间：2018-10-24 14:11:57" itemprop="dateCreated datePublished" datetime="2018-10-24T14:11:57+08:00">2018-10-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-25 20:48:13" itemprop="dateModified" datetime="2018-10-25T20:48:13+08:00">2018-10-25</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -413,14 +451,43 @@
       
 
       
-        <p>eureka</p>
-<p>bus</p>
-<p>zuul</p>
-<p>持续集成持续发布</p>
-<p>配置中心</p>
-<p>spring cloud config/ zoo keeper</p>
-<p>redis</p>
-<p>断路器</p>
+        <h2 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>有服务注册中心、服务生产者和服务消费者</p>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
+<li>服务生产者启动时，向服务注册中心注册服务</li>
+<li>服务消费者(启动时？)向服务注册中心订阅服务</li>
+<li>服务注册中心向服务消费者返回服务生产者的地址</li>
+<li>服务消费者调用所需服务</li>
+</ol>
+<a id="more"></a>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><blockquote>
+<p>这是一段话<br>所以注册的服务只是告诉注册中心自己的地址，让注册中心转告给消费者？</p>
+</blockquote>
+<h3 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h3><h4 id="服务注册中心"><a href="#服务注册中心" class="headerlink" title="服务注册中心"></a>服务注册中心</h4><p>是一个eureka-server<br>建议禁用client功能</p>
+<h4 id="服务生产者"><a href="#服务生产者" class="headerlink" title="服务生产者"></a>服务生产者</h4><p>是一个eureka-client</p>
+<h2 id="bus"><a href="#bus" class="headerlink" title="bus"></a>bus</h2><blockquote>
+<p>Spring Cloud Bus被翻译为消息总线<br>看起来可以在多个服务中互相传递消息</p>
+</blockquote>
+<h3 id="用途-1"><a href="#用途-1" class="headerlink" title="用途"></a>用途</h3><blockquote>
+<p>这也是一段用途，但他不能教我数学</p>
+</blockquote>
+<h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><ul>
+<li>服务A启动，连接总线</li>
+<li>服务B启动，连接总线</li>
+<li>服务C启动，连接总线</li>
+<li>服务A发送消息</li>
+<li>服务B、C收到消息</li>
+</ul>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><ul>
+<li>ActiveMQ</li>
+<li>Kafka</li>
+<li>RabbitMQ</li>
+<li>RocketMQ</li>
+</ul>
+<p>比较吗？需要比较一下吗？</p>
+<h3 id="使用RabiitMQ"><a href="#使用RabiitMQ" class="headerlink" title="使用RabiitMQ"></a>使用RabiitMQ</h3><h2 id="zuul"><a href="#zuul" class="headerlink" title="zuul"></a>zuul</h2><blockquote>
+<p>zuul是一个网关</p>
+</blockquote>
+<h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><h2 id="spring-cloud-config-zoo-keeper"><a href="#spring-cloud-config-zoo-keeper" class="headerlink" title="spring cloud config/ zoo keeper"></a>spring cloud config/ zoo keeper</h2><h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h2 id="断路器-熔断-Hystrix"><a href="#断路器-熔断-Hystrix" class="headerlink" title="断路器/熔断/Hystrix"></a>断路器/熔断/Hystrix</h2><h2 id="devops和aiops"><a href="#devops和aiops" class="headerlink" title="devops和aiops"></a>devops和aiops</h2><h2 id="dubbo-zookeeper"><a href="#dubbo-zookeeper" class="headerlink" title="dubbo/zookeeper"></a>dubbo/zookeeper</h2><p>读论文 我们需要读论文<br>学习</p>
 
       
     </div>
@@ -438,6 +505,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/学习/" rel="tag"># 学习</a>
+          
+            <a href="/blog/tags/SpringCloud/" rel="tag"># SpringCloud</a>
+          
+        </div>
       
 
       
@@ -505,8 +580,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -546,7 +630,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -601,7 +687,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -650,6 +738,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka"><span class="nav-number">1.</span> <span class="nav-text">Eureka</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">1.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程"><span class="nav-number">1.2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">1.3.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动方式"><span class="nav-number">1.4.</span> <span class="nav-text">启动方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务注册中心"><span class="nav-number">1.4.1.</span> <span class="nav-text">服务注册中心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务生产者"><span class="nav-number">1.4.2.</span> <span class="nav-text">服务生产者</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bus"><span class="nav-number">2.</span> <span class="nav-text">bus</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用途-1"><span class="nav-number">2.1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-1"><span class="nav-number">2.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个栗子"><span class="nav-number">2.3.</span> <span class="nav-text">举个栗子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用RabiitMQ"><span class="nav-number">2.4.</span> <span class="nav-text">使用RabiitMQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zuul"><span class="nav-number">3.</span> <span class="nav-text">zuul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置中心"><span class="nav-number">4.</span> <span class="nav-text">配置中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-cloud-config-zoo-keeper"><span class="nav-number">5.</span> <span class="nav-text">spring cloud config/ zoo keeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">6.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断路器-熔断-Hystrix"><span class="nav-number">7.</span> <span class="nav-text">断路器/熔断/Hystrix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devops和aiops"><span class="nav-number">8.</span> <span class="nav-text">devops和aiops</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo-zookeeper"><span class="nav-number">9.</span> <span class="nav-text">dubbo/zookeeper</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
