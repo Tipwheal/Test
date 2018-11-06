@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[草稿和素材]]></title>
+    <url>%2Fblog%2F2018%2F11%2F06%2Fdraft%2F</url>
+    <content type="text"><![CDATA[Docker命令相关创建一个网络1docker networt create --subnet=172.18.0.0/16 mynetwork 列出网络1docker network ls docker内网访问的问题在一个容器中使用反向代理，代理到其它容器的服务，此容器使用公网，其他容器只能在内网访问。 即比如有如下三个容器A, B, C 然后A容器暴露80端口到公网 B和C暴露各自的服务端口如8080或3000等到内网 然后在A容器中使用反向代理，代理容器B和C中的服务，使得公网可以通过访问A来访问B和C的服务 失败的方案A容器A: 0.0.0.0:80:80容器B: 172.17.0.1:8080:8080容器C: 172.17.0.1:8081:8080 不知是什么原因，172.17.0.1:8080在容器A内或者在宿主机上都无法访问 方案B为什么使用172.18.0.0/16，然后直接访问对应的ip也不行呢 尝试-p参数-p参数的作用是什么呢，可以的选项是什么呢？0.0.0.0可以用，那么127.0.0.1呢我需要搞清楚这个 如果指派一个ip给容器，就不能再把对应的ip用来映射了比如172.18.0.10:5000:5000 还同时把172.18.0.10分配给一个容器，这是不行的 EXPOSE的作用（去搜索） EXPOSE 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务 –摘自https://yeasy.gitbooks.io/docker_practice/image/dockerfile/expose.html 所以它实际上并不能暴露端口。 如果EXPOSE和-P参数一起使用，则会使用随机映射的策略进行映射，这估计是EXPOSE的唯一作用。 -p 参数则用于手动指定端口映射。 格式大致如ip:宿主机port:容器port 那么这个ip的限制呢？ –link这个命令似乎有神奇的作用，但是我们需要 啊 我只是想让某个docker服务只暴露在内网，为何总是无法访问 难道我需要iptables吗 对应的文档或者源码能不能看一下呢 curl的笔记1curl -X POST http://balabala.com/balabala -d &#123;\"param1\":\"value\"&#125; -X可以指定请求方式，比如POST或者GET. -d可以指定参数，但是似乎默认的参数格式是&quot;a=sss&amp;b=c&quot;这种格式 似乎需要额外的参数指定json格式呢 DevOps Development and Operations 特点？好处都有啥？缺点？采用的技术？啊容器和虚拟机是不一样的，曾经有人问我他们的区别 VSCode很好，vscode很好 草稿需要的时候从草稿中取出素材已经学过的东西需要被记录 反复反复记录阅读反复阅读记录阅读强化 等待，我总是在等待 我需要把所有的额外的东西先打包一个docker image,而不是每次都操作一次,这太蠢了 人在等待的时候应该做什么 零样本学习pycryptodome什么是pycryptodome呢 源码为什么不看一看源码呢 iptables1iptables -t nat -nL]]></content>
+      <categories>
+        <category>草稿</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>草稿</tag>
+        <tag>素材</tag>
+        <tag>乱贴标签</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[git分支操作笔记]]></title>
+    <url>%2Fblog%2F2018%2F11%2F05%2Fgit-branch%2F</url>
+    <content type="text"><![CDATA[创建本地分支1git checkout -b new_branch 相当于 12git branch new_branchgit checkout new_branch]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[$\mathtt{B\acute{e}zier}$曲线]]></title>
     <url>%2Fblog%2F2018%2F10%2F26%2Fbezier-curve%2F</url>
     <content type="text"><![CDATA[$\mathtt{B\acute{e}zier}$曲线的定义$$P(t)=\sum_{i=0}^nB_{i,n}(t)P_i,0\le{t}\le{1}$$ 其中， $$B_{i,n}(t)=C_n^it^i(1-t)^{n-i}=\frac{n!}{i!(n-i)!}t^i(1-t)^{n-i},i=0,1,\dots,n$$ 当$n=1$时,式子成为 $$\begin{split}P(t)&amp;=B_{0,1}(t)P_0+B_{1,1}(t)P_1,0\le{t}\le{1} \\&amp;=(1-t)P_0+tP_1 \\&amp;=\begin{pmatrix}t &amp; 1 \\\end{pmatrix}\begin{pmatrix}-1 &amp; 1 \\1 &amp; 0 \\\end{pmatrix}\begin{pmatrix}P_0 \\P_1 \\\end{pmatrix}\end{split}$$ 这个式子意味着这是一条从$P_0$连到$P_1$的直线段. 当$n=2$时,式子成为 $$\begin{split}P(t)&amp;=(1-t)^2P_0+2t(1-t)P_1+t^2P_2 \\&amp;=\begin{pmatrix}t^2 &amp; t &amp; 1 \\\end{pmatrix}\begin{pmatrix}1 &amp; -2 &amp; 1 \\-2 &amp; 2 &amp; 0 \\1 &amp; 0 &amp; 0 \\\end{pmatrix}\begin{pmatrix}P_0 \\P_1 \\P_2 \\\end{pmatrix}\end{split}$$ 这次是一个抛物线. 当$n=3$时，式子成为 $$\begin{split}P(t)&amp;=(1-t)^3P_0+3t(1-t)^2P_1+3t^2(1-t)P_2+t^3P_3 \\&amp;=\begin{pmatrix}t^3 &amp; t^2 &amp; t &amp; 1 \\\end{pmatrix}\begin{pmatrix}-1 &amp; 3 &amp; -3 &amp; 1 \\3 &amp; -6 &amp; 3 &amp; 0 \\-3 &amp; 3 &amp; 0 &amp; 0 \\1 &amp; 0 &amp; 0 &amp; 0 \\\end{pmatrix}\begin{pmatrix}P_0 \\P_1 \\P_2 \\P_3 \\\end{pmatrix}\end{split}$$ 曲线的性质]]></content>
@@ -184,8 +206,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Ftrigonometric-series%2F</url>
     <content type="text"><![CDATA[三角级数$\quad$一般地，以$A_k\sin(kx+\varphi_k)$为项作成的无穷级数 $$\sum\limits_{k=0}^{\infty}A_k\sin(kx+\varphi_k)$$ 称为三角级数.（所以首先三角级数都是无穷级数） 但是有时候也会取如下形式： $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}(a_k\cos{kx}+b_k\sin{kx})。$$ 周期函数周期函数有初相,振幅,频率 正弦级数给三角级数中所有的$a_k$取$0$，可以得到如下的正弦级数: $$\sum\limits_{k=1}^{\infty}b_k\sin{kx}$$ 余弦级数类似的操作可以得到余弦级数 $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}a_k\cos{kx}$$ 傅里叶级数$$\begin{split}A_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\cos{nx}\mathtt{d}x \\B_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\sin{nx}\mathtt{d}x\end{split}$$ 这里用的符号和上面不一样呢 应该打屁股]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
         <tag>级数</tag>
       </tags>
   </entry>
@@ -194,8 +216,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fcurve-line-integral%2F</url>
     <content type="text"><![CDATA[曲线积分第一类曲线积分第一类曲线积分用来求一个曲线物体的质量.当物体的密度是一个常值时，只需要将密度乘以弧长就可以得到质量.当物体的密度不均匀时，我们将密度表示为函数$f$，并对函数在曲线上积分，称为第一类曲线积分或者对弧长的曲线积分,记为$\int_Cf(x,y)\mathtt{d}s$，即 $$\int_Cf(x,y)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i)\Delta{s_i}$$ 其中$f(x,y)$称为被积函数,$C$称为积分曲线,$\mathtt{d}s$成为弧微分. 我们可以把这个概念扩展到三维空间或者更高维的空间中： $$\int_Cf(x,y,z)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i,\zeta_i)\Delta{s_i}$$ 第二类曲线积分和第一类曲线积分不同，第二类曲线积分可以用来表示变力沿曲线做的功，是有方向的.第二类曲线积分记为: $$\int_CP(x,y)dx+Q(x,y)dy\quad或\quad\int_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$ 特别地，还可以有对某个方向的曲线积分 沿曲线$C$对坐标$x$的曲线积分$$\int_CP(x,y)dx=\lim_{\lambda\to{0}}\sum_{i=1}^nP(\xi_i,\eta_i)\Delta{x_i}$$ 沿曲线$C$对坐标$y$的曲线积分$$\int_CQ(x,y)dy=\lim_{\lambda\to{0}}\sum_{i=1}^nQ(\xi_i,\eta_i)\Delta{y_i}$$ 既然如此，应该还可以对一个特定的方向积分，就是不知道怎么表示. 如果曲线$C$为闭曲线，则记第二类曲线积分为 $$\oint_CP(x,y)dx+Q(x,y)dy\quad或\quad\oint_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
@@ -203,8 +225,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2FGreen-Formula%2F</url>
     <content type="text"><![CDATA[格林公式的定义和一些练习学习一下格林公式~ 简单闭曲线$\quad$设曲线$C$的参数方程为 $$\begin{cases}x=\varphi(t), \\y=\psi(t)\end{cases}\quad(\alpha\le{t}\le\beta).$$ 如果$\varphi,\psi$连续，且对不同的参数$t_1,t_2\in[\alpha,\beta]$(不妨设$t_1\le{t_2}$),$(\varphi(t_1),\psi(t_1))=(\varphi(t_2),\psi(t_2))$当且仅当$t_1=\alpha,t_2=\beta$,则称$C$为简单闭曲线 单连通区域$\quad$设有一个平面区域$D$,若$D$内的任意一条简单闭曲线所围的部分仍属于$D$，则称$D$为单连通区域，否则称为多连通区域. 格林公式$\quad$设有界闭区域$D$由逐段光滑曲线$C$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则 $$\begin{split}\oint_C{P}\mathtt{d}x+Q\mathtt{d}y=\iint\limits_D\left(\frac{\partial{Q}}{\partial{x}}-\frac{\partial{P}}{\partial{y}}\right)\mathtt{d}x\mathtt{d}y\end{split}$$ 用途通常这些东西总是有用的，我们观察上面的式子。 左边一部分是对光滑曲线$C$的第二类曲线积分，格林公式告诉我们它会与在由曲线围成的平面区域$D$上对两个方向的分量在另一个方向的偏导之差的积分相等. 证明为了加深理解，我们来看一下证明.证明格林公式的时候是拆开证的，也就是 $$\oint_CP\mathtt{d}x=-\iint\limits_D\frac{\partial{P}}{\partial{y}}\mathtt{d}x\mathtt{d}y, \quad\oint_CQ\mathtt{d}y=\iint\frac{\partial{Q}}{\partial{x}}\mathtt{d}x\mathtt{d}y$$ 分以下三种情况讨论: $D$由曲线$y=\varphi_1(x),y=\varphi_2(x)$，及直线$x=a,x=b$围成，即 $$D=\{(x,y)\mid\varphi_1(x)\le{y}\le\varphi_2(x),a\le{x}\le{b}\}$$ $D$是单连通区域，且与某些与$y$轴平行的直线相交多于两点 $D$是多联通区域 做题环节题目1求椭圆$x=a\cos\theta,y=b\sin\theta$所围图形面积. 解： 我们可以从格林公式中得到一个简单的应用： 当$P=-y,Q=x$时，公式就变成了 $$\begin{split}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y=2\iint\limits_D\mathtt{d}x\mathtt{d}y\end{split}$$ 也就是闭区域$D$的面积$A$为: $$\begin{split}A=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y\end{split}$$ 那么求椭圆面积就变为了求解上述式子,有: $$\begin{split}A&amp;=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y \\&amp;=\frac{1}{2}\int_0^{2\pi}{-b\sin\theta}\mathtt{d}{a\cos\theta}+a\cos\theta\mathtt{d}b\sin\theta \\&amp;=\frac{1}{2}\int_0^{2\pi}{ab\sin^2\theta}\mathtt{d}{\theta}+ab\cos^2\theta\mathtt{d}\theta \\&amp;=\frac{1}{2}ab·2\pi \\&amp;=ab\pi\end{split}$$]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
 </search>
