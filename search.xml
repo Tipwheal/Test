@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[草稿和素材]]></title>
     <url>%2Fblog%2F2018%2F11%2F06%2Fdraft%2F</url>
-    <content type="text"><![CDATA[Docker命令相关创建一个网络1docker networt create --subnet=172.18.0.0/16 mynetwork 列出网络1docker network ls docker内网访问的问题在一个容器中使用反向代理，代理到其它容器的服务，此容器使用公网，其他容器只能在内网访问。 即比如有如下三个容器A, B, C 然后A容器暴露80端口到公网 B和C暴露各自的服务端口如8080或3000等到内网 然后在A容器中使用反向代理，代理容器B和C中的服务，使得公网可以通过访问A来访问B和C的服务 失败的方案A容器A: 0.0.0.0:80:80容器B: 172.17.0.1:8080:8080容器C: 172.17.0.1:8081:8080 不知是什么原因，172.17.0.1:8080在容器A内或者在宿主机上都无法访问 方案B为什么使用172.18.0.0/16，然后直接访问对应的ip也不行呢 尝试-p参数-p参数的作用是什么呢，可以的选项是什么呢？0.0.0.0可以用，那么127.0.0.1呢我需要搞清楚这个 如果指派一个ip给容器，就不能再把对应的ip用来映射了比如172.18.0.10:5000:5000 还同时把172.18.0.10分配给一个容器，这是不行的 EXPOSE的作用（去搜索） EXPOSE 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务 –摘自https://yeasy.gitbooks.io/docker_practice/image/dockerfile/expose.html 所以它实际上并不能暴露端口。 如果EXPOSE和-P参数一起使用，则会使用随机映射的策略进行映射，这估计是EXPOSE的唯一作用。 -p 参数则用于手动指定端口映射。 格式大致如ip:宿主机port:容器port 那么这个ip的限制呢？ –link这个命令似乎有神奇的作用，但是我们需要 啊 我只是想让某个docker服务只暴露在内网，为何总是无法访问 难道我需要iptables吗 对应的文档或者源码能不能看一下呢 curl的笔记1curl -X POST http://balabala.com/balabala -d &#123;\"param1\":\"value\"&#125; -X可以指定请求方式，比如POST或者GET. -d可以指定参数，但是似乎默认的参数格式是&quot;a=sss&amp;b=c&quot;这种格式 似乎需要额外的参数指定json格式呢 DevOps Development and Operations 特点？好处都有啥？缺点？采用的技术？啊容器和虚拟机是不一样的，曾经有人问我他们的区别 VSCode很好，vscode很好 草稿需要的时候从草稿中取出素材已经学过的东西需要被记录 反复反复记录阅读反复阅读记录阅读强化 等待，我总是在等待 我需要把所有的额外的东西先打包一个docker image,而不是每次都操作一次,这太蠢了 人在等待的时候应该做什么 零样本学习pycryptodome什么是pycryptodome呢 源码为什么不看一看源码呢 iptables1iptables -t nat -nL]]></content>
+    <content type="text"><![CDATA[Docker命令相关创建一个网络1docker networt create --subnet=172.18.0.0/16 mynetwork 列出网络1docker network ls 查看镜像信息1docker inspect imageid docker内网访问的问题在一个容器中使用反向代理，代理到其它容器的服务，此容器使用公网，其他容器只能在内网访问。 即比如有如下三个容器A, B, C 然后A容器暴露80端口到公网 B和C暴露各自的服务端口如8080或3000等到内网 然后在A容器中使用反向代理，代理容器B和C中的服务，使得公网可以通过访问A来访问B和C的服务 方案A容器A: 0.0.0.0:80:80容器B: 172.17.0.1:8080:8080容器C: 172.17.0.1:8081:8080 这个方案是可以的 方案B使用172.18.0.0/16网络，分配固定ip，并直接访问也是可以的。比如容器A依旧是 0.0.0.0:80:80容器B使用ip和端口: 172.18.0.10:8080这时也是可以使用的 尝试-p参数-p参数的作用是什么呢，可以的选项是什么呢？0.0.0.0可以用，那么127.0.0.1呢我需要搞清楚这个 如果指派一个ip给容器，就不能再把对应的ip用来映射了比如172.18.0.10:5000:5000 还同时把172.18.0.10分配给一个容器，这是不行的 EXPOSE的作用（去搜索） EXPOSE 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务 –摘自https://yeasy.gitbooks.io/docker_practice/image/dockerfile/expose.html 所以它实际上并不能暴露端口。 如果EXPOSE和-P参数一起使用，则会使用随机映射的策略进行映射，这估计是EXPOSE的唯一作用。 -p 参数则用于手动指定端口映射。 格式大致如ip:宿主机port:容器port 那么这个ip的限制呢？ –link这个命令似乎有神奇的作用，但是我们需要 啊 我只是想让某个docker服务只暴露在内网，为何总是无法访问 难道我需要iptables吗 对应的文档或者源码能不能看一下呢 -p的原理使用iptables可以查看实际上的操作 看起来docker里面应该填网络名。先使用iptables看看效果 Docker的笔记 Docker使用Go语言开发，对进程进行封装隔离，属于操作系统层面的虚拟化技术。比虚拟机技术更加轻便，快捷。 和虚拟机的区别 虚拟机技术在所有在虚拟机之上使用Hypervisor，然后每一个虚拟机包含了应用，库文件以及整个操作系统 Docker技术则使用Docker Engine对所有的容器进行管理，每一个容器中只有应用的库文件 Docker的好处 更高效地利用系统资源（不需要完整的操作系统） 更快的启动时间（比起虚拟机，不需要一个操作系统，所以很快） 一致的运行环境（同样的Dockerfile，不用担心换环境导致错误） 持续交付和部署（使用Dockerfile，CI/CD） 轻松迁移（保证执行环境的一致性） 更轻松的维护和扩展（什么是分层存储和镜像技术？）（有很多官方镜像可以使用） 镜像，容器和仓库镜像Docker镜像相当于一个root文件系统。Linux内核启动后会挂载root文件系统为其提供用户空间支持。 不是很懂这个 分层存储 分层存储利用了Union FS技术,docker的镜像并不是一个单一的文件，而是由一组文件组成。 镜像构建时会一层一层地构建。而在后面的层将无法改动前面的层，删除上一层的文件的操作实际上是将其标志为删除。 好处是在镜像复用或者定制时更加容易。 容器一个镜像可以有多个容器实例，就像面向对象的类和实例的关系一样。 容器可以进行的操作有： 创建 启动 停止 删除 暂停 跟虚拟机可以进行的操作很类似。 特性： 容器的实质是进程，这个进程运行于独立的命名空间 每一个容器运行时，会在镜像上面创建一层容器存储层，最佳实践推荐不要向存储层写入任何数据。 文件操作： 应该使用数据卷或者绑定宿主目录的方式对宿主进行读写，在这种操作方式下，容器消亡时数据并不会消亡。 仓库Docker Registry是一个集中存储、分发镜像的服务 一个Registry里面可以包含多个仓库(Repository),每个仓库可以包含多喝标签(tag); 每个标签对应一个镜像。 比如: ubuntu:16.04 ubuntu:latest 如果在docker pull时不指定标签，使用默认标签latest 常用的公开registry服务： Docker Hub Quay.io Google Container Registry 常见的加速器(Registry Mirror): 阿里云加速器 DaoCloud加速器 (配置方式呢) Dockerfile的操作 每一个指令，都会建立一层存储 FROM选择基础镜像，如果从空白开始则是FROM scratch 使用Go开发的应用很多会使用这种方式来制作镜像，体积更加小巧 RUN用于执行命令行命令，注意进行一个完整的操作时应该将命令行命令写在同一个RUN中，用\换行 举例如下: (摘自 https://yeasy.gitbooks.io/docker_practice/image/build.html) 1234567891011121314FROM debian:jessieRUN buildDeps='gcc libc6-dev make' \ &amp;&amp; apt-get update \ &amp;&amp; apt-get install -y $buildDeps \ &amp;&amp; wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \ &amp;&amp; mkdir -p /usr/src/redis \ &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \ &amp;&amp; make -C /usr/src/redis \ &amp;&amp; make -C /usr/src/redis install \ &amp;&amp; rm -rf /var/lib/apt/lists/* \ &amp;&amp; rm redis.tar.gz \ &amp;&amp; rm -r /usr/src/redis \ &amp;&amp; apt-get purge -y --auto-remove $buildDeps 这样可以避免出无意义的层并且增加镜像的体积(因为后面的层无法真正地删除前面的层的文件) COPYADDCMDENTRYPOINTENVARGVOLUMEEXPOSEWORKDIRUSERHEALTHCHECKONBUILD Docker依旧是一种虚拟化的方式 curl的笔记1curl -X POST http://balabala.com/balabala -d &#123;\"param1\":\"value\"&#125; -X可以指定请求方式，比如POST或者GET. -d可以指定参数，但是似乎默认的参数格式是&quot;a=sss&amp;b=c&quot;这种格式 似乎需要额外的参数指定json格式呢 找到了 1curl -H "Content-Type:application/json" -X POST http://balabala.com/balabala -d &#123;\"param1\":\"value\"&#125; DevOps Development and Operations 特点？好处都有啥？缺点？采用的技术？啊容器和虚拟机是不一样的，曾经有人问我他们的区别 VSCode很好，vscode很好vscode很奇怪 不是很好 材料 md编辑时打开preview关闭很迷 terminal放到右边时如何回到下方 草稿需要的时候从草稿中取出素材已经学过的东西需要被记录 反复反复记录阅读反复阅读记录阅读强化 等待，我总是在等待 我需要把所有的额外的东西先打包一个docker image,而不是每次都操作一次,这太蠢了 人在等待的时候应该做什么 零样本学习pycryptodome什么是pycryptodome呢 源码为什么不看一看源码呢 iptables1iptables -t nat -nL iptables好像很有趣 收藏一个关于docker的gitbook: https://yeasy.gitbooks.io/docker_practice/ gitbook?#的作用比如#test可以访问这里 docker的网络模型导出word的方案telnet使用Spring boot中使用redis做缓存一篇文章： https://www.cnblogs.com/gdpuzxs/p/7222309.html另一篇： https://www.cnblogs.com/badboyf/p/6995202.html?utm_source=itdadao&amp;utm_medium=referral 读读书，涨涨姿势中文文案排版指南https://github.com/mzlogin/chinese-copywriting-guidelines#%E8%B0%81%E5%9C%A8%E8%BF%99%E6%A0%B7%E5%81%9A Go方法以及简单的Hello World1234567package mainimport "fmt"func main() &#123; fmt.Println("Hello, World!")&#125; 用scratch来制作一个go应用镜像摘自菜鸟教程。 package main代表是一个可独立执行的程序。 fmt是一个IO库。 Println竟然是大写 {的位置1234func main()&#123; fmt.Println("Hello, Wolrd")&#125; 这样写会报错。。。。真的有这个必要吗 调试1go run filename.go 新问题在docker里面启动的东西能不能把命令行的日志放到日志文件里啊 试一下吧 docker启动一个redis12docker pull redisdocker run -d --name myredis -p 16379:6379 redis --requirepass "mypassword"]]></content>
       <categories>
         <category>草稿</category>
       </categories>
@@ -36,7 +36,7 @@
   <entry>
     <title><![CDATA[使用docker搭建jenkins]]></title>
     <url>%2Fblog%2F2018%2F10%2F25%2Fjenkins%2F</url>
-    <content type="text"><![CDATA[记录一下在CentOS7中使用docker运行一个jenkins… 环境使用CentOS7 前置条件 需要有tomcat 123docker pull jenkinsmkdir /home/jenkinsdocker run -d --name myjenkins -p 15000:50000 -p 18080:8080 -v /home/jenkins:/home/jenkins jenkins 然后需要找密码了，访问服务器的10080端口可以看到jenkins的登陆界面。该界面会告诉我们密码放在/var/jenkins_home/secrets/initialAdminPassword里面，但我们的jenkins是在docker容器中启动的，所以我们需要到容器内对应的路径去找。 12docker exec -it myjenkins /bin/bash # 进入容器cat /var/jenkins_home/secrets/initialAdminPassword 拿到密码a704538e730d4acda43343383718377c 退出容器 1logout 登陆进去选插件，发现有一堆安装失败了pipeline 后续操作并没有学会…… 自己写一个吧]]></content>
+    <content type="text"><![CDATA[记录一下在CentOS7中使用docker运行一个jenkins… 环境使用CentOS7 前置条件 需要有tomcat 123docker pull jenkinsmkdir /home/jenkinsdocker run -d --name myjenkins -p 15000:50000 -p 18080:8080 -v /home/jenkins:/home/jenkins jenkins -v和使用copy的效果是如何不同的此处占坑 然后需要找密码了，访问服务器的10080端口可以看到jenkins的登陆界面。该界面会告诉我们密码放在/var/jenkins_home/secrets/initialAdminPassword里面，但我们的jenkins是在docker容器中启动的，所以我们需要到容器内对应的路径去找。 12docker exec -it myjenkins /bin/bash # 进入容器cat /var/jenkins_home/secrets/initialAdminPassword 拿到密码a704538e730d4acda43343383718377c 退出容器 1logout 登陆进去选插件，发现有一堆安装失败了pipeline 后续操作并没有学会…… 自己写一个吧]]></content>
       <categories>
         <category>持续集成</category>
       </categories>
@@ -122,19 +122,27 @@
   <entry>
     <title><![CDATA[计算PageRank]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fpage-rank%2F</url>
-    <content type="text"><![CDATA[占坑]]></content>
+    <content type="text"><![CDATA[这就是我什么都没写的原因吗？]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>学习</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[奇异值分解的计算方式]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fsingular-value-decomposition%2F</url>
-    <content type="text"><![CDATA[占坑]]></content>
+    <content type="text"><![CDATA[特征值方阵$A$,向量$v$,值$\lambda$有如下关系 $$Av=\lambda v$$ 此时称$v$为方阵$A$的特征向量,$\lambda$则是此特征向量对应的特征值。 奇异值分解]]></content>
   </entry>
   <entry>
     <title><![CDATA[如何学习ruby]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fruby-learning%2F</url>
-    <content type="text"><![CDATA[开发环境搭建windows下的安装CentOS7我需要一个消息队列拯救服务器记笔记一个类]]></content>
+    <content type="text"><![CDATA[开发环境搭建windows下的安装这个不难，有时候installer可能被墙 CentOS7我需要一个消息队列拯救服务器记笔记一个类1234567class Demo def initialize end def func1 endend]]></content>
       <categories>
         <category>编程</category>
+        <category>草稿</category>
       </categories>
       <tags>
         <tag>学习</tag>
@@ -145,7 +153,10 @@
   <entry>
     <title><![CDATA[如何学习汉语]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fchinese-learning%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[大学1大学之道，在明明德，在亲民，在止於至善。知止而後有定，定而後能静，静而後能安，安而後能虑，虑而後能得。物有本末，事有终始，知所先後，则近道矣]]></content>
+      <categories>
+        <category>草稿</category>
+      </categories>
       <tags>
         <tag>学习</tag>
         <tag>汉语</tag>
@@ -206,8 +217,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Ftrigonometric-series%2F</url>
     <content type="text"><![CDATA[三角级数$\quad$一般地，以$A_k\sin(kx+\varphi_k)$为项作成的无穷级数 $$\sum\limits_{k=0}^{\infty}A_k\sin(kx+\varphi_k)$$ 称为三角级数.（所以首先三角级数都是无穷级数） 但是有时候也会取如下形式： $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}(a_k\cos{kx}+b_k\sin{kx})。$$ 周期函数周期函数有初相,振幅,频率 正弦级数给三角级数中所有的$a_k$取$0$，可以得到如下的正弦级数: $$\sum\limits_{k=1}^{\infty}b_k\sin{kx}$$ 余弦级数类似的操作可以得到余弦级数 $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}a_k\cos{kx}$$ 傅里叶级数$$\begin{split}A_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\cos{nx}\mathtt{d}x \\B_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\sin{nx}\mathtt{d}x\end{split}$$ 这里用的符号和上面不一样呢 应该打屁股]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
         <tag>级数</tag>
       </tags>
   </entry>
@@ -216,8 +227,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fcurve-line-integral%2F</url>
     <content type="text"><![CDATA[曲线积分第一类曲线积分第一类曲线积分用来求一个曲线物体的质量.当物体的密度是一个常值时，只需要将密度乘以弧长就可以得到质量.当物体的密度不均匀时，我们将密度表示为函数$f$，并对函数在曲线上积分，称为第一类曲线积分或者对弧长的曲线积分,记为$\int_Cf(x,y)\mathtt{d}s$，即 $$\int_Cf(x,y)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i)\Delta{s_i}$$ 其中$f(x,y)$称为被积函数,$C$称为积分曲线,$\mathtt{d}s$成为弧微分. 我们可以把这个概念扩展到三维空间或者更高维的空间中： $$\int_Cf(x,y,z)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i,\zeta_i)\Delta{s_i}$$ 第二类曲线积分和第一类曲线积分不同，第二类曲线积分可以用来表示变力沿曲线做的功，是有方向的.第二类曲线积分记为: $$\int_CP(x,y)dx+Q(x,y)dy\quad或\quad\int_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$ 特别地，还可以有对某个方向的曲线积分 沿曲线$C$对坐标$x$的曲线积分$$\int_CP(x,y)dx=\lim_{\lambda\to{0}}\sum_{i=1}^nP(\xi_i,\eta_i)\Delta{x_i}$$ 沿曲线$C$对坐标$y$的曲线积分$$\int_CQ(x,y)dy=\lim_{\lambda\to{0}}\sum_{i=1}^nQ(\xi_i,\eta_i)\Delta{y_i}$$ 既然如此，应该还可以对一个特定的方向积分，就是不知道怎么表示. 如果曲线$C$为闭曲线，则记第二类曲线积分为 $$\oint_CP(x,y)dx+Q(x,y)dy\quad或\quad\oint_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
       </tags>
   </entry>
   <entry>
@@ -225,8 +236,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2FGreen-Formula%2F</url>
     <content type="text"><![CDATA[格林公式的定义和一些练习学习一下格林公式~ 简单闭曲线$\quad$设曲线$C$的参数方程为 $$\begin{cases}x=\varphi(t), \\y=\psi(t)\end{cases}\quad(\alpha\le{t}\le\beta).$$ 如果$\varphi,\psi$连续，且对不同的参数$t_1,t_2\in[\alpha,\beta]$(不妨设$t_1\le{t_2}$),$(\varphi(t_1),\psi(t_1))=(\varphi(t_2),\psi(t_2))$当且仅当$t_1=\alpha,t_2=\beta$,则称$C$为简单闭曲线 单连通区域$\quad$设有一个平面区域$D$,若$D$内的任意一条简单闭曲线所围的部分仍属于$D$，则称$D$为单连通区域，否则称为多连通区域. 格林公式$\quad$设有界闭区域$D$由逐段光滑曲线$C$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则 $$\begin{split}\oint_C{P}\mathtt{d}x+Q\mathtt{d}y=\iint\limits_D\left(\frac{\partial{Q}}{\partial{x}}-\frac{\partial{P}}{\partial{y}}\right)\mathtt{d}x\mathtt{d}y\end{split}$$ 用途通常这些东西总是有用的，我们观察上面的式子。 左边一部分是对光滑曲线$C$的第二类曲线积分，格林公式告诉我们它会与在由曲线围成的平面区域$D$上对两个方向的分量在另一个方向的偏导之差的积分相等. 证明为了加深理解，我们来看一下证明.证明格林公式的时候是拆开证的，也就是 $$\oint_CP\mathtt{d}x=-\iint\limits_D\frac{\partial{P}}{\partial{y}}\mathtt{d}x\mathtt{d}y, \quad\oint_CQ\mathtt{d}y=\iint\frac{\partial{Q}}{\partial{x}}\mathtt{d}x\mathtt{d}y$$ 分以下三种情况讨论: $D$由曲线$y=\varphi_1(x),y=\varphi_2(x)$，及直线$x=a,x=b$围成，即 $$D=\{(x,y)\mid\varphi_1(x)\le{y}\le\varphi_2(x),a\le{x}\le{b}\}$$ $D$是单连通区域，且与某些与$y$轴平行的直线相交多于两点 $D$是多联通区域 做题环节题目1求椭圆$x=a\cos\theta,y=b\sin\theta$所围图形面积. 解： 我们可以从格林公式中得到一个简单的应用： 当$P=-y,Q=x$时，公式就变成了 $$\begin{split}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y=2\iint\limits_D\mathtt{d}x\mathtt{d}y\end{split}$$ 也就是闭区域$D$的面积$A$为: $$\begin{split}A=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y\end{split}$$ 那么求椭圆面积就变为了求解上述式子,有: $$\begin{split}A&amp;=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y \\&amp;=\frac{1}{2}\int_0^{2\pi}{-b\sin\theta}\mathtt{d}{a\cos\theta}+a\cos\theta\mathtt{d}b\sin\theta \\&amp;=\frac{1}{2}\int_0^{2\pi}{ab\sin^2\theta}\mathtt{d}{\theta}+ab\cos^2\theta\mathtt{d}\theta \\&amp;=\frac{1}{2}ab·2\pi \\&amp;=ab\pi\end{split}$$]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
       </tags>
   </entry>
 </search>
