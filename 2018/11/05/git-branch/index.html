@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="创建本地分支1git checkout -b new_branch 相当于 12git branch new_branchgit checkout new_branch">
+  <meta name="description" content="创建本地分支1git checkout -b issn 相当于 12git branch issngit checkout issn">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git分支操作笔记">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/11/05/git-branch/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="创建本地分支1git checkout -b new_branch 相当于 12git branch new_branchgit checkout new_branch">
+<meta property="og:description" content="创建本地分支1git checkout -b issn 相当于 12git branch issngit checkout issn">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-05T11:34:30.448Z">
+<meta property="og:updated_time" content="2018-11-13T06:25:54.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git分支操作笔记">
-<meta name="twitter:description" content="创建本地分支1git checkout -b new_branch 相当于 12git branch new_branchgit checkout new_branch">
+<meta name="twitter:description" content="创建本地分支1git checkout -b issn 相当于 12git branch issngit checkout issn">
 
 
 
@@ -376,12 +376,24 @@
                 
               
 
-              <time title="创建时间：2018-11-05 19:19:38 / 修改时间：19:34:30" itemprop="dateCreated datePublished" datetime="2018-11-05T19:19:38+08:00">2018-11-05</time>
+              <time title="创建时间：2018-11-05 19:19:38" itemprop="dateCreated datePublished" datetime="2018-11-05T19:19:38+08:00">2018-11-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-13 14:25:54" itemprop="dateModified" datetime="2018-11-13T14:25:54+08:00">2018-11-13</time>
               
             
           </span>
@@ -414,10 +426,13 @@
       
 
       
-        <h3 id="创建本地分支"><a href="#创建本地分支" class="headerlink" title="创建本地分支"></a>创建本地分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b new_branch</span><br></pre></td></tr></table></figure>
+        <h3 id="创建本地分支"><a href="#创建本地分支" class="headerlink" title="创建本地分支"></a>创建本地分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b issn</span><br></pre></td></tr></table></figure>
 <p>相当于</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch new_branch</span><br><span class="line">git checkout new_branch</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch issn</span><br><span class="line">git checkout issn</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="提交更改到分支"><a href="#提交更改到分支" class="headerlink" title="提交更改到分支"></a>提交更改到分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"message"</span></span><br></pre></td></tr></table></figure>
+<h3 id="回到主分支"><a href="#回到主分支" class="headerlink" title="回到主分支"></a>回到主分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge issn</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -695,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建本地分支"><span class="nav-number">1.</span> <span class="nav-text">创建本地分支</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建本地分支"><span class="nav-number">1.</span> <span class="nav-text">创建本地分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交更改到分支"><span class="nav-number">2.</span> <span class="nav-text">提交更改到分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回到主分支"><span class="nav-number">3.</span> <span class="nav-text">回到主分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并分支"><span class="nav-number">4.</span> <span class="nav-text">合并分支</span></a></li></ol></div>
             
 
           </div>
