@@ -122,13 +122,14 @@
   <entry>
     <title><![CDATA[计算PageRank]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fpage-rank%2F</url>
-    <content type="text"><![CDATA[这就是我什么都没写的原因吗？]]></content>
+    <content type="text"><![CDATA[核心思想PageRank的核心思想： 如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高. 如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高. 计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}$$ 计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}$$ 算法举例PageRank的值物理意义上是一个网页被访问的概率，因此通常对$N$个网页计算时，将每个网页的初始值设为$\frac{1}{N}$. 假设有4个网页A, B, C, D A有1个出链到D,B有2个出链到A和DC有1个出链到AD有2个出链到B和C 然后我们开始算第一轮: $$\begin{split}PR(A)&amp;=\alpha\left(\frac{PR(B)}{L(B)}+\frac{PR(C)}{L(C)}\right)+\frac{1-\alpha}{N} \\&amp;=\alpha\left(\frac{\frac{1}{4}}{2}+\frac{\frac{1}{4}}{1}\right)+\frac{1-\alpha}{N} \\&amp;=\frac{17}{20}\times\frac{3}{8}+\frac{3}{80} \\&amp;=\frac{57}{160} \\\end{split}$$$$\begin{split}PR(B)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\&amp;=\frac{23}{160} \\\end{split}$$$$\begin{split}PR(C)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\&amp;=\frac{23}{160} \\\end{split}$$$$\begin{split}PR(D)&amp;=\alpha\left(\frac{PR(A)}{L(A)}+\frac{PR(B)}{L(B)}\right)+\frac{1-\alpha}{N} \\&amp;=\alpha\left(\frac{\frac{57}{160}}{1}+\frac{\frac{23}{160}}{2}\right)+\frac{1-\alpha}{N} \\&amp;=\frac{17}{20}\times\frac{137}{320}+\frac{3}{80} \\&amp;=\frac{2569}{6400} \\\end{split}$$ 然后再从$PR(A)$开始计算……直到趋于平稳为止. 注意 当一个网页没有出链时认为对所有网页都有出链 为了限制一个网页只有指向自己的出链或者几个出链形成一个圈的情况，我们假定有一个概率$\alpha$，用户在浏览网页时会有一个这样的概率直接跳转到一个随机的网页，而每个网页的概率是相等的. $\alpha$值通常取$0.85$]]></content>
       <categories>
         <category>算法</category>
       </categories>
       <tags>
         <tag>学习</tag>
         <tag>算法</tag>
+        <tag>PageRank</tag>
       </tags>
   </entry>
   <entry>
