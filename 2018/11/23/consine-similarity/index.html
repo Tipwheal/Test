@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="核心思想PageRank的核心思想：  如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高. 如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高.  计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{P">
-<meta name="keywords" content="学习,算法,PageRank">
+  <meta name="description" content="先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下:  分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近">
+<meta name="keywords" content="算法,文本分析,相似度计算">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算PageRank">
-<meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/09/page-rank/index.html">
+<meta property="og:title" content="余弦相似度计算">
+<meta property="og:url" content="https://tipwheal.github.io/blog/2018/11/23/consine-similarity/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="核心思想PageRank的核心思想：  如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高. 如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高.  计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{P">
+<meta property="og:description" content="先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下:  分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T05:53:58.574Z">
+<meta property="og:updated_time" content="2018-11-23T12:33:59.458Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="计算PageRank">
-<meta name="twitter:description" content="核心思想PageRank的核心思想：  如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高. 如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高.  计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{P">
+<meta name="twitter:title" content="余弦相似度计算">
+<meta name="twitter:description" content="先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下:  分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近">
 
 
 
 
 
 
-  <link rel="canonical" href="https://tipwheal.github.io/blog/2018/10/09/page-rank/"/>
+  <link rel="canonical" href="https://tipwheal.github.io/blog/2018/11/23/consine-similarity/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>计算PageRank | 当然要记笔记啊</title>
+  <title>余弦相似度计算 | 当然要记笔记啊</title>
   
 
 
@@ -342,7 +342,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/10/09/page-rank/">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/11/23/consine-similarity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="红色鲱鱼">
@@ -359,7 +359,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">计算PageRank
+          <h1 class="post-title" itemprop="name headline">余弦相似度计算
               
             
           </h1>
@@ -384,24 +384,12 @@
                 
               
 
-              <time title="创建时间：2018-10-09 23:59:05" itemprop="dateCreated datePublished" datetime="2018-10-09T23:59:05+08:00">2018-10-09</time>
+              <time title="创建时间：2018-11-23 19:25:29 / 修改时间：20:33:59" itemprop="dateCreated datePublished" datetime="2018-11-23T19:25:29+08:00">2018-11-23</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-11-13 13:53:58" itemprop="dateModified" datetime="2018-11-13T13:53:58+08:00">2018-11-13</time>
               
             
           </span>
@@ -460,27 +448,59 @@
       
 
       
-        <h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><p>PageRank的核心思想：</p>
-<ul>
-<li>如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高.</li>
-<li>如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高.</li>
-</ul>
-<h2 id="计算公式"><a href="#计算公式" class="headerlink" title="计算公式"></a>计算公式</h2><p>一般情况下,一个网页的PR值的计算公式如下：</p>
-<p>$$<br>PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}<br>$$</p>
+        <h2 id="先来一段废话"><a href="#先来一段废话" class="headerlink" title="先来一段废话"></a>先来一段废话</h2><p>为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。</p>
+<p>具体怎么算呢？</p>
+<p>简单一点就是如下:</p>
+<ol>
+<li>分词</li>
+<li>将所有的词放在一个集合中</li>
+<li>根据集合位置给词编码</li>
+<li>将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数</li>
+<li>计算两个向量的余弦值，越大代表越接近</li>
+</ol>
 <a id="more"></a>
-<h2 id="计算公式-1"><a href="#计算公式-1" class="headerlink" title="计算公式"></a>计算公式</h2><p>一般情况下,一个网页的PR值的计算公式如下：</p>
-<p>$$<br>PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}<br>$$</p>
-<h2 id="算法举例"><a href="#算法举例" class="headerlink" title="算法举例"></a>算法举例</h2><p>PageRank的值物理意义上是一个网页被访问的概率，因此通常对$N$个网页计算时，将每个网页的初始值设为$\frac{1}{N}$.</p>
-<p>假设有4个网页A, B, C, D</p>
-<p>A有1个出链到D,<br>B有2个出链到A和D<br>C有1个出链到A<br>D有2个出链到B和C</p>
-<p>然后我们开始算第一轮:</p>
-<p>$$<br>\begin{split}<br>PR(A)&amp;=\alpha\left(\frac{PR(B)}{L(B)}+\frac{PR(C)}{L(C)}\right)+\frac{1-\alpha}{N} \\<br>&amp;=\alpha\left(\frac{\frac{1}{4}}{2}+\frac{\frac{1}{4}}{1}\right)+\frac{1-\alpha}{N} \\<br>&amp;=\frac{17}{20}\times\frac{3}{8}+\frac{3}{80} \\<br>&amp;=\frac{57}{160} \\<br>\end{split}<br>$$<br>$$<br>\begin{split}<br>PR(B)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\<br>&amp;=\frac{23}{160} \\<br>\end{split}<br>$$<br>$$<br>\begin{split}<br>PR(C)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\<br>&amp;=\frac{23}{160} \\<br>\end{split}<br>$$<br>$$<br>\begin{split}<br>PR(D)&amp;=\alpha\left(\frac{PR(A)}{L(A)}+\frac{PR(B)}{L(B)}\right)+\frac{1-\alpha}{N} \\<br>&amp;=\alpha\left(\frac{\frac{57}{160}}{1}+\frac{\frac{23}{160}}{2}\right)+\frac{1-\alpha}{N} \\<br>&amp;=\frac{17}{20}\times\frac{137}{320}+\frac{3}{80} \\<br>&amp;=\frac{2569}{6400} \\<br>\end{split}<br>$$</p>
-<p>然后再从$PR(A)$开始计算……直到趋于平稳为止.</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
-<li>当一个网页没有出链时认为对所有网页都有出链</li>
-<li>为了限制一个网页只有指向自己的出链或者几个出链形成一个圈的情况，我们假定有一个概率$\alpha$，用户在浏览网页时会有一个这样的概率直接跳转到一个随机的网页，而每个网页的概率是相等的.</li>
-<li>$\alpha$值通常取$0.85$</li>
-</ul>
+<h2 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h2><h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>我们可以用jieba分词，因为它分得一定比我好</p>
+<h3 id="把所有的词放在集合中"><a href="#把所有的词放在集合中" class="headerlink" title="把所有的词放在集合中"></a>把所有的词放在集合中</h3><p>遍历一下即可</p>
+<h3 id="根据集合位置给词编码"><a href="#根据集合位置给词编码" class="headerlink" title="根据集合位置给词编码"></a>根据集合位置给词编码</h3><p>变为一个dict并且对应的位置置为数量</p>
+<h3 id="转向量"><a href="#转向量" class="headerlink" title="转向量"></a>转向量</h3><p>先将分词结果替换为数字数组，数字为dict中的值。<br>统计不同位置出现的次数，存在向量中。</p>
+<h3 id="计算余弦值"><a href="#计算余弦值" class="headerlink" title="计算余弦值"></a>计算余弦值</h3><p>使用如下式子计算：</p>
+<p>$$<br>\cos(\theta)=\frac{\sum\limits_{i=1}^n(x_i\times{y_i})}{\sqrt{\sum\limits_{i=1}^n(x_i)^2}\times\sqrt{\sum\limits_{i=1}^n(y_i)^2}}<br>$$</p>
+<p>其实就是点积和长度的乘积的比值。</p>
+<p>具体影响：</p>
+<p>如果两个句子相同的词越多，点积就会越大，相似度也会越高。<br>如果两个句子在相同的词不变的情况下，句子长度越长，相似度则会越低。</p>
+<p>如果动脑子想一想，确实还是有道理的，但是似乎有点太简单了一些。</p>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>首先我们拿到两句话：</p>
+<p>这里有一根比较长的棍子<br>这里有一根比较短的棍子</p>
+<p>使用jiaba分词的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;]</span><br><span class="line">[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;短&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;]</span><br></pre></td></tr></table></figure>
+<p>(所以标点符号也算进去了)</p>
+<p>然后我们变成这样的集合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;短&apos;]</span><br></pre></td></tr></table></figure>
+<p>然后标个号:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &apos;这里&apos;: 0,</span><br><span class="line">    &apos;有&apos;: 1,</span><br><span class="line">    &apos;一根&apos;: 2,</span><br><span class="line">    &apos;比较&apos;: 3,</span><br><span class="line">    &apos;长&apos;: 4,</span><br><span class="line">    &apos;的&apos;: 5,</span><br><span class="line">    &apos;棍子&apos;: 6,</span><br><span class="line">    &apos;。&apos;: 7,</span><br><span class="line">    &apos;短&apos; 8</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们变成两个向量：</p>
+<p>[1, 1, 1, 1, 1, 1, 1, 1, 0],<br>[1, 1, 1, 1, 0, 1, 1, 1, 1],</p>
+<p>最后求得余弦值为$0.875$</p>
+<p>此时我们再掏出一个句子：</p>
+<p>这里有一根棍子，它有点长</p>
+<p>分个词：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;棍子&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;, &apos;长&apos;, &apos;。&apos;]</span><br></pre></td></tr></table></figure>
+<p>我们用第一个句子和第二个句子来计算相似度，那么我们得到的集合是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;]</span><br></pre></td></tr></table></figure>
+<p>向量:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]</span><br><span class="line">[1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1]</span><br></pre></td></tr></table></figure>
+<p>余弦值约等于$0.707$</p>
+<p>结果也就是说，比较和第二，第三句的相似度，第一句和第二句的相似度是比较高的。</p>
+<p>虽然它们结构上确实是……比较接近的</p>
+<p>但是意思显然…不太对</p>
+<h2 id="一个可能有效的改进"><a href="#一个可能有效的改进" class="headerlink" title="一个可能有效的改进"></a>一个可能有效的改进</h2><p>假设我们有一个反义词集，里面有记录 长/短 是一对反义词，那么我们似乎可以记录一个负值：</p>
+<p>比如在计算前两句的相似度时，我们认为长和短在同一个维度，但方向相反，我们如下的位置集合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &apos;这里&apos;: [0, 1],</span><br><span class="line">    &apos;有&apos;: [1, 1],</span><br><span class="line">    &apos;一根&apos;: [2, 1],</span><br><span class="line">    &apos;比较&apos;: [3, 1],</span><br><span class="line">    &apos;长&apos;: [4, 1],</span><br><span class="line">    &apos;的&apos;: [5, 1],</span><br><span class="line">    &apos;棍子&apos;: [6, 1],</span><br><span class="line">    &apos;。&apos;: [7, 1],</span><br><span class="line">    &apos;短&apos; [4, -1]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么我们在这个情况下，计算的两个向量为：</p>
+<p>[1, 1, 1, 1, 1, 1, 1, 1]<br>[1, 1, 1, -1, 1, 1, 1, 1]</p>
+<p>余弦值只有$0.75$了…感觉总归是有一点效果的，对于当前这种，一个位置意思相反的情况。</p>
+<p>要是冒出一个双重否定怎么办呢…也许我们需要加入一些结构分析</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>没有实现</p>
 
       
     </div>
@@ -501,11 +521,11 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/学习/" rel="tag"># 学习</a>
-          
             <a href="/blog/tags/算法/" rel="tag"># 算法</a>
           
-            <a href="/blog/tags/PageRank/" rel="tag"># PageRank</a>
+            <a href="/blog/tags/文本分析/" rel="tag"># 文本分析</a>
+          
+            <a href="/blog/tags/相似度计算/" rel="tag"># 相似度计算</a>
           
         </div>
       
@@ -518,8 +538,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/10/09/singular-value-decomposition/" rel="next" title="奇异值分解的计算方式">
-                <i class="fa fa-chevron-left"></i> 奇异值分解的计算方式
+              <a href="/blog/2018/11/15/ordinary-differential-equation/" rel="next" title="常微分方程及解法">
+                <i class="fa fa-chevron-left"></i> 常微分方程及解法
               </a>
             
           </div>
@@ -527,10 +547,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/10/10/apriori/" rel="prev" title="java实现一个简单的apriori算法">
-                java实现一个简单的apriori算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -777,7 +793,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心思想"><span class="nav-number">1.</span> <span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算公式"><span class="nav-number">2.</span> <span class="nav-text">计算公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算公式-1"><span class="nav-number">3.</span> <span class="nav-text">计算公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法举例"><span class="nav-number">4.</span> <span class="nav-text">算法举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">4.1.</span> <span class="nav-text">注意</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#先来一段废话"><span class="nav-number">1.</span> <span class="nav-text">先来一段废话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体操作"><span class="nav-number">2.</span> <span class="nav-text">具体操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分词"><span class="nav-number">2.1.</span> <span class="nav-text">分词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把所有的词放在集合中"><span class="nav-number">2.2.</span> <span class="nav-text">把所有的词放在集合中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据集合位置给词编码"><span class="nav-number">2.3.</span> <span class="nav-text">根据集合位置给词编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转向量"><span class="nav-number">2.4.</span> <span class="nav-text">转向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算余弦值"><span class="nav-number">2.5.</span> <span class="nav-text">计算余弦值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个栗子"><span class="nav-number">3.</span> <span class="nav-text">举个栗子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个可能有效的改进"><span class="nav-number">4.</span> <span class="nav-text">一个可能有效的改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
             
 
           </div>

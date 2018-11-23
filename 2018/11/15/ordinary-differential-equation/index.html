@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="微分方程先整理一些在下面会出现的概念或者定义… 微分方程指一个表示未知函数、未知函数的导数以及自变量之间的关系的方程. 微分方程的阶指微分方程中出现的最高阶导数或偏导数的阶. 常微分方程指自变量个数只有一个的微分方程. 偏微分方程指自变量个数大于一个的微分方程.  举个栗子: $\frac{\partial^2{u}}{\partial{x^2}}+\frac{\partial^2{u}}{\pa">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-16T07:56:26.201Z">
+<meta property="og:updated_time" content="2018-11-19T04:34:02.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常微分方程及解法">
 <meta name="twitter:description" content="微分方程先整理一些在下面会出现的概念或者定义… 微分方程指一个表示未知函数、未知函数的导数以及自变量之间的关系的方程. 微分方程的阶指微分方程中出现的最高阶导数或偏导数的阶. 常微分方程指自变量个数只有一个的微分方程. 偏微分方程指自变量个数大于一个的微分方程.  举个栗子: $\frac{\partial^2{u}}{\partial{x^2}}+\frac{\partial^2{u}}{\pa">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-11-16 15:56:26" itemprop="dateModified" datetime="2018-11-16T15:56:26+08:00">2018-11-16</time>
+                <time title="修改时间：2018-11-19 12:34:02" itemprop="dateModified" datetime="2018-11-19T12:34:02+08:00">2018-11-19</time>
               
             
           </span>
@@ -525,8 +525,29 @@
 <p>我们称$L$是<strong>利普希兹常数</strong>，称$f(x,y)$在区域$D$上关于$y$满足<strong>利普希兹条件</strong>.</p>
 <h3 id="皮卡存在唯一性定理"><a href="#皮卡存在唯一性定理" class="headerlink" title="皮卡存在唯一性定理"></a>皮卡存在唯一性定理</h3><p>如果$f(x,y)$在闭区域$D$：$\mid x-x_0\mid\le{a},\mid y-y_0\mid\le{b}$上连续且关于$y$满足利普希兹条件，则方程$\frac{\mathtt{d}y}{\mathtt{d}x}=f(x,y)$存在唯一的解$y=\phi(x)$,它在区间$\mid x-x_0\mid\le{h}$上连续，且满足初始条件$\phi(x_0)=y_0$,这里$h=\min(a,\frac{b}{M}),M=\max\limits_{(x,y)\in{D}}\mid f(x,y)\mid$.</p>
 <p>上面的定理描述是针对一阶微分方程的,那么高阶的时候是否成立或者如何描述呢？</p>
-<p>证明起来步骤似乎很长，我先试图把它记住吧.</p>
-<h3 id="定理的证明"><a href="#定理的证明" class="headerlink" title="定理的证明"></a>定理的证明</h3><h2 id="高阶微分方程"><a href="#高阶微分方程" class="headerlink" title="高阶微分方程"></a>高阶微分方程</h2><p>这一部分主要是二阶齐次和非齐次微分方程，有时候虽然不好解，但我们的问题可能只是需要一个解，或者由一些条件来计算通解.因此这里是一些性质和定理，可以直接使用.</p>
+<p>证明起来步骤似乎很长，首先证明有解等价于一个式子，然后构造一个函数序列，证明对于每个n，函数都存在，然后证明函数序列一致收敛，求极限后等于我们要求的式子，最后再证明解的唯一性…</p>
+<h3 id="定理的证明"><a href="#定理的证明" class="headerlink" title="定理的证明"></a>定理的证明</h3><p>我们分五个引理来证明这个定理。方便起见区间$\mid x-x_0\mid\le{h}$取$x_0\le{x}\le{x_0+h}$部分来证明.</p>
+<h4 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h4><p>$y=\phi(x)$是方程$\frac{\mathtt{d}y}{\mathtt{d}x}=f(x,y)$定义在区间$x_0\le{x}\le{x_0+h}$上,且满足初始条件$\phi(x_0)=y_0$的解，当且仅当$y=\phi(x)$在$x_0\le{x}\le{x_0+h}$上连续且满足</p>
+<p>$$<br>\phi(x)=y_0+\int_{x_0}^xf(x,y)\mathtt{d}x,(x_0\le{x}\le{x_0+h})<br>$$</p>
+<p>(看起来是这样，既满足初始条件，求个导也是$f(x,y)$)</p>
+<p>证明:</p>
+<p>由于$y=\phi(x)$是方程的解，有:</p>
+<p>$$<br>\frac{\mathtt{d}\phi(x)}{\mathtt{d}x}=f(x,\phi(x))<br>$$</p>
+<p>(直接写y不好吗)<br>那么我们对两边从$x_0$到$x$求定积分就可以得到:</p>
+<p>$$<br>\phi(x)-\phi(x_0)=\int_{x_0}^xf(x,\phi(x))\mathtt{d}x,(x_0\le{x}\le{x_0+h})<br>$$</p>
+<p>整理一下就是上面写的式子了.</p>
+<p>反过来我们对$\phi(x)=y_0+\int_{x_0}^xf(x,y)\mathtt{d}x,(x_0\le{x}\le{x_0+h})$两边求导,可得</p>
+<p>$$<br>\frac{\mathtt{d}\phi(x)}{\mathtt{d}x}=f(x,\phi(x))<br>$$</p>
+<p>(所以$y$和$\phi$混着写令人非常难受)<br>证明了这个引理就是告诉我们在这个区间上，有解和这个条件是等价的，那我们后面需要证这个条件就可以得出有解.</p>
+<h4 id="引理2"><a href="#引理2" class="headerlink" title="引理2"></a>引理2</h4><p>我们首先构造一个<strong>皮卡逐步逼近函数序列</strong>:</p>
+<p>$$<br>\begin{cases}<br>\phi_0(x)=y_0 \\<br>\phi_n(x)=y_0+\int_{x_0}^xf(t,\phi_{n-1}(t))\mathtt{d}t,(x_0\le{x}\le{x_0+h})<br>\end{cases}<br>$$</p>
+<p>引理2的内容是：</p>
+<p>对于所有的$n$，式中的函数$\phi_n(x)$在区间$x_0\le{x}\le{x_0+h}$都有定义且满足:</p>
+<p>$$<br>\mid{\phi_n(x)-y_0}\mid\le{b}<br>$$</p>
+<p>证明：</p>
+<p>我们用数学归纳法可以证明。当$n=1$时，$\phi_1(x)=y_0+\int_{x_0}^xf(t,y_0)\mathtt{d}t$，易见这个函数在$x_0\le{x}\le{x_0+h}$上有定义，连续且有:</p>
+<p>$$<br>\begin{split}<br>\mid\phi_1(x)-y_0\mid&amp;=\left\vert\int_{x_0}^xf(t,y_0)\mathtt{d}t\right\vert \\<br>&amp;\le\int_{x_0}^x\vert{f(t,y_0)}\vert\mathtt{d}t \\<br>&amp;\le{M(x-x_0)}\le{Mh}\le{b}<br>\end{split}<br>$$</p>
+<h4 id="引理3"><a href="#引理3" class="headerlink" title="引理3"></a>引理3</h4><h4 id="引理4"><a href="#引理4" class="headerlink" title="引理4"></a>引理4</h4><h4 id="引理5"><a href="#引理5" class="headerlink" title="引理5"></a>引理5</h4><h2 id="高阶微分方程"><a href="#高阶微分方程" class="headerlink" title="高阶微分方程"></a>高阶微分方程</h2><p>这一部分主要是二阶齐次和非齐次微分方程，有时候虽然不好解，但我们的问题可能只是需要一个解，或者由一些条件来计算通解.因此这里是一些性质和定理，可以直接使用.</p>
 <h2 id="应用举例"><a href="#应用举例" class="headerlink" title="应用举例"></a>应用举例</h2><p>emmm,似乎没有那么必要</p>
 
       
@@ -574,6 +595,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/11/23/consine-similarity/" rel="prev" title="余弦相似度计算">
+                余弦相似度计算 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -647,7 +672,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -757,7 +782,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -816,7 +845,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微分方程"><span class="nav-number">1.</span> <span class="nav-text">微分方程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解和通解"><span class="nav-number">1.1.</span> <span class="nav-text">解和通解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶微分方程的初等解法"><span class="nav-number">1.2.</span> <span class="nav-text">一阶微分方程的初等解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量分离方程"><span class="nav-number">1.2.1.</span> <span class="nav-text">变量分离方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可以化为变量分离方程的情况"><span class="nav-number">1.2.2.</span> <span class="nav-text">可以化为变量分离方程的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-形如-frac-mathtt-d-y-mathtt-d-x-f-ax-by-c-的微分方程"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">1. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f(ax+by+c)$的微分方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-形如-frac-mathtt-d-y-mathtt-d-x-f-frac-y-x-的微分方程"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f(\frac{y}{x})$的微分方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-形如-frac-mathtt-d-y-mathtt-d-x-f-left-frac-a-1x-b-1x-c-a-2x-b-2y-c-right-的微分方程"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">3. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f\left(\frac{a_1x+b_1x+c}{a_2x+b_2y+c}\right)$的微分方程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶线性微分方程"><span class="nav-number">1.3.</span> <span class="nav-text">一阶线性微分方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一阶齐次线性微分方程"><span class="nav-number">1.3.1.</span> <span class="nav-text">一阶齐次线性微分方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一阶非齐次线性微分方程"><span class="nav-number">1.3.2.</span> <span class="nav-text">一阶非齐次线性微分方程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全微分方程与积分因子"><span class="nav-number">1.4.</span> <span class="nav-text">全微分方程与积分因子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全微分方程"><span class="nav-number">1.4.1.</span> <span class="nav-text">全微分方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#积分因子"><span class="nav-number">1.4.2.</span> <span class="nav-text">积分因子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解的存在唯一性定理"><span class="nav-number">1.5.</span> <span class="nav-text">解的存在唯一性定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#利普希兹-Lipschitz-条件"><span class="nav-number">1.5.1.</span> <span class="nav-text">利普希兹(Lipschitz)条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#皮卡存在唯一性定理"><span class="nav-number">1.5.2.</span> <span class="nav-text">皮卡存在唯一性定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定理的证明"><span class="nav-number">1.5.3.</span> <span class="nav-text">定理的证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高阶微分方程"><span class="nav-number">1.6.</span> <span class="nav-text">高阶微分方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用举例"><span class="nav-number">1.7.</span> <span class="nav-text">应用举例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微分方程"><span class="nav-number">1.</span> <span class="nav-text">微分方程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解和通解"><span class="nav-number">1.1.</span> <span class="nav-text">解和通解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶微分方程的初等解法"><span class="nav-number">1.2.</span> <span class="nav-text">一阶微分方程的初等解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量分离方程"><span class="nav-number">1.2.1.</span> <span class="nav-text">变量分离方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可以化为变量分离方程的情况"><span class="nav-number">1.2.2.</span> <span class="nav-text">可以化为变量分离方程的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-形如-frac-mathtt-d-y-mathtt-d-x-f-ax-by-c-的微分方程"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">1. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f(ax+by+c)$的微分方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-形如-frac-mathtt-d-y-mathtt-d-x-f-frac-y-x-的微分方程"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f(\frac{y}{x})$的微分方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-形如-frac-mathtt-d-y-mathtt-d-x-f-left-frac-a-1x-b-1x-c-a-2x-b-2y-c-right-的微分方程"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">3. 形如$\frac{\mathtt{d}y}{\mathtt{d}x}=f\left(\frac{a_1x+b_1x+c}{a_2x+b_2y+c}\right)$的微分方程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶线性微分方程"><span class="nav-number">1.3.</span> <span class="nav-text">一阶线性微分方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一阶齐次线性微分方程"><span class="nav-number">1.3.1.</span> <span class="nav-text">一阶齐次线性微分方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一阶非齐次线性微分方程"><span class="nav-number">1.3.2.</span> <span class="nav-text">一阶非齐次线性微分方程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全微分方程与积分因子"><span class="nav-number">1.4.</span> <span class="nav-text">全微分方程与积分因子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全微分方程"><span class="nav-number">1.4.1.</span> <span class="nav-text">全微分方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#积分因子"><span class="nav-number">1.4.2.</span> <span class="nav-text">积分因子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解的存在唯一性定理"><span class="nav-number">1.5.</span> <span class="nav-text">解的存在唯一性定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#利普希兹-Lipschitz-条件"><span class="nav-number">1.5.1.</span> <span class="nav-text">利普希兹(Lipschitz)条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#皮卡存在唯一性定理"><span class="nav-number">1.5.2.</span> <span class="nav-text">皮卡存在唯一性定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定理的证明"><span class="nav-number">1.5.3.</span> <span class="nav-text">定理的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引理1"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">引理1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引理2"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">引理2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引理3"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">引理3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引理4"><span class="nav-number">1.5.3.4.</span> <span class="nav-text">引理4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引理5"><span class="nav-number">1.5.3.5.</span> <span class="nav-text">引理5</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高阶微分方程"><span class="nav-number">1.6.</span> <span class="nav-text">高阶微分方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用举例"><span class="nav-number">1.7.</span> <span class="nav-text">应用举例</span></a></li></ol></li></ol></div>
             
 
           </div>
