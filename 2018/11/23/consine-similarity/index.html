@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下:  分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-23T12:33:59.458Z">
+<meta property="og:updated_time" content="2018-11-23T12:47:15.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="余弦相似度计算">
 <meta name="twitter:description" content="先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下:  分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近">
@@ -384,7 +384,7 @@
                 
               
 
-              <time title="创建时间：2018-11-23 19:25:29 / 修改时间：20:33:59" itemprop="dateCreated datePublished" datetime="2018-11-23T19:25:29+08:00">2018-11-23</time>
+              <time title="创建时间：2018-11-23 19:25:29 / 修改时间：20:47:15" itemprop="dateCreated datePublished" datetime="2018-11-23T19:25:29+08:00">2018-11-23</time>
             
 
             
@@ -500,6 +500,8 @@
 <p>[1, 1, 1, 1, 1, 1, 1, 1]<br>[1, 1, 1, -1, 1, 1, 1, 1]</p>
 <p>余弦值只有$0.75$了…感觉总归是有一点效果的，对于当前这种，一个位置意思相反的情况。</p>
 <p>要是冒出一个双重否定怎么办呢…也许我们需要加入一些结构分析</p>
+<p>感觉会有人用了一些考虑了不同的词的相关性的算法…而不是这样简单粗暴地分成多个维度 或者只是加一个反向</p>
+<p>不过暂时应该是够用了</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>没有实现</p>
 
       

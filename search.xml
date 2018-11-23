@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[余弦相似度计算]]></title>
     <url>%2Fblog%2F2018%2F11%2F23%2Fconsine-similarity%2F</url>
-    <content type="text"><![CDATA[先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下: 分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近 具体操作分词我们可以用jieba分词，因为它分得一定比我好 把所有的词放在集合中遍历一下即可 根据集合位置给词编码变为一个dict并且对应的位置置为数量 转向量先将分词结果替换为数字数组，数字为dict中的值。统计不同位置出现的次数，存在向量中。 计算余弦值使用如下式子计算： $$\cos(\theta)=\frac{\sum\limits_{i=1}^n(x_i\times{y_i})}{\sqrt{\sum\limits_{i=1}^n(x_i)^2}\times\sqrt{\sum\limits_{i=1}^n(y_i)^2}}$$ 其实就是点积和长度的乘积的比值。 具体影响： 如果两个句子相同的词越多，点积就会越大，相似度也会越高。如果两个句子在相同的词不变的情况下，句子长度越长，相似度则会越低。 如果动脑子想一想，确实还是有道理的，但是似乎有点太简单了一些。 举个栗子首先我们拿到两句话： 这里有一根比较长的棍子这里有一根比较短的棍子 使用jiaba分词的结果： 12[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;][&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;短&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;] (所以标点符号也算进去了) 然后我们变成这样的集合： 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;短&apos;] 然后标个号: 1234567891011&#123; &apos;这里&apos;: 0, &apos;有&apos;: 1, &apos;一根&apos;: 2, &apos;比较&apos;: 3, &apos;长&apos;: 4, &apos;的&apos;: 5, &apos;棍子&apos;: 6, &apos;。&apos;: 7, &apos;短&apos; 8&#125; 然后我们变成两个向量： [1, 1, 1, 1, 1, 1, 1, 1, 0],[1, 1, 1, 1, 0, 1, 1, 1, 1], 最后求得余弦值为$0.875$ 此时我们再掏出一个句子： 这里有一根棍子，它有点长 分个词： 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;棍子&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;, &apos;长&apos;, &apos;。&apos;] 我们用第一个句子和第二个句子来计算相似度，那么我们得到的集合是: 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;] 向量: 12[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0][1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1] 余弦值约等于$0.707$ 结果也就是说，比较和第二，第三句的相似度，第一句和第二句的相似度是比较高的。 虽然它们结构上确实是……比较接近的 但是意思显然…不太对 一个可能有效的改进假设我们有一个反义词集，里面有记录 长/短 是一对反义词，那么我们似乎可以记录一个负值： 比如在计算前两句的相似度时，我们认为长和短在同一个维度，但方向相反，我们如下的位置集合： 1234567891011&#123; &apos;这里&apos;: [0, 1], &apos;有&apos;: [1, 1], &apos;一根&apos;: [2, 1], &apos;比较&apos;: [3, 1], &apos;长&apos;: [4, 1], &apos;的&apos;: [5, 1], &apos;棍子&apos;: [6, 1], &apos;。&apos;: [7, 1], &apos;短&apos; [4, -1]&#125; 那么我们在这个情况下，计算的两个向量为： [1, 1, 1, 1, 1, 1, 1, 1][1, 1, 1, -1, 1, 1, 1, 1] 余弦值只有$0.75$了…感觉总归是有一点效果的，对于当前这种，一个位置意思相反的情况。 要是冒出一个双重否定怎么办呢…也许我们需要加入一些结构分析 代码实现没有实现]]></content>
+    <content type="text"><![CDATA[先来一段废话为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。 具体怎么算呢？ 简单一点就是如下: 分词 将所有的词放在一个集合中 根据集合位置给词编码 将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数 计算两个向量的余弦值，越大代表越接近 具体操作分词我们可以用jieba分词，因为它分得一定比我好 把所有的词放在集合中遍历一下即可 根据集合位置给词编码变为一个dict并且对应的位置置为数量 转向量先将分词结果替换为数字数组，数字为dict中的值。统计不同位置出现的次数，存在向量中。 计算余弦值使用如下式子计算： $$\cos(\theta)=\frac{\sum\limits_{i=1}^n(x_i\times{y_i})}{\sqrt{\sum\limits_{i=1}^n(x_i)^2}\times\sqrt{\sum\limits_{i=1}^n(y_i)^2}}$$ 其实就是点积和长度的乘积的比值。 具体影响： 如果两个句子相同的词越多，点积就会越大，相似度也会越高。如果两个句子在相同的词不变的情况下，句子长度越长，相似度则会越低。 如果动脑子想一想，确实还是有道理的，但是似乎有点太简单了一些。 举个栗子首先我们拿到两句话： 这里有一根比较长的棍子这里有一根比较短的棍子 使用jiaba分词的结果： 12[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;][&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;短&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;] (所以标点符号也算进去了) 然后我们变成这样的集合： 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;短&apos;] 然后标个号: 1234567891011&#123; &apos;这里&apos;: 0, &apos;有&apos;: 1, &apos;一根&apos;: 2, &apos;比较&apos;: 3, &apos;长&apos;: 4, &apos;的&apos;: 5, &apos;棍子&apos;: 6, &apos;。&apos;: 7, &apos;短&apos; 8&#125; 然后我们变成两个向量： [1, 1, 1, 1, 1, 1, 1, 1, 0],[1, 1, 1, 1, 0, 1, 1, 1, 1], 最后求得余弦值为$0.875$ 此时我们再掏出一个句子： 这里有一根棍子，它有点长 分个词： 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;棍子&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;, &apos;长&apos;, &apos;。&apos;] 我们用第一个句子和第二个句子来计算相似度，那么我们得到的集合是: 1[&apos;这里&apos;, &apos;有&apos;, &apos;一根&apos;, &apos;比较&apos;, &apos;长&apos;, &apos;的&apos;, &apos;棍子&apos;, &apos;。&apos;, &apos;，&apos;, &apos;它&apos;, &apos;有点&apos;] 向量: 12[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0][1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1] 余弦值约等于$0.707$ 结果也就是说，比较和第二，第三句的相似度，第一句和第二句的相似度是比较高的。 虽然它们结构上确实是……比较接近的 但是意思显然…不太对 一个可能有效的改进假设我们有一个反义词集，里面有记录 长/短 是一对反义词，那么我们似乎可以记录一个负值： 比如在计算前两句的相似度时，我们认为长和短在同一个维度，但方向相反，我们如下的位置集合： 1234567891011&#123; &apos;这里&apos;: [0, 1], &apos;有&apos;: [1, 1], &apos;一根&apos;: [2, 1], &apos;比较&apos;: [3, 1], &apos;长&apos;: [4, 1], &apos;的&apos;: [5, 1], &apos;棍子&apos;: [6, 1], &apos;。&apos;: [7, 1], &apos;短&apos; [4, -1]&#125; 那么我们在这个情况下，计算的两个向量为： [1, 1, 1, 1, 1, 1, 1, 1][1, 1, 1, -1, 1, 1, 1, 1] 余弦值只有$0.75$了…感觉总归是有一点效果的，对于当前这种，一个位置意思相反的情况。 要是冒出一个双重否定怎么办呢…也许我们需要加入一些结构分析 感觉会有人用了一些考虑了不同的词的相关性的算法…而不是这样简单粗暴地分成多个维度 或者只是加一个反向 不过暂时应该是够用了 代码实现没有实现]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -162,8 +162,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
@@ -212,8 +212,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
     <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序顺便学习C 并查集]]></content>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
@@ -235,8 +235,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fback-end-learning%2F</url>
     <content type="text"><![CDATA[我需要学习这些东西有时间做一个思维导图 数据库 hibernate redis 分布式 中间件 linux 网络协议 jvm 设计模式 消息队列]]></content>
       <tags>
-        <tag>后端</tag>
         <tag>学习</tag>
+        <tag>后端</tag>
       </tags>
   </entry>
   <entry>
