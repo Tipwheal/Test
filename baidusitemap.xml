@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/11/23/consine-similarity/</loc>
-    <lastmod>2018-11-23T12:47:15.672Z</lastmod>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/24/name-entities-recognition/</loc>
+    <lastmod>2018-11-24T08:48:37.476Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/21/arduino/</loc>
+    <lastmod>2018-11-24T07:27:43.014Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/24/lstm-crf/</loc>
+    <lastmod>2018-11-24T07:03:32.251Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/16/learning-py3/</loc>
+    <lastmod>2018-11-24T06:39:01.604Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
+    <lastmod>2018-11-24T06:38:37.317Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/06/draft/</loc>
-    <lastmod>2018-11-23T06:45:52.777Z</lastmod>
+    <lastmod>2018-11-24T03:08:54.561Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/23/software-process-management/</loc>
+    <lastmod>2018-11-23T16:31:30.437Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/23/consine-similarity/</loc>
+    <lastmod>2018-11-23T13:05:31.317Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/15/ordinary-differential-equation/</loc>
     <lastmod>2018-11-19T04:34:02.120Z</lastmod>
@@ -21,9 +39,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/page-rank/</loc>
     <lastmod>2018-11-13T05:53:58.574Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
-    <lastmod>2018-11-12T12:10:28.943Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/singular-value-decomposition/</loc>
     <lastmod>2018-11-06T15:57:11.598Z</lastmod>
@@ -43,14 +58,8 @@
     <loc>https://tipwheal.github.io/blog/blog/2018/10/24/springngcloud/</loc>
     <lastmod>2018-10-25T12:48:13.508Z</lastmod>
   </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/21/arduino/</loc>
-    <lastmod>2018-10-25T03:14:50.618Z</lastmod>
-  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/21/opengl/</loc>
     <lastmod>2018-10-21T12:46:25.355Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/16/learning-py3/</loc>
-    <lastmod>2018-10-21T07:11:53.629Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/trigonometric-series/</loc>
     <lastmod>2018-10-20T16:14:05.951Z</lastmod>
