@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/24/hidden-markov-model/</loc>
+    <lastmod>2018-11-25T04:02:57.373Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/24/lstm-crf/</loc>
+    <lastmod>2018-11-25T03:23:22.244Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/24/name-entities-recognition/</loc>
-    <lastmod>2018-11-24T08:48:37.476Z</lastmod>
+    <lastmod>2018-11-24T15:26:44.851Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/21/arduino/</loc>
     <lastmod>2018-11-24T07:27:43.014Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/11/24/lstm-crf/</loc>
-    <lastmod>2018-11-24T07:03:32.251Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/16/learning-py3/</loc>
     <lastmod>2018-11-24T06:39:01.604Z</lastmod>

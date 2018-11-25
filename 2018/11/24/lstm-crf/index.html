@@ -109,14 +109,14 @@
 
 
   <meta name="description" content="介绍LSTM-CRF是一个用于命名实体识别的内嵌CRF的LSTM模型。 好处呢循环神经网络解决了传统神经网络只依赖于当前输入的问题。长短时记忆网络模型解决了循环神经网络由于梯度爆炸或消失只能学习到短周期的依赖关系问题。">
-<meta name="keywords" content="神经网络,LSTM,深度学习,自然语言处理">
+<meta name="keywords" content="自然语言处理,神经网络,LSTM,深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LSTM-CRF模型">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/11/24/lstm-crf/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="介绍LSTM-CRF是一个用于命名实体识别的内嵌CRF的LSTM模型。 好处呢循环神经网络解决了传统神经网络只依赖于当前输入的问题。长短时记忆网络模型解决了循环神经网络由于梯度爆炸或消失只能学习到短周期的依赖关系问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-24T07:03:32.251Z">
+<meta property="og:updated_time" content="2018-11-25T03:23:22.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LSTM-CRF模型">
 <meta name="twitter:description" content="介绍LSTM-CRF是一个用于命名实体识别的内嵌CRF的LSTM模型。 好处呢循环神经网络解决了传统神经网络只依赖于当前输入的问题。长短时记忆网络模型解决了循环神经网络由于梯度爆炸或消失只能学习到短周期的依赖关系问题。">
@@ -384,12 +384,24 @@
                 
               
 
-              <time title="创建时间：2018-11-24 14:39:28 / 修改时间：15:03:32" itemprop="dateCreated datePublished" datetime="2018-11-24T14:39:28+08:00">2018-11-24</time>
+              <time title="创建时间：2018-11-24 14:39:28" itemprop="dateCreated datePublished" datetime="2018-11-24T14:39:28+08:00">2018-11-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-25 11:23:22" itemprop="dateModified" datetime="2018-11-25T11:23:22+08:00">2018-11-25</time>
               
             
           </span>
@@ -458,10 +470,25 @@
 <li>遗忘门$c_t$</li>
 <li>输出门$o_t$</li>
 </ul>
-<p>有下列一组计算公式</p>
-<p>$$<br>\begin{split}<br>i_t&amp;=\sigma(W_ix_t+U_ih_{t-1}+V_ic{t-1}), \\<br>f_t&amp;=\sigma(W_ix_t+U_fh_{t-1}+V_fc{t-1}), \\<br>o_t&amp;=\sigma(W_ox_t+U_oh_{t-1}+V_oc{t}), \\<br>\widetilde{c}_t&amp;=\tanh(W_cx_t+U_ch{t-1}), \\<br>c_t&amp;=f_t\odot{c}_{t-1}+i_t\odot\widetilde{c}_t, \\<br>h_t&amp;=o_t\odot\tanh(c_t)<br>\end{split}<br>$$</p>
-<p>其中，$x_t$是当前时刻的输入，$\sigma$是$\mathrm{logistic}$函数，$V_i$,$V_f$,$V_o$是对角矩阵。</p>
+<p>有下列一组计算公式，是peeholes convolutional LSTM的式子</p>
+<p>$$<br>\begin{split}<br>i_t&amp;=\sigma(W_ix_t+U_ih_{t-1}+V_ic_{t-1}), \\<br>f_t&amp;=\sigma(W_ix_t+U_fh_{t-1}+V_fc_{t-1}), \\<br>o_t&amp;=\sigma(W_ox_t+U_oh_{t-1}+V_oc_{t}), \\<br>\widetilde{c}_t&amp;=\tanh(W_cx_t+U_ch_{t-1}+b_c), \\<br>c_t&amp;=f_t\odot{c}_{t-1}+i_t\odot\widetilde{c}_t, \\<br>h_t&amp;=o_t\odot\tanh(c_t)<br>\end{split}<br>$$</p>
+<p>其中，$x_t$是当前时刻的输入，$\sigma$是$\mathrm{logistic}$函数，也就是$\mathrm{sigmoid}$(如下)，$V_i$,$V_f$,$V_o$是对角矩阵。</p>
+<p>$$<br>\sigma(x)=\frac{1}{1+e^{-x}}<br>$$</p>
+<p>$c_t$指cell在t时刻的状态，$\widetilde{c}_t$是对输入和上一时刻的状态进行处理后的值。</p>
 <p>那么$W$和$U$又是什么呢？</p>
+<p>$W$是对于输入值$x$的权重，$U$则是对于从输出返回来的输入$h$的权重。</p>
+<p>我们先看一组简单一点的LSTM式子：</p>
+<p>$$<br>\begin{split}<br>i_t&amp;=\sigma(W_ix_t+U_ih_{t-1}+b_i), \\<br>f_t&amp;=\sigma(W_ix_t+U_fh_{t-1}+b_f), \\<br>o_t&amp;=\sigma(W_ox_t+U_oh_{t-1}+b_o), \\<br>\widetilde{c}_t&amp;=\tanh(W_cx_t+U_ch_{t-1}+b_c), \\<br>c_t&amp;=f_t\odot{c}_{t-1}+i_t\odot\widetilde{c}_t, \\<br>h_t&amp;=o_t\odot\tanh(c_t)<br>\end{split}<br>$$</p>
+<p>我们可以看到输入门，遗忘门和输出门的值，都是由当前输入乘上输入权重，上一轮的输出乘上对应的权重，和一个偏置项的和，套上一层$\mathrm{sigmoid}$组成的。<br>而计算Cell状态$c$时，引入的$\widetilde{c}_t$也有类似的权重加偏置项，然后使用$\tanh$激活。<br>$c$的计算是对上一回$c$的状态和遗忘门使用madamard积，也就是将对应的位置乘起来，而我们的遗忘门经过了sigmoid之后是$(0,1)$之间的值，这么一乘就可以以一定的比例“遗忘”上一回的状态。除了遗忘之外，我们还需要将新的输入也加上，这一个项$i_t\odot\widetilde{c}_t$使用输入门和$\widetilde{c}_t$求madamard积获得。<br>最后是这一层的输出$h$则是用输出门与$c_t$求madamard积。$c_t$可以使用$\tanh$激活，也可以不使用。</p>
+<p>初始化时，$h_0$和$c_0$均为0。</p>
+<p>我们根据上面的一通分析可以描述一下$\mathrm{LSTM}$的结构:</p>
+<p>有一个Cell $c$,初始状态都是0,每一时刻的输入来自输入和自身在前一时刻的状态$c_{t-1}$经过的一些处理。</p>
+<p>其中的输入来源有实际输入和上一次的输出。他们分别乘上对应的权重后，与一个偏置项求和，使用$\tanh$激活后再经过一层输入门，就成为了输入。</p>
+<p>而自身上一次的状态则需要经过遗忘门。</p>
+<p>最终这一个时刻的输出$h_t$则是由Cell状态$c$经过输出门得到的结果，而下一时刻输入门，输出门，遗忘门包括Cell再计算输入时，都会使用到这一个$h_t$。</p>
+<p>因此这是一个循环的结构并且(如果训练得当)我们可以看出一次输出可能会受到很久以前的输入的影响，也许我应该看看为什么传统的RNN会产生梯度爆炸/消失而这个不会。</p>
+<h3 id="LSTM-CRF模型"><a href="#LSTM-CRF模型" class="headerlink" title="LSTM-CRF模型"></a>LSTM-CRF模型</h3><p>啊……哦……这里是空的。</p>
+<p>我们看完了LSTM但并不知道如何在其中嵌入一个CRF模型</p>
 
       
     </div>
@@ -482,13 +509,13 @@
       
         <div class="post-tags">
           
+            <a href="/blog/tags/自然语言处理/" rel="tag"># 自然语言处理</a>
+          
             <a href="/blog/tags/神经网络/" rel="tag"># 神经网络</a>
           
             <a href="/blog/tags/LSTM/" rel="tag"># LSTM</a>
           
             <a href="/blog/tags/深度学习/" rel="tag"># 深度学习</a>
-          
-            <a href="/blog/tags/自然语言处理/" rel="tag"># 自然语言处理</a>
           
         </div>
       
@@ -510,6 +537,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/11/24/hidden-markov-model/" rel="prev" title="神摸是隐马尔可夫模型(Hidden Markov Model)">
+                神摸是隐马尔可夫模型(Hidden Markov Model) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -583,7 +614,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -620,7 +651,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -711,7 +746,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">39</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -770,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#好处呢"><span class="nav-number">1.1.</span> <span class="nav-text">好处呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记忆单元"><span class="nav-number">1.2.</span> <span class="nav-text">记忆单元</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#好处呢"><span class="nav-number">1.1.</span> <span class="nav-text">好处呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记忆单元"><span class="nav-number">1.2.</span> <span class="nav-text">记忆单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LSTM-CRF模型"><span class="nav-number">1.3.</span> <span class="nav-text">LSTM-CRF模型</span></a></li></ol></li></ol></div>
             
 
           </div>
