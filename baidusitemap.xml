@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/28/goupi5/</loc>
+    <lastmod>2018-11-29T00:55:39.119Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/27/goupi4/</loc>
+    <lastmod>2018-11-28T12:37:52.157Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/27/goupi3/</loc>
+    <lastmod>2018-11-27T11:30:44.697Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/11/23/software-process-management/</loc>
+    <lastmod>2018-11-27T07:59:43.088Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/24/hidden-markov-model/</loc>
     <lastmod>2018-11-25T04:02:57.373Z</lastmod>
   </url>  <url>
@@ -21,9 +33,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/06/draft/</loc>
     <lastmod>2018-11-24T03:08:54.561Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/11/23/software-process-management/</loc>
-    <lastmod>2018-11-23T16:31:30.437Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/23/consine-similarity/</loc>
     <lastmod>2018-11-23T13:05:31.317Z</lastmod>
