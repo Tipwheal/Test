@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-30T09:51:33.290Z">
+<meta property="og:updated_time" content="2018-11-30T14:29:15.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="收集一些变换矩阵">
 <meta name="twitter:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-11-30 17:51:33" itemprop="dateModified" datetime="2018-11-30T17:51:33+08:00">2018-11-30</time>
+                <time title="修改时间：2018-11-30 22:29:15" itemprop="dateModified" datetime="2018-11-30T22:29:15+08:00">2018-11-30</time>
               
             
           </span>
@@ -476,11 +476,11 @@
 <p>其中：$\left(\begin{matrix}<br>a &amp; d \\<br>b &amp; e \\<br>\end{matrix}\right)$是对图形进行比例、旋转、对称、错切等变换；$\left(\begin{matrix}<br>c &amp; f \\<br>\end{matrix}\right)$是对图形进行平移变换；$\left(\begin{matrix}<br>g \\<br>h \\<br>\end{matrix}\right)$是对图形进行投影变换；$\left(\begin{matrix}<br>i<br>\end{matrix}\right)$是对图形整体做比例变换。</p>
 <h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><p>平移会用到的位置就是上述的$\left(\begin{matrix}<br>c &amp; f \\<br>\end{matrix}\right)$位置，然后其余部分按照单位矩阵补上就OK了，也就是：</p>
 <p>$$<br>\boldsymbol{p’}=\left(<br>\begin{matrix}<br>x’ &amp; y’ &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x &amp; y &amp; 1 \\<br>\end{matrix}<br>\right)\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 \\<br>T_x &amp; T_y &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x+T_x &amp; y+T_y &amp; 1<br>\end{matrix}<br>\right)<br>$$</p>
-<div id="canvas-div"><br>    <canvas id="moveCanvas" width="300px" height="200px"></canvas><br>    <div id="c1" class="canvas-top"><br>        <p>$(x+T_x, y+T_y)$</p><br>    </div><br>    <div id="c2" class="canvas-top"><br>        <p>$(x,y)$</p><br>    </div><br></div>
+<div class="canvas-div"><br>    <canvas id="moveCanvas" width="300px" height="200px"></canvas><br>    <div id="c1" class="canvas-top"><br>        <p>$(x+T_x, y+T_y)$</p><br>    </div><br>    <div id="c2" class="canvas-top"><br>        <p>$(x,y)$</p><br>    </div><br></div>
 
 
 <script>
-function main() {
+let main = () => {
     let canvas = document.querySelector("#moveCanvas");
     let ctx = canvas.getContext("2d");
 
@@ -518,9 +518,106 @@ main();
 
 <h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><p>缩放也很简单，只需要用到二维齐次变换矩阵中的$a,e$就可以了。</p>
 <p>$$<br>\boldsymbol{p’}=\left(<br>\begin{matrix}<br>x’ &amp; y’ &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x &amp; y &amp; 1 \\<br>\end{matrix}<br>\right)\left(<br>\begin{matrix}<br>S_x &amp; 0 &amp; 0 \\<br>0 &amp; S_y &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>xS_x &amp; yS_y &amp; 1<br>\end{matrix}<br>\right)<br>$$</p>
+<div class="canvas-div"><br>    <canvas id="scaleCanvas" width="300px" height="200px"></canvas><br>    <div id="c3" class="canvas-top"><br>        <p>$(xS_x, yS_y)$</p><br>    </div><br>    <div id="c4" class="canvas-top"><br>        <p>$(x,y)$</p><br>    </div><br></div>
+
+<script>
+main = () => {
+    let canvas = document.querySelector("#scaleCanvas");
+    let ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(5, 100);
+    ctx.lineTo(295, 100);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(30, 195);
+    ctx.lineTo(30, 5);
+    ctx.stroke();
+
+    ctx.setLineDash([3, 2]);
+    ctx.strokeRect(25, 85, 60, 40);
+
+    ctx.setLineDash([]);
+    ctx.strokeRect(20, 70, 120, 80);
+
+    ctx.beginPath();
+    ctx.arc(85, 85, 2, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fillStyle = "red";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(140, 70, 2, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+}
+
+main();
+</script>
+
 <h3 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h3><p>旋转时，我们假设逆时针旋转了$\theta$，很容易可以得到如下关系：</p>
 <p>（用$x’=t\sin(\alpha+\theta)$这种方式或者 比较麻烦的方式）</p>
 <p>$$<br>\boldsymbol{p’}=\left(<br>\begin{matrix}<br>x’ &amp; y’ &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x &amp; y &amp; 1 \\<br>\end{matrix}<br>\right)\left(<br>\begin{matrix}<br>\cos{\theta} &amp; \sin{\theta} &amp; 0 \\<br>-\sin{\theta} &amp; \cos{\theta} &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x\cos{\theta}-y\sin{\theta} &amp; x\sin{\theta}+y\cos{\theta} &amp; 1<br>\end{matrix}<br>\right)<br>$$</p>
+<div class="canvas-div"><br>    <canvas id="rotateCanvas" width="300px" height="200px"></canvas><br>    <div id="c5" class="canvas-top"><br>        <p>$(x\cos\theta-y\sin\theta, x\sin\theta+y\cos\theta)$</p><br>    </div><br>    <div id="c6" class="canvas-top"><br>        <p>$(x,y)$</p><br>    </div><br>    <div id="c7" class="canvas-top"><br>        <p>$\theta$</p><br>    </div><br></div>
+
+<script>
+main = () => {
+    let canvas = document.querySelector("#rotateCanvas");
+    let ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(5, 180);
+    ctx.lineTo(295, 180);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(30, 195);
+    ctx.lineTo(30, 5);
+    ctx.stroke();
+
+    ctx.setLineDash([7, 2]);
+    ctx.beginPath();
+    ctx.moveTo(30, 180);
+    ctx.lineTo(170, 125);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(30, 180);
+    ctx.lineTo(122.69, 62.78);
+    ctx.stroke();
+
+    ctx.setLineDash([3, 2]);
+    ctx.beginPath();
+    ctx.moveTo(150, 150);
+    ctx.lineTo(230, 140);
+    ctx.lineTo(170, 125);
+    ctx.lineTo(150, 150);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(118.02, 94.25);
+    ctx.lineTo(181.7, 45.66);
+    ctx.lineTo(122.69, 62.78);
+    ctx.lineTo(118.02, 94.25);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(122.69, 62.78, 2, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fillStyle = "red";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(170, 125, 2, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+}
+
+main();
+</script>
+
 <h3 id="对称"><a href="#对称" class="headerlink" title="对称"></a>对称</h3><p>首先我们会讨论一下关于坐标轴或者某些简单的直线对称的变换矩阵，然后再通过变换的组合来完成对任意直线的对称变换。</p>
 <h4 id="关于坐标轴对称"><a href="#关于坐标轴对称" class="headerlink" title="关于坐标轴对称"></a>关于坐标轴对称</h4><p>当一个图形关于$x$轴对称时，我们只需要将$y$变为原来的相反数即可，因此有以下矩阵：</p>
 <p>$$<br>\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; -1 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
@@ -550,10 +647,11 @@ main();
 <p>$$<br>\left(<br>\begin{matrix}<br>\cos{2\theta} &amp; \sin{2\theta} &amp; 0 \\<br>\sin{2\theta} &amp; -\cos{2\theta} &amp; 0 \\<br>-b\sin{2\theta} &amp; b(\cos{2\theta}+1) &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
 <p>这就是我们的对称矩阵了，其中$\theta=\arctan{k}$</p>
 <h2 id="三维图形变换"><a href="#三维图形变换" class="headerlink" title="三维图形变换"></a>三维图形变换</h2><style>
-#canvas-div {
+.canvas-div {
     position: relative;
     z-index: 1;
     margin: 0 auto;
+    padding: 0;
     width: 300px;
 }
 
@@ -567,16 +665,35 @@ main();
 }
 
 #c1 {
-    padding: 20px 0 0 130px;
+    padding: 14px 0 0 130px;
 }
 
 #c2 {
     padding: 60px 0 0 60px;
 }
 
-#canvas-div hr {
-    display none;
-    top: 20px;
+#c3 {
+    padding: 45px 0 0 110px;
+}
+
+#c4 {
+    padding: 75px 0 0 90px;
+}
+
+#c5 {
+    padding: 25px 0 0 90px;
+}
+
+#c6 {
+    padding: 95px 0 0 140px;
+}
+
+#c7 {
+    padding: 150px 0 0 50px;
+}
+
+.canvas-div br {
+    display: none;
 }
 
 </style>
@@ -741,7 +858,9 @@ main();
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
