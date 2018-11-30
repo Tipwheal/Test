@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转  二维齐次变换矩阵我们引入一个概念叫二位齐次变换矩阵，它可以用来进行二位图像的各种变换，如下： $">
+  <meta name="description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转">
 <meta name="keywords" content="图形学,矩阵,线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="收集一些变换矩阵">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/11/29/transformation-metrix/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转  二维齐次变换矩阵我们引入一个概念叫二位齐次变换矩阵，它可以用来进行二位图像的各种变换，如下： $">
+<meta property="og:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-29T16:54:09.312Z">
+<meta property="og:updated_time" content="2018-11-30T07:33:27.083Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="收集一些变换矩阵">
-<meta name="twitter:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转  二维齐次变换矩阵我们引入一个概念叫二位齐次变换矩阵，它可以用来进行二位图像的各种变换，如下： $">
+<meta name="twitter:description" content="下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。 二维图形变换显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。 常见的二维图形几何变换有：  平移 缩放 旋转">
 
 
 
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-11-30 00:54:09" itemprop="dateModified" datetime="2018-11-30T00:54:09+08:00">2018-11-30</time>
+                <time title="修改时间：2018-11-30 15:33:27" itemprop="dateModified" datetime="2018-11-30T15:33:27+08:00">2018-11-30</time>
               
             
           </span>
@@ -468,6 +468,7 @@
 <li>缩放</li>
 <li>旋转</li>
 </ul>
+<a id="more"></a>
 <h3 id="二维齐次变换矩阵"><a href="#二维齐次变换矩阵" class="headerlink" title="二维齐次变换矩阵"></a>二维齐次变换矩阵</h3><p>我们引入一个概念叫<strong>二位齐次变换矩阵</strong>，它可以用来进行二位图像的各种变换，如下：</p>
 <p>$$<br>T_{2D}=\left(<br>\begin{matrix}<br>a &amp; d &amp; g \\<br>b &amp; e &amp; h \\<br>c &amp; f &amp; i \\<br>\end{matrix}<br>\right)<br>$$</p>
 <p>我们可以从变换功能上把它分成四个部分:</p>
@@ -481,7 +482,34 @@
 <p>（用$x’=t\sin(\alpha+\theta)$这种方式或者 比较麻烦的方式）</p>
 <p>$$<br>\boldsymbol{p’}=\left(<br>\begin{matrix}<br>x’ &amp; y’ &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x &amp; y &amp; 1 \\<br>\end{matrix}<br>\right)\left(<br>\begin{matrix}<br>\cos{\theta} &amp; \sin{\theta} &amp; 0 \\<br>-\sin{\theta} &amp; \cos{\theta} &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)=\left(<br>\begin{matrix}<br>x\cos{\theta}-y\sin{\theta} &amp; x\sin{\theta}+y\cos{\theta} &amp; 1<br>\end{matrix}<br>\right)<br>$$</p>
 <h3 id="对称"><a href="#对称" class="headerlink" title="对称"></a>对称</h3><p>首先我们会讨论一下关于坐标轴或者某些简单的直线对称的变换矩阵，然后再通过变换的组合来完成对任意直线的对称变换。</p>
-
+<h4 id="关于坐标轴对称"><a href="#关于坐标轴对称" class="headerlink" title="关于坐标轴对称"></a>关于坐标轴对称</h4><p>当一个图形关于$x$轴对称时，我们只需要将$y$变为原来的相反数即可，因此有以下矩阵：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; -1 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>关于$y$对称则是：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>-1 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<h4 id="关于原点对称"><a href="#关于原点对称" class="headerlink" title="关于原点对称"></a>关于原点对称</h4><p>也就是两个坐标都取相反数：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>-1 &amp; 0 &amp; 0 \\<br>0 &amp; -1 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<h4 id="关于-y-x-或者-y-x-对称"><a href="#关于-y-x-或者-y-x-对称" class="headerlink" title="关于$y=x$或者$y=-x$对称"></a>关于$y=x$或者$y=-x$对称</h4><p>关于$y=x$对称时，实际上是将$x$和$y$对调，即$y’=x,x’=y$，因此：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>0 &amp; 1 &amp; 0 \\<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>那么如果是$y=-x$，我们有：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>0 &amp; -1 &amp; 0 \\<br>-1 &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<h4 id="关于直线-y-kx-b-对称"><a href="#关于直线-y-kx-b-对称" class="headerlink" title="关于直线$y=kx+b$对称"></a>关于直线$y=kx+b$对称</h4><p>上面提到的几个都比较容易理解…不过当对一条长得比较随意的直线对称的时候就没那么好直接写出来了。</p>
+<p>我们可以把变换分解一下。</p>
+<p>我们可以通过平移，旋转和简单的对称来组合成一个比较复杂的变化。</p>
+<p>比如这条$y=kx+b$,截距是$b$,我们可以先将点在$y$轴上挪动$-y$,然后关于$y=kx$对称,结束后再往回挪动即可。</p>
+<p>因此有：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 \\<br>0 &amp; -b &amp; 1 \\<br>\end{matrix}<br>\right)<br>\left(<br>\begin{matrix}<br>? &amp; ? &amp; 0 \\<br>? &amp; ? &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; 1 &amp; 0 \\<br>0 &amp; b &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>那么中间的一部分就是关于$y=kx$对称的矩阵，我们要如何得到它呢。</p>
+<p>$y=kx$时我们假设直线与$x$轴的夹角为$\theta$，（从$x$轴开始两个方向旋转,$\theta$的范围是$(-\frac{\pi}{2},\frac{\pi}{2})$）</p>
+<p>我们有$k=\tan{\theta}$,即$\theta=\arctan{k}$,可以知道$y=kx$是$x$轴旋转了$\theta$后得到的直线。</p>
+<p>因此我么可以先将点旋转$-\theta$,再关于$x$轴对称，最后再旋转$\theta$即可，有：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>\cos{\theta} &amp; -\sin{\theta} &amp; 0 \\<br>\sin{\theta} &amp; \cos{\theta} &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>\left(<br>\begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; -1 &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>\left(<br>\begin{matrix}<br>\cos{\theta} &amp; \sin{\theta} &amp; 0 \\<br>-\sin{\theta} &amp; \cos{\theta} &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>即</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>\cos{2\theta} &amp; \sin{2\theta} &amp; 0 \\<br>\sin{2\theta} &amp; -\cos{2\theta} &amp; 0 \\<br>0 &amp; 0 &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>是一个美美的式子呢。</p>
+<p>我们再代回刚才的$?$号矩阵，可以得到：</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>\cos{2\theta} &amp; \sin{2\theta} &amp; 0 \\<br>\sin{2\theta} &amp; -\cos{2\theta} &amp; 0 \\<br>-b\sin{2\theta} &amp; b(\cos{2\theta}+1) &amp; 1 \\<br>\end{matrix}<br>\right)<br>$$</p>
+<p>这就是我们的对称矩阵了，其中$\theta=\arctan{k}$</p>
+<h2 id="三维图形变换"><a href="#三维图形变换" class="headerlink" title="三维图形变换"></a>三维图形变换</h2>
       
     </div>
 
@@ -527,6 +555,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/11/30/webgl-lab/" rel="prev" title="WebGL测试">
+                WebGL测试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -600,7 +632,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -612,8 +644,6 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/blog/categories/index.html">
                     
-                    
-                      
                     
                       
                     
@@ -740,7 +770,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">43</span>
+                      
+                    
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -799,7 +831,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二维图形变换"><span class="nav-number">1.</span> <span class="nav-text">二维图形变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二维齐次变换矩阵"><span class="nav-number">1.1.</span> <span class="nav-text">二维齐次变换矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.2.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.4.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称"><span class="nav-number">1.5.</span> <span class="nav-text">对称</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二维图形变换"><span class="nav-number">1.</span> <span class="nav-text">二维图形变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二维齐次变换矩阵"><span class="nav-number">1.1.</span> <span class="nav-text">二维齐次变换矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.2.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.4.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称"><span class="nav-number">1.5.</span> <span class="nav-text">对称</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于坐标轴对称"><span class="nav-number">1.5.1.</span> <span class="nav-text">关于坐标轴对称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于原点对称"><span class="nav-number">1.5.2.</span> <span class="nav-text">关于原点对称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于-y-x-或者-y-x-对称"><span class="nav-number">1.5.3.</span> <span class="nav-text">关于$y=x$或者$y=-x$对称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于直线-y-kx-b-对称"><span class="nav-number">1.5.4.</span> <span class="nav-text">关于直线$y=kx+b$对称</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三维图形变换"><span class="nav-number">2.</span> <span class="nav-text">三维图形变换</span></a></li></ol></div>
             
 
           </div>
