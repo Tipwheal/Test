@@ -382,12 +382,24 @@
                 
               
 
-              <time title="创建时间：2018-11-30 14:12:57 / 修改时间：15:47:16" itemprop="dateCreated datePublished" datetime="2018-11-30T14:12:57+08:00">2018-11-30</time>
+              <time title="创建时间：2018-11-30 14:12:57" itemprop="dateCreated datePublished" datetime="2018-11-30T14:12:57+08:00">2018-11-30</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-01 10:31:23" itemprop="dateModified" datetime="2018-12-01T10:31:23+08:00">2018-12-01</time>
               
             
           </span>
@@ -442,7 +454,14 @@
 }
 </style>
 
+<script src="/blog/js/gl-matrix-min.js"></script>
+
 <script>
+const canvas = document.querySelector('#canvas');
+const gl = canvas.getContext('webgl');
+
+const mat4 = glMatrix.mat4;
+
 const vsSource = `
     attribute vec4 aVertexPosition;
 
@@ -450,41 +469,15 @@ const vsSource = `
     uniform mat4 uProjectionMatrix;
 
     void main() {
-      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+        gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
     }
-  `;
+`;
 
 const fsSource = `
     void main() {
-      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     }
-  `;
-
-function main() {
-    const canvas = document.querySelector("#canvas");
-    const gl = canvas.getContext("webgl");
-
-    if (!gl) {
-        alert("Unable to initialize WebGL. Your browser or machine may not support it.");
-        return;
-    }
-
-    gl.clearColor(0.9, 0.9, 0.9, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
-
-    const programInfo = {
-        program: shaderProgram,
-        attribLocations: {
-            vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-        },
-        uniformLocations: {
-            projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-            modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
-        },
-    };
-}
+`;
 
 function initShaderProgram(gl, vsSource, fsSource) {
     const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
@@ -502,27 +495,116 @@ function loadShader(gl, type, source) {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
-
     return shader;
 }
 
-var horizAspect = 480.0/640.0;
+const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
-function initBuffers() {
-  squareVerticesBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+        vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+    },
+    uniformLocations: {
+        projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+        modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+    },
+};
 
-  var vertices = [
-    1.0,  1.0,  0.0,
-    -1.0, 1.0,  0.0,
-    1.0,  -1.0, 0.0,
-    -1.0, -1.0, 0.0
-  ];
+function initBuffers(gl) {
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    const positions = [
+        -1.0, 1.0,
+        1.0, 1.0,
+        -1.0, -1.0,
+        1.0, -1.0,
+    ];
+
+    gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array(positions),
+        gl.STATIC_DRAW
+    );
+
+    return {
+        position: positionBuffer,
+    };
 }
 
-main();
+function drawScene(gl, programInfo, buffers) {
+    gl.clearColor(0.0, 0.0, 0.0, 1,0);
+    gl.clearDepth(1.0);
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LEQUAL);
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    const fieldOfView = 45 * Math.PI / 180;
+    const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    const zNear = 0.1;
+    const zFar = 100;
+    const projectionMatrix = mat4.create();
+
+    mat4.perspective(
+        projectionMatrix,
+        fieldOfView,
+        aspect,
+        zNear,
+        zFar
+    );
+
+    const modelViewMatrix = mat4.create();
+
+    mat4.translate(
+        modelViewMatrix,
+        modelViewMatrix,
+        [-0.0, 0.0, -6.0]
+    );
+
+    {
+        const numComponents = 2;
+        const type = gl.FLOAT;
+        const normalize = false;
+        const stride = 0;
+
+        const offset = 0;
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+        gl.vertexAttribPointer(
+            programInfo.attribLocations.vertexPosition,
+            numComponents,
+            type,
+            normalize,
+            stride,
+            offset
+        );
+        gl.enableVertexAttribArray(
+            programInfo.attribLocations.vertexPosition
+        );
+    }
+
+    gl.useProgram(programInfo.program);
+    gl.uniformMatrix4fv(
+        programInfo.uniformLocations.projectionMatrix,
+        false,
+        projectionMatrix
+    );
+    gl.uniformMatrix4fv(
+        programInfo.uniformLocations.modelViewMatrix,
+        false,
+        modelViewMatrix
+    );
+
+    {
+        const offset = 0;
+        const vertexCount = 4;
+        gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+    }
+}
+
+const buffers = initBuffers(gl);
+drawScene(gl, programInfo, buffers);
 </script>
           
         
