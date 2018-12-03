@@ -263,8 +263,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
@@ -316,8 +316,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
     <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序顺便学习C 并查集]]></content>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
@@ -339,8 +339,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fback-end-learning%2F</url>
     <content type="text"><![CDATA[我需要学习这些东西有时间做一个思维导图 数据库 hibernate redis 分布式 中间件 linux 网络协议 jvm 设计模式 消息队列]]></content>
       <tags>
-        <tag>后端</tag>
         <tag>学习</tag>
+        <tag>后端</tag>
       </tags>
   </entry>
   <entry>
