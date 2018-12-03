@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="#canvas-div {     margin: 0 auto;     width: 200px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     width: 200px;     height: 200px;     margin: 0; }      var">
+  <meta name="description" content="#canvas-div {     margin: 0 auto;     width: 250px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     margin: 0; }      var cubeRotation = 0.0;  main();  let ma">
 <meta name="keywords" content="计算机图形学,WebGL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebGL测试">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/11/30/webgl-lab/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="#canvas-div {     margin: 0 auto;     width: 200px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     width: 200px;     height: 200px;     margin: 0; }      var">
+<meta property="og:description" content="#canvas-div {     margin: 0 auto;     width: 250px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     margin: 0; }      var cubeRotation = 0.0;  main();  let ma">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-02T15:47:37.465Z">
+<meta property="og:updated_time" content="2018-12-03T06:40:37.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebGL测试">
-<meta name="twitter:description" content="#canvas-div {     margin: 0 auto;     width: 200px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     width: 200px;     height: 200px;     margin: 0; }      var">
+<meta name="twitter:description" content="#canvas-div {     margin: 0 auto;     width: 250px;     padding: 0 !important; }  #canvas-div br {     display: none; }  #canvas {     margin: 0; }      var cubeRotation = 0.0;  main();  let ma">
 
 
 
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-02 23:47:37" itemprop="dateModified" datetime="2018-12-02T23:47:37+08:00">2018-12-02</time>
+                <time title="修改时间：2018-12-03 14:40:37" itemprop="dateModified" datetime="2018-12-03T14:40:37+08:00">2018-12-03</time>
               
             
           </span>
@@ -442,12 +442,12 @@
       
 
       
-        <div id="canvas-div"><br>    <canvas id="canvas"></canvas><br></div>
+        <div id="canvas-div"><br>    <canvas id="canvas" width="250px" height="250px"></canvas><br></div>
 
 <style>
 #canvas-div {
     margin: 0 auto;
-    width: 200px;
+    width: 250px;
     padding: 0 !important;
 }
 
@@ -456,8 +456,6 @@
 }
 
 #canvas {
-    width: 200px;
-    height: 200px;
     margin: 0;
 }
 </style>
@@ -853,6 +851,10 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime) {
               modelViewMatrix,  // matrix to rotate
               cubeRotation * .7,// amount to rotate in radians
               [0, 1, 0]);       // axis to rotate around (X)
+  mat4.rotate(modelViewMatrix,  // destination matrix
+              modelViewMatrix,  // matrix to rotate
+              cubeRotation * .5,// amount to rotate in radians
+              [1, 0, 0]);       // axis to rotate around (X)            
 
   const normalMatrix = mat4.create();
   mat4.invert(normalMatrix, modelViewMatrix);
@@ -1058,6 +1060,10 @@ function loadShader(gl, type, source) {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/2018/12/03/threejs-lab/" rel="prev" title="Three.js测试">
+                Three.js测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1121,7 +1127,7 @@ function loadShader(gl, type, source) {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1263,7 +1269,9 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">44</span>
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

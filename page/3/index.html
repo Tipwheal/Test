@@ -336,6 +336,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/10/10/tcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="当然要记笔记啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/10/10/tcp/" itemprop="url">
+                  tcp中的一些细节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 19:20:14" itemprop="dateCreated datePublished" datetime="2018-10-10T19:20:14+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-18 17:04:08" itemprop="dateModified" datetime="2018-10-18T17:04:08+08:00">2018-10-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="RTT-往返时延"><a href="#RTT-往返时延" class="headerlink" title="RTT(往返时延)"></a>RTT(往返时延)</h2><p>RTT的估计和超时</p>
+<p>tcp像很多其他的协议一样，超时的时候会重发，但是如何估计往返时间和设定超时时间是一个需要考虑的问题</p>
+<h3 id="估计往返时延"><a href="#估计往返时延" class="headerlink" title="估计往返时延"></a>估计往返时延</h3><p>segment里面有SampleRTT，计算方式是一个segment发出的时间，到ack收到的时间，对于重发的segment则不进行计算</p>
+<p>显然这个值会因为网络状况产生一些波动，为了估计一个典型的RTT. TCP维护一个平均值，EstimatedRTT:</p>
+<p>$$<br>\mathtt{EstimatedRTT}=(1-\alpha)·\mathtt{EstimatedRTT}+\alpha·\mathtt{SampleRTT}<br>$$</p>
+<p>其中常用的$\alpha$值为$0.125$</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2018/10/10/tcp/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/10/10/sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1547,7 +1708,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-02 23:31:37" itemprop="dateModified" datetime="2018-12-02T23:31:37+08:00">2018-12-02</time>
+                <time title="修改时间：2018-12-03 15:46:35" itemprop="dateModified" datetime="2018-12-03T15:46:35+08:00">2018-12-03</time>
               
             
           </span>
@@ -1801,173 +1962,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/10/09/cpp-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="当然要记笔记啊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/10/09/cpp-learning/" itemprop="url">
-                  如何学习c++
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-10-09 23:28:24" itemprop="dateCreated datePublished" datetime="2018-10-09T23:28:24+08:00">2018-10-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-21 00:03:48" itemprop="dateModified" datetime="2018-10-21T00:03:48+08:00">2018-10-21</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="to-do-list"><a href="#to-do-list" class="headerlink" title="to do list"></a>to do list</h2><p>下面是我计划关注的方面</p>
-<ul>
-<li>多态和继承</li>
-<li>运算符重载</li>
-<li>常用的库</li>
-<li>函数模板和类模板</li>
-<li>元编程</li>
-<li>指针和引用</li>
-<li>IO</li>
-<li>网络编程</li>
-<li>多线程</li>
-<li>数据库</li>
-</ul>
-<h2 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h2><p>打算使用windows上的能看文件结构的编辑器+在linux上编译执行</p>
-<p>搭完了</p>
-<p>最后还是用了mingw</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2019,7 +2013,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2161,7 +2155,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">44</span>
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2749,13 +2745,13 @@
   
     
       
-    
-      
-    
-      
-    
-      
         
+      
+    
+      
+    
+      
+    
       
     
       

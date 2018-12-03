@@ -336,6 +336,221 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/12/03/threejs-lab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="当然要记笔记啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/12/03/threejs-lab/" itemprop="url">
+                  Three.js测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-03 16:20:57 / 修改时间：19:04:27" itemprop="dateCreated datePublished" datetime="2018-12-03T16:20:57+08:00">2018-12-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="three-div"><br></div>
+
+<style>
+#three-div {
+    margin: 0 auto;
+    width: 250px;
+    padding: 0 !important;
+}
+
+#three-div br {
+    display: none;
+}
+</style>
+
+<script src="/blog/js/three.js"></script>
+<script>
+let scene = new THREE.Scene();
+const height = 200;
+const width = 200;
+let camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000 );
+let renderer = new THREE.WebGLRenderer({
+    antialias: true
+});
+renderer.setSize( width, height );
+renderer.setClearColor(0xffffff);
+document.querySelector('#three-div').appendChild( renderer.domElement );
+
+//添加环境光
+{
+    var ambientLight = new THREE.AmbientLight( 0x707070 );
+    scene.add( ambientLight );
+}
+
+//添加平行光
+{
+    var directionalLight = new THREE.DirectionalLight( 0xffffff );
+    directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+    scene.add( directionalLight );
+}
+
+var axes = new THREE.AxesHelper(10);
+scene.add(axes);
+
+cube();
+
+camera.position.z = 5;
+camera.position.x = 1;
+camera.position.y = 2;
+
+renderer.render( scene, camera );
+
+function sphere() {
+    let sphereGeo = new THREE.SphereGeometry(5, 40, 40);
+    let sphereMat = new THREE.MeshLambertMaterial({
+        color:0x0000FF,
+        wireframe:false
+    });
+    let sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    sphereMesh.position.set(3, 10, -15);
+    scene.add(sphereMesh);
+}
+
+function cube() {
+    let cube = new THREE.CubeGeometry(10, 10, 10, 1, 1, 1);
+    let cubeMat = new THREE.MeshLambertMaterial({
+        color: 0xbbbbbb,
+        wireframe: false
+    });
+    let cubeMesh = new THREE.Mesh(cube, cubeMat);
+    cubeMesh.position.set(-1, 5, -30);
+    cubeMesh.rotation.y += 0.25 * Math.PI;
+    cubeMesh.rotation.z += 0.15 * Math.PI;
+
+    scene.add(cubeMesh);
+}
+
+</script>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/11/30/webgl-lab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,7 +614,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-02 23:47:37" itemprop="dateModified" datetime="2018-12-02T23:47:37+08:00">2018-12-02</time>
+                <time title="修改时间：2018-12-03 14:40:37" itemprop="dateModified" datetime="2018-12-03T14:40:37+08:00">2018-12-03</time>
               
             
           </span>
@@ -434,12 +649,12 @@
       
         
           
-            <div id="canvas-div"><br>    <canvas id="canvas"></canvas><br></div>
+            <div id="canvas-div"><br>    <canvas id="canvas" width="250px" height="250px"></canvas><br></div>
 
 <style>
 #canvas-div {
     margin: 0 auto;
-    width: 200px;
+    width: 250px;
     padding: 0 !important;
 }
 
@@ -448,8 +663,6 @@
 }
 
 #canvas {
-    width: 200px;
-    height: 200px;
     margin: 0;
 }
 </style>
@@ -845,6 +1058,10 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime) {
               modelViewMatrix,  // matrix to rotate
               cubeRotation * .7,// amount to rotate in radians
               [0, 1, 0]);       // axis to rotate around (X)
+  mat4.rotate(modelViewMatrix,  // destination matrix
+              modelViewMatrix,  // matrix to rotate
+              cubeRotation * .5,// amount to rotate in radians
+              [1, 0, 0]);       // axis to rotate around (X)            
 
   const normalMatrix = mat4.create();
   mat4.invert(normalMatrix, modelViewMatrix);
@@ -2386,177 +2603,6 @@ function loadShader(gl, type, source) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/11/23/consine-similarity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="当然要记笔记啊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/11/23/consine-similarity/" itemprop="url">
-                  余弦相似度计算
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-23 19:25:29 / 修改时间：21:05:31" itemprop="dateCreated datePublished" datetime="2018-11-23T19:25:29+08:00">2018-11-23</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="先来一段废话"><a href="#先来一段废话" class="headerlink" title="先来一段废话"></a>先来一段废话</h2><p>为了计算文本的相似度，我们需要一些算法，比如这个余弦相似度算法。</p>
-<p>具体怎么算呢？</p>
-<p>简单一点就是如下:</p>
-<ol>
-<li>分词</li>
-<li>将所有的词放在一个集合中</li>
-<li>根据集合位置给词编码</li>
-<li>将两个语句化为向量，维度为所有词的数量，每个维度的数值为这个词在此句子中出现的次数</li>
-<li>计算两个向量的余弦值，越大代表越接近</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/11/23/consine-similarity/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2608,7 +2654,7 @@ function loadShader(gl, type, source) {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2750,7 +2796,9 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">44</span>
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3340,9 +3388,9 @@ function loadShader(gl, type, source) {
       
     
       
-        
-      
     
+      
+        
       
     
       
