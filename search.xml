@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[JS的数据可视化工具收集]]></title>
+    <url>%2Fblog%2F2018%2F12%2F09%2Fvisualize-lib-js%2F</url>
+    <content type="text"><![CDATA[D3官网中文站 流程图 EchartsinfoVisCesiumHighChartsFusionChartsAnyChartamChartChart.jsChartist.jsGoogle ChartLeafletDygraphsichartsflowchart.jsflotn3-chartsEmber ChartsChartKickMeteorChartsEJS ChartuvCharts]]></content>
+      <tags>
+        <tag>可视化</tag>
+        <tag>js</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Three.js测试]]></title>
     <url>%2Fblog%2F2018%2F12%2F03%2Fthreejs-lab%2F</url>
     <content type="text"><![CDATA[总感觉可能js文件太大了 #three-div { margin: 0 auto; width: 250px; padding: 0 !important; } #three-div br { display: none; } let scene = new THREE.Scene(); const height = 200; const width = 200; let camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000 ); let renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize( width, height ); renderer.setClearColor(0xffffff); document.querySelector('#three-div').appendChild( renderer.domElement ); //添加环境光 { var ambientLight = new THREE.AmbientLight( 0x707070 ); scene.add( ambientLight ); } //添加平行光 { var directionalLight = new THREE.DirectionalLight( 0xffffff ); directionalLight.position.set( 1, 0.75, 0.5 ).normalize(); scene.add( directionalLight ); } var axes = new THREE.AxesHelper(10); scene.add(axes); cube(); camera.position.z = 5; camera.position.x = 1; camera.position.y = 2; renderer.render( scene, camera ); function sphere() { let sphereGeo = new THREE.SphereGeometry(5, 40, 40); let sphereMat = new THREE.MeshLambertMaterial({ color:0x0000FF, wireframe:false }); let sphereMesh = new THREE.Mesh(sphereGeo, sphereMat); sphereMesh.position.set(3, 10, -15); scene.add(sphereMesh); } function cube() { let cube = new THREE.CubeGeometry(10, 10, 10, 1, 1, 1); let cubeMat = new THREE.MeshLambertMaterial({ color: 0xbbbbbb, wireframe: false }); let cubeMesh = new THREE.Mesh(cube, cubeMat); cubeMesh.position.set(-1, 5, -30); cubeMesh.rotation.y += 0.25 * Math.PI; cubeMesh.rotation.z += 0.15 * Math.PI; scene.add(cubeMesh); }]]></content>
@@ -263,8 +273,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>学习</tag>
+        <tag>算法</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
@@ -283,8 +293,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>ruby</tag>
         <tag>编程</tag>
+        <tag>ruby</tag>
       </tags>
   </entry>
   <entry>
@@ -295,14 +305,14 @@
         <category>草稿</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>汉语</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[收集英语单词]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fenglish-learning%2F</url>
-    <content type="text"><![CDATA[如何扩大单词量 如何提高听力 太难了 收集一些翻到的英语词汇perpendicularadj. 垂直的，成直角的n. 垂直线，垂直面 namelyadv. 即，也就是说 coordinatevt. 使协调，使调和vi. 协调，协同adj. 同等的;带有同等性质的 regardless of不管，不顾 obscureadj. 昏暗的，朦胧的;晦涩的，不清楚的vt. 使…模糊不清n. 某种模糊的或不清楚的东西 perspectiven. 透镜，望远镜;观点，看法adj. (按照)透视画法的;透视的 distortionn. 扭曲，变形;失真，畸变 interpolationn. 篡改，添写，插补，插值 revisevt. 修订，修正，改变，复习vi. 修订，校订 permeatevt. 渗透，渗入，弥漫，遍布vi. 贯穿，感染，传播，渗入，遍及，穿透某物 photonn. 光子，光量子 strikingadj. 引人注目的，显著的v. 击，打(现在分词);敲响;报时 comprisevt. 包含，包括;由…组成 squishn. 咯吱声，果酱v. 压扁，压烂，咯吱吱地走 retentionn. 保留，记忆力，保持力，滞留，扣留，闭尿]]></content>
+    <content type="text"><![CDATA[如何扩大单词量 如何提高听力 太难了 收集一些翻到的英语词汇perpendicularadj. 垂直的，成直角的n. 垂直线，垂直面 namelyadv. 即，也就是说 coordinatevt. 使协调，使调和vi. 协调，协同adj. 同等的;带有同等性质的 regardless of不管，不顾 obscureadj. 昏暗的，朦胧的;晦涩的，不清楚的vt. 使…模糊不清n. 某种模糊的或不清楚的东西 perspectiven. 透镜，望远镜;观点，看法adj. (按照)透视画法的;透视的 distortionn. 扭曲，变形;失真，畸变 interpolationn. 篡改，添写，插补，插值 revisevt. 修订，修正，改变，复习vi. 修订，校订 permeatevt. 渗透，渗入，弥漫，遍布vi. 贯穿，感染，传播，渗入，遍及，穿透某物 photonn. 光子，光量子 strikingadj. 引人注目的，显著的v. 击，打(现在分词);敲响;报时 comprisevt. 包含，包括;由…组成 squishn. 咯吱声，果酱v. 压扁，压烂，咯吱吱地走 retentionn. 保留，记忆力，保持力，滞留，扣留，闭尿 innocentadj. 清白的,天真无邪的n. 无辜者,头脑简单的人 molen. 鼹鼠，痣，间谍，防波堤]]></content>
       <categories>
         <category>英语</category>
       </categories>
@@ -316,8 +326,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
     <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序顺便学习C 并查集]]></content>
       <tags>
-        <tag>算法</tag>
         <tag>学习</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -339,8 +349,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>编程</tag>
         <tag>Java</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
