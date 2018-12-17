@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[计算机算法笔记]]></title>
+    <url>%2Fblog%2F2018%2F12%2F16%2Fnotes-caida%2F</url>
+    <content type="text"><![CDATA[分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。 停机问题 能否判断一个任意给出的算法（或计算机程序）在给定输入的情况下是否最终停止。 阿兰·图灵建立了一个重要的否定结论是，这个问题不能用计算机程序解决。 这个问题的意思是说，我能不能用一个程序来判断任意的一个程序在某个特定的输入下是不是会终止。 这个问题的意义在哪里… 继续实际应用中大量问题都是可解决的，但是我们可能没有足够的时间或者存储空间，因此有了计算机科学中的一个分支计算复杂性。 我们可以使用复杂性的公理来证明任意一个复杂问题的存在，以及问题有没有最好的程序。 几个很有用的算法 分而治之(divide and conquer) 贪婪算法(greedy algorithms) 深度优先搜索(depth first search) 动态编程(dynamic programming) 一些约定 函数的完全类型特种指返回类型和参数类型的组合，也叫原型 过程是一个可以取名字、可以被调用的计算步骤序列（带参数） 函数是一个可以向调用者返回值的过程 私有数据的维护叫封装或信息隐藏 重载指一个方法有多个带不同参数的定义，但有相同的返回值 覆盖指子类覆盖父类的方法 组织者类指一种只是为了将多个实例域组合在一起的简单的类。 通常实现为内部类。 组织者类中只有一个copy()方法]]></content>
+      <categories>
+        <category>编程</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker的一些有趣的东西]]></title>
     <url>%2Fblog%2F2018%2F12%2F13%2Fdocker-learning%2F</url>
     <content type="text"><![CDATA[Docker命令相关创建一个网络1docker network create --subnet=172.18.0.0/16 mynetwork docker默认使用的网络是172.17.0.0/16，所以创建网络应该从内网的其他部分选取。 列出网络1docker network ls 查看镜像信息1docker inspect imageid 查看使用记录1docker history docker内网访问的问题我需要在一个容器中使用反向代理，代理其它容器的服务，此容器使用公网，其他容器只能在内网访问。 即有如下三个容器A, B, C 然后A容器暴露80端口到公网 B和C暴露各自的服务端口如8080或3000等到内网 然后在A容器中使用反向代理，代理容器B和C中的服务，使得公网可以通过访问A来访问B和C的服务 直接使用-p绑定端口到默认网络容器A: 0.0.0.0:80:80容器B: 172.17.0.1:8080:8080容器C: 172.17.0.1:8081:3000 这个方案可以使容器A可以从公网的80端口访问，而容器A可以使用127.17.0.1:8080和127.17.0.1:8081分别访问容器B和容器C。 通过这种方式我们可以使用容器A来代理所有的内网服务。 分配一个固定的ip，直接访问使用172.18.0.0/16网络，分配固定ip，并直接访问 比如容器A是 0.0.0.0:80:80容器B使用ip和端口: 172.18.0.10:8080容器C使用ip和端口: 172.18.0.11:3000 这种方式需要改变容器内应用监听的ip和port号，比较麻烦。此外没有试过在默认网络是不是也可以用。讲道理我觉得可以。 –link这个命令似乎有神奇的作用，有机会看一看 -p的原理使用iptables可以查看实际进行的操作。 Docker的笔记 Docker使用Go语言开发，对进程进行封装隔离，属于操作系统层面的虚拟化技术。比虚拟机技术更加轻便，快捷。 和虚拟机的区别 虚拟机技术在所有在虚拟机之上使用Hypervisor，然后每一个虚拟机包含了应用，库文件以及整个操作系统 Docker技术则使用Docker Engine对所有的容器进行管理，每一个容器中只有应用的库文件 Docker的好处 更高效地利用系统资源（不需要完整的操作系统） 更快的启动时间（比起虚拟机，不需要一个操作系统，所以很快） 一致的运行环境（同样的Dockerfile，不用担心换环境导致错误） 持续交付和部署（使用Dockerfile，CI/CD） 轻松迁移（保证执行环境的一致性） 更轻松的维护和扩展（什么是分层存储和镜像技术？）（有很多官方镜像可以使用） 镜像，容器和仓库镜像Docker镜像相当于一个root文件系统。Linux内核启动后会挂载root文件系统为其提供用户空间支持。 不是很懂这个 分层存储 分层存储利用了Union FS技术,docker的镜像并不是一个单一的文件，而是由一组文件组成。 镜像构建时会一层一层地构建。而在后面的层将无法改动前面的层，删除上一层的文件的操作实际上是将其标志为删除。 好处是在镜像复用或者定制时更加容易。 容器一个镜像可以有多个容器实例，就像面向对象的类和实例的关系一样。 容器可以进行的操作有： 创建 启动 停止 删除 暂停 跟虚拟机可以进行的操作很类似。 特性： 容器的实质是进程，这个进程运行于独立的命名空间 每一个容器运行时，会在镜像上面创建一层容器存储层，最佳实践推荐不要向存储层写入任何数据。 文件操作： 应该使用数据卷或者绑定宿主目录的方式对宿主进行读写，在这种操作方式下，容器消亡时数据并不会消亡。 仓库Docker Registry是一个集中存储、分发镜像的服务 一个Registry里面可以包含多个仓库(Repository),每个仓库可以包含多喝标签(tag); 每个标签对应一个镜像。 比如: ubuntu:16.04 ubuntu:latest 如果在docker pull时不指定标签，使用默认标签latest 常用的公开registry服务： Docker Hub Quay.io Google Container Registry 常见的加速器(Registry Mirror): 阿里云加速器 DaoCloud加速器 (配置方式呢) Dockerfile的操作 每一个指令，都会建立一层存储 FROM选择基础镜像，如果从空白开始则是FROM scratch 使用Go开发的应用很多会使用这种方式来制作镜像，体积更加小巧 RUN用于执行命令行命令，注意进行一个完整的操作时应该将命令行命令写在同一个RUN中，用\换行 举例如下: (摘自 https://yeasy.gitbooks.io/docker_practice/image/build.html) 1234567891011121314FROM debian:jessieRUN buildDeps='gcc libc6-dev make' \ &amp;&amp; apt-get update \ &amp;&amp; apt-get install -y $buildDeps \ &amp;&amp; wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \ &amp;&amp; mkdir -p /usr/src/redis \ &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \ &amp;&amp; make -C /usr/src/redis \ &amp;&amp; make -C /usr/src/redis install \ &amp;&amp; rm -rf /var/lib/apt/lists/* \ &amp;&amp; rm redis.tar.gz \ &amp;&amp; rm -r /usr/src/redis \ &amp;&amp; apt-get purge -y --auto-remove $buildDeps 这样可以避免出无意义的层并且增加镜像的体积(因为后面的层无法真正地删除前面的层的文件) COPYADDCMDCMD是容器启动时执行的命令，和RUN一样有两种格式： shell格式 exec格式 12CMD 命令CMD ["xxx", "arg1", "arg2"] 通常推荐使用exec格式 也可以先使用ENTRYPOINT再在CMD里面放参数列表 ENTRYPOINTENTRYPOINT主要有两个作用： 是使镜像可以像命令一样使用 应用运行前的准备工作 第一种是将原本的CMD命令用ENTRYPOINT替换 如我们构建了一个查看ip地址的镜像，其中的CMD如下: 1CMD [ "curl", "-s", "https://ip.cn" ] 当我们使用docker命令运行时，跟在镜像后面的部分会替换CMD，也就是我们不能通过在后面加上一些部分如-i来运行curl -s https://ip.cn -i，这个时候我们可以使用ENTRYPOINT。 1ENTRYPOINT [ "curl", "-s", "https://ip.cn" ] 这时候我们就可以docker run ip_check -i 这样来运行了(假设镜像叫ip_check) 第二种情况则是我们需要进行的一些初始化操作是需要根据命令行参数来决定的情况，可以在CMD里面放默认的启动参数，如果我们需要执行其他的操作，可以在命令行运行时指定参数，替换CMD中的参数。 ENVENV是用来设置环境变量的。 格式有两种： ENV &lt;key&gt; &lt;value&gt; ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt; 换行使用\ ARGVOLUMEEXPOSE EXPOSE 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务 所以它实际上并不能暴露端口。 如果EXPOSE和-P参数一起使用，则会使用随机映射的策略进行映射，这估计是EXPOSE的唯一作用。 -p 参数则用于手动指定端口映射。 格式大致如ip:宿主机port:容器port 这里的ip可以用的有0.0.0.0，localhost以及docker中的其他网络。 WORKDIR用于改变各层工作目录的位置。 也就是指明后面执行的命令的位置… 具体的命令有：RUN,CMD,ENTRYPOINT USERUSER则是指定后面的命令执行时的用户身份。 （这个用户必须是之前建立好的） HEALTHCHECKONBUILD收藏一个关于docker的gitbook: https://yeasy.gitbooks.io/docker_practice/ 操作数据]]></content>
@@ -301,8 +314,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>ruby</tag>
         <tag>编程</tag>
+        <tag>ruby</tag>
       </tags>
   </entry>
   <entry>
@@ -332,7 +345,7 @@
   <entry>
     <title><![CDATA[如何学习算法]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
-    <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序顺便学习C 并查集]]></content>
+    <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 啊 已经过去一个月了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序并查集]]></content>
       <tags>
         <tag>学习</tag>
         <tag>算法</tag>
@@ -357,8 +370,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>编程</tag>
         <tag>Java</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
