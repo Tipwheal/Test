@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-17T09:31:36.704Z">
+<meta property="og:updated_time" content="2018-12-18T07:00:00.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机算法笔记">
 <meta name="twitter:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-17 17:31:36" itemprop="dateModified" datetime="2018-12-17T17:31:36+08:00">2018-12-17</time>
+                <time title="修改时间：2018-12-18 15:00:00" itemprop="dateModified" datetime="2018-12-18T15:00:00+08:00">2018-12-18</time>
               
             
           </span>
@@ -498,7 +498,53 @@
 <h3 id="组织者类"><a href="#组织者类" class="headerlink" title="组织者类"></a>组织者类</h3><p>指一种只是为了将多个实例域组合在一起的简单的类。</p>
 <p>通常实现为内部类。</p>
 <p>组织者类中只有一个<code>copy()</code>方法</p>
-
+<h3 id="数学知识"><a href="#数学知识" class="headerlink" title="数学知识"></a>数学知识</h3><h4 id="集合的定义方法"><a href="#集合的定义方法" class="headerlink" title="集合的定义方法"></a>集合的定义方法</h4><p>集合指一堆不同的元素（通常有同样的类型），集合中的元素没有固定的顺序</p>
+<ul>
+<li>列举法</li>
+<li>描述法</li>
+</ul>
+<p>两种方式都在一对大括号中，如下</p>
+<p>$$<br>S_1=\{a, b, c\}, S_2=\{x\vert x是2的整数次幂\}, S_3=\{1,\dots,n\}<br>$$</p>
+<p><strong>集合的基</strong>指集合中的元素的数量，记为$\vert S\vert$</p>
+<h4 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h4><p>以特定顺序组合的一组元素称为序列，此外，序列中的元素可以是重复的。</p>
+<p>通常像这么表示：</p>
+<p>$$<br>(a,b,c),(b,c,a),(1,\dots,n)<br>$$</p>
+<h4 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h4><p>元组则指一个有不同类别元素的有限序列（也可以是相同的）</p>
+<p>两个集合$S$和$T$的叉积，是一个<strong>对</strong>(二元组)的集合，每个对的第一个元素来自$S$，第二个元素来自$T$:</p>
+<p>$$<br>S\times T=\{(x,y)\vert x\in S,y\in T\}<br>$$</p>
+<p>元组可以根据数量分为二元组，三元组，四元组以及更多的n元组（一个大概是不行的，但我不确定）</p>
+<p>集合的叉积迭代指类似如下的事情：</p>
+<p>$$<br>S\times T\times U=\{(x,y,z)\vert x\in S,y\in T,z\in U\}<br>$$</p>
+<h4 id="一些结论或者关系或者定义"><a href="#一些结论或者关系或者定义" class="headerlink" title="一些结论或者关系或者定义"></a>一些结论或者关系或者定义</h4><p>集合之间的关系： $\subseteq$, $\subset$, $\supseteq$, $\supset$以及其他更多的关系</p>
+<p>如果有限序列的所有元素都不同，那么我们称该序列是由同样的元素构成的有限集合的一个排列。</p>
+<p>一个有$n$个元素的集合有$n!$个排列，有$2^n$个子集(包括自身和空集)，有$c_n^k$个基为$k$的子集。</p>
+<p>$c_n^k$又称为<strong>二项式系数</strong>,计算如下：</p>
+<p>$$<br>c_n^k=\frac{n!}{(n-k)!k!}<br>$$</p>
+<h4 id="关系和函数"><a href="#关系和函数" class="headerlink" title="关系和函数"></a>关系和函数</h4><p><strong>关系</strong>是叉积的一个简单子集，可以是有限的/无限的/空集/叉积本身。</p>
+<p>如实数上的小于关系：</p>
+<p>$$<br>\{(x,y)\vert x\in R,y\in R,x\lt y\}<br>$$</p>
+<p>假设有关系$R$，符号$xRy$表示$(x,y)\in R$</p>
+<p>关系的一些属性：</p>
+<h5 id="自反性"><a href="#自反性" class="headerlink" title="自反性"></a>自反性</h5><p>对于所有$x\in S$，有$(x,x)\in R$</p>
+<h5 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h5><p>$(x,y)\in R$，则$(y,x)\in R$</p>
+<h5 id="反对称性"><a href="#反对称性" class="headerlink" title="反对称性"></a>反对称性</h5><p>$(x,y)\in R$，则$(y,x)\not\in R$</p>
+<h5 id="传递性"><a href="#传递性" class="headerlink" title="传递性"></a>传递性</h5><p>$(x,y)\in R$且$(y,z)in R$，则$(x,z)\in R$</p>
+<h5 id="全等"><a href="#全等" class="headerlink" title="全等"></a>全等</h5><p>全等关系指一个满足自反、对称和可传递的关系，记做$\equiv$(又称为等价关系)</p>
+<p>等价关系可以将底层集合划分为一组不相交的子集（也叫等价类），其中每个子集都是等价的。</p>
+<p>如果$R$是$S$的一个等价关系，我们称$R$等价于$S$</p>
+<p>许多涉及二元关系的问题可以转换为一个图上的问题，如我们可能会在后面遇到形如“任务x必须在任务y完成之后才可以开始，有固定的人来完成固定的任务，如何安排在最短时间内完成”这样的问题。</p>
+<h4 id="代数和微积分工具"><a href="#代数和微积分工具" class="headerlink" title="代数和微积分工具"></a>代数和微积分工具</h4><h5 id="Floor和Ceiling"><a href="#Floor和Ceiling" class="headerlink" title="Floor和Ceiling"></a>Floor和Ceiling</h5><p>$\lfloor{x}\rfloor$表示小于或等于$x$的最大整数，$\lceil{x}\rceil$表示大于或等于$x$的最小整数。</p>
+<h5 id="对数的注意事项"><a href="#对数的注意事项" class="headerlink" title="对数的注意事项"></a>对数的注意事项</h5><p>（一大部分的数学知识…我应该整理一些我比较不熟悉的）</p>
+<ul>
+<li>$x^{\log_by}=y^{\log_bx}$</li>
+<li>对数函数的复合： $\lg\lg(x)=\lg(\lg(x))=\lg^{(2)}(x)$</li>
+</ul>
+<p>如果$n$不是$2$的幂，则有一个整数$k$使得$2^k\lt{n}\lt2^{k+1}$</p>
+<p>此时$\lfloor{\lg{n}}\rfloor=k$且$\lceil{\lg{n}}\rceil=k+1$</p>
+<p>然后还有两个不等式：</p>
+<p>$n\le2{\lceil{n}\rceil}\le{2n}$<br>$\frac{n}{2}\le2{\lfloor}$</p>
+<h5 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h5><p><strong>基本事件</strong>：假设在给定的状况下，一个事件或试验有一个或$k$个结果，这些结果叫基本事件，记为$s_1,s_2,s_3,\dots,s_k$<br>所有基本事件的集合叫<strong>事件空间</strong>，以$U$标记。</p>
+<h5 id="级数"><a href="#级数" class="headerlink" title="级数"></a>级数</h5><h5 id="单调递增函数和凸函数"><a href="#单调递增函数和凸函数" class="headerlink" title="单调递增函数和凸函数"></a>单调递增函数和凸函数</h5><h5 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h5><h4 id="逻辑元素"><a href="#逻辑元素" class="headerlink" title="逻辑元素"></a>逻辑元素</h4>
       
     </div>
 
@@ -832,7 +878,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析算法和问题：原理和例子"><span class="nav-number">1.</span> <span class="nav-text">分析算法和问题：原理和例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法可解的"><span class="nav-number">1.1.</span> <span class="nav-text">算法可解的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停机问题"><span class="nav-number">1.3.</span> <span class="nav-text">停机问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继续"><span class="nav-number">1.4.</span> <span class="nav-text">继续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很有用的算法"><span class="nav-number">1.5.</span> <span class="nav-text">几个很有用的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些约定"><span class="nav-number">1.6.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织者类"><span class="nav-number">1.7.</span> <span class="nav-text">组织者类</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析算法和问题：原理和例子"><span class="nav-number">1.</span> <span class="nav-text">分析算法和问题：原理和例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法可解的"><span class="nav-number">1.1.</span> <span class="nav-text">算法可解的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停机问题"><span class="nav-number">1.3.</span> <span class="nav-text">停机问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继续"><span class="nav-number">1.4.</span> <span class="nav-text">继续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很有用的算法"><span class="nav-number">1.5.</span> <span class="nav-text">几个很有用的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些约定"><span class="nav-number">1.6.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织者类"><span class="nav-number">1.7.</span> <span class="nav-text">组织者类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学知识"><span class="nav-number">1.8.</span> <span class="nav-text">数学知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集合的定义方法"><span class="nav-number">1.8.1.</span> <span class="nav-text">集合的定义方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序列"><span class="nav-number">1.8.2.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">1.8.3.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些结论或者关系或者定义"><span class="nav-number">1.8.4.</span> <span class="nav-text">一些结论或者关系或者定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系和函数"><span class="nav-number">1.8.5.</span> <span class="nav-text">关系和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自反性"><span class="nav-number">1.8.5.1.</span> <span class="nav-text">自反性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称性"><span class="nav-number">1.8.5.2.</span> <span class="nav-text">对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反对称性"><span class="nav-number">1.8.5.3.</span> <span class="nav-text">反对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#传递性"><span class="nav-number">1.8.5.4.</span> <span class="nav-text">传递性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#全等"><span class="nav-number">1.8.5.5.</span> <span class="nav-text">全等</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代数和微积分工具"><span class="nav-number">1.8.6.</span> <span class="nav-text">代数和微积分工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Floor和Ceiling"><span class="nav-number">1.8.6.1.</span> <span class="nav-text">Floor和Ceiling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对数的注意事项"><span class="nav-number">1.8.6.2.</span> <span class="nav-text">对数的注意事项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#概率"><span class="nav-number">1.8.6.3.</span> <span class="nav-text">概率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#级数"><span class="nav-number">1.8.6.4.</span> <span class="nav-text">级数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单调递增函数和凸函数"><span class="nav-number">1.8.6.5.</span> <span class="nav-text">单调递增函数和凸函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#积分"><span class="nav-number">1.8.6.6.</span> <span class="nav-text">积分</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑元素"><span class="nav-number">1.8.7.</span> <span class="nav-text">逻辑元素</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1380,6 +1426,30 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
