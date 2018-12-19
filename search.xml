@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python可视化库收集]]></title>
+    <url>%2Fblog%2F2018%2F12%2F18%2Fvisualize-lib-py%2F</url>
+    <content type="text"><![CDATA[graphvizgraphviz官网 (这是一个可以使用的软件，有一套DSL可以用来画图) 实例 1234567891011121314from graphviz import Digraphdot = Digraph(comment='The Test Table', format='png')dot.node('A', 'Dot A')dot.node('B', 'Dot B')dot.node('C', 'Dot C')dot.node('D', 'Dot D')dot.edges(['AB', 'BC', 'AB'])dot.save('xxx.gv')dot.render('xxx.gv')dot.view() 实际上js中也有对应的viz.js 试一下吧 var viz = new Viz(); viz.renderSVGElement(` digraph { a [label = "Dot A", style="filled", fillcolor="green"] b [label = "Dot B"] c [label = "Dot C", style="filled", fillcolor="green"] d [label = "Dot D", shape="box",style="filled", fillcolor="green"] a -> b b -> c a -> c c -> d }`) .then(function(element) { document.querySelector('#pic').appendChild(element); }) .catch(error => { // Create a new Viz instance (@see Caveats page for more info) viz = new Viz(); // Possibly display the error console.error(error); }); 但是除了这个之外似乎并不能折叠，对于大的流程图也不能弄出缩略图？]]></content>
+      <tags>
+        <tag>可视化</tag>
+        <tag>py</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[计算机算法笔记]]></title>
     <url>%2Fblog%2F2018%2F12%2F16%2Fnotes-caida%2F</url>
-    <content type="text"><![CDATA[分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。 停机问题 能否判断一个任意给出的算法（或计算机程序）在给定输入的情况下是否最终停止。 阿兰·图灵建立了一个重要的否定结论是，这个问题不能用计算机程序解决。 这个问题的意思是说，我能不能用一个程序来判断任意的一个程序在某个特定的输入下是不是会终止。 这个问题的意义在哪里… 继续实际应用中大量问题都是可解决的，但是我们可能没有足够的时间或者存储空间，因此有了计算机科学中的一个分支计算复杂性。 我们可以使用复杂性的公理来证明任意一个复杂问题的存在，以及问题有没有最好的程序。 几个很有用的算法 分而治之(divide and conquer) 贪婪算法(greedy algorithms) 深度优先搜索(depth first search) 动态编程(dynamic programming) 一些约定 函数的完全类型特种指返回类型和参数类型的组合，也叫原型 过程是一个可以取名字、可以被调用的计算步骤序列（带参数） 函数是一个可以向调用者返回值的过程 私有数据的维护叫封装或信息隐藏 重载指一个方法有多个带不同参数的定义，但有相同的返回值 覆盖指子类覆盖父类的方法 组织者类指一种只是为了将多个实例域组合在一起的简单的类。 通常实现为内部类。 组织者类中只有一个copy()方法 数学知识集合的定义方法集合指一堆不同的元素（通常有同样的类型），集合中的元素没有固定的顺序 列举法 描述法 两种方式都在一对大括号中，如下 $$S_1=\{a, b, c\}, S_2=\{x\vert x是2的整数次幂\}, S_3=\{1,\dots,n\}$$ 集合的基指集合中的元素的数量，记为$\vert S\vert$ 序列以特定顺序组合的一组元素称为序列，此外，序列中的元素可以是重复的。 通常像这么表示： $$(a,b,c),(b,c,a),(1,\dots,n)$$ 元组元组则指一个有不同类别元素的有限序列（也可以是相同的） 两个集合$S$和$T$的叉积，是一个对(二元组)的集合，每个对的第一个元素来自$S$，第二个元素来自$T$: $$S\times T=\{(x,y)\vert x\in S,y\in T\}$$ 元组可以根据数量分为二元组，三元组，四元组以及更多的n元组（一个大概是不行的，但我不确定） 集合的叉积迭代指类似如下的事情： $$S\times T\times U=\{(x,y,z)\vert x\in S,y\in T,z\in U\}$$ 一些结论或者关系或者定义集合之间的关系： $\subseteq$, $\subset$, $\supseteq$, $\supset$以及其他更多的关系 如果有限序列的所有元素都不同，那么我们称该序列是由同样的元素构成的有限集合的一个排列。 一个有$n$个元素的集合有$n!$个排列，有$2^n$个子集(包括自身和空集)，有$c_n^k$个基为$k$的子集。 $c_n^k$又称为二项式系数,计算如下： $$c_n^k=\frac{n!}{(n-k)!k!}$$ 关系和函数关系是叉积的一个简单子集，可以是有限的/无限的/空集/叉积本身。 如实数上的小于关系： $$\{(x,y)\vert x\in R,y\in R,x\lt y\}$$ 假设有关系$R$，符号$xRy$表示$(x,y)\in R$ 关系的一些属性： 自反性对于所有$x\in S$，有$(x,x)\in R$ 对称性$(x,y)\in R$，则$(y,x)\in R$ 反对称性$(x,y)\in R$，则$(y,x)\not\in R$ 传递性$(x,y)\in R$且$(y,z)in R$，则$(x,z)\in R$ 全等全等关系指一个满足自反、对称和可传递的关系，记做$\equiv$(又称为等价关系) 等价关系可以将底层集合划分为一组不相交的子集（也叫等价类），其中每个子集都是等价的。 如果$R$是$S$的一个等价关系，我们称$R$等价于$S$ 许多涉及二元关系的问题可以转换为一个图上的问题，如我们可能会在后面遇到形如“任务x必须在任务y完成之后才可以开始，有固定的人来完成固定的任务，如何安排在最短时间内完成”这样的问题。 代数和微积分工具Floor和Ceiling$\lfloor{x}\rfloor$表示小于或等于$x$的最大整数，$\lceil{x}\rceil$表示大于或等于$x$的最小整数。 对数的注意事项（一大部分的数学知识…我应该整理一些我比较不熟悉的） $x^{\log_by}=y^{\log_bx}$ 对数函数的复合： $\lg\lg(x)=\lg(\lg(x))=\lg^{(2)}(x)$ 如果$n$不是$2$的幂，则有一个整数$k$使得$2^k\lt{n}\lt2^{k+1}$ 此时$\lfloor{\lg{n}}\rfloor=k$且$\lceil{\lg{n}}\rceil=k+1$ 然后还有两个不等式： $n\le2{\lceil{n}\rceil}\le{2n}$$\frac{n}{2}\le2{\lfloor}$ 概率基本事件：假设在给定的状况下，一个事件或试验有一个或$k$个结果，这些结果叫基本事件，记为$s_1,s_2,s_3,\dots,s_k$所有基本事件的集合叫事件空间，以$U$标记。 级数单调递增函数和凸函数积分逻辑元素]]></content>
+    <content type="text"><![CDATA[分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。 停机问题 能否判断一个任意给出的算法（或计算机程序）在给定输入的情况下是否最终停止。 阿兰·图灵建立了一个重要的否定结论是，这个问题不能用计算机程序解决。 这个问题的意思是说，我能不能用一个程序来判断任意的一个程序在某个特定的输入下是不是会终止。 这个问题的意义在哪里… 继续实际应用中大量问题都是可解决的，但是我们可能没有足够的时间或者存储空间，因此有了计算机科学中的一个分支计算复杂性。 我们可以使用复杂性的公理来证明任意一个复杂问题的存在，以及问题有没有最好的程序。 几个很有用的算法 分而治之(divide and conquer) 贪婪算法(greedy algorithms) 深度优先搜索(depth first search) 动态编程(dynamic programming) 一些约定 函数的完全类型特种指返回类型和参数类型的组合，也叫原型 过程是一个可以取名字、可以被调用的计算步骤序列（带参数） 函数是一个可以向调用者返回值的过程 私有数据的维护叫封装或信息隐藏 重载指一个方法有多个带不同参数的定义，但有相同的返回值 覆盖指子类覆盖父类的方法 组织者类指一种只是为了将多个实例域组合在一起的简单的类。 通常实现为内部类。 组织者类中只有一个copy()方法 数学知识集合的定义方法集合指一堆不同的元素（通常有同样的类型），集合中的元素没有固定的顺序 列举法 描述法 两种方式都在一对大括号中，如下 $$S_1=\{a, b, c\}, S_2=\{x\vert x是2的整数次幂\}, S_3=\{1,\dots,n\}$$ 集合的基指集合中的元素的数量，记为$\vert S\vert$ 序列以特定顺序组合的一组元素称为序列，此外，序列中的元素可以是重复的。 通常像这么表示： $$(a,b,c),(b,c,a),(1,\dots,n)$$ 元组元组则指一个有不同类别元素的有限序列（也可以是相同的） 两个集合$S$和$T$的叉积，是一个对(二元组)的集合，每个对的第一个元素来自$S$，第二个元素来自$T$: $$S\times T=\{(x,y)\vert x\in S,y\in T\}$$ 元组可以根据数量分为二元组，三元组，四元组以及更多的n元组（一个大概是不行的，但我不确定） 集合的叉积迭代指类似如下的事情： $$S\times T\times U=\{(x,y,z)\vert x\in S,y\in T,z\in U\}$$ 一些结论或者关系或者定义集合之间的关系： $\subseteq$, $\subset$, $\supseteq$, $\supset$以及其他更多的关系 如果有限序列的所有元素都不同，那么我们称该序列是由同样的元素构成的有限集合的一个排列。 一个有$n$个元素的集合有$n!$个排列，有$2^n$个子集(包括自身和空集)，有$c_n^k$个基为$k$的子集。 $c_n^k$又称为二项式系数,计算如下： $$c_n^k=\frac{n!}{(n-k)!k!}$$ 关系和函数关系是叉积的一个简单子集，可以是有限的/无限的/空集/叉积本身。 如实数上的小于关系： $$\{(x,y)\vert x\in R,y\in R,x\lt y\}$$ 假设有关系$R$，符号$xRy$表示$(x,y)\in R$ 关系的一些属性： 自反性对于所有$x\in S$，有$(x,x)\in R$ 对称性$(x,y)\in R$，则$(y,x)\in R$ 反对称性$(x,y)\in R$，则$(y,x)\not\in R$ 传递性$(x,y)\in R$且$(y,z)in R$，则$(x,z)\in R$ 全等全等关系指一个满足自反、对称和可传递的关系，记做$\equiv$(又称为等价关系) 等价关系可以将底层集合划分为一组不相交的子集（也叫等价类），其中每个子集都是等价的。 如果$R$是$S$的一个等价关系，我们称$R$等价于$S$ 许多涉及二元关系的问题可以转换为一个图上的问题，如我们可能会在后面遇到形如“任务x必须在任务y完成之后才可以开始，有固定的人来完成固定的任务，如何安排在最短时间内完成”这样的问题。 代数和微积分工具Floor和Ceiling$\lfloor{x}\rfloor$表示小于或等于$x$的最大整数，$\lceil{x}\rceil$表示大于或等于$x$的最小整数。 对数的注意事项（一大部分的数学知识…我应该整理一些我比较不熟悉的） $x^{\log_by}=y^{\log_bx}$ 对数函数的复合： $\lg\lg(x)=\lg(\lg(x))=\lg^{(2)}(x)$ 如果$n$不是$2$的幂，则有一个整数$k$使得$2^k\lt{n}\lt2^{k+1}$ 此时$\lfloor{\lg{n}}\rfloor=k$且$\lceil{\lg{n}}\rceil=k+1$ 然后还有两个不等式： $n\le2{\lceil{n}\rceil}\le{2n}$$\frac{n}{2}\le2{\lfloor{n}\rfloor}\le{n}$ 概率基本事件：假设在给定的状况下，一个事件或试验有一个或$k$个结果，这些结果叫基本事件，记为$s_1,s_2,s_3,\dots,s_k$所有基本事件的集合叫事件空间，以$U$标记。 级数单调递增函数和凸函数积分逻辑元素]]></content>
       <categories>
         <category>编程</category>
         <category>算法</category>
@@ -34,7 +44,7 @@
   <entry>
     <title><![CDATA[Three.js测试]]></title>
     <url>%2Fblog%2F2018%2F12%2F03%2Fthreejs-lab%2F</url>
-    <content type="text"><![CDATA[总感觉可能js文件太大了 #three-div { margin: 0 auto; width: 250px; padding: 0 !important; } #three-div br { display: none; } let scene = new THREE.Scene(); const height = 200; const width = 200; let camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000 ); let renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize( width, height ); renderer.setClearColor(0xffffff); document.querySelector('#three-div').appendChild( renderer.domElement ); //添加环境光 { var ambientLight = new THREE.AmbientLight( 0x707070 ); scene.add( ambientLight ); } //添加平行光 { var directionalLight = new THREE.DirectionalLight( 0xffffff ); directionalLight.position.set( 1, 0.75, 0.5 ).normalize(); scene.add( directionalLight ); } var axes = new THREE.AxesHelper(10); scene.add(axes); cube(); camera.position.z = 5; camera.position.x = 1; camera.position.y = 2; renderer.render( scene, camera ); function sphere() { let sphereGeo = new THREE.SphereGeometry(5, 40, 40); let sphereMat = new THREE.MeshLambertMaterial({ color:0x0000FF, wireframe:false }); let sphereMesh = new THREE.Mesh(sphereGeo, sphereMat); sphereMesh.position.set(3, 10, -15); scene.add(sphereMesh); } function cube() { let cube = new THREE.CubeGeometry(10, 10, 10, 1, 1, 1); let cubeMat = new THREE.MeshLambertMaterial({ color: 0xbbbbbb, wireframe: false }); let cubeMesh = new THREE.Mesh(cube, cubeMat); cubeMesh.position.set(-1, 5, -30); cubeMesh.rotation.y += 0.25 * Math.PI; cubeMesh.rotation.z += 0.15 * Math.PI; scene.add(cubeMesh); }]]></content>
+    <content type="text"><![CDATA[#three-div { margin: 0 auto; width: 250px; padding: 0 !important; } #three-div br { display: none; } let scene = new THREE.Scene(); const height = 200; const width = 200; let camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000 ); let renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize( width, height ); renderer.setClearColor(0xffffff); document.querySelector('#three-div').appendChild( renderer.domElement ); //添加环境光 { var ambientLight = new THREE.AmbientLight( 0x707070 ); scene.add( ambientLight ); } //添加平行光 { var directionalLight = new THREE.DirectionalLight( 0xffffff ); directionalLight.position.set( 1, 0.75, 0.5 ).normalize(); scene.add( directionalLight ); } var axes = new THREE.AxesHelper(10); scene.add(axes); cube(); camera.position.z = 5; camera.position.x = 1; camera.position.y = 2; renderer.render( scene, camera ); function sphere() { let sphereGeo = new THREE.SphereGeometry(5, 40, 40); let sphereMat = new THREE.MeshLambertMaterial({ color:0x0000FF, wireframe:false }); let sphereMesh = new THREE.Mesh(sphereGeo, sphereMat); sphereMesh.position.set(3, 10, -15); scene.add(sphereMesh); } function cube() { let cube = new THREE.CubeGeometry(10, 10, 10, 1, 1, 1); let cubeMat = new THREE.MeshLambertMaterial({ color: 0xbbbbbb, wireframe: false }); let cubeMesh = new THREE.Mesh(cube, cubeMat); cubeMesh.position.set(-1, 5, -30); cubeMesh.rotation.y += 0.25 * Math.PI; cubeMesh.rotation.z += 0.15 * Math.PI; scene.add(cubeMesh); }]]></content>
       <tags>
         <tag>玩儿</tag>
       </tags>
@@ -59,30 +69,6 @@
         <tag>图形学</tag>
         <tag>矩阵</tag>
         <tag>线性代数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[软件过程管理瞎复习中]]></title>
-    <url>%2Fblog%2F2018%2F11%2F28%2Fgoupi5%2F</url>
-    <content type="text"><![CDATA[假装没有东西 质量评价的方法我们可以通过实施度量和分析活动来进行质量评价 度量元 度量时间 度量缺陷 度量规模 CMM和CMMI他们是干嘛的呢 CMMCapability Maturity Model, 能力成熟度模型 五个等级 Initial 原始级别 Repeatable 可重复以前的主要经验 Defined 已定义级 Managed 已管理级 Optimizing 优化级 CMMICapability Maturity Model Integration, 能力成熟度模型集成 CMMI是一个过程改进的模型，不是开发模型 五个等级 Initial 原始级别 Managed 已经管理 Defined 已经定义 Quantitively Managed 定量管理 Optimizing 持续优化 A/FRA/FR是质检过失比，即质检质量成本/过失质量成本，用来测量在第一次编译前花在查找缺陷上的时间的相对值。 可以用复查时间/(编译+测试)时间来计算。 一些值当A/FR&lt;1时，程序测试一般会发现很多错误。当A/FR&gt;2时，过程产生无缺陷的可能性更大。 PQIPQI是5个数据的乘积 设计质量：设计的时间应该大于编码的时间 设计评审质量：设计评审的时间应该大于设计时间的50% 代码评审质量：代码评审时间应该大于编码时间的50% 代码质量：代码的编译缺陷密度应当小于10个/千行 程序质量：代码单元测试缺陷密度应当小于5个/千行 PQI越大，质量越高 Review Rate在PSP实践中，代码评审速度小于200LOC/小时，文档评审速度小于4Page/小时。 DRL 缺陷消除效率比缺陷消除效率比度量的是不同缺陷消除手段消除缺陷的效率。 计算方式是以某个测试阶段，一般是单元测试阶段，每小时发现的缺陷数为基础，其他阶段每小时发现的缺陷数与该测试阶段每小时发现的缺陷数的比值就是DRL。 YieldYield也是一个质量指标。 Yield用以度量每个阶段在消除缺陷方面的效率。 Phase Yield是某阶段发现的缺陷个数/(某阶段注入的缺陷个数+进入该阶段前遗留的缺陷个数)的百分比。 Process Yield是第一次编译前发现的缺陷个数/第一次编译前注入的缺陷个数。 PSP的质量策略 用缺陷管理来替代质量管理 高质量产品也就意味着要求组成软件产品的各个组件基本无缺陷 各个组件的高质量是通过高质量评审来实现的 GQM(Goal Question Measure)一个完整的GQM过程 先期调研 制定GQM目标 产生GQM计划 产生测量计划 收集整理数据 数据分析 打包 最能体现GQM思想的步骤 制定GQM目标 产生GQM计划 三个层 概念层(Goal) 操作层(Question) 量化层(Measure) 概念层目标是为某个特定对象定义的。这里的对象是指软件产品、软件过程以及相关的资源等。 操作层刻画上述目标是否达成或者达成的进展的模型，使用一系列问题来定义所研究的对象。 量化层试图以量化的方式回答上述操作层识别出来的问题。 产品组建集成策略 大爆炸 逐一添加 集簇集成 扁平化集成 大爆炸将所有已经完成的组件放在一起，进行一次集成 优点需要的测试用例最少 缺点需要待集成的组件具有较高的质量 逐一添加一次添加一个组件的集成 优点很容易定位缺陷的位置 缺点可能需要最多的测试用例 集簇集成把功能相关联的组件优先进行集成，形成可以工作的组件。 优点可以尽早获得可以工作的组件，有利于其他组件测试工作的开展 缺点过于关注个别组件，缺乏系统的整体观，不能尽早发现系统层面的缺陷 扁平化集成要求尽快构建一个可以工作的扁平化系统。优先集成高层的部件，然后逐步将各个组件、模块的真正实现加入系统。 优点有系统的整体观 缺点需要打大量的桩，提供伪实现。这种方式往往不能覆盖整个系统应该处理的多种状态。 PROBE估算流程概要设计 代理识别和代理规模 估算并调整程序规模 估算并调整资源 计算预测区间 计算预测区间 不好背啊 项目计划框架 客户需求 定义需求 概要设计 规模估算 资源估算 日程计划 开发产品 交付产品 规模历史数据 生产效率历史数据 团队资源水平 规模、资源、日程数据收集 过程分析 跟踪报告 管理层 质量保证活动 个人评审 团队评审 单元测试 集成测试 系统测试 验收测试 自主型团队含义软件工程师所从事的工作一般称之为复杂的知识工作。在这种性质的工作中，实现软件工程师自我管理往往可以获得最好的工作效率和质量水平。如果整个团队的所有成员都实现了自我管理，也就形成了所谓的自主团队。 特点 自行定义项目的目标 自行决定团队组成形式以及成员的角色 自行决定项目的开发策略 自行定义项目的开发过程 自行制定项目的开发计划 自行度量、管理和控制项目工作 必要性自主团队可以形成“胶冻状团队”。在这样的团队中存在一种神奇的力量，这种神奇力量弥漫于该团队的所有工作。团队成员互相支持，更为重要的是，团队成员在任何时刻都知道应该以怎样的方式帮助别人；团队成员相互信任，有强烈的归属感；团队在适当的时候会聚集在一起，研究现状，讨论策略。 不同人的观点和贡献Shewhart 质量改进的奠基人 提出过程控制概念 提出Plan-Do-See的概念，戴明将其发展为PDCA Deming 质量改进，提出质量改进的思想，被日本工业界采用 提出PCDA循环，(Plan, Do, Check, Action) 提出十四点原则 Juran 编写《质量控制手册》，被称为质量控制科学的圣经 奠定全面质量管理TQM的理论基础和基本方法做出了卓越的贡献，提出了Juran质量螺旋 Crosby 提出了零缺陷的概念，即第一次就把事情做对 发展质量成熟度的量化 Humphrey 将上述理论引入软件过程 提出了CMM软件能力成熟度模型 敏捷方法的特征精益精益生产，是衍生自丰田生产方式的一种管理哲学。 基本思想Just In Time 特征 追求零库存 追求快速反应，即快速应对市场的变化 企业内外环境的和谐统一 人本主义 库存是祸根 敏捷开发主要体现小周期迭代式持续交付 价值观 小周期迭代 快速响应变更 价值交付 自动化 敏捷开发宣言的4个简单的价值观 个体和交互 胜过 过程和工具 可以工作的软件 胜过 面面俱到的文档 客户合作 胜过 合同谈判 响应变化 胜过 遵循计划 IDEAL五个阶段 Initializing,开始 Diagonizing,诊断、评价 Establishing,建立 Acting,执行 Leveraging,调整]]></content>
-      <tags>
-        <tag>呵呵</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[软件过程与管理Part4 PSP]]></title>
-    <url>%2Fblog%2F2018%2F11%2F27%2Fgoupi4%2F</url>
-    <content type="text"><![CDATA[假装没有东西 PSP 个人软件过程 PSP简介 流程 度量 PROBE估算方法讨论 PSP中的质量管理 PSP的渊源和作用 过程改进运动 TQM Humphrey早期工作 PSP/TSP 百度归来： 软件过程改进叫SPI(Software Process Improvement)TQM是Total Quality Management, 全面质量管理Watts Humphrey 1986年在软件过程中采用Crosby的成熟度量化，加入成熟度等级的概念。而Phil Crosby是在1980年**了发展质量成熟度的量化。Personal Software Process和Team Software Process。 软件过程改进 软件过程改进，就是在软件过程工程中为了更有效地达到优化软件过程的目的同时改善或改变其软件过程的一系列活动。 PSP的作用 个人级管理实践和过程估算和计划 承诺和拒绝承诺 理解和改进 工业水准的过程和规范 客观决策的数据 什么是PSPPSP的过程度量GQM是什么呢Goal, Question, Metric 但我不知道是干什么的 PSP基本度项 规模 时间 缺陷 日程(TSP) PSP的阶段PSP阶段是说我们用PSP开发的时候把我们的过程分成了几个阶段，如下： 策划 设计 编码 编译 单元测试 总结 万一我不需要编译呢 PSP中的日志时间日志时间日志需要记录一些东西 序号 所属阶段 开始时间 结束时间 中断时间 净时间 备注信息 缺陷日志 序号 发现日期 注入阶段 消除阶段 消除时间 关联缺陷 简要描述 规模度量的困境 精确的度量方式往往不便于早期规划 有助于早期规划的度量往往难以产生精确度量结果 Line of Code VS Function Point PROBE的作用 PROBE即Proxy Based Estimation 三种历史数据的处理方式 简单方法 正态分布 对数正态分布 简单方法基本思想是： 将每个方法的代码行数进行排序 选择最小值作为VS 选择最大值作为VL 选择中值作为M 选择VS与M的均值作为S 选择VL与M的均值作为L 正态分布均值作为$M$，所有数据的标准差为$\sigma$,有： $$\begin{split}S&amp;=M-\sigma \\VS&amp;=M-2\sigma \\L&amp;=M+\sigma \\VL&amp;=M+2\sigma \\\end{split}$$ 对数正态分布以$e$为底计算所有数据的自然对数，然后按照正态分布中的处理方式处理。 三种方法的对比 简单方法计算简单，但是不稳定 正态分布法相对稳定，在历史数据基本符合正态分布的情况下，可以给出非常好的相对大小矩阵 对数正态分布法更加符合人们对于程序的规模的直观感觉 相关性相关性描述的是两组变化的数据之间相互关联的程度。 在PSP中，为了确保估算质量，对于历史数据的相关性要求$r\le{0.7}$ $$r_{x,y}=\frac{n\left(\sum\limits_{i=1}^nx_iy_i\right)-\left(\sum\limits_{i=1}^nx_i\right)\left(\sum\limits_{i-1}^ny_i\right)}{\sqrt{\left[n\left(\sum\limits_{i=1}^nx_i^2\right)-\left(\sum\limits_{i=1}^nx_i\right)^2\right]\left[n\left(\sum\limits_{i=1}^ny_i^2\right)-\left(\sum\limits_{i=1}^ny_i\right)^2\right]}}$$ 显著性显著性描述的是两组数据的相关关系出现的偶然性，显著性越小越好。 在PSP中，要求显著性$s\le{0.05}$ PSP的不同级别PSP0 基本过程 时间日志 缺陷日志 缺陷类型标准 PSP0.1 编码规范 代码行统计规范 过程改进提案 PSP1 PROBE计算 测试报告 PSP1.1 任务计划 日程计划 PSP2 代码复查 设计复查 PSP2.1 设计模板 TSP(PSP3.0) 小组开发 通用计划框架客户需求-&gt;定义需求-&gt;概要设计-&gt;规模估算-&gt;资源估算-&gt;日程计划-&gt;开发产品-&gt;交付产品-&gt;回到客户需求 这是一个圈圈。除此之外还要干不少事情。 算了不会画图]]></content>
-      <tags>
-        <tag>呵呵</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[软件过程与管理part3]]></title>
-    <url>%2Fblog%2F2018%2F11%2F27%2Fgoupi3%2F</url>
-    <content type="text"><![CDATA[假装没有东西 软件过程的历史演变和经典工作当前软件发展现状软件应用的典型特征 进一步服务化和网络化 用户需求多样性进一步凸显 软件产品和服务的地位变化 错综复杂的部署环境 近乎苛刻的用户期望 多： 功能丰富 快： 快速使用，及时更新 好： 稳定，可靠 省： 用户获得的成本低，最好免费 软件开发的典型特征 空前强大的开发和部署环境————XaaS IaaS PaaS SaaS,FaaS 盛行共享文化 潜在支撑获得了长足进步（AI, Bigdata, Cloud） 典型DevOps实践和方法 方法论基础是敏捷软件开发、精益思想以及看板Kanban方法 以领域驱动设计为指导的微服务架构方式 大量虚拟化技术的使用 一切皆服务XaaS(X as a service)的理念指导 构建了强大的工具链，支持高水平自动化]]></content>
-      <tags>
-        <tag>呵呵</tag>
       </tags>
   </entry>
   <entry>
@@ -122,14 +108,6 @@
       <tags>
         <tag>自然语言处理</tag>
         <tag>解决方案</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[假装复习软件过程管理]]></title>
-    <url>%2Fblog%2F2018%2F11%2F23%2Fsoftware-process-management%2F</url>
-    <content type="text"><![CDATA[下面是一堆垃圾内容 常见词汇和术语 软件项目管理 软件生命周期 软件过程 软件过程管理 敏捷软件开发 CMM 瀑布模型 什么是软件开发软件开发的本质困难 复杂性 不可见性 可变性 一致性 这些都是啥 课程目标 理解项目管理的基本概念，掌握项目管理的常用方法。例如估算和计划跟踪，配置管理，风险管理等。 掌握产品质量和过程质量的基本概念，理解通过过程质量管理来保障最终产品质量或服务质量的手段。 掌握软件过程的基本概念，了解常用软件过程方法。理解进行个人级、小组级和组织级软件过程的评价与改进方法。 面临复杂项目的时候，能够选择适用的软件过程，对其进行合理组合和裁剪，并在此基础上合理组织和管理项目开发，达到预先设定的质量要求。 内容安排 概述 基本概念 软件过程的历史演变和经典工作 软件开发和应用特征驱动 当前挑战和未来 不同阶段的经典（瀑布、CMM、敏捷） 技术热点ABC和DevOps 后面的东西 PSP/TSP 敏捷方法 XP、SCRUM DevOps CMM/CMMI 过程组合和裁剪 关键实践讨论 估算、计划和跟踪 质量管理 风险管理 这个内容安排 很乱 很垃圾 教材和参考书 《DevOps原理、方法与实践》机械工业出版社 《软件过程与管理》机械工业出版社 概述软件工程的核心问题软件工程的管理视角成功是否可以复制？ 软件工程的技术视角问题是否可以解决得更好？ 软件项目管理概念管理的三大关键要素 目标 状态 纠偏 软件项目管理 典型的三大目标： 成本、质量、工期 软件项目管理是应用方法、工具、技术以及人员能力来完成软件项目，实现项目目标的过程。 估算、计划、跟踪、风险管理、范围管理、人员管理、沟通管理，等等 软件项目管理的管理视角成功是否可以复制？ 软件过程 软件过程是为了实现一个或者多个事先定义的目标而建立起来的一组实践的集合 这组实践之间往往有一定的先后顺序，作为一个整体来实现事先定义的一个或多个目标。 生命周期模型 对软件过程的一种人为划分 广义软件过程理论基石：软件产品和服务的质量，很大程度上取决于生产和维护该软件或者服务的过程的质量。 广义软件过程包括技术、人员以及狭义过程 广义软件过程的同义词：软件开发方法、软件开发过程 包含以下内容： 净室Cleanroom方法、极限编程方法、SCRUM方法、Gate方法 而更一般的，敏捷软件过程/方法、轻量型过程/方法以及重型过程/方法等描述也是恰当的 生命周期模型与软件过程区别和联系 生命周期模型是对一个软件开发过程的人为划分 生命周期模型是软件开发过程的主框架，是对软件开发过程的一种粗粒度划分 生命周期模型往往不包括技术实践 典型的生命周期模型 瀑布模型、迭代式模型、增量模型、螺旋模型、原型法等等 软件过程管理 管理对象是软件过程 管理的目的是为了让软件过程在开发效率、质量等方面有着更好性能绩效（preformance） 软件项目管理： 产品生产管理软件过程管理： 流水线的设计、建设、维护、优化以及升级改造 软件过程管理与软件过程改进两者意思接近 软件过程管理参考模型CMM/CMMI，SPICE等 软件过程改进参考模型PDCA，IDEAL 此处需要一张图 戴明的PCDA循环示意图 思考问题n 是否正确 软件过程管理是软件项目管理应该要实现目标。 在公司导入敏捷过程是我们今年过程改进的主要目标。 XP和CMM是对立的两种软件开发方法 CMM不适合当今互联网环境的项目管理需求 PCDA和IDEAL不适合在敏捷环境中使用 不同的软件开发过程应该使用不同的生命周期模型。反之呢 什么狗屁问题 软件过程的历史演变和经典工作（一）再读《没有银弹》这是一本书，好像讲了不错的东西 软件开发有很多困难，但本质难题是 不可见性 复杂性 可变性 一致性 进一步分析 三个本质难题因项目而异(哪三个) 四大本质难题相互促进 本质难题变化带动软件方法（过程）演变 软件发展三大阶段 软硬件一体化阶段（50年代~70年代） 软件完全依附于硬件 软件作坊 软件成为独立的产品（70年代~90年代） 网络化和服务化（90年代中期迄今） 软件完全依附于硬件软件应用典型特征 软件支持硬件完成计算任务 功能单一 复杂度有限 几乎不需要需求变更 软件开发典型特征 硬件太贵 团队以硬件工程师和数学家为主 典型软件过程和实践PPT很乱，存一些名词自己找吧。 SAGE Mesure twice, cut once. Code and fix. 软件作坊软件应用典型特征： 功能简单 规模小 软件开发典型特征 很多非专业领域的人员涌入软件开发领域 高级程序语言出现 质疑权威文化盛行 软件危机和软件工程“Code and fix”不适合大型软件项目开发。 软件成为独立产品软件应用特征 摆脱了硬件束缚(OS) 功能强大 规模和复杂度剧增 个人电脑出现-&gt;普通人成为软件用户 需求多变 兼容性要求 来自市场的压力 典型软件过程和实践 方法之一：形式化方法 方法之二：结构化程序设计和瀑布模型 （瀑布模型？） 那他们有什么问题和不足呢(效率和质量) 形式化在扩展性和可用性方面存在不足 瀑布模型成为一个重文档，慢节奏的过程 成熟度模型这个东西有五个等级： Level1: Initial Level2: Managed Level3: Defined Level4: Quantitatively Managed Level5: Optimizing 一些讨论 CMMI是过程改进模型而非软件过程或者软件过程模型 CMMI不是过程优劣的标准，也不适合用作公司之间的能力比较 CMMI VS. Agile是一个伪命题 网络化和服务化 软件应用特征 功能更复杂，规模更大 用户数量急剧增加（这会带来什么问题？） 快速演化和需求不确定 分发方式的变化（SaaS） 典型软件过程和实践迭代式： 大型软件系统的开发过程也是一个逐步学习和交流的过程，软件系统的交付不是一次完成，而是通过多个迭代周期，逐步来完成交付。 雪鸟会议和敏捷宣言 个体和互动胜过流程和工具 可以工作的软件胜过详尽的文档 客户合作胜过合同谈判 响应变化胜过遵循计划 XP方法 偏重于一些工程实践的描述 SCRUM方法 管理框架和管理实践 Kanban方法 精益生产（丰田制造法）的具体实现 可视化工作流、限定WIP、管理周期时间 开源软件开发方法： 是一种基于并行开发模式的软件开发的组织与管理方式 linus定律： 如果有足够多的beta测试者和合作开发者，几乎所有问题都会很快显现，然后自然有人会把它解决。 早发布，常发布，倾听用户的反馈 把你的用户当作合作开发者对待，如果想让代码质量快速提升并有效排错，这是最省心的途径 设计上的完美不是没有东西可以再加，而是没有东西可以再减 代码管理： 严格的代码提交社区审核制度 一些演化： 内部开源(Inner Source) 众包(Crowdsourcing) 思考上了从软件发展的三大历史阶段（我怎么忘了）以及软件过程的演变当中，我们可以总结出哪些有规律的东西？ 看到了，重复一下： 软硬件一体化阶段（50年代~70年代） 软件完全依附于硬件 软件作坊 软件成为独立的产品（70年代~90年代） 网络化和服务化（90年代中期迄今） 然后是不同阶段的实践可以整理。]]></content>
-      <tags>
-        <tag>呵呵</tag>
       </tags>
   </entry>
   <entry>
@@ -218,18 +196,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Arduino怎么写呢]]></title>
-    <url>%2Fblog%2F2018%2F10%2F21%2Farduino%2F</url>
-    <content type="text"><![CDATA[整理一些简单语法… 疑问 为什么打开Arduino放着不动，cpu占用率高达30%? Hexo的Arduino高亮似乎有问题 Arduino是垃圾吗？ 声明变量12int xxx = 1;boolean yyy = false; 舵机控制使用Servo控制舵机 12345678#include&lt;Servo.h&gt;Servo servo;void setup() &#123; servo.attatch(portNum); servo.write(angle);&#125; 一个简单程序的结构1234567void setup() &#123;&#125;void loop() &#123;&#125; setup会在初始化时执行，loop会持续执行 信号的IO123analogRead(portNum);digitalRead(portNum);digitalWrite(portNum, LOW); 设置输出端口1pinMode(portNum); 串口调试1234567void setup() &#123; Serial.begin(9600); //频率&#125;void loop() &#123; Serial.println(&quot;sdasdas&quot;);&#125;]]></content>
-      <categories>
-        <category>编程</category>
-        <category>arduino</category>
-      </categories>
-      <tags>
-        <tag>aruduino</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[在c++中使用opengl]]></title>
     <url>%2Fblog%2F2018%2F10%2F21%2Fopengl%2F</url>
     <content type="text"><![CDATA[Shaders哪里放more,这里放more 如何偷懒，如何不偷懒关键字in和out是一个Shaders文件的输入和输出 vertex和fragment shader有一些不同 123in type in_variable_name;out type out_variable_name; 我们惊奇地发现，这个主题还支持glsl uniform是全局变量，后面的shader可以使用 1uniform type variable_name; Sampler通常在fragment shader中定义，是一个uniform类型的变量，但我不是很懂uniform了 取整和插值texelFetch1texelFetch(Sampler, vec2, lod); textureSizelod是什么意思呢level of detail, 有机会试试 百度百科： 多细节层次 LOG技术根据物体模型的节点在显示环境中所处的位置和重要度 给人一种放大缩小的感觉 12345uniform sampler2D texSlot;void main() &#123; vec2 texSize = textureSize(texSlot, 1);&#125; opengl很强]]></content>
@@ -277,16 +243,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[bochs的安装和使用]]></title>
-    <url>%2Fblog%2F2018%2F10%2F10%2Fbochs%2F</url>
-    <content type="text"><![CDATA[占坑]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[java实现一个简单的apriori算法]]></title>
-    <url>%2Fblog%2F2018%2F10%2F10%2Fapriori%2F</url>
-    <content type="text"><![CDATA[占坑]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[计算PageRank]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fpage-rank%2F</url>
     <content type="text"><![CDATA[核心思想PageRank的核心思想： 如果一个网页被很多其他网页链接到，说明这个网页比较重要，PageRank值相对也会比较高. 如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页PageRank值也会相应提高. 计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}$$ 计算公式一般情况下,一个网页的PR值的计算公式如下： $$PR(p_i)=\alpha\sum\limits_{Pj\in{M_{p_i}}}\frac{PR(p_j)}{L(P_j)}+\frac{1-\alpha}{N}$$ 算法举例PageRank的值物理意义上是一个网页被访问的概率，因此通常对$N$个网页计算时，将每个网页的初始值设为$\frac{1}{N}$. 假设有4个网页A, B, C, D A有1个出链到D,B有2个出链到A和DC有1个出链到AD有2个出链到B和C 然后我们开始算第一轮: $$\begin{split}PR(A)&amp;=\alpha\left(\frac{PR(B)}{L(B)}+\frac{PR(C)}{L(C)}\right)+\frac{1-\alpha}{N} \\&amp;=\alpha\left(\frac{\frac{1}{4}}{2}+\frac{\frac{1}{4}}{1}\right)+\frac{1-\alpha}{N} \\&amp;=\frac{17}{20}\times\frac{3}{8}+\frac{3}{80} \\&amp;=\frac{57}{160} \\\end{split}$$$$\begin{split}PR(B)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\&amp;=\frac{23}{160} \\\end{split}$$$$\begin{split}PR(C)&amp;=\alpha\frac{PR(D)}{L(D)}+\frac{1-\alpha}{N} \\&amp;=\frac{23}{160} \\\end{split}$$$$\begin{split}PR(D)&amp;=\alpha\left(\frac{PR(A)}{L(A)}+\frac{PR(B)}{L(B)}\right)+\frac{1-\alpha}{N} \\&amp;=\alpha\left(\frac{\frac{57}{160}}{1}+\frac{\frac{23}{160}}{2}\right)+\frac{1-\alpha}{N} \\&amp;=\frac{17}{20}\times\frac{137}{320}+\frac{3}{80} \\&amp;=\frac{2569}{6400} \\\end{split}$$ 然后再从$PR(A)$开始计算……直到趋于平稳为止. 注意 当一个网页没有出链时认为对所有网页都有出链 为了限制一个网页只有指向自己的出链或者几个出链形成一个圈的情况，我们假定有一个概率$\alpha$，用户在浏览网页时会有一个这样的概率直接跳转到一个随机的网页，而每个网页的概率是相等的. $\alpha$值通常取$0.85$]]></content>
@@ -298,11 +254,6 @@
         <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[奇异值分解的计算方式]]></title>
-    <url>%2Fblog%2F2018%2F10%2F09%2Fsingular-value-decomposition%2F</url>
-    <content type="text"><![CDATA[特征值方阵$A$,向量$v$,值$\lambda$有如下关系 $$Av=\lambda v$$ 此时称$v$为方阵$A$的特征向量,$\lambda$则是此特征向量对应的特征值。 奇异值分解]]></content>
   </entry>
   <entry>
     <title><![CDATA[如何学习ruby]]></title>
@@ -343,24 +294,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[如何学习算法]]></title>
-    <url>%2Fblog%2F2018%2F10%2F09%2Falgorithm-learning%2F</url>
-    <content type="text"><![CDATA[我需要学习如下算法需要在45天内完成，那就11.14完成吧 完了 时间已经快到了 啊 已经过去一个月了 快速排序 堆排序 归并排序 选择排序 并查集算法 图的遍历 有向图的DFS 无向图的DFS 最小生成树 图的最短路径 贪心算法 动态规划 NP完全问题 KMP算法 BM算法 近似匹配算法 传递闭包算法 中间值算法 对抗方法 分治算法 哈希算法 快速排序并查集]]></content>
-      <tags>
-        <tag>算法</tag>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[如何学习c++]]></title>
-    <url>%2Fblog%2F2018%2F10%2F09%2Fcpp-learning%2F</url>
-    <content type="text"><![CDATA[to do list下面是我计划关注的方面 多态和继承 运算符重载 常用的库 函数模板和类模板 元编程 指针和引用 IO 网络编程 多线程 数据库 开发环境搭建打算使用windows上的能看文件结构的编辑器+在linux上编译执行 搭完了 最后还是用了mingw]]></content>
-      <tags>
-        <tag>学习</tag>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Java中的一些有趣的内容]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fjava-learning%2F</url>
     <content type="text"><![CDATA[enumenum也就是Java中的枚举类，我们可以声明一个类为如下的几个具体类型： class interface enum annotation(@interface) 那么enum中可以进行什么操作，enum是怎么实现的？ enum通常可以进行的操作通常我们会拿它来定义一些枚举值，比如 虽然我很想翻出几个java中自带的enum但是想了几个都是static final XXX什么的 还是随便来一个吧 123public enum Color &#123; GREEN, YELLOW, BLUE&#125; 也就是定义一些常量，然后我们可以给它们加一点属性… 1234567891011public enum Color &#123; GREEN("绿色", "#00ff00"), RED("红色", "#ff0000"), BLUE("蓝色", "0000ff"); Color(String description, String value) &#123; this.description = description; this.value = value; &#125; public String description; public String value;&#125; 再加一点方法… 12345678910111213141516171819202122232425262728293031323334353637383940414243444546public enum Color &#123; GREEN("绿色", 0, 255, 0) &#123; @Override public int getChannelValue(String original) &#123; return Integer.parseInt(original.substring(3, 5), 16); &#125; &#125;, RED("红色", 255, 0, 0) &#123; @Override public int getChannelValue(String original) &#123; return Integer.parseInt(original.substring(1, 3), 16); &#125; &#125;, BLUE("蓝色", 0, 0, 255) &#123; @Override public int getChannelValue(String original) &#123; return Integer.parseInt(original.substring(5, 7), 16); &#125; &#125;; Color(String description, int r, int g, int b) &#123; this.description = description; this.r = r; this.g = g; this.b = b; &#125; public String description; public int r; public int g; public int b; public String getValue() &#123; return "#" + toHexString(r) + toHexString(g) + toHexString(b); &#125; private String toHexString(int i) &#123; String hex = Integer.toHexString(i); if (hex.length() == 1) &#123; hex = "0" + hex; &#125; return hex; &#125; public abstract int getChannelValue(String original);&#125; 我们可以在里面放一些 属性 普通方法 抽象方法 构造函数 如果是构造函数或者是抽象方法，我们需要在每一个枚举值中进行重载，也就是下面这个写法： 123456BLUE("蓝色", 0, 0, 255) &#123; @Override public int getChannelValue(String original) &#123; return Integer.parseInt(original.substring(5, 7), 16); &#125;&#125;; 看起来就像实现一个匿名内部类一样（其实实际上也是的） 实现原理我们操作完上面的步骤，现在看看它是怎么实现的 实际上enum在Java1.5开始才加入Java中，我们定义的枚举类和里面的枚举值实际上是继承了java.lang.Enum的类和它的匿名内部类的实现。 即enum XXX实际上是abstract class XXX extends Enum&lt;XXX&gt; 而里面的每一个枚举值A,B,C是这个类的几个static final实例。 由于XXX是抽象类，所以每一个实例初始化都需要override构造方法和抽象方法，来实现一个匿名内部类，每一个枚举值都是抽象类里面的不同匿名内部类的实例。 这样就可以达到一个枚举的效果。 LocalDateTime@since 1.8java.time.LocalDateTime是Java8开始加入的类。 操作起来应该比较舒服了。 此外LocalDateTime是与时区无关的，它不能单独表示某一个确切的时间点。 （我们在数据库里存的DateTime呢） 最大和最小值LocalDateTime.MIN和LocalDateTime.MAX可以表示-999999999-01-01T00:00:00和+999999999-12-31T23:59:59.999999999。 也就是说如果使用LocalDateTime, 几乎没有需要担心有时间表示不了的情况。 一些方法LocalDateTime实际上是由LocalDate和LocalTime组成的。 可以用now(), of()等方法构造一个LocalDateTime 而LocalDateTime对象可以使用各种minus, plus方法来获得另一个时间，当然也可以使用with某个value的方法。 也就是说如果我们需要获得上一周时间，上一周开始时间，等等，都是可以很方便地操作的 这些方法的返回值是一个新的LocalDateTime对象，所以我们可以…..调用来拿到我们想要的时间。 （不过还是JodaTime的方便一些） LocalDate和LocalTimeLocalTime中的每一个field都是用一个单独的int来存储的。 （这个实现一点都不复杂） 收集一些待解决的问题 Java里面声明一个数字的时候可以用下划线分隔… 如123_123_123 所以不写访问权限的时候是可以从哪里访问来着… Objects.requireNonNull();似乎是用来抛出异常的]]></content>
@@ -372,24 +305,6 @@
         <tag>学习</tag>
         <tag>Java</tag>
         <tag>编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[如何学习后端]]></title>
-    <url>%2Fblog%2F2018%2F10%2F09%2Fback-end-learning%2F</url>
-    <content type="text"><![CDATA[我需要学习这些东西有时间做一个思维导图 数据库 hibernate redis 分布式 中间件 linux 网络协议 jvm 设计模式 消息队列]]></content>
-      <tags>
-        <tag>学习</tag>
-        <tag>后端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[如何学习前端]]></title>
-    <url>%2Fblog%2F2018%2F10%2F09%2Ffront-end-learning%2F</url>
-    <content type="text"><![CDATA[我需要学习这些东西 CSS JS CSS3 H5 Ajax Grunt Gulp eslint Vue React React Native Angular babel Promise]]></content>
-      <tags>
-        <tag>前端</tag>
-        <tag>web</tag>
       </tags>
   </entry>
   <entry>

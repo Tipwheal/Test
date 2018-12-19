@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tipwheal.github.io/blog/2018/12/16/notes-caida/</loc>
+    <loc>https://tipwheal.github.io/blog/2018/12/18/visualize-lib-py/</loc>
     
-    <lastmod>2018-12-18T07:00:00.066Z</lastmod>
+    <lastmod>2018-12-19T07:27:53.328Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/algorithm-learning/</loc>
+    <loc>https://tipwheal.github.io/blog/about/index.html</loc>
     
-    <lastmod>2018-12-16T12:20:58.129Z</lastmod>
+    <lastmod>2018-12-19T07:26:58.581Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/12/03/threejs-lab/</loc>
+    
+    <lastmod>2018-12-19T06:22:35.150Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/12/09/visualize-lib-js/</loc>
+    
+    <lastmod>2018-12-18T08:41:43.261Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/12/16/notes-caida/</loc>
+    
+    <lastmod>2018-12-18T08:41:33.692Z</lastmod>
     
   </url>
   
@@ -44,20 +65,6 @@
   </url>
   
   <url>
-    <loc>https://tipwheal.github.io/blog/2018/12/09/visualize-lib-js/</loc>
-    
-    <lastmod>2018-12-13T02:00:33.836Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/12/03/threejs-lab/</loc>
-    
-    <lastmod>2018-12-03T11:16:11.296Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tipwheal.github.io/blog/2018/11/30/webgl-lab/</loc>
     
     <lastmod>2018-12-03T06:40:37.184Z</lastmod>
@@ -65,44 +72,9 @@
   </url>
   
   <url>
-    <loc>https://tipwheal.github.io/blog/about/index.html</loc>
-    
-    <lastmod>2018-12-02T15:13:23.164Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tipwheal.github.io/blog/2018/11/29/transformation-metrix/</loc>
     
     <lastmod>2018-11-30T14:29:15.604Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/28/goupi5/</loc>
-    
-    <lastmod>2018-11-29T05:22:27.204Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/27/goupi4/</loc>
-    
-    <lastmod>2018-11-29T05:13:13.070Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/27/goupi3/</loc>
-    
-    <lastmod>2018-11-29T05:13:05.345Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/23/software-process-management/</loc>
-    
-    <lastmod>2018-11-27T07:59:43.088Z</lastmod>
     
   </url>
   
@@ -124,13 +96,6 @@
     <loc>https://tipwheal.github.io/blog/2018/11/24/name-entities-recognition/</loc>
     
     <lastmod>2018-11-24T15:26:44.851Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/21/arduino/</loc>
-    
-    <lastmod>2018-11-24T07:27:43.014Z</lastmod>
     
   </url>
   
@@ -180,13 +145,6 @@
     <loc>https://tipwheal.github.io/blog/2018/10/09/page-rank/</loc>
     
     <lastmod>2018-11-13T05:53:58.574Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/singular-value-decomposition/</loc>
-    
-    <lastmod>2018-11-06T15:57:11.598Z</lastmod>
     
   </url>
   
@@ -254,30 +212,9 @@
   </url>
   
   <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/cpp-learning/</loc>
-    
-    <lastmod>2018-10-20T16:03:48.162Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tipwheal.github.io/blog/2018/10/10/tcp/</loc>
     
     <lastmod>2018-10-18T09:04:08.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/10/apriori/</loc>
-    
-    <lastmod>2018-10-10T12:02:47.729Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/10/bochs/</loc>
-    
-    <lastmod>2018-10-10T12:02:30.666Z</lastmod>
     
   </url>
   
@@ -292,20 +229,6 @@
     <loc>https://tipwheal.github.io/blog/2018/10/09/curve-line-integral/</loc>
     
     <lastmod>2018-10-10T02:01:30.335Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/back-end-learning/</loc>
-    
-    <lastmod>2018-10-10T01:14:21.292Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/front-end-learning/</loc>
-    
-    <lastmod>2018-10-10T01:08:55.399Z</lastmod>
     
   </url>
   
