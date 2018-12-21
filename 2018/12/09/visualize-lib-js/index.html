@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="D3官网中文站 流程图">
+  <meta name="description" content="D3.js官网有一些文档和例子中文站 流程图">
 <meta name="keywords" content="可视化,js,JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS的数据可视化工具收集">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/12/09/visualize-lib-js/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="D3官网中文站 流程图">
+<meta property="og:description" content="D3.js官网有一些文档和例子中文站 流程图">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-18T08:41:43.261Z">
+<meta property="og:updated_time" content="2018-12-21T13:08:08.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS的数据可视化工具收集">
-<meta name="twitter:description" content="D3官网中文站 流程图">
+<meta name="twitter:description" content="D3.js官网有一些文档和例子中文站 流程图">
 
 
 
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-18 16:41:43" itemprop="dateModified" datetime="2018-12-18T16:41:43+08:00">2018-12-18</time>
+                <time title="修改时间：2018-12-21 21:08:08" itemprop="dateModified" datetime="2018-12-21T21:08:08+08:00">2018-12-21</time>
               
             
           </span>
@@ -442,9 +442,298 @@
       
 
       
-        <h3 id="D3"><a href="#D3" class="headerlink" title="D3"></a>D3</h3><p><a href="https://d3js.org/" target="_blank" rel="noopener">官网</a><br><a href="http://d3.decembercafe.org/" target="_blank" rel="noopener">中文站</a></p>
+        <h3 id="D3-js"><a href="#D3-js" class="headerlink" title="D3.js"></a>D3.js</h3><p><a href="https://d3js.org/" target="_blank" rel="noopener">官网</a>有一些文档和例子<br><a href="http://d3.decembercafe.org/" target="_blank" rel="noopener">中文站</a></p>
 <p><a href="https://beta.observablehq.com/@mbostock/graphviz" target="_blank" rel="noopener">流程图</a></p>
 <a id="more"></a>
+<p>据说这个叫力导向图</p>
+
+<div>
+    <svg width="600" height="400"/>
+</div>
+
+<script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
+<script src="https://cdn.bootcss.com/d3-force/1.1.0/d3-force.js"></script>
+<script>
+
+var dataset = {
+        nodes: [
+                { name: "Adam" },
+                { name: "Bob" },
+                { name: "Carrie" },
+                { name: "Donovan" },
+                { name: "Edward" },
+                { name: "Felicity" },
+                { name: "George" },
+                { name: "Hannah" },
+                { name: "Iris" },
+                { name: "Jerry" },
+                { name: "Kkk" },
+                { name: "Llull" },
+                { name: "Mnn" },
+                { name: "Nmm" },
+                { name: "Ok" },
+        ],
+        links: [
+                { source: 0, target: 1 },
+                { source: 0, target: 2 },
+                { source: 0, target: 3 },
+                { source: 0, target: 4 },
+                { source: 1, target: 5 },
+                { source: 2, target: 5 },
+                { source: 2, target: 5 },
+                { source: 3, target: 4 },
+                { source: 3, target: 14 },
+                { source: 5, target: 8 },
+                { source: 5, target: 9 },
+                { source: 6, target: 7 },
+                { source: 7, target: 8 },
+                { source: 8, target: 9 },
+                { source: 8, target: 11 },
+                { source: 8, target: 14 },
+                { source: 10, target: 11},
+                { source: 12, target: 13},
+                { source: 12, target: 14},
+                { source: 13, target: 14},
+        ]
+};
+
+var svg = d3.select('svg'),
+		width = +svg.attr('width'),
+		height = +svg.attr('height'),
+		colors = d3.scaleOrdinal(d3.schemeCategory10);
+
+var simulation = d3.forceSimulation(dataset.nodes)
+                   .force('charge', d3.forceManyBody())
+                   .force('link', d3.forceLink(dataset.links))
+                   .force('center', d3.forceCenter(width / 2, height / 2));
+
+var link = svg.append('g')
+               .attr('class', 'links')
+              .selectAll('line')
+              .data(dataset.links)
+              .enter().append('line')
+               .attr('stroke', '#ccc')
+               .attr('stroke-width', 1);
+            
+var node = svg.append('g')
+                .attr('class', 'nodes')
+              .selectAll('circle')
+              .data(dataset.nodes)
+              .enter().append('circle')
+                .attr('r', 10)
+                .attr('fill', function(d, i) {
+									return colors(i);
+								})
+                .call(d3.drag()
+										 .on('start', dragstarted)
+										 .on('drag', dragged)
+										 .on('end', dragended));
+
+node.append('title')
+    .text(function(d) { return d.name; });
+
+simulation
+    .nodes(dataset.nodes)
+    .on('tick', ticked);
+
+simulation.force('link')
+          .links(dataset.links);
+
+function ticked() {
+	link
+			.attr('x1', function(d) { return d.source.x; })
+			.attr('y1', function(d) { return d.source.y; })
+			.attr('x2', function(d) { return d.target.x; })
+			.attr('y2', function(d) { return d.target.y; })
+	
+	node
+			.attr('cx', function(d) { return d.x; })
+			.attr('cy', function(d) { return d.y; })
+}
+
+function dragstarted(d) {
+	if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+	d.fx = d.x;
+	d.fy = d.y;
+}
+
+function dragged(d) {
+	d.fx = d3.event.x;
+	d.fy = d3.event.y;
+}
+
+function dragended(d) {
+	if (!d3.event.active) simulation.alphaTarget(0);
+	d.fx = null;
+	d.fy = null;
+}
+</script>
+
+<p>这个是一个可以折叠的树的效果：</p>
+
+<div id="svg-div">
+</div>
+<script>
+let dx = 20
+let dy = 162.5
+let data = {
+    name: "开始",
+    children: [
+        {
+            name: "初始化数据",
+            children: [
+                {name: "输入a"},
+                {name: "输入b"},
+                {name: "瞎分配一些内存空间"}
+            ]
+        },
+        {
+            name: "运行",
+            children: [
+                {name: "计算a+b，结果存在c"},
+                {name: "将c除以2"}
+            ]
+        },
+        {
+            name: "结束",
+            children: [
+                {name: "回收分配的内存空间"},
+                {name: "返回c"}
+            ]
+        }
+    ]
+}
+let margin = ({top: 10, right: 120, bottom: 10, left: 40})
+let tree = d3.tree().nodeSize([dx, dy])
+let diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x)
+
+chart = () => {
+  const root = d3.hierarchy(data);
+
+  root.x0 = dy / 2;
+  root.y0 = 0;
+  root.descendants().forEach((d, i) => {
+    d.id = i;
+    d._children = d.children;
+    if (d.depth && d.data.name.length !== 7) d.children = null;
+  });
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", dx)
+      .attr("viewBox", [-margin.left, -margin.top, width, dx])
+      .style("font", "12px sans-serif")
+      .style("user-select", "none");
+
+  const gLink = svg.append("g")
+      .attr("fill", "none")
+      .attr("stroke", "#555")
+      .attr("stroke-opacity", 0.4)
+      .attr("stroke-width", 1.5);
+
+  const gNode = svg.append("g")
+      .attr("cursor", "pointer");
+
+  function update(source) {
+    const duration = d3.event && d3.event.altKey ? 2500 : 250;
+    const nodes = root.descendants().reverse();
+    const links = root.links();
+
+    // Compute the new tree layout.
+    tree(root);
+
+    let left = root;
+    let right = root;
+    root.eachBefore(node => {
+      if (node.x < left.x) left = node;
+      if (node.x > right.x) right = node;
+    });
+
+    const height = right.x - left.x + margin.top + margin.bottom;
+
+    const transition = svg.transition()
+        .duration(duration)
+        .attr("height", height)
+        .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
+        .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
+
+    // Update the nodes…
+    const node = gNode.selectAll("g")
+      .data(nodes, d => d.id);
+
+    // Enter any new nodes at the parent's previous position.
+    const nodeEnter = node.enter().append("g")
+        .attr("transform", d => `translate(${source.y0},${source.x0})`)
+        .attr("fill-opacity", 0)
+        .attr("stroke-opacity", 0)
+        .on("click", d => {
+          d.children = d.children ? null : d._children;
+          update(d);
+        });
+
+    nodeEnter.append("circle")
+        .attr("r", 2.5)
+        .attr("fill", d => d._children ? "#555" : "#999");
+
+    nodeEnter.append("text")
+        .attr("dy", "0.31em")
+        .attr("x", d => d._children ? -6 : 6)
+        .attr("text-anchor", d => d._children ? "end" : "start")
+        .text(d => d.data.name)
+      .clone(true).lower()
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-width", 3)
+        .attr("stroke", "white");
+
+    // Transition nodes to their new position.
+    const nodeUpdate = node.merge(nodeEnter).transition(transition)
+        .attr("transform", d => `translate(${d.y},${d.x})`)
+        .attr("fill-opacity", 1)
+        .attr("stroke-opacity", 1);
+
+    // Transition exiting nodes to the parent's new position.
+    const nodeExit = node.exit().transition(transition).remove()
+        .attr("transform", d => `translate(${source.y},${source.x})`)
+        .attr("fill-opacity", 0)
+        .attr("stroke-opacity", 0);
+
+    // Update the links…
+    const link = gLink.selectAll("path")
+      .data(links, d => d.target.id);
+
+    // Enter any new links at the parent's previous position.
+    const linkEnter = link.enter().append("path")
+        .attr("d", d => {
+          const o = {x: source.x0, y: source.y0};
+          return diagonal({source: o, target: o});
+        });
+
+    // Transition links to their new position.
+    link.merge(linkEnter).transition(transition)
+        .attr("d", diagonal);
+
+    // Transition exiting nodes to the parent's new position.
+    link.exit().transition(transition).remove()
+        .attr("d", d => {
+          const o = {x: source.x, y: source.y};
+          return diagonal({source: o, target: o});
+        });
+
+    // Stash the old positions for transition.
+    root.eachBefore(d => {
+      d.x0 = d.x;
+      d.y0 = d.y;
+    });
+  }
+
+  update(root);
+
+  return svg.node();
+}
+let c = chart();
+document.querySelector('#svg-div').appendChild(c);
+</script>
+
 <h3 id="Echarts"><a href="#Echarts" class="headerlink" title="Echarts"></a>Echarts</h3><h3 id="infoVis"><a href="#infoVis" class="headerlink" title="infoVis"></a>infoVis</h3><h3 id="Cesium"><a href="#Cesium" class="headerlink" title="Cesium"></a>Cesium</h3><h3 id="HighCharts"><a href="#HighCharts" class="headerlink" title="HighCharts"></a>HighCharts</h3><h3 id="FusionCharts"><a href="#FusionCharts" class="headerlink" title="FusionCharts"></a>FusionCharts</h3><h3 id="AnyChart"><a href="#AnyChart" class="headerlink" title="AnyChart"></a>AnyChart</h3><h3 id="amChart"><a href="#amChart" class="headerlink" title="amChart"></a>amChart</h3><h3 id="Chart-js"><a href="#Chart-js" class="headerlink" title="Chart.js"></a>Chart.js</h3><h3 id="Chartist-js"><a href="#Chartist-js" class="headerlink" title="Chartist.js"></a>Chartist.js</h3><h3 id="Google-Chart"><a href="#Google-Chart" class="headerlink" title="Google Chart"></a>Google Chart</h3><h3 id="Leaflet"><a href="#Leaflet" class="headerlink" title="Leaflet"></a>Leaflet</h3><h3 id="Dygraphs"><a href="#Dygraphs" class="headerlink" title="Dygraphs"></a>Dygraphs</h3><h3 id="icharts"><a href="#icharts" class="headerlink" title="icharts"></a>icharts</h3><h3 id="flowchart-js"><a href="#flowchart-js" class="headerlink" title="flowchart.js"></a>flowchart.js</h3><h3 id="flot"><a href="#flot" class="headerlink" title="flot"></a>flot</h3><h3 id="n3-charts"><a href="#n3-charts" class="headerlink" title="n3-charts"></a>n3-charts</h3><h3 id="Ember-Charts"><a href="#Ember-Charts" class="headerlink" title="Ember Charts"></a>Ember Charts</h3><h3 id="ChartKick"><a href="#ChartKick" class="headerlink" title="ChartKick"></a>ChartKick</h3><h3 id="MeteorCharts"><a href="#MeteorCharts" class="headerlink" title="MeteorCharts"></a>MeteorCharts</h3><h3 id="EJS-Chart"><a href="#EJS-Chart" class="headerlink" title="EJS Chart"></a>EJS Chart</h3><h3 id="uvCharts"><a href="#uvCharts" class="headerlink" title="uvCharts"></a>uvCharts</h3>
       
     </div>
@@ -789,7 +1078,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#D3"><span class="nav-number">1.</span> <span class="nav-text">D3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Echarts"><span class="nav-number">2.</span> <span class="nav-text">Echarts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#infoVis"><span class="nav-number">3.</span> <span class="nav-text">infoVis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cesium"><span class="nav-number">4.</span> <span class="nav-text">Cesium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HighCharts"><span class="nav-number">5.</span> <span class="nav-text">HighCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FusionCharts"><span class="nav-number">6.</span> <span class="nav-text">FusionCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AnyChart"><span class="nav-number">7.</span> <span class="nav-text">AnyChart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amChart"><span class="nav-number">8.</span> <span class="nav-text">amChart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chart-js"><span class="nav-number">9.</span> <span class="nav-text">Chart.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chartist-js"><span class="nav-number">10.</span> <span class="nav-text">Chartist.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chart"><span class="nav-number">11.</span> <span class="nav-text">Google Chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leaflet"><span class="nav-number">12.</span> <span class="nav-text">Leaflet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dygraphs"><span class="nav-number">13.</span> <span class="nav-text">Dygraphs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icharts"><span class="nav-number">14.</span> <span class="nav-text">icharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flowchart-js"><span class="nav-number">15.</span> <span class="nav-text">flowchart.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flot"><span class="nav-number">16.</span> <span class="nav-text">flot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n3-charts"><span class="nav-number">17.</span> <span class="nav-text">n3-charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ember-Charts"><span class="nav-number">18.</span> <span class="nav-text">Ember Charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChartKick"><span class="nav-number">19.</span> <span class="nav-text">ChartKick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MeteorCharts"><span class="nav-number">20.</span> <span class="nav-text">MeteorCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EJS-Chart"><span class="nav-number">21.</span> <span class="nav-text">EJS Chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uvCharts"><span class="nav-number">22.</span> <span class="nav-text">uvCharts</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#D3-js"><span class="nav-number">1.</span> <span class="nav-text">D3.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Echarts"><span class="nav-number">2.</span> <span class="nav-text">Echarts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#infoVis"><span class="nav-number">3.</span> <span class="nav-text">infoVis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cesium"><span class="nav-number">4.</span> <span class="nav-text">Cesium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HighCharts"><span class="nav-number">5.</span> <span class="nav-text">HighCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FusionCharts"><span class="nav-number">6.</span> <span class="nav-text">FusionCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AnyChart"><span class="nav-number">7.</span> <span class="nav-text">AnyChart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amChart"><span class="nav-number">8.</span> <span class="nav-text">amChart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chart-js"><span class="nav-number">9.</span> <span class="nav-text">Chart.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chartist-js"><span class="nav-number">10.</span> <span class="nav-text">Chartist.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chart"><span class="nav-number">11.</span> <span class="nav-text">Google Chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leaflet"><span class="nav-number">12.</span> <span class="nav-text">Leaflet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dygraphs"><span class="nav-number">13.</span> <span class="nav-text">Dygraphs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icharts"><span class="nav-number">14.</span> <span class="nav-text">icharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flowchart-js"><span class="nav-number">15.</span> <span class="nav-text">flowchart.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flot"><span class="nav-number">16.</span> <span class="nav-text">flot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n3-charts"><span class="nav-number">17.</span> <span class="nav-text">n3-charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ember-Charts"><span class="nav-number">18.</span> <span class="nav-text">Ember Charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChartKick"><span class="nav-number">19.</span> <span class="nav-text">ChartKick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MeteorCharts"><span class="nav-number">20.</span> <span class="nav-text">MeteorCharts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EJS-Chart"><span class="nav-number">21.</span> <span class="nav-text">EJS Chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uvCharts"><span class="nav-number">22.</span> <span class="nav-text">uvCharts</span></a></li></ol></div>
             
 
           </div>
