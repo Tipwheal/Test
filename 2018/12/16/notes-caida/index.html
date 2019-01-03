@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-18T08:41:33.692Z">
+<meta property="og:updated_time" content="2019-01-03T07:21:33.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机算法笔记">
 <meta name="twitter:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-18 16:41:33" itemprop="dateModified" datetime="2018-12-18T16:41:33+08:00">2018-12-18</time>
+                <time title="修改时间：2019-01-03 15:21:33" itemprop="dateModified" datetime="2019-01-03T15:21:33+08:00">2019-01-03</time>
               
             
           </span>
@@ -488,7 +488,7 @@
 <li>动态编程(dynamic programming)</li>
 </ul>
 <h3 id="一些约定"><a href="#一些约定" class="headerlink" title="一些约定"></a>一些约定</h3><ul>
-<li><strong>函数的完全类型特种</strong>指返回类型和参数类型的组合，也叫<strong>原型</strong></li>
+<li><strong>函数的完全类型特征</strong>指返回类型和参数类型的组合，也叫<strong>原型</strong></li>
 <li><strong>过程</strong>是一个可以取名字、可以被调用的计算步骤序列（带参数）</li>
 <li><strong>函数</strong>是一个可以向调用者返回值的过程</li>
 <li>私有数据的维护叫<strong>封装</strong>或<strong>信息隐藏</strong></li>
@@ -544,7 +544,202 @@
 <p>然后还有两个不等式：</p>
 <p>$n\le2{\lceil{n}\rceil}\le{2n}$<br>$\frac{n}{2}\le2{\lfloor{n}\rfloor}\le{n}$</p>
 <h5 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h5><p><strong>基本事件</strong>：假设在给定的状况下，一个事件或试验有一个或$k$个结果，这些结果叫基本事件，记为$s_1,s_2,s_3,\dots,s_k$<br>所有基本事件的集合叫<strong>事件空间</strong>，以$U$标记。</p>
-<h5 id="级数"><a href="#级数" class="headerlink" title="级数"></a>级数</h5><h5 id="单调递增函数和凸函数"><a href="#单调递增函数和凸函数" class="headerlink" title="单调递增函数和凸函数"></a>单调递增函数和凸函数</h5><h5 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h5><h4 id="逻辑元素"><a href="#逻辑元素" class="headerlink" title="逻辑元素"></a>逻辑元素</h4>
+<h5 id="级数"><a href="#级数" class="headerlink" title="级数"></a>级数</h5><h5 id="单调递增函数和凸函数"><a href="#单调递增函数和凸函数" class="headerlink" title="单调递增函数和凸函数"></a>单调递增函数和凸函数</h5><h5 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h5><h4 id="逻辑元素"><a href="#逻辑元素" class="headerlink" title="逻辑元素"></a>逻辑元素</h4><h4 id="分析算法和问题"><a href="#分析算法和问题" class="headerlink" title="分析算法和问题"></a>分析算法和问题</h4><p>分析一个算法的目的是要改进他，为在解决一个问题中到底选择哪一个方法提供依据。</p>
+<p>我们使用下面的标准：</p>
+<ol>
+<li>正确性</li>
+<li>所做工作的量（时间复杂度）</li>
+<li>使用空间的量</li>
+<li>简单，清晰</li>
+<li>最优性</li>
+</ol>
+<p>后面会介绍建立问题最低边界复杂性的技术。</p>
+<h5 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h5><p>建立算法的正确性有三步：</p>
+<ol>
+<li>对“正确”有一个清晰的概念</li>
+<li>需要一个清晰的命题来描述期望有效输入的特性（前提）</li>
+<li>需要处理每一个输出的结果（后置条件）</li>
+</ol>
+<p>在输入前提条件满足，算法结束之后后置条件也正确的话，我们尝试证明输入输出关系的命题。</p>
+<p>这一段有点乱，后面回来整理吧。</p>
+<p>算法有两个方面，一是要解决的问题，二是解决问题所需要的指令序列。</p>
+<hr>
+<p>什么是<strong>循环不变式(loop invariants)</strong>？</p>
+<hr>
+<h5 id="所做工作的量"><a href="#所做工作的量" class="headerlink" title="所做工作的量"></a>所做工作的量</h5><p>不是简单地比较执行的时间，时间会随着不同的计算机而变化，但我们可以用执行的指令数或者语句的数量来代替执行时间。</p>
+<p>一个简单的算法可能由一堆初始化构造和循环组成，此时我们可以用循环体执行的次数来衡量工作量。</p>
+<p>在许多时候，为了分析一个算法，我们可以隔离出一种解决所研究问题的<strong>基本操作</strong>。</p>
+<p>比如在如下问题中可以有这样的基本操作：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在一个数组中查找x</td>
+<td>比较x和数组中的元素</td>
+</tr>
+<tr>
+<td>两个实数矩阵相乘</td>
+<td>两个实数做乘法（或者乘法和加法）</td>
+</tr>
+<tr>
+<td>数组排序</td>
+<td>比较数组的两个元素</td>
+</tr>
+<tr>
+<td>遍历二叉树</td>
+<td>便历边</td>
+</tr>
+<tr>
+<td>任一迭代过程</td>
+<td>过程调用</td>
+</tr>
+</tbody>
+</table>
+<p>选定了基本操作之后，我们就可以粗略地估计执行基本操作的数目。</p>
+<p>算法所做工作的度量也可以用一个算法的复杂性来代替。</p>
+<h5 id="平均和最坏分析"><a href="#平均和最坏分析" class="headerlink" title="平均和最坏分析"></a>平均和最坏分析</h5><p>我们知道工作量的大小不能用一个简单的数值来描述，对于不同的输入算法执行的步数也可能不同。</p>
+<p>工作量依赖于输入量的大小，也依赖于具体输入的值。</p>
+<p>我们可以根据工作量依赖于输入量的大小指出一个输入规模的度量：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>输入的规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在名字数组中查找 x</td>
+<td>数组中名字的个数</td>
+</tr>
+<tr>
+<td>两个矩阵乘法</td>
+<td>矩阵的维数</td>
+</tr>
+<tr>
+<td>遍历二叉树</td>
+<td>树节点的数量</td>
+</tr>
+<tr>
+<td>解系统的线性方程</td>
+<td>等式的数量，或未知数的数量，或者两者</td>
+</tr>
+<tr>
+<td>一个关于图的问题</td>
+<td>图节点的数量，或边的数量，或者两者</td>
+</tr>
+</tbody>
+</table>
+<p>我们经常使用<strong>最坏情况复杂性</strong>来描述算法的行为。</p>
+<p>定义如下：</p>
+<p>令$D_n$是所考虑问题的规模为$n$的输入集合，$I$是$D_n$的一个元素。令$t(I)$是对于输入$I$要执行的基本操作的数量。我们定义函数$W$</p>
+<p>$$<br>W(n)=\max\{t(I)\vert I\in D_n\}<br>$$</p>
+<p>函数$W(n)$称为算法的<strong>最坏复杂性</strong>，是对于规模为$n$的输入所要做的基本操作的最大数量。<br>除非特别指出，当我们说一个算法的工作量时，都是指最坏情况时的工作量。<br>当然有时候计算平均复杂度或者带权平均复杂度更有用。</p>
+<p>平均复杂性的定义如下：</p>
+<p>$$<br>A(n)=\sum\limits_{I\in D_n}P_r(I)t(I)<br>$$</p>
+<p>$P_r(I)$通过一些假设或者先验知识来获得。</p>
+<p>下面是一个展示平均和最坏分析的例子：</p>
+
+
+<button class="btn" onclick="start()">下一步</button>
+<button class="btn" onclick="reset()">重置</button>
+<button class="btn" onclick="auto = !auto">自动</button>
+
+<div id="main-div">
+</div>
+
+<script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
+<script>
+let dataset = [];
+function getChart(change) {
+    const width = 300;
+    const height = 100;
+    d3.select("#main-div").selectAll("*").remove();
+    let svg = d3.select("#main-div").append("svg").attr("width", width).attr("height", height);
+    let c = svg.selectAll("svg")
+        .data(dataset)
+        .enter()
+        .append("svg")
+    let rec = c.append("rect").attr("stroke-width", 1).attr("stroke", "black").attr("x", (d, i) => i * 50 + 1).attr("y",50).attr("width",40).attr("height",40).attr("fill", d => d.color);
+    let text = c.append("text").attr("x", (d, i) => i * 50 + 13).attr("y",75).attr("fill", "black").text(d => d.value);
+    if (change !== undefined) {
+        rec.transition().delay(200).duration(800)
+            .attr("x", (d, i) => change[i] * 50 + 1)
+        text.transition().delay(200).duration(800)
+            .attr("x", (d, i) => change[i] * 50 + 13)
+    }
+}
+function updateData(change) {
+    let backup = [].concat(dataset);
+    for(let i = 0;i<change.length;i++) {
+        console.log(change[i]);
+        dataset[i] = backup[change[i]];
+    }
+    console.log(dataset);
+}
+let step = 0;
+let auto = false;
+let changeList = [
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [0, 1, 3, 2, 4],
+        [0, 1, 2, 4, 3],
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [0, 1, 3, 2, 4],
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [1, 0, 2, 3, 4],
+    ];
+function reset() {
+    dataset = [
+        {
+            value: 25,
+            color: '#d62728',
+        },
+        {
+            value: 17,
+            color: '#17becf',
+        },
+        {
+            value: 13,
+            color: '#bcbd22',
+        },
+        {
+            value: 2,
+            color: '#2ca02c',
+        },
+        {
+            value: 1,
+            color: '#ff7f0e',
+        }
+    ]
+    step = 0;
+    getChart();
+}
+function start() {
+    if (step >= changeList.length) {
+        return;
+    }
+    let next = changeList[step];
+    getChart(next);
+    updateData(next);
+    step += 1;
+}
+reset();
+setInterval(() => {
+    if(auto) {
+        start();
+    }
+}, 1000);
+</script>
+
+
       
     </div>
 
@@ -886,7 +1081,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析算法和问题：原理和例子"><span class="nav-number">1.</span> <span class="nav-text">分析算法和问题：原理和例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法可解的"><span class="nav-number">1.1.</span> <span class="nav-text">算法可解的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停机问题"><span class="nav-number">1.3.</span> <span class="nav-text">停机问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继续"><span class="nav-number">1.4.</span> <span class="nav-text">继续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很有用的算法"><span class="nav-number">1.5.</span> <span class="nav-text">几个很有用的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些约定"><span class="nav-number">1.6.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织者类"><span class="nav-number">1.7.</span> <span class="nav-text">组织者类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学知识"><span class="nav-number">1.8.</span> <span class="nav-text">数学知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集合的定义方法"><span class="nav-number">1.8.1.</span> <span class="nav-text">集合的定义方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序列"><span class="nav-number">1.8.2.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">1.8.3.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些结论或者关系或者定义"><span class="nav-number">1.8.4.</span> <span class="nav-text">一些结论或者关系或者定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系和函数"><span class="nav-number">1.8.5.</span> <span class="nav-text">关系和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自反性"><span class="nav-number">1.8.5.1.</span> <span class="nav-text">自反性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称性"><span class="nav-number">1.8.5.2.</span> <span class="nav-text">对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反对称性"><span class="nav-number">1.8.5.3.</span> <span class="nav-text">反对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#传递性"><span class="nav-number">1.8.5.4.</span> <span class="nav-text">传递性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#全等"><span class="nav-number">1.8.5.5.</span> <span class="nav-text">全等</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代数和微积分工具"><span class="nav-number">1.8.6.</span> <span class="nav-text">代数和微积分工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Floor和Ceiling"><span class="nav-number">1.8.6.1.</span> <span class="nav-text">Floor和Ceiling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对数的注意事项"><span class="nav-number">1.8.6.2.</span> <span class="nav-text">对数的注意事项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#概率"><span class="nav-number">1.8.6.3.</span> <span class="nav-text">概率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#级数"><span class="nav-number">1.8.6.4.</span> <span class="nav-text">级数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单调递增函数和凸函数"><span class="nav-number">1.8.6.5.</span> <span class="nav-text">单调递增函数和凸函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#积分"><span class="nav-number">1.8.6.6.</span> <span class="nav-text">积分</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑元素"><span class="nav-number">1.8.7.</span> <span class="nav-text">逻辑元素</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析算法和问题：原理和例子"><span class="nav-number">1.</span> <span class="nav-text">分析算法和问题：原理和例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法可解的"><span class="nav-number">1.1.</span> <span class="nav-text">算法可解的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停机问题"><span class="nav-number">1.3.</span> <span class="nav-text">停机问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继续"><span class="nav-number">1.4.</span> <span class="nav-text">继续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很有用的算法"><span class="nav-number">1.5.</span> <span class="nav-text">几个很有用的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些约定"><span class="nav-number">1.6.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织者类"><span class="nav-number">1.7.</span> <span class="nav-text">组织者类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学知识"><span class="nav-number">1.8.</span> <span class="nav-text">数学知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集合的定义方法"><span class="nav-number">1.8.1.</span> <span class="nav-text">集合的定义方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序列"><span class="nav-number">1.8.2.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元组"><span class="nav-number">1.8.3.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些结论或者关系或者定义"><span class="nav-number">1.8.4.</span> <span class="nav-text">一些结论或者关系或者定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系和函数"><span class="nav-number">1.8.5.</span> <span class="nav-text">关系和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自反性"><span class="nav-number">1.8.5.1.</span> <span class="nav-text">自反性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称性"><span class="nav-number">1.8.5.2.</span> <span class="nav-text">对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反对称性"><span class="nav-number">1.8.5.3.</span> <span class="nav-text">反对称性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#传递性"><span class="nav-number">1.8.5.4.</span> <span class="nav-text">传递性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#全等"><span class="nav-number">1.8.5.5.</span> <span class="nav-text">全等</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代数和微积分工具"><span class="nav-number">1.8.6.</span> <span class="nav-text">代数和微积分工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Floor和Ceiling"><span class="nav-number">1.8.6.1.</span> <span class="nav-text">Floor和Ceiling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对数的注意事项"><span class="nav-number">1.8.6.2.</span> <span class="nav-text">对数的注意事项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#概率"><span class="nav-number">1.8.6.3.</span> <span class="nav-text">概率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#级数"><span class="nav-number">1.8.6.4.</span> <span class="nav-text">级数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单调递增函数和凸函数"><span class="nav-number">1.8.6.5.</span> <span class="nav-text">单调递增函数和凸函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#积分"><span class="nav-number">1.8.6.6.</span> <span class="nav-text">积分</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑元素"><span class="nav-number">1.8.7.</span> <span class="nav-text">逻辑元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析算法和问题"><span class="nav-number">1.8.8.</span> <span class="nav-text">分析算法和问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#正确性"><span class="nav-number">1.8.8.1.</span> <span class="nav-text">正确性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#所做工作的量"><span class="nav-number">1.8.8.2.</span> <span class="nav-text">所做工作的量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平均和最坏分析"><span class="nav-number">1.8.8.3.</span> <span class="nav-text">平均和最坏分析</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -906,7 +1101,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
