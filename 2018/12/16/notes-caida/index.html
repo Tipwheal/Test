@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T07:21:33.535Z">
+<meta property="og:updated_time" content="2019-01-03T15:32:22.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机算法笔记">
 <meta name="twitter:description" content="分析算法和问题：原理和例子算法可解的说一个问题是算法可解的，意味着： 可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。 算法20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。 算法被解释成： 一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-03 15:21:33" itemprop="dateModified" datetime="2019-01-03T15:21:33+08:00">2019-01-03</time>
+                <time title="修改时间：2019-01-03 23:32:22" itemprop="dateModified" datetime="2019-01-03T23:32:22+08:00">2019-01-03</time>
               
             
           </span>
@@ -668,9 +668,8 @@ function getChart(change) {
     let rec = c.append("rect").attr("stroke-width", 1).attr("stroke", "black").attr("x", (d, i) => i * 50 + 1).attr("y",50).attr("width",40).attr("height",40).attr("fill", d => d.color);
     let text = c.append("text").attr("x", (d, i) => i * 50 + 13).attr("y",75).attr("fill", "black").text(d => d.value);
     if (change !== undefined) {
-        rec.transition().delay(200).duration(800)
-            .attr("x", (d, i) => change[i] * 50 + 1)
-        text.transition().delay(200).duration(800)
+        rec.transition().duration(800).attr("x", (d, i) => change[i] * 50 + 1)
+        text.transition().duration((d, i) => 800)
             .attr("x", (d, i) => change[i] * 50 + 13)
     }
 }
@@ -724,6 +723,7 @@ function reset() {
 }
 function start() {
     if (step >= changeList.length) {
+        auto = false;
         return;
     }
     let next = changeList[step];
@@ -739,6 +739,25 @@ setInterval(() => {
 }, 1000);
 </script>
 
+
+<p>这是一个最坏情况的冒泡排序，我们比较并交换了$10$次数组中的元素。</p>
+<p>如果是最好的情况（已排序），我们只需要比较$4$次并且不做任何的交换就可以了。</p>
+<p>我们对于输入$n$，可以得出冒泡排序中最坏情况需要比较和交换$1+2+\dots+(n-1)$次，也就是$\frac{n(n-1)}{2}$次。</p>
+<hr>
+<p>看一个书上的例子，查找某个数在数组中的位置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">seqSearch</span><span class="params">(<span class="keyword">int</span>[] E, <span class="keyword">int</span> n, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans, index;</span><br><span class="line">    ans = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(index = <span class="number">0</span>; index &lt; n; ++index) &#123;</span><br><span class="line">        <span class="keyword">if</span> (K == E[index]) &#123;</span><br><span class="line">            ans = index;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们定义一下基本操作为比较$x$和数组的元素。</p>
+<p>最坏分析： $W(n)=n$，也就是把所有的元素都比较以便才找到或者没找到对应的位置。</p>
+<p>我们在假定数组中的元素各不相同下分析一下平均情况，记事件$K$在数组$E$中为$succ$,不在记为$fail$。</p>
+<p>当$K$在$E$中时，令$t(I)$为输入$I$时的比较次数，我们有:</p>
+<p>$$<br>\begin{split}<br>A_{succ}(n)&amp;=\sum_{i=0}^{n-1}P_r(I_i\vert succ)t(I_i) \\<br>&amp;=\sum_{i=0}^{n-1}(\frac{1}{n})(i+1) \\<br>&amp;=\frac{n+1}{2}<br>\end{split}<br>$$</p>
+<p>而$K$不在$E$中时我们有：</p>
+<p>$$<br>A_{fail}(n)=n<br>$$</p>
+<p>进一步：</p>
+<p>$$<br>A(n)=P_r(succ)A_{succ}(n)+P_r(fail)A_{fail}(n)=n(1-\frac{1}{2}q)+\frac{1}{2}q<br>$$</p>
+<p>其中$q$为$K$在$E$中的概率。</p>
+<hr>
+<p>再看一个</p>
 
       
     </div>
