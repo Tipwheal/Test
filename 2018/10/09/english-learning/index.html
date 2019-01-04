@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="如何扩大单词量 如何提高听力">
+  <meta name="description" content="下一个    #main-div {     background-color: #fad689;     min-width: 400px;     min-height: 140px;     margin-bottom: 40px;     padding: 15px;     border: 2px sol">
 <meta name="keywords" content="学习,英语">
 <meta property="og:type" content="article">
-<meta property="og:title" content="收集英语单词">
+<meta property="og:title" content="收集&#x2F;背英语单词">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/09/english-learning/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="如何扩大单词量 如何提高听力">
+<meta property="og:description" content="下一个    #main-div {     background-color: #fad689;     min-width: 400px;     min-height: 140px;     margin-bottom: 40px;     padding: 15px;     border: 2px sol">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-14T06:39:09.505Z">
+<meta property="og:updated_time" content="2019-01-04T10:55:40.630Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="收集英语单词">
-<meta name="twitter:description" content="如何扩大单词量 如何提高听力">
+<meta name="twitter:title" content="收集&#x2F;背英语单词">
+<meta name="twitter:description" content="下一个    #main-div {     background-color: #fad689;     min-width: 400px;     min-height: 140px;     margin-bottom: 40px;     padding: 15px;     border: 2px sol">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>收集英语单词 | 当然要记笔记啊</title>
+  <title>收集/背英语单词 | 当然要记笔记啊</title>
   
 
 
@@ -359,7 +359,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">收集英语单词
+          <h1 class="post-title" itemprop="name headline">收集/背英语单词
               
             
           </h1>
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-14 14:39:09" itemprop="dateModified" datetime="2018-12-14T14:39:09+08:00">2018-12-14</time>
+                <time title="修改时间：2019-01-04 18:55:40" itemprop="dateModified" datetime="2019-01-04T18:55:40+08:00">2019-01-04</time>
               
             
           </span>
@@ -460,10 +460,41 @@
       
 
       
-        <p>如何扩大单词量</p>
-<p>如何提高听力</p>
+        
+
+<div id="wrapper">
+    <div id="main-div">
+        <span id="title"></span>
+        <br>
+        <span id="text-content"></span>
+    </div>
+    <button class="btn" onclick="render(getRandom())">下一个</button>
+</div>
+
+<style type="text/css">
+#main-div {
+    background-color: #fad689;
+    min-width: 400px;
+    min-height: 140px;
+    margin-bottom: 40px;
+    padding: 15px;
+    border: 2px solid black;
+}
+
+#title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
+
+
 <a id="more"></a>
-<p>太难了</p>
 <h3 id="收集一些翻到的英语词汇"><a href="#收集一些翻到的英语词汇" class="headerlink" title="收集一些翻到的英语词汇"></a>收集一些翻到的英语词汇</h3><h4 id="perpendicular"><a href="#perpendicular" class="headerlink" title="perpendicular"></a>perpendicular</h4><p>adj. 垂直的，成直角的<br>n. 垂直线，垂直面</p>
 <h4 id="namely"><a href="#namely" class="headerlink" title="namely"></a>namely</h4><p>adv. 即，也就是说</p>
 <h4 id="coordinate"><a href="#coordinate" class="headerlink" title="coordinate"></a>coordinate</h4><p>vt. 使协调，使调和<br>vi. 协调，协同<br>adj. 同等的;带有同等性质的</p>
@@ -524,6 +555,29 @@
 <h4 id="subtle"><a href="#subtle" class="headerlink" title="subtle"></a>subtle</h4><p>adj. 微妙的，巧妙的，敏感的，狡猾的</p>
 <h4 id="tidbit"><a href="#tidbit" class="headerlink" title="tidbit"></a>tidbit</h4><p>n. 趣闻，（美味食物的）一口，小栏报导</p>
 <h4 id="decent"><a href="#decent" class="headerlink" title="decent"></a>decent</h4><p>adj. 正派的，得体的，相称的，合宜的</p>
+<h4 id="anecdote"><a href="#anecdote" class="headerlink" title="anecdote"></a>anecdote</h4><p>a short, often funny story, especially about something someone has done<br>n. 趣闻，轶事</p>
+
+
+<script>
+function getRandom() {
+    let titles = document.querySelectorAll('h4');
+    let ps = document.querySelectorAll('p');
+    let len = titles.length;
+    let rand = Math.floor(Math.random() * len); 
+    return {
+        title: titles[rand].id,
+        text: ps[rand+1].innerText
+    }
+}
+function render(card) {
+    let title = document.querySelector('#title');
+    let content = document.querySelector('#text-content');
+    title.innerText = card.title;
+    content.innerText = card.text;
+}
+render(getRandom());
+</script>
+
 
       
     </div>
@@ -870,7 +924,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#收集一些翻到的英语词汇"><span class="nav-number">1.</span> <span class="nav-text">收集一些翻到的英语词汇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#perpendicular"><span class="nav-number">1.1.</span> <span class="nav-text">perpendicular</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#namely"><span class="nav-number">1.2.</span> <span class="nav-text">namely</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#coordinate"><span class="nav-number">1.3.</span> <span class="nav-text">coordinate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regardless-of"><span class="nav-number">1.4.</span> <span class="nav-text">regardless of</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#obscure"><span class="nav-number">1.5.</span> <span class="nav-text">obscure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#perspective"><span class="nav-number">1.6.</span> <span class="nav-text">perspective</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#distortion"><span class="nav-number">1.7.</span> <span class="nav-text">distortion</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interpolation"><span class="nav-number">1.8.</span> <span class="nav-text">interpolation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#revise"><span class="nav-number">1.9.</span> <span class="nav-text">revise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#permeate"><span class="nav-number">1.10.</span> <span class="nav-text">permeate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#photon"><span class="nav-number">1.11.</span> <span class="nav-text">photon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#striking"><span class="nav-number">1.12.</span> <span class="nav-text">striking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#comprise"><span class="nav-number">1.13.</span> <span class="nav-text">comprise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#squish"><span class="nav-number">1.14.</span> <span class="nav-text">squish</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#retention"><span class="nav-number">1.15.</span> <span class="nav-text">retention</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innocent"><span class="nav-number">1.16.</span> <span class="nav-text">innocent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mole"><span class="nav-number">1.17.</span> <span class="nav-text">mole</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#proleptic"><span class="nav-number">1.18.</span> <span class="nav-text">proleptic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#temporal"><span class="nav-number">1.19.</span> <span class="nav-text">temporal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#corpus"><span class="nav-number">1.20.</span> <span class="nav-text">corpus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#semantics"><span class="nav-number">1.21.</span> <span class="nav-text">semantics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#farewell"><span class="nav-number">1.22.</span> <span class="nav-text">farewell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#magnificant"><span class="nav-number">1.23.</span> <span class="nav-text">magnificant</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nap"><span class="nav-number">1.24.</span> <span class="nav-text">nap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tinker"><span class="nav-number">1.25.</span> <span class="nav-text">tinker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intrinsic"><span class="nav-number">1.26.</span> <span class="nav-text">intrinsic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#harness"><span class="nav-number">1.27.</span> <span class="nav-text">harness</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#concretize"><span class="nav-number">1.28.</span> <span class="nav-text">concretize</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#provably"><span class="nav-number">1.29.</span> <span class="nav-text">provably</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#caveat"><span class="nav-number">1.30.</span> <span class="nav-text">caveat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fledge"><span class="nav-number">1.31.</span> <span class="nav-text">fledge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nasty"><span class="nav-number">1.32.</span> <span class="nav-text">nasty</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#feasibility"><span class="nav-number">1.33.</span> <span class="nav-text">feasibility</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dissecting"><span class="nav-number">1.34.</span> <span class="nav-text">dissecting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sprite"><span class="nav-number">1.35.</span> <span class="nav-text">sprite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#affirmative"><span class="nav-number">1.36.</span> <span class="nav-text">affirmative</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prone"><span class="nav-number">1.37.</span> <span class="nav-text">prone</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#acquaint"><span class="nav-number">1.38.</span> <span class="nav-text">acquaint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#purge"><span class="nav-number">1.39.</span> <span class="nav-text">purge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#explanatory"><span class="nav-number">1.40.</span> <span class="nav-text">explanatory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#restate"><span class="nav-number">1.41.</span> <span class="nav-text">restate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#taint"><span class="nav-number">1.42.</span> <span class="nav-text">taint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scarce"><span class="nav-number">1.43.</span> <span class="nav-text">scarce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#elaborate"><span class="nav-number">1.44.</span> <span class="nav-text">elaborate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#aforementioned"><span class="nav-number">1.45.</span> <span class="nav-text">aforementioned</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ambitiously"><span class="nav-number">1.46.</span> <span class="nav-text">ambitiously</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auxiliary"><span class="nav-number">1.47.</span> <span class="nav-text">auxiliary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tighten"><span class="nav-number">1.48.</span> <span class="nav-text">tighten</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#impose"><span class="nav-number">1.49.</span> <span class="nav-text">impose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#legit"><span class="nav-number">1.50.</span> <span class="nav-text">legit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recap"><span class="nav-number">1.51.</span> <span class="nav-text">recap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oversights"><span class="nav-number">1.52.</span> <span class="nav-text">oversights</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dedicated"><span class="nav-number">1.53.</span> <span class="nav-text">dedicated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#concatenated"><span class="nav-number">1.54.</span> <span class="nav-text">concatenated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innocuous"><span class="nav-number">1.55.</span> <span class="nav-text">innocuous</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intermingle"><span class="nav-number">1.56.</span> <span class="nav-text">intermingle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#trivial"><span class="nav-number">1.57.</span> <span class="nav-text">trivial</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#subtle"><span class="nav-number">1.58.</span> <span class="nav-text">subtle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tidbit"><span class="nav-number">1.59.</span> <span class="nav-text">tidbit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decent"><span class="nav-number">1.60.</span> <span class="nav-text">decent</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#收集一些翻到的英语词汇"><span class="nav-number">1.</span> <span class="nav-text">收集一些翻到的英语词汇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#perpendicular"><span class="nav-number">1.1.</span> <span class="nav-text">perpendicular</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#namely"><span class="nav-number">1.2.</span> <span class="nav-text">namely</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#coordinate"><span class="nav-number">1.3.</span> <span class="nav-text">coordinate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regardless-of"><span class="nav-number">1.4.</span> <span class="nav-text">regardless of</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#obscure"><span class="nav-number">1.5.</span> <span class="nav-text">obscure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#perspective"><span class="nav-number">1.6.</span> <span class="nav-text">perspective</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#distortion"><span class="nav-number">1.7.</span> <span class="nav-text">distortion</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interpolation"><span class="nav-number">1.8.</span> <span class="nav-text">interpolation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#revise"><span class="nav-number">1.9.</span> <span class="nav-text">revise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#permeate"><span class="nav-number">1.10.</span> <span class="nav-text">permeate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#photon"><span class="nav-number">1.11.</span> <span class="nav-text">photon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#striking"><span class="nav-number">1.12.</span> <span class="nav-text">striking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#comprise"><span class="nav-number">1.13.</span> <span class="nav-text">comprise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#squish"><span class="nav-number">1.14.</span> <span class="nav-text">squish</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#retention"><span class="nav-number">1.15.</span> <span class="nav-text">retention</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innocent"><span class="nav-number">1.16.</span> <span class="nav-text">innocent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mole"><span class="nav-number">1.17.</span> <span class="nav-text">mole</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#proleptic"><span class="nav-number">1.18.</span> <span class="nav-text">proleptic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#temporal"><span class="nav-number">1.19.</span> <span class="nav-text">temporal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#corpus"><span class="nav-number">1.20.</span> <span class="nav-text">corpus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#semantics"><span class="nav-number">1.21.</span> <span class="nav-text">semantics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#farewell"><span class="nav-number">1.22.</span> <span class="nav-text">farewell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#magnificant"><span class="nav-number">1.23.</span> <span class="nav-text">magnificant</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nap"><span class="nav-number">1.24.</span> <span class="nav-text">nap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tinker"><span class="nav-number">1.25.</span> <span class="nav-text">tinker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intrinsic"><span class="nav-number">1.26.</span> <span class="nav-text">intrinsic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#harness"><span class="nav-number">1.27.</span> <span class="nav-text">harness</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#concretize"><span class="nav-number">1.28.</span> <span class="nav-text">concretize</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#provably"><span class="nav-number">1.29.</span> <span class="nav-text">provably</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#caveat"><span class="nav-number">1.30.</span> <span class="nav-text">caveat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fledge"><span class="nav-number">1.31.</span> <span class="nav-text">fledge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nasty"><span class="nav-number">1.32.</span> <span class="nav-text">nasty</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#feasibility"><span class="nav-number">1.33.</span> <span class="nav-text">feasibility</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dissecting"><span class="nav-number">1.34.</span> <span class="nav-text">dissecting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sprite"><span class="nav-number">1.35.</span> <span class="nav-text">sprite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#affirmative"><span class="nav-number">1.36.</span> <span class="nav-text">affirmative</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prone"><span class="nav-number">1.37.</span> <span class="nav-text">prone</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#acquaint"><span class="nav-number">1.38.</span> <span class="nav-text">acquaint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#purge"><span class="nav-number">1.39.</span> <span class="nav-text">purge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#explanatory"><span class="nav-number">1.40.</span> <span class="nav-text">explanatory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#restate"><span class="nav-number">1.41.</span> <span class="nav-text">restate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#taint"><span class="nav-number">1.42.</span> <span class="nav-text">taint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scarce"><span class="nav-number">1.43.</span> <span class="nav-text">scarce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#elaborate"><span class="nav-number">1.44.</span> <span class="nav-text">elaborate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#aforementioned"><span class="nav-number">1.45.</span> <span class="nav-text">aforementioned</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ambitiously"><span class="nav-number">1.46.</span> <span class="nav-text">ambitiously</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auxiliary"><span class="nav-number">1.47.</span> <span class="nav-text">auxiliary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tighten"><span class="nav-number">1.48.</span> <span class="nav-text">tighten</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#impose"><span class="nav-number">1.49.</span> <span class="nav-text">impose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#legit"><span class="nav-number">1.50.</span> <span class="nav-text">legit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recap"><span class="nav-number">1.51.</span> <span class="nav-text">recap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oversights"><span class="nav-number">1.52.</span> <span class="nav-text">oversights</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dedicated"><span class="nav-number">1.53.</span> <span class="nav-text">dedicated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#concatenated"><span class="nav-number">1.54.</span> <span class="nav-text">concatenated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innocuous"><span class="nav-number">1.55.</span> <span class="nav-text">innocuous</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intermingle"><span class="nav-number">1.56.</span> <span class="nav-text">intermingle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#trivial"><span class="nav-number">1.57.</span> <span class="nav-text">trivial</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#subtle"><span class="nav-number">1.58.</span> <span class="nav-text">subtle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tidbit"><span class="nav-number">1.59.</span> <span class="nav-text">tidbit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decent"><span class="nav-number">1.60.</span> <span class="nav-text">decent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#anecdote"><span class="nav-number">1.61.</span> <span class="nav-text">anecdote</span></a></li></ol></li></ol></div>
             
 
           </div>

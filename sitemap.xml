@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tipwheal.github.io/blog/about/index.html</loc>
+    <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
     
-    <lastmod>2019-01-03T15:46:58.369Z</lastmod>
+    <lastmod>2019-01-04T10:55:40.630Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://tipwheal.github.io/blog/2018/12/16/notes-caida/</loc>
     
-    <lastmod>2019-01-03T15:32:22.635Z</lastmod>
+    <lastmod>2019-01-04T10:24:25.614Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/about/index.html</loc>
+    
+    <lastmod>2019-01-03T15:46:58.369Z</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>https://tipwheal.github.io/blog/2018/11/06/draft/</loc>
     
     <lastmod>2018-12-16T12:02:24.155Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
-    
-    <lastmod>2018-12-14T06:39:09.505Z</lastmod>
     
   </url>
   
