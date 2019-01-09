@@ -108,21 +108,22 @@
 
 
 
-  <meta name="description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://tipwheal.github.io/blog/">
+  <meta name="description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://             tipwheal.github.i">
 <meta name="keywords" content="导航">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网站导航">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://tipwheal.github.io/blog/">
+<meta property="og:description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://             tipwheal.github.i">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/tirefox.svg">
 <meta property="og:image" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/exit.svg">
 <meta property="og:image" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/lock.svg">
-<meta property="og:updated_time" content="2019-01-09T08:00:28.577Z">
+<meta property="og:updated_time" content="2019-01-09T08:24:40.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网站导航">
-<meta name="twitter:description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://tipwheal.github.io/blog/">
-<meta name="twitter:image" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/exit.svg">
+<meta name="twitter:description" content="推荐使用&amp;nbsp;TireFox&amp;nbsp;倦糊浏览器&amp;nbsp;!                                                                                     https://             tipwheal.github.i">
+<meta name="twitter:image" content="https://tipwheal.github.io/blog/2019/01/09/nav-page/tirefox.svg">
 
 
 
@@ -388,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-01-09 10:38:54 / 修改时间：16:00:28" itemprop="dateCreated datePublished" datetime="2019-01-09T10:38:54+08:00">2019-01-09</time>
+              <time title="创建时间：2019-01-09 10:38:54 / 修改时间：16:24:40" itemprop="dateCreated datePublished" datetime="2019-01-09T10:38:54+08:00">2019-01-09</time>
             
 
             
@@ -439,6 +440,7 @@
 <div id="wrapper">
     <div id="title">
         <div id="bar">
+            <img src="/blog/2019/01/09/nav-page/tirefox.svg">
             <span>推荐使用&nbsp;TireFox&nbsp;倦糊浏览器&nbsp;!</span>
         </div>
         <div id="tool">
@@ -448,7 +450,9 @@
     <div id="content-nav">
         <div id="nav-input">
             <img src="/blog/2019/01/09/nav-page/lock.svg">
-            <span>https://tipwheal.github.io/blog/</span>
+            <span style="color: gray">https://</span>
+            <span>tipwheal.github.io</span>
+            <span style="color: gray">/blog/</span>
         </div>
     </div>
     <div id="content-main">
@@ -483,11 +487,24 @@
     align-items: center;
     border-bottom: 1px solid #7D6C46;
     color: white;
-    padding: 0 5px;
+    user-select: none;
+    -moz-user-select: none;
+    font-size: 0.95rem;
 }
 
 #bar {
     flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#bar img {
+    width: 20px;
+    height: 20px;
+    margin: 0 2px;
+    border: none;
+    user-select: none;
+    -moz-user-select: none;
 }
 
 #tool img {
@@ -497,6 +514,7 @@
     border: none;
     user-select: none;
     -moz-user-select: none;
+    margin-right: 2px;
 }
 
 #content-nav {
@@ -518,6 +536,7 @@
     display: flex;
     align-items: center;
     cursor: text;
+    font-size: 0.95rem;
 }
 
 #nav-input img {
