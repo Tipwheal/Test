@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2019/01/09/nav-page/</loc>
+    
+    <lastmod>2019-01-09T03:51:11.151Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/10/26/bezier-curve/</loc>
+    
+    <lastmod>2019-01-09T02:38:45.036Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
     
-    <lastmod>2019-01-07T14:12:40.120Z</lastmod>
+    <lastmod>2019-01-08T04:22:29.279Z</lastmod>
     
   </url>
   
@@ -166,13 +180,6 @@
     <loc>https://tipwheal.github.io/blog/2018/10/25/jenkins/</loc>
     
     <lastmod>2018-11-06T15:32:15.280Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/26/bezier-curve/</loc>
-    
-    <lastmod>2018-10-26T06:31:04.414Z</lastmod>
     
   </url>
   
