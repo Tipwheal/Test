@@ -109,16 +109,16 @@
 
 
   <meta name="description" content="to do list下面是我计划关注的方面  多态和继承 运算符重载 常用的库 函数模板和类模板 元编程 指针和引用 IO 网络编程 多线程 数据库  开发环境搭建打算使用windows上的能看文件结构的编辑器+在linux上编译执行 搭完了 最后还是用了mingw">
-<meta name="keywords" content="学习,c++">
+<meta name="keywords" content="学习,c++,笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何学习c++">
+<meta property="og:title" content="Effective C++ 的笔记">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2018/10/09/cpp-learning/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="to do list下面是我计划关注的方面  多态和继承 运算符重载 常用的库 函数模板和类模板 元编程 指针和引用 IO 网络编程 多线程 数据库  开发环境搭建打算使用windows上的能看文件结构的编辑器+在linux上编译执行 搭完了 最后还是用了mingw">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-20T16:03:48.162Z">
+<meta property="og:updated_time" content="2019-01-09T06:03:54.926Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何学习c++">
+<meta name="twitter:title" content="Effective C++ 的笔记">
 <meta name="twitter:description" content="to do list下面是我计划关注的方面  多态和继承 运算符重载 常用的库 函数模板和类模板 元编程 指针和引用 IO 网络编程 多线程 数据库  开发环境搭建打算使用windows上的能看文件结构的编辑器+在linux上编译执行 搭完了 最后还是用了mingw">
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>如何学习c++ | 当然要记笔记啊</title>
+  <title>Effective C++ 的笔记 | 当然要记笔记啊</title>
   
 
 
@@ -359,13 +359,14 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">如何学习c++
+          <h1 class="post-title" itemprop="name headline">Effective C++ 的笔记
               
             
           </h1>
         
 
         <div class="post-meta">
+
           <span class="post-time">
 
             
@@ -401,11 +402,36 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-21 00:03:48" itemprop="dateModified" datetime="2018-10-21T00:03:48+08:00">2018-10-21</time>
+                <time title="修改时间：2019-01-09 14:03:54" itemprop="dateModified" datetime="2019-01-09T14:03:54+08:00">2019-01-09</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -482,6 +508,8 @@
           
             <a href="/blog/tags/c/" rel="tag"># c++</a>
           
+            <a href="/blog/tags/笔记/" rel="tag"># 笔记</a>
+          
         </div>
       
 
@@ -503,8 +531,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/10/09/algorithm-learning/" rel="prev" title="如何学习算法">
-                如何学习算法 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/10/09/english-learning/" rel="prev" title="收集/背英语单词">
+                收集/背英语单词 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -579,7 +607,7 @@
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -591,6 +619,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/blog/categories/index.html">
                     
+                    
+                      
                     
                       
                     
@@ -737,6 +767,16 @@
                     
                       
                     
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
                     <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -772,6 +812,10 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="https://itxia.club/" title="IT侠公益协会" target="_blank">IT侠公益协会</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.pmforever.cn/" title="浮芸姐姐的博客" target="_blank">浮芸姐姐的博客</a>
                   </li>
                 
               </ul>
@@ -816,7 +860,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
