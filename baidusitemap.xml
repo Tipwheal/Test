@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
+    <lastmod>2019-01-12T13:48:37.886Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/01/12/audio-test/</loc>
+    <lastmod>2019-01-12T13:15:54.375Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/cpp-learning/</loc>
     <lastmod>2019-01-11T13:52:05.481Z</lastmod>
   </url>  <url>
@@ -9,9 +15,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/26/bezier-curve/</loc>
     <lastmod>2019-01-09T02:38:45.036Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
-    <lastmod>2019-01-08T04:22:29.279Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/11/06/draft/</loc>
     <lastmod>2019-01-07T13:27:45.068Z</lastmod>
