@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[请勿打开]]></title>
+    <url>%2Fblog%2F2019%2F01%2F17%2Fbm-test%2F</url>
+    <content type="text"><![CDATA[当前文件：&nbsp; 读取 保存 测试 下载一个初始化文件 br { margin-bottom: 20px; } #mainDiv { display: flex; height: 400px; width: 300px; overflow-y: scroll; } let fileName = ''; let fileData = ''; let state = '未读取'; let viewState = { showNav: true, } function init() { let obj = { teams: [ '雄鹿', '猛龙', '步行者', '76人', '凯尔特人', '热火', '篮网', '黄蜂', '活塞', '魔术', '奇才', '老鹰', '尼克斯', '公牛', '骑士', '勇士', '掘金', '雷霆', '开拓者', '火箭', '马刺', '快船', '爵士', '湖人', '国王', '森林狼', '鹈鹕', '独行侠', '灰熊', '太阳', ], } let blob = new Blob([JSON.stringify(obj)], { type: "text/plain;charset=utf-8" }); saveAs(blob, getTime() + 'INIT.json'); } function createLine(text) { const lineTemplate = ` `; let newNode = new DOMParser().parseFromString('', 'text/html').querySelector('.wrapper'); } function initGameData() { } function load() { let file = document.getElementById("selectFile").files; fileName = file[0].name; let reader = new FileReader(); reader.readAsText(file[0], "UTF-8"); reader.onload = function(evt){ fileData = evt.target.result; changeName(); } } function getTime() { let datetime = new Date(); return datetime.getFullYear() + '-' + (datetime.getMonth() + 1) + '-' + datetime.getDate() + 'T' + datetime.getHours() + '-' + datetime.getMinutes() + '-' + datetime.getSeconds(); } function changeName() { let theSpan = document.getElementById("state"); theSpan.innerText = fileName; } function save() { let blob = new Blob([fileData], { type: "text/plain;charset=utf-8" }); saveAs(blob, getTime() + fileName); } function test() { // console.log(JSON.parse(fileData)); // console.log(data.test); }]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[试一试tensorflowjs]]></title>
+    <url>%2Fblog%2F2019%2F01%2F15%2Ftfjs-test%2F</url>
+    <content type="text"><![CDATA[开始训练 测试 const model = tf.sequential(); model.add(tf.layers.dense({ units: 100, activation: 'relu', inputDim: 10, })); model.add(tf.layers.dense({ units: 1, activation: 'linear', })); model.compile({ optimizer: 'sgd', loss: 'meanSquaredError', }); function fit() { const xs = tf.randomNormal([100, 10]); const ys = tf.randomNormal([100, 1]); model.fit(xs, ys, { epochs: 10, callbacks: { onEpochEnd: (epoch, log) => { console.log("epoch: " + epoch + " loss: " + log.loss); } }, }); model.predict(tf.randomNormal([1, 10])).print(); } function test() { const md = tf.sequential(); let img = new Image(); img.src = 'http://localhost:4000/blog/images/avatar.jpg'; let tfimg = tf.fromPixels(img); console.log(tfimg.shape); let ttt = tfimg.expandDims(); let fltimg = tfimg.flatten(); const xs = tf.randomNormal(ttt.shape); md.add(tf.layers.conv2d({ inputShape: tfimg.shape, filters: 5, kernelSize: [3, 3], })); // md.add(tf.layers.flatten({ // inputShape: tfimg.shape // })); // md.add(tf.layers.dense({ // units: 100, // activation: 'sigmoid', // })); md.add(tf.layers.dense({ units: 100, activation: 'sigmoid', })); md.add(tf.layers.dense({ units: fltimg, activation: 'sigmoid', })); md.add(tf.layers.reshape({ targetShape: tfimg.shape })); md.summary(); md.compile({ optimizer: 'sgd', loss: 'meanSquaredError', }); md.fit(xs, ttt, { epochs: 10, callbacks: { onEpochEnd: (epoch, log) => { console.log("epoch: " + epoch + " loss: " + log.loss); } }, }); }]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[合成钢琴声测试]]></title>
     <url>%2Fblog%2F2019%2F01%2F13%2Fsynth-piano%2F</url>
     <content type="text"><![CDATA[https://www.soundonsound.com/techniques/whats-sound 这里有好东西 https://www.soundonsound.com/search/articles/%22Synth%20Secrets%22?solrsort=ds_created%20asc&amp;f%5B0%5D=im_field_subject%3A8106 VCF，EG，和LFO分别是什么呢？ 我只是想模拟一下钢琴的声音，才发现这件事情有点复杂。It’s all greek for me. 我应该学习一些subtractive synthesis。 啊哈 sine, square, sawtooth, triangle提供了四种不同的音色（它们的波形不一样） gainNode可以调整它们的音量大小，这样我们至少可以组合出一个最像的出来。 我们可以用sine波，把频率调为整数倍来合成，这样频率并不会改变。 比如录一个比较干净的钢琴声，然后用神经网络训练出一个接近的组合。 (下面的频率指261的倍数) 播放 sine square triangle sawtooth 删除此行 添加 .wrapper { margin-top: 10px; display: flex; } button { margin-left: 10px; } #btn-last { margin-top: 10px; } select { margin-left: 10px; border: 2px solid #555; border-radius: 2px; appearance: none; -webkit-appearance: none; -moz-appearance: none; text-align: center; cursor: pointer; } input::input-placeholder { text-align: center; } ::-webkit-input-placeholder { text-align: center; } :-moz-placeholder { text-align: center; } ::-moz-placeholder { text-align: center; } :-ms-input-placeholder { text-align: center; } input { margin-left: 10px; width: 70px; border: 2px solid #555; border-radius: 2px; text-align: center; } window.AudioContext = window.AudioContext||window.webkitAudioContext; const context = new AudioContext(); const typeList = ['sine', 'square', 'triangle', 'sawtooth'] function getOscillator(typeNum, freq, gain) { let oscillator = context.createOscillator(); let gainNode = context.createGain(); oscillator.connect(gainNode); gainNode.gain.value = gain; gainNode.connect(context.destination); oscillator.type = typeList[typeNum]; oscillator.frequency.value = freq; return oscillator; } function getCurrentList() { const items = document.getElementsByClassName('wrapper'); let result = []; for(let i = 0;i]]></content>
@@ -8,7 +18,7 @@
   <entry>
     <title><![CDATA[Audio！]]></title>
     <url>%2Fblog%2F2019%2F01%2F12%2Faudio-test%2F</url>
-    <content type="text"><![CDATA[播放 另一个 window.AudioContext = window.AudioContext||window.webkitAudioContext; const context = new AudioContext(); function playSound(buffer){ let source = context.createBufferSource(); source = context.createBuffersource(); source.buffer = buffer; source.connect(context.destination); source.start(0); } const s = [ [16, 18, 21, 22, 25, 28, 31], [33, 36, 41, 44, 49, 55, 62], [65, 73, 82, 87, 98, 110, 123], [131, 147, 165, 175, 196, 220, 247], [261, 293, 329, 349, 392, 440, 493], [523, 587, 659, 698, 784, 880, 988], [1047, 1175, 1319, 1397, 1568, 1760, 1976], [2093, 2349, 2637, 2794, 3136, 3520, 3951], [4186, 4697, 5274, 5588, 6272, 7040, 7902], [8372, 9398, 10548, 11176, 12544, 14080, 15805], ]; const sh = [ ]; let combList = ['sine', 'square', 'triangle', 'sawtooth'] let testTone = [ [0, 1, 0.8], [0, 2, 0.3], [0, 3, 0.2], [2, 1, 0.05], ] let tone2 = [ [1, 1, 0.1], ] function playValue(freq, start, stop, amp) { if(amp < 1) { let curT = tone2[0]; let curO = getOscillator(combList[curT[0]], freq * curT[1], curT[2] * amp); curO.start(start); curO.stop(stop); } for(let i = 0;i]]></content>
+    <content type="text"><![CDATA[不要用手机点哦… 播放 demo1 demo2 window.AudioContext = window.AudioContext||window.webkitAudioContext; const context = new AudioContext(); function playSound(buffer){ let source = context.createBufferSource(); source = context.createBuffersource(); source.buffer = buffer; source.connect(context.destination); source.start(0); } const s = [ [16, 18, 21, 22, 25, 28, 31], [33, 36, 41, 44, 49, 55, 62], [65, 73, 82, 87, 98, 110, 123], [131, 147, 165, 175, 196, 220, 247], [261, 293, 329, 349, 392, 440, 493], [523, 587, 659, 698, 784, 880, 988], [1047, 1175, 1319, 1397, 1568, 1760, 1976], [2093, 2349, 2637, 2794, 3136, 3520, 3951], [4186, 4697, 5274, 5588, 6272, 7040, 7902], [8372, 9398, 10548, 11176, 12544, 14080, 15805], ]; const sh = [ [17, 19, 0, 23, 26, 29, 0], [35, 39, 0, 46, 52, 58, 0], [69, 78, 0, 93, 104, 117, 0], [139, 156, 0, 185, 208, 233, 0], [277, 311, 0, 370, 415, 466, 0], [554, 622, 0, 740, 831, 932, 0], [1109, 1245, 0, 1480, 1661, 1865, 0], [2218, 2489, 0, 2960, 3323, 3729, 0], [4435, 4978, 0, 5920, 6645, 7459, 0], [8870, 9398, 0, 11840, 13290, 14918, 0], ]; let combList = ['sine', 'square', 'triangle', 'sawtooth'] let testTone = [ [0, 1, 0.8], [0, 2, 0.3], [0, 3, 0.2], [2, 1, 0.05], ] let tone2 = [ [1, 1, 0.1], ] function playValue(freq, start, stop, amp) { console.log(freq + " " + start + " " + stop + " " + amp); if(amp < 1) { let curT = tone2[0]; let curO = getOscillator(combList[curT[0]], freq * curT[1], curT[2] * amp); curO.start(start); curO.stop(stop); } for(let i = 0;i]]></content>
   </entry>
   <entry>
     <title><![CDATA[网站导航]]></title>
@@ -107,8 +117,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>隐马尔可夫模型</tag>
+        <tag>自然语言处理</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -120,10 +130,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
+        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
-        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -160,8 +170,8 @@
         <category>微积分</category>
       </categories>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
         <tag>常微分方程</tag>
       </tags>
   </entry>
@@ -354,8 +364,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Ftrigonometric-series%2F</url>
     <content type="text"><![CDATA[三角级数$\quad$一般地，以$A_k\sin(kx+\varphi_k)$为项作成的无穷级数 $$\sum\limits_{k=0}^{\infty}A_k\sin(kx+\varphi_k)$$ 称为三角级数.（所以首先三角级数都是无穷级数） 但是有时候也会取如下形式： $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}(a_k\cos{kx}+b_k\sin{kx})。$$ 周期函数周期函数有初相,振幅,频率 正弦级数给三角级数中所有的$a_k$取$0$，可以得到如下的正弦级数: $$\sum\limits_{k=1}^{\infty}b_k\sin{kx}$$ 余弦级数类似的操作可以得到余弦级数 $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}a_k\cos{kx}$$ 傅里叶级数$$\begin{split}A_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\cos{nx}\mathtt{d}x \\B_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\sin{nx}\mathtt{d}x\end{split}$$ 这里用的符号和上面不一样呢 应该打屁股]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
         <tag>级数</tag>
       </tags>
   </entry>
@@ -364,8 +374,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fcurve-line-integral%2F</url>
     <content type="text"><![CDATA[曲线积分第一类曲线积分第一类曲线积分用来求一个曲线物体的质量.当物体的密度是一个常值时，只需要将密度乘以弧长就可以得到质量.当物体的密度不均匀时，我们将密度表示为函数$f$，并对函数在曲线上积分，称为第一类曲线积分或者对弧长的曲线积分,记为$\int_Cf(x,y)\mathtt{d}s$，即 $$\int_Cf(x,y)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i)\Delta{s_i}$$ 其中$f(x,y)$称为被积函数,$C$称为积分曲线,$\mathtt{d}s$成为弧微分. 我们可以把这个概念扩展到三维空间或者更高维的空间中： $$\int_Cf(x,y,z)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i,\zeta_i)\Delta{s_i}$$ 第二类曲线积分和第一类曲线积分不同，第二类曲线积分可以用来表示变力沿曲线做的功，是有方向的.第二类曲线积分记为: $$\int_CP(x,y)dx+Q(x,y)dy\quad或\quad\int_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$ 特别地，还可以有对某个方向的曲线积分 沿曲线$C$对坐标$x$的曲线积分$$\int_CP(x,y)dx=\lim_{\lambda\to{0}}\sum_{i=1}^nP(\xi_i,\eta_i)\Delta{x_i}$$ 沿曲线$C$对坐标$y$的曲线积分$$\int_CQ(x,y)dy=\lim_{\lambda\to{0}}\sum_{i=1}^nQ(\xi_i,\eta_i)\Delta{y_i}$$ 既然如此，应该还可以对一个特定的方向积分，就是不知道怎么表示. 如果曲线$C$为闭曲线，则记第二类曲线积分为 $$\oint_CP(x,y)dx+Q(x,y)dy\quad或\quad\oint_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
       </tags>
   </entry>
   <entry>
@@ -373,8 +383,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2FGreen-Formula%2F</url>
     <content type="text"><![CDATA[格林公式的定义和一些练习学习一下格林公式~ 简单闭曲线$\quad$设曲线$C$的参数方程为 $$\begin{cases}x=\varphi(t), \\y=\psi(t)\end{cases}\quad(\alpha\le{t}\le\beta).$$ 如果$\varphi,\psi$连续，且对不同的参数$t_1,t_2\in[\alpha,\beta]$(不妨设$t_1\le{t_2}$),$(\varphi(t_1),\psi(t_1))=(\varphi(t_2),\psi(t_2))$当且仅当$t_1=\alpha,t_2=\beta$,则称$C$为简单闭曲线 单连通区域$\quad$设有一个平面区域$D$,若$D$内的任意一条简单闭曲线所围的部分仍属于$D$，则称$D$为单连通区域，否则称为多连通区域. 格林公式$\quad$设有界闭区域$D$由逐段光滑曲线$C$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则 $$\begin{split}\oint_C{P}\mathtt{d}x+Q\mathtt{d}y=\iint\limits_D\left(\frac{\partial{Q}}{\partial{x}}-\frac{\partial{P}}{\partial{y}}\right)\mathtt{d}x\mathtt{d}y\end{split}$$ 用途通常这些东西总是有用的，我们观察上面的式子。 左边一部分是对光滑曲线$C$的第二类曲线积分，格林公式告诉我们它会与在由曲线围成的平面区域$D$上对两个方向的分量在另一个方向的偏导之差的积分相等. 证明为了加深理解，我们来看一下证明.证明格林公式的时候是拆开证的，也就是 $$\oint_CP\mathtt{d}x=-\iint\limits_D\frac{\partial{P}}{\partial{y}}\mathtt{d}x\mathtt{d}y, \quad\oint_CQ\mathtt{d}y=\iint\frac{\partial{Q}}{\partial{x}}\mathtt{d}x\mathtt{d}y$$ 分以下三种情况讨论: $D$由曲线$y=\varphi_1(x),y=\varphi_2(x)$，及直线$x=a,x=b$围成，即 $$D=\{(x,y)\mid\varphi_1(x)\le{y}\le\varphi_2(x),a\le{x}\le{b}\}$$ $D$是单连通区域，且与某些与$y$轴平行的直线相交多于两点 $D$是多联通区域 做题环节题目1求椭圆$x=a\cos\theta,y=b\sin\theta$所围图形面积. 解： 我们可以从格林公式中得到一个简单的应用： 当$P=-y,Q=x$时，公式就变成了 $$\begin{split}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y=2\iint\limits_D\mathtt{d}x\mathtt{d}y\end{split}$$ 也就是闭区域$D$的面积$A$为: $$\begin{split}A=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y\end{split}$$ 那么求椭圆面积就变为了求解上述式子,有: $$\begin{split}A&amp;=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y \\&amp;=\frac{1}{2}\int_0^{2\pi}{-b\sin\theta}\mathtt{d}{a\cos\theta}+a\cos\theta\mathtt{d}b\sin\theta \\&amp;=\frac{1}{2}\int_0^{2\pi}{ab\sin^2\theta}\mathtt{d}{\theta}+ab\cos^2\theta\mathtt{d}\theta \\&amp;=\frac{1}{2}ab·2\pi \\&amp;=ab\pi\end{split}$$]]></content>
       <tags>
-        <tag>微积分</tag>
         <tag>数学</tag>
+        <tag>微积分</tag>
       </tags>
   </entry>
 </search>
