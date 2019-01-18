@@ -1,0 +1,80 @@
+$middleBlack: #555;
+$hoverGrey: #eee;
+$youth1: #ECF752;
+$youth2: #24D197;
+$youth3: #FFB8B8;
+$youth4: #86E65A;
+$youth5: #79E8D0;
+$middleMargin: 20px;
+
+br {
+    margin-bottom: $middleMargin;
+}
+
+%baseLine {
+    display: flex;
+    justify-content: center;
+    padding: 1px 5px;
+    flex-direction: row;
+    border-bottom: 1px solid $youth3;
+    cursor: pointer;
+    &:hover {
+        background-color: $youth5;
+    }
+}
+
+.gameLine {
+    @extend %baseLine;
+    background-color: $youth1
+;
+}
+
+.navLine {
+    @extend %baseLine;
+    background-color: $youth2;
+}
+
+#contentDiv {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-left: 1px solid $youth3;
+    overflow-y: scroll;
+    background-color: $youth1;
+}
+
+#mainWrapper {
+    background-color: $youth4;
+    margin-top: $middleMargin;
+    display: flex;
+    align-content: start;
+    font-size: 12px;
+    flex-direction: column;
+    border: 2px solid $youth3;
+    border-radius: 2px;
+}
+
+#stateDiv {
+    border-bottom: 1px solid $youth3;
+    padding: 1px 5px;
+    display: flex;
+}
+
+#stateTitle {
+    flex-grow: 1;
+}
+
+#mainDiv {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+    flex-grow: 1;
+}
+
+#sideDiv {
+    min-width: 100px;
+}
+
+#mainDiv::-webkit-scrollbar {
+    display: none
+}

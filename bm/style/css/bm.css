@@ -1,0 +1,58 @@
+br {
+  margin-bottom: 20px; }
+
+.gameLine, .navLine {
+  display: flex;
+  justify-content: center;
+  padding: 1px 5px;
+  flex-direction: row;
+  border-bottom: 1px solid #FFB8B8;
+  cursor: pointer; }
+  .gameLine:hover, .navLine:hover {
+    background-color: #79E8D0; }
+
+.gameLine {
+  background-color: #ECF752; }
+
+.navLine {
+  background-color: #24D197; }
+
+#contentDiv {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-left: 1px solid #FFB8B8;
+  overflow-y: scroll;
+  background-color: #ECF752; }
+
+#mainWrapper {
+  background-color: #86E65A;
+  margin-top: 20px;
+  display: flex;
+  align-content: start;
+  font-size: 12px;
+  flex-direction: column;
+  border: 2px solid #FFB8B8;
+  border-radius: 2px; }
+
+#stateDiv {
+  border-bottom: 1px solid #FFB8B8;
+  padding: 1px 5px;
+  display: flex; }
+
+#stateTitle {
+  flex-grow: 1; }
+
+#mainDiv {
+  display: flex;
+  flex-direction: row;
+  height: 400px;
+  flex-grow: 1; }
+
+#sideDiv {
+  min-width: 100px; }
+
+#mainDiv::-webkit-scrollbar {
+  display: none; }
+
+/*# sourceMappingURL=bm.css.map */
