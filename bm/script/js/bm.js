@@ -192,6 +192,7 @@ var FileUtil = /** @class */ (function () {
             });
         }
         catch (e) {
+            alert(e);
             window.BlobBuilder = window.BlobBuilder ||
                 window.WebkitBlobBuilder ||
                 window.MozBlobBuilder ||

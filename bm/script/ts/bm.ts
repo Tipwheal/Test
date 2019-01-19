@@ -184,6 +184,7 @@ class FileUtil {
                 type: "text/plain;charset=utf-8"
             });
         } catch(e) {
+            alert(e);
             window.BlobBuilder = window.BlobBuilder ||
                 window.WebkitBlobBuilder ||
                 window.MozBlobBuilder ||
