@@ -16,8 +16,10 @@ br {
     justify-content: center;
     padding: 1px 5px;
     flex-direction: row;
-    // min-height: 20px;
     border-bottom: 1px solid $youth3;
+}
+
+%hoverLine {
     cursor: pointer;
     &:hover {
         background-color: $youth5;
@@ -26,12 +28,22 @@ br {
 
 .gameLine {
     @extend %baseLine;
-    background-color: $youth1
-;
+    @extend %hoverLine;
+    background-color: $youth1;
+}
+
+.leftLine {
+    @extend %baseLine;
+    justify-content: start;
+    flex-direction: column;
+    p {
+        margin-bottom: 0;
+    }
 }
 
 .navLine {
     @extend %baseLine;
+    @extend %hoverLine;
     background-color: $youth2;
 }
 
@@ -53,8 +65,6 @@ br {
     flex-direction: column;
     border: 2px solid $youth3;
     border-radius: 2px;
-    height: 400px;
-    overflow: auto;
 }
 
 #stateDiv {
@@ -70,7 +80,8 @@ br {
 #mainDiv {
     display: flex;
     flex-direction: row;
-    height: 1000px;
+    overflow: auto;
+    height: 400px;
     flex-grow: 1;
 }
 

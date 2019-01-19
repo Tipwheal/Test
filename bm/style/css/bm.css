@@ -1,18 +1,26 @@
 br {
   margin-bottom: 20px; }
 
-.gameLine, .navLine {
+.gameLine, .leftLine, .navLine {
   display: flex;
   justify-content: center;
   padding: 1px 5px;
   flex-direction: row;
-  border-bottom: 1px solid #FFB8B8;
+  border-bottom: 1px solid #FFB8B8; }
+
+.gameLine, .navLine {
   cursor: pointer; }
   .gameLine:hover, .navLine:hover {
     background-color: #79E8D0; }
 
 .gameLine {
   background-color: #ECF752; }
+
+.leftLine {
+  justify-content: start;
+  flex-direction: column; }
+  .leftLine p {
+    margin-bottom: 0; }
 
 .navLine {
   background-color: #24D197; }
@@ -33,9 +41,7 @@ br {
   font-size: 12px;
   flex-direction: column;
   border: 2px solid #FFB8B8;
-  border-radius: 2px;
-  height: 400px;
-  overflow: auto; }
+  border-radius: 2px; }
 
 #stateDiv {
   border-bottom: 1px solid #FFB8B8;
@@ -48,7 +54,8 @@ br {
 #mainDiv {
   display: flex;
   flex-direction: row;
-  height: 1000px;
+  overflow: auto;
+  height: 400px;
   flex-grow: 1; }
 
 #sideDiv {
