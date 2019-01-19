@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="不要打开">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-18T15:41:33.570Z">
+<meta property="og:updated_time" content="2019-01-19T00:37:06.667Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请勿打开">
 <meta name="twitter:description" content="不要打开">
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-18 23:41:33" itemprop="dateModified" datetime="2019-01-18T23:41:33+08:00">2019-01-18</time>
+                <time title="修改时间：2019-01-19 08:37:06" itemprop="dateModified" datetime="2019-01-19T08:37:06+08:00">2019-01-19</time>
               
             
           </span>
@@ -491,12 +491,11 @@ let gameState = {
 };
 let game = new Game();
 let timeUtil = new TimeUtil();
+let fileUtil = new FileUtil();
 
 function init() {
     let obj = game.getInitData();
-    let blob = new Blob([JSON.stringify(obj)], {
-        type: "text/plain;charset=utf-8"
-    });
+    let blob = fileUtil.createBlob(obj);
     saveAs(blob, 'BM-INIT.json');
 }
 
@@ -557,10 +556,8 @@ function changeName() {
 }
 
 function save() {
-    let blob = new Blob([fileData], {
-        type: "text/plain;charset=utf-8"
-    });
-    saveAs(blob, timeUtil.getTimeString() + fileName);
+    let blob = fileUtil.createBlob(JSON.stringify(gameState));
+    saveAs(blob, fileName);
 }
 </script>
 

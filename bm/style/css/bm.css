@@ -22,7 +22,7 @@ br {
   flex-direction: column;
   flex-grow: 1;
   border-left: 1px solid #FFB8B8;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: #ECF752; }
 
 #mainWrapper {

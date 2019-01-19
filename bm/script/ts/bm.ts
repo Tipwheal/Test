@@ -175,3 +175,25 @@ class TimeUtil {
             + datetime.getSeconds();
     }
 }
+
+class FileUtil {
+    public createBlob(content: any):any {
+        let blob;
+        try {
+            blob = new Blob([content], {
+                type: "text/plain;charset=utf-8"
+            });
+        } catch(e) {
+            window.BlobBuilder = window.BlobBuilder ||
+                window.WebkitBlobBuilder ||
+                window.MozBlobBuilder ||
+                window.MSBlobBuilder;
+            if(e.name == 'TypeError' && window.BlobBuilder) {
+                let bb = new BlobBuilder();
+                bb.append([content]);
+                blob = bb.getBlob("text/plain;charset=utf-8");
+            }
+        }
+        return blob;
+    }
+}

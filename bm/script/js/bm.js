@@ -181,3 +181,28 @@ var TimeUtil = /** @class */ (function () {
     };
     return TimeUtil;
 }());
+var FileUtil = /** @class */ (function () {
+    function FileUtil() {
+    }
+    FileUtil.prototype.createBlob = function (content) {
+        var blob;
+        try {
+            blob = new Blob([content], {
+                type: "text/plain;charset=utf-8"
+            });
+        }
+        catch (e) {
+            window.BlobBuilder = window.BlobBuilder ||
+                window.WebkitBlobBuilder ||
+                window.MozBlobBuilder ||
+                window.MSBlobBuilder;
+            if (e.name == 'TypeError' && window.BlobBuilder) {
+                var bb = new BlobBuilder();
+                bb.append([content]);
+                blob = bb.getBlob("text/plain;charset=utf-8");
+            }
+        }
+        return blob;
+    };
+    return FileUtil;
+}());
