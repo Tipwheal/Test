@@ -957,13 +957,13 @@ var Game = /** @class */ (function () {
         return 0;
     };
     Game.nextDay = function (gameData) {
-        var homeTeam = Math.floor(Math.random() * 30);
-        var visitor = Math.floor(Math.random() * 30);
-        while (homeTeam === visitor) {
-            visitor = Math.floor(Math.random() * 30);
+        var homeTeamId = Math.floor(Math.random() * 30);
+        var visitorId = Math.floor(Math.random() * 30);
+        while (homeTeamId === visitorId) {
+            visitorId = Math.floor(Math.random() * 30);
         }
-        homeTeam = gameData.teams[homeTeam];
-        visitor = gameData.teams[visitor];
+        var homeTeam = gameData.teams[homeTeamId];
+        var visitor = gameData.teams[visitorId];
         var homeTeamName = homeTeam.name;
         var visitorName = visitor.name;
         var homeScore = 0;
@@ -982,6 +982,14 @@ var Game = /** @class */ (function () {
                 visitorScore += score;
             }
         } while (homeScore === visitorScore);
+        gameData.teams[homeTeamId].gameNum += 1;
+        gameData.teams[visitorId].gameNum += 1;
+        if (homeScore > visitorScore) {
+            gameData.teams[homeTeamId].winNum += 1;
+        }
+        else {
+            gameData.teams[visitorId].winNum += 1;
+        }
         gameData.news.push({
             season: gameData.currentSeason,
             day: gameData.currentDay,
@@ -990,6 +998,27 @@ var Game = /** @class */ (function () {
         });
         gameData.showState = ShowState.News;
         gameData.currentDay += 1;
+    };
+    Game.getTeamRank = function (gameData) {
+        var teams = gameData.teams;
+        var result = [];
+        for (var i = 0; i < 30; i++) {
+            result.push(teams[i]);
+            result[i].id = i;
+        }
+        result = result.sort(function (a, b) {
+            var aRate = 0;
+            if (a.gameNum !== 0) {
+                aRate = a.winNum / a.gameNum;
+            }
+            var bRate = 0;
+            if (b.gameNum !== 0) {
+                bRate = b.winNum / b.gameNum;
+            }
+            return bRate - aRate;
+        });
+        console.log(result);
+        return result;
     };
     Game.getPlayerInfo = function (id, gameData) {
         return gameData.players[id];
@@ -1054,7 +1083,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createNewsLine = function (day, season, content) {
-        var template = "\n        <div class='leftLine'>\n            <p><span>\u7B2C" + day + "\u5929&nbsp;</span><span>\u7B2C" + season + "\u8D5B\u5B63</span></p>\n            <p>" + content + "</p>\n        </div>\n        ";
+        var template = "\n        <div class='leftLine'>\n            <span>\u7B2C" + day + "\u5929&nbsp;</span><span>\u7B2C" + season + "\u8D5B\u5B63</span>\n            <br />\n            " + content + "\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
         return newNode;
     };
@@ -1065,8 +1094,9 @@ var TemplateUtil = /** @class */ (function () {
     };
     TemplateUtil.createTeamLine = function (teamId, gameData) {
         var teamName = gameData.teams[teamId].name;
-        console.log(teamName);
-        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span>" + teamName + "</span>\n        </div>\n        ";
+        var win = gameData.teams[teamId].winNum;
+        var lost = gameData.teams[teamId].gameNum - win;
+        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span>" + teamName + "&nbsp;" + win + "&nbsp;\u80DC&nbsp;" + lost + "&nbsp;\u8D1F</span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };

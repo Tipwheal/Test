@@ -35,7 +35,6 @@ br {
 .leftLine {
     @extend %baseLine;
     justify-content: start;
-    flex-direction: column;
     p {
         margin-bottom: 0;
     }

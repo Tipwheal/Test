@@ -17,8 +17,7 @@ br {
   background-color: #ECF752; }
 
 .leftLine {
-  justify-content: start;
-  flex-direction: column; }
+  justify-content: start; }
   .leftLine p {
     margin-bottom: 0; }
 

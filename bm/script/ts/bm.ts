@@ -955,13 +955,13 @@ class Game {
     }
 
     public static nextDay(gameData: any): any {
-        let homeTeam: any = Math.floor(Math.random() * 30);
-        let visitor: any = Math.floor(Math.random() * 30);
-        while(homeTeam === visitor) {
-            visitor = Math.floor(Math.random() * 30);
+        let homeTeamId: any = Math.floor(Math.random() * 30);
+        let visitorId: any = Math.floor(Math.random() * 30);
+        while(homeTeamId === visitorId) {
+            visitorId = Math.floor(Math.random() * 30);
         }
-        homeTeam = gameData.teams[homeTeam];
-        visitor = gameData.teams[visitor];
+        let homeTeam = gameData.teams[homeTeamId];
+        let visitor = gameData.teams[visitorId];
         const homeTeamName = homeTeam.name;
         const visitorName = visitor.name;
         let homeScore = 0;
@@ -980,6 +980,13 @@ class Game {
                 visitorScore += score;
             }
         }while(homeScore === visitorScore);
+        gameData.teams[homeTeamId].gameNum += 1;
+        gameData.teams[visitorId].gameNum += 1;
+        if(homeScore > visitorScore) {
+            gameData.teams[homeTeamId].winNum += 1;
+        }else {
+            gameData.teams[visitorId].winNum += 1;
+        }
         gameData.news.push({
             season: gameData.currentSeason,
             day: gameData.currentDay,
@@ -988,6 +995,28 @@ class Game {
         });
         gameData.showState = ShowState.News;
         gameData.currentDay += 1;
+    }
+
+    public static getTeamRank(gameData: any): any {
+        const teams = gameData.teams;
+        let result = [];
+        for(let i = 0; i < 30; i++) {
+            result.push(teams[i]);
+            result[i].id = i;
+        }
+        result = result.sort((a: any, b: any) => {
+            let aRate:number = 0;
+            if(a.gameNum !== 0) {
+                aRate = a.winNum / a.gameNum;
+            }
+            let bRate:number = 0;
+            if(b.gameNum !== 0) {
+                bRate = b.winNum / b.gameNum;
+            }
+            return bRate - aRate;
+        });
+        console.log(result);
+        return result;
     }
 
     public static getPlayerInfo(id: string, gameData: any): any {
@@ -1052,8 +1081,9 @@ class TemplateUtil {
     public static createNewsLine(day: any, season: any, content: any): any {
         const template = `
         <div class='leftLine'>
-            <p><span>第${day}天&nbsp;</span><span>第${season}赛季</span></p>
-            <p>${content}</p>
+            <span>第${day}天&nbsp;</span><span>第${season}赛季</span>
+            <br />
+            ${content}
         </div>
         `;
         let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
@@ -1072,10 +1102,11 @@ class TemplateUtil {
 
     public static createTeamLine(teamId: any, gameData: any): any {
         const teamName = gameData.teams[teamId].name;
-        console.log(teamName);
+        const win = gameData.teams[teamId].winNum;
+        const lost = gameData.teams[teamId].gameNum - win;
         const lineTemplate = `
         <div class='gameLine' onclick='showTeamInfo(${teamId})'>
-            <span>${teamName}</span>
+            <span>${teamName}&nbsp;${win}&nbsp;胜&nbsp;${lost}&nbsp;负</span>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
