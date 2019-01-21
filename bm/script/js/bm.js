@@ -9,180 +9,210 @@ var Game = /** @class */ (function () {
                     name: '雄鹿',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['46', '81', '124', '139', '148'],
                 },
                 '1': {
                     name: '猛龙',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['11', '58', '65', '123', '140'],
                 },
                 '2': {
                     name: '步行者',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['4', '26', '44', '122', '141'],
                 },
                 '3': {
                     name: '76人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['31', '63', '64', '83', '121'],
                 },
                 '4': {
                     name: '凯尔特人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['36', '77', '82', '90', '92'],
                 },
                 '5': {
                     name: '热火',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['13', '105', '125', '142', '149'],
                 },
                 '6': {
                     name: '篮网',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['34', '6', '104', '126', '143'],
                 },
                 '7': {
                     name: '黄蜂',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['7', '39', '91', '127', '144'],
                 },
                 '8': {
                     name: '活塞',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['8', '15', '23', '40', '67'],
                 },
                 '9': {
                     name: '魔术',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['17', '57', '60', '74', '128'],
                 },
                 '10': {
                     name: '奇才',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['50', '75', '99', '117', '119'],
                 },
                 '11': {
                     name: '老鹰',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['11', '98', '107', '118', '129'],
                 },
                 '12': {
                     name: '尼克斯',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['21', '22', '59', '66', '68'],
                 },
                 '13': {
                     name: '公牛',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['3', '30', '13', '53', '103'],
                 },
                 '14': {
                     name: '骑士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['16', '76', '80', '97', '102'],
                 },
                 '15': {
                     name: '勇士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['61', '85', '109', '130', '145'],
                 },
                 '16': {
                     name: '掘金',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['47', '48', '69', '84', '108'],
                 },
                 '17': {
                     name: '雷霆',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['12', '25', '41', '70', '131'],
                 },
                 '18': {
                     name: '开拓者',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['5', '28', '0', '73', '93'],
                 },
                 '19': {
                     name: '火箭',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['19', '20', '88', '115', '120'],
                 },
                 '20': {
                     name: '马刺',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['72', '87', '94', '114', '132'],
                 },
                 '21': {
                     name: '快船',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['52', '55', '56', '106', '133'],
                 },
                 '22': {
                     name: '爵士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['18', '54', '86', '134', '146'],
                 },
                 '23': {
                     name: '湖人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['29', '89', '95', '112', '135'],
                 },
                 '24': {
                     name: '国王',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['27', '32', '35', '113', '136'],
                 },
                 '25': {
                     name: '森林狼',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['7', '10', '49', '62', '100'],
                 },
                 '26': {
                     name: '鹈鹕',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['24', '96', '111', '116', '137'],
                 },
                 '27': {
                     name: '独行侠',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['51', '71', '78', '101', '110'],
                 },
                 '28': {
                     name: '灰熊',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['14', '37', '79', '138', '147'],
                 },
                 '29': {
                     name: '太阳',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['1', '2', '6', '33', '45'],
                 },
             },
@@ -965,10 +995,14 @@ var Game = /** @class */ (function () {
             gameData.players[id].ability = 0;
         }
     };
-    Game.calcScore = function (player) {
-        return 0;
+    Game.setRegularChampion = function (gameData) {
+        var rank = this.getTeamRank(gameData);
+        var championId = rank[0].id;
+        gameData.teams[championId].regularChampionNum += 1;
+        return gameData.teams[championId].name;
     };
     Game.nextDay = function (gameData) {
+        gameData.showState = ShowState.News;
         if (gameData.currentDay <= Game.regularEndDay) {
             var games = GameSchedule.gamesOfDay(gameData.currentDay);
             for (var i = 0; i < games.length; i++) {
@@ -976,10 +1010,18 @@ var Game = /** @class */ (function () {
                 var visitorId = games[i][1];
                 this.nextGame(homeTeamId, visitorId, gameData);
             }
-            gameData.showState = ShowState.News;
             gameData.currentDay += 1;
         }
-        else {
+        else if (gameData.currentDay === Game.regularEndDay + 1) {
+            var chamName = this.setRegularChampion(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: '常规赛冠军是' + chamName + '!, 恭喜!新的一年也要努力哦，点击模拟进入下一个赛季。',
+            });
+            gameData.currentDay += 1;
+        }
+        else if (gameData.currentDay === Game.regularEndDay + 2) {
             gameData.currentDay = 1;
             gameData.currentSeason += 1;
             for (var i = 0; i < 30; i++) {
@@ -987,6 +1029,11 @@ var Game = /** @class */ (function () {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: '第' + gameData.currentSeason + '赛季开始了',
+            });
         }
     };
     Game.nextGame = function (homeTeamId, visitorId, gameData) {
@@ -1025,8 +1072,7 @@ var Game = /** @class */ (function () {
         gameData.news.push({
             season: gameData.currentSeason,
             day: gameData.currentDay,
-            content: homeTeamName + '和' + visitorName + '打了比赛<br />'
-                + '比分' + homeScore + ':' + visitorScore,
+            content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
         });
     };
     Game.getTeamRank = function (gameData) {
@@ -1049,6 +1095,19 @@ var Game = /** @class */ (function () {
         });
         return result;
     };
+    Game.getAbilityRank = function (gameData) {
+        var players = gameData.players;
+        var result = [];
+        for (var i in players) {
+            result.push(players[i + '']);
+            result[i].id = i;
+        }
+        result = result.sort(function (a, b) {
+            return b.ability - a.ability;
+        });
+        console.log(result);
+        return result;
+    };
     Game.getPlayerInfo = function (id, gameData) {
         return gameData.players[id];
     };
@@ -1061,6 +1120,7 @@ var ShowState;
     ShowState[ShowState["TeamRank"] = 1] = "TeamRank";
     ShowState[ShowState["News"] = 2] = "News";
     ShowState[ShowState["Statistics"] = 3] = "Statistics";
+    ShowState[ShowState["AttrRank"] = 4] = "AttrRank";
 })(ShowState || (ShowState = {}));
 var GameSchedule = /** @class */ (function () {
     function GameSchedule() {
@@ -1291,7 +1351,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createNewsLine = function (day, season, content) {
-        var template = "\n        <div class='leftLine'>\n            <span>\u7B2C" + day + "\u5929&nbsp;</span><span>\u7B2C" + season + "\u8D5B\u5B63</span>\n            <br />\n            " + content + "\n        </div>\n        ";
+        var template = "\n        <div class='leftLine'>\n            <span>\n                <span>\u7B2C" + season + "\u8D5B\u5B63</span><span>\u7B2C" + day + "\u5929&nbsp;</span>\n                <br />\n                " + content + "\n            </span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
         return newNode;
     };
@@ -1300,11 +1360,11 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
-    TemplateUtil.createTeamLine = function (teamId, gameData) {
+    TemplateUtil.createTeamLine = function (rank, teamId, gameData) {
         var teamName = gameData.teams[teamId].name;
         var win = gameData.teams[teamId].winNum;
         var lost = gameData.teams[teamId].gameNum - win;
-        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span>" + teamName + "&nbsp;" + win + "&nbsp;\u80DC&nbsp;" + lost + "&nbsp;\u8D1F</span>\n        </div>\n        ";
+        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span class='rankSpan'>" + rank + "</span><span class='growSpan'>" + teamName + "</span><span>&nbsp;" + win + "&nbsp;\u80DC&nbsp;" + lost + "&nbsp;\u8D1F</span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };

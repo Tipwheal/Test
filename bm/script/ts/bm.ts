@@ -8,180 +8,210 @@ class Game {
                     name: '雄鹿',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['46', '81', '124', '139', '148'],
                 },
                 '1': {
                     name: '猛龙',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['11', '58', '65', '123', '140'],
                 },
                 '2': {
                     name: '步行者',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['4', '26', '44', '122', '141'],
                 },
                 '3': {
                     name: '76人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['31', '63', '64', '83', '121'],
                 },
                 '4': {
                     name: '凯尔特人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['36', '77', '82', '90', '92'],
                 },
                 '5': {
                     name: '热火',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['13', '105', '125', '142', '149'],
                 },
                 '6': {
                     name: '篮网',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['34', '6', '104', '126', '143'],
                 },
                 '7': {
                     name: '黄蜂',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['7', '39', '91', '127', '144'],
                 },
                 '8': {
                     name: '活塞',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['8', '15', '23', '40', '67'],
                 },
                 '9': {
                     name: '魔术',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['17', '57', '60', '74', '128'],
                 },
                 '10': {
                     name: '奇才',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['50', '75', '99', '117', '119'],
                 },
                 '11': {
                     name: '老鹰',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['11', '98', '107', '118', '129'],
                 },
                 '12': {
                     name: '尼克斯',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['21', '22', '59', '66', '68'],
                 },
                 '13': {
                     name: '公牛',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['3', '30', '13', '53', '103'],
                 },
                 '14': {
                     name: '骑士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['16', '76', '80', '97', '102'],
                 },
                 '15': {
                     name: '勇士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['61', '85', '109', '130', '145'],
                 },
                 '16': {
                     name: '掘金',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['47', '48', '69', '84', '108'],
                 },
                 '17': {
                     name: '雷霆',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['12', '25', '41', '70', '131'],
                 },
                 '18': {
                     name: '开拓者',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['5', '28', '0', '73', '93'],
                 },
                 '19': {
                     name: '火箭',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['19', '20', '88', '115', '120'],
                 },
                 '20': {
                     name: '马刺',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['72', '87', '94', '114', '132'],
                 },
                 '21': {
                     name: '快船',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['52', '55', '56', '106', '133'],
                 },
                 '22': {
                     name: '爵士',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['18', '54', '86', '134', '146'],
                 },
                 '23': {
                     name: '湖人',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['29', '89', '95', '112', '135'],
                 },
                 '24': {
                     name: '国王',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['27', '32', '35', '113', '136'],
                 },
                 '25': {
                     name: '森林狼',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['7', '10', '49', '62', '100'],
                 },
                 '26': {
                     name: '鹈鹕',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['24', '96', '111', '116', '137'],
                 },
                 '27': {
                     name: '独行侠',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['51', '71', '78', '101', '110'],
                 },
                 '28': {
                     name: '灰熊',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['14', '37', '79', '138', '147'],
                 },
                 '29': {
                     name: '太阳',
                     gameNum: 0,
                     winNum: 0,
+                    regularChampionNum: 0,
                     players: ['1', '2', '6', '33', '45'],
                 },
             },
@@ -964,11 +994,15 @@ class Game {
         }
     }
 
-    private static calcScore(player: any): number {
-        return 0;
+    private static setRegularChampion(gameData: any): any {
+        const rank = this.getTeamRank(gameData);
+        const championId = rank[0].id;
+        gameData.teams[championId].regularChampionNum += 1;
+        return gameData.teams[championId].name;
     }
 
     public static nextDay(gameData: any): any {
+        gameData.showState = ShowState.News;
         if(gameData.currentDay <= Game.regularEndDay) {
             let games = GameSchedule.gamesOfDay(gameData.currentDay);
             for(let i = 0; i < games.length; i ++) {
@@ -976,9 +1010,16 @@ class Game {
                 let visitorId = games[i][1];
                 this.nextGame(homeTeamId, visitorId, gameData);
             }
-            gameData.showState = ShowState.News;
             gameData.currentDay += 1;
-        }else {
+        } else if(gameData.currentDay === Game.regularEndDay + 1){
+            let chamName = this.setRegularChampion(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: '常规赛冠军是' + chamName + '!, 恭喜!新的一年也要努力哦，点击模拟进入下一个赛季。',
+            });
+            gameData.currentDay += 1;
+        }else if(gameData.currentDay === Game.regularEndDay + 2) {
             gameData.currentDay = 1;
             gameData.currentSeason += 1;
             for(let i = 0; i<30;i++) {
@@ -986,6 +1027,11 @@ class Game {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: '第' + gameData.currentSeason + '赛季开始了',
+            });
         }
     }
 
@@ -1024,8 +1070,7 @@ class Game {
         gameData.news.push({
             season: gameData.currentSeason,
             day: gameData.currentDay,
-            content: homeTeamName + '和' + visitorName + '打了比赛<br />' 
-                + '比分' + homeScore + ':' + visitorScore,
+            content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
         });
     }
 
@@ -1050,6 +1095,20 @@ class Game {
         return result;
     }
 
+    public static getAbilityRank(gameData: any): any {
+        const players = gameData.players;
+        let result = [];
+        for(let i in players) {
+            result.push(players[i + '']);
+            result[<any>i].id = i;
+        }
+        result = result.sort((a: any, b: any) => {
+            return b.ability - a.ability;
+        });
+        console.log(result);
+        return result;
+    }
+
     public static getPlayerInfo(id: string, gameData: any): any {
         return gameData.players[id];
     }
@@ -1060,6 +1119,7 @@ enum ShowState {
     TeamRank,
     News,
     Statistics,
+    AttrRank,
 }
 
 class GameSchedule {
@@ -1289,9 +1349,11 @@ class TemplateUtil {
     public static createNewsLine(day: any, season: any, content: any): any {
         const template = `
         <div class='leftLine'>
-            <span>第${day}天&nbsp;</span><span>第${season}赛季</span>
-            <br />
-            ${content}
+            <span>
+                <span>第${season}赛季</span><span>第${day}天&nbsp;</span>
+                <br />
+                ${content}
+            </span>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
@@ -1308,13 +1370,13 @@ class TemplateUtil {
         return newNode;
     }
 
-    public static createTeamLine(teamId: any, gameData: any): any {
+    public static createTeamLine(rank: any, teamId: any, gameData: any): any {
         const teamName = gameData.teams[teamId].name;
         const win = gameData.teams[teamId].winNum;
         const lost = gameData.teams[teamId].gameNum - win;
         const lineTemplate = `
         <div class='gameLine' onclick='showTeamInfo(${teamId})'>
-            <span>${teamName}&nbsp;${win}&nbsp;胜&nbsp;${lost}&nbsp;负</span>
+            <span class='rankSpan'>${rank}</span><span class='growSpan'>${teamName}</span><span>&nbsp;${win}&nbsp;胜&nbsp;${lost}&nbsp;负</span>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');

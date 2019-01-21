@@ -32,10 +32,20 @@ br {
     background-color: $youth1;
 }
 
+.rankSpan {
+    min-width: 15px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.growSpan {
+    flex-grow: 1;
+}
+
 .leftLine {
     @extend %baseLine;
     justify-content: start;
-    p {
+    br {
         margin-bottom: 0;
     }
 }
@@ -44,6 +54,9 @@ br {
     @extend %baseLine;
     @extend %hoverLine;
     background-color: $youth2;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 #contentDiv {

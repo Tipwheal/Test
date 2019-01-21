@@ -16,13 +16,24 @@ br {
 .gameLine {
   background-color: #FDFFD0; }
 
+.rankSpan {
+  min-width: 15px;
+  text-align: right;
+  margin-right: 5px; }
+
+.growSpan {
+  flex-grow: 1; }
+
 .leftLine {
   justify-content: start; }
-  .leftLine p {
+  .leftLine br {
     margin-bottom: 0; }
 
 .navLine {
-  background-color: #9BC595; }
+  background-color: #9BC595;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none; }
 
 #contentDiv {
   display: flex;
