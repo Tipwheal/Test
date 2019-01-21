@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="当然要记笔记啊">
 <meta property="og:description" content="不要打开">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-20T06:09:23.526Z">
+<meta property="og:updated_time" content="2019-01-21T06:02:23.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请勿打开">
 <meta name="twitter:description" content="不要打开">
@@ -199,7 +199,7 @@
     </div>
     
       
-        <p class="site-subtitle">嗯……总之欢迎啊</p>
+        <p class="site-subtitle">阿波呲嘚儿佛歌 呵噫击科勒摸呢</p>
       
     
   </div>
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-20 14:09:23" itemprop="dateModified" datetime="2019-01-20T14:09:23+08:00">2019-01-20</time>
+                <time title="修改时间：2019-01-21 14:02:23" itemprop="dateModified" datetime="2019-01-21T14:02:23+08:00">2019-01-21</time>
               
             
           </span>
@@ -448,11 +448,11 @@
 
 <input type="file" name="" id="selectFile">
 <br>
-<span>当前文件：&nbsp;<span id="state"></span></span>
+<span>当前存档名：&nbsp;<span id="state"></span></span>
 <br>
 <button class="btn" onclick="load()">读取</button>
 <button class="btn" onclick="save()">保存</button>
-<button class="btn" onclick="init()">下载一个初始化文件</button>
+<button class="btn" onclick="init()">开始新游戏</button>
 <button class="btn" onclick="random()">来个随机数</button>
 
 <div id="mainWrapper">
@@ -470,6 +470,7 @@
             <div class="navLine" onclick="refreshPane(ShowState.TeamRank)"><span>球队排行</span></div>
             <div class="navLine"><span>数据统计</span></div>
             <div class="navLine" onclick="nextDay()"><span>模拟一天</span></div>
+            <div class="navLine" onclick="next30Day()" id="sim30Btn"><span>模拟30天</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.News)"><span>新闻查看</span></div>
         </div>
         <div id="contentDiv"></div>
@@ -491,9 +492,10 @@ let viewState = {
 let gameState = {};
 
 function init() {
-    let obj = Game.getInitData();
-    let blob = FileUtil.createBlob(JSON.stringify(obj));
-    saveAs(blob, 'BM-INIT.json');
+    gameState = Game.getInitData();
+    fileName = 'BM-INIT.json';
+    changeName();
+    initGameData();
 }
 
 function updateDay() {
@@ -504,6 +506,14 @@ function updateDay() {
 function updateSeason() {
     const dayNum = document.getElementById('currentSeason');
     dayNum.innerText = gameState.currentSeason;
+    const sim30Button = document.getElementById('sim30Btn');
+    if(gameState.currentDay > 166) {
+        sim30Button.innerText = '模拟一轮';
+    }else if(gameState.currentDay + 30 >= 166) {
+        sim30Button.innerText = '直达季后赛';
+    }else {
+        sim30Button.innerText = '模拟30天';
+    }
 }
 
 function initGameData() {
@@ -600,6 +610,16 @@ function nextDay() {
     updateDay();
     updateSeason();
     refreshPane();
+}
+
+function next30Day() {
+    for(let i = 0;i<30;i++) {
+        if(gameState.currentDay < 165) {
+            nextDay();
+        }else {
+            break;
+        }
+    }
 }
 
 function changeName() {
