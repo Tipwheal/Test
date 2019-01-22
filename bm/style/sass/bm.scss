@@ -38,6 +38,46 @@ br {
     margin-right: 5px;
 }
 
+#offSeasonPane {
+    padding: 10px;
+    display: flex;
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+.offSeasonColumn {
+    flex-grow: 1;
+    // text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .batDiv {
+        margin: 0 5px;
+    }
+    div {
+        border: 1px solid $youth3;
+    }
+    .ordDiv {
+        display: flex;
+        padding: 0 5px;
+    }
+    .winDiv {
+        @extend .ordDiv;
+        background-color: $youth2;
+    }
+    .lostDiv {
+        @extend .ordDiv;
+        background-color: $hoverGrey;
+    }
+    .nameSpan {
+        flex-grow: 1;
+    }
+    .nameRightSpan {
+        @extend .nameSpan;
+        text-align: right;
+    }
+}
+
 .growSpan {
     flex-grow: 1;
 }

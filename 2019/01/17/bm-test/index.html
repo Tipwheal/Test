@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="不要打开">
+  <meta name="description" content="请使用Firefox或Chrome打开： 爱心链接： FirefoxChrome">
 <meta property="og:type" content="article">
 <meta property="og:title" content="请勿打开">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/01/17/bm-test/index.html">
 <meta property="og:site_name" content="当然要记笔记啊">
-<meta property="og:description" content="不要打开">
+<meta property="og:description" content="请使用Firefox或Chrome打开： 爱心链接： FirefoxChrome">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-21T13:25:22.003Z">
+<meta property="og:updated_time" content="2019-01-22T13:34:46.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请勿打开">
-<meta name="twitter:description" content="不要打开">
+<meta name="twitter:description" content="请使用Firefox或Chrome打开： 爱心链接： FirefoxChrome">
 
 
 
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-21 21:25:22" itemprop="dateModified" datetime="2019-01-21T21:25:22+08:00">2019-01-21</time>
+                <time title="修改时间：2019-01-22 21:34:46" itemprop="dateModified" datetime="2019-01-22T21:34:46+08:00">2019-01-22</time>
               
             
           </span>
@@ -442,7 +442,9 @@
       
 
       
-        <p>不要打开</p>
+        <p>请使用Firefox或Chrome打开：</p>
+<p>爱心链接：</p>
+<p><a href="http://www.firefox.com.cn/" target="_blank" rel="noopener">Firefox</a><br><a href="https://chrome.en.softonic.com/" target="_blank" rel="noopener">Chrome</a></p>
 <a id="more"></a>
 
 
@@ -453,7 +455,6 @@
 <button class="btn" onclick="load()">读取</button>
 <button class="btn" onclick="save()">保存</button>
 <button class="btn" onclick="init()">开始新游戏</button>
-<button class="btn" onclick="random()">来个随机数</button>
 
 <div id="mainWrapper">
     <div id="stateDiv">
@@ -470,6 +471,7 @@
             <div class="navLine" onclick="refreshPane(ShowState.TeamRank)"><span>球队排行</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.AttrRank)"><span>属性排行</span></div>
             <div class="navLine"><span>数据统计</span></div>
+            <div class="navLine" onclick="refreshPane(ShowState.OffSeason)" id="offSeasonBtn"><span>季后赛程</span></div>
             <div class="navLine" onclick="nextDay()"><span>模拟一天</span></div>
             <div class="navLine" onclick="next30Day()" id="sim30Btn"><span>模拟30天</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.News)"><span>新闻查看</span></div>
@@ -480,6 +482,7 @@
 
 <link rel="stylesheet" href="/blog/bm/style/css/bm.css" type="text/css">
 
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
 <script src="/blog/bm/script/js/bm.js"></script>
 
@@ -507,19 +510,27 @@ function updateDay() {
 function updateSeason() {
     const dayNum = document.getElementById('currentSeason');
     dayNum.innerText = gameState.currentSeason;
+}
+
+function updateButton() {
     const sim30Button = document.getElementById('sim30Btn');
-    if(gameState.currentDay > 166) {
+    const day = gameState.currentDay;
+    if(day >= 166) {
         sim30Button.innerText = '模拟一轮';
-    }else if(gameState.currentDay + 30 >= 166) {
+    }else if(day + 30 >= 166) {
         sim30Button.innerText = '直达季后赛';
     }else {
         sim30Button.innerText = '模拟30天';
     }
+    const offSeasonButton = document.getElementById('offSeasonBtn');
+    if(day >= 166) {
+        $("#offSeasonBtn").attr('style', 'display:block;');
+    }else {
+        $("#offSeasonBtn").attr('style', 'display:none;');
+    }
 }
 
 function initGameData() {
-    updateDay();
-    updateSeason();
     refreshPane();
 }
 
@@ -540,10 +551,11 @@ function showUserTeam() {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
     let title = TemplateUtil.createLine('我的球队-' + gameState.userTeam);
-    let regChampNum = gameState.teams[gameState.userTeamId].regularChampionNum;
-    let champNum = TemplateUtil.createLine('常规赛冠军：' + regChampNum);
+    let regularChampionNum = gameState.teams[gameState.userTeamId].regularChampionNum;
+    let championNum = gameState.teams[gameState.userTeamId].championNum;
+    let regChampNum = TemplateUtil.createLine('常规赛冠军：' + regularChampionNum + '&nbsp总冠军：' + championNum);
     mainDiv.appendChild(title);
-    mainDiv.appendChild(champNum);
+    mainDiv.appendChild(regChampNum);
     let team = gameState.teams[gameState.userTeamId];
     let teamPlayers = team.players;
     for(let i = 0; i < teamPlayers.length; i++) {
@@ -561,10 +573,6 @@ function showTeamRank() {
         let line = TemplateUtil.createTeamLine(i + 1, teams[i].id, gameState);
         mainDiv.appendChild(line);
     }
-}
-
-function random() {
-    console.log(Math.floor(Math.random() * 30));
 }
 
 function showNews() {
@@ -586,10 +594,11 @@ function showTeamInfo(teamId) {
     mainDiv.innerHTML = "";
     let teamName = gameState.teams[teamId].name;
     let title = TemplateUtil.createLine('别人的球队-' + teamName);
-    let regChampNum = gameState.teams[teamId].regularChampionNum;
-    let champNum = TemplateUtil.createLine('常规赛冠军：' + regChampNum);
+    let regularChampionNum = gameState.teams[teamId].regularChampionNum;
+    let championNum = gameState.teams[teamId].championNum;
+    let regChampNum = TemplateUtil.createLine('常规赛冠军：' + regularChampionNum + '&nbsp总冠军：' + championNum);
     mainDiv.appendChild(title);
-    mainDiv.appendChild(champNum);
+    mainDiv.appendChild(regChampNum);
     let team = gameState.teams[teamId];
     let teamPlayers = team.players;
     for(let i = 0; i < teamPlayers.length; i++) {
@@ -610,7 +619,15 @@ function showAttrRank() {
     }
 }
 
+function showOffSeason() {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    const pane = TemplateUtil.createOffSeasonPane(gameState);
+    mainDiv.appendChild(pane);
+}
+
 function refreshPane(prop) {
+    updateViewState();
     if(prop !== null && prop !== undefined) {
         gameState.showState = prop;
     }
@@ -622,13 +639,19 @@ function refreshPane(prop) {
         showNews();
     }else if(gameState.showState === ShowState.AttrRank) {
         showAttrRank();
+    }else if(gameState.showState === ShowState.OffSeason) {
+        showOffSeason();
     }
+}
+
+function updateViewState() {
+    updateDay();
+    updateSeason();
+    updateButton();
 }
 
 function nextDay() {
     Game.nextDay(gameState);
-    updateDay();
-    updateSeason();
     refreshPane();
 }
 
@@ -652,6 +675,55 @@ function save() {
     saveAs(blob, fileName);
 }
 </script>
+
+<p>待做列表：</p>
+<ul>
+<li>统计球员分数<ul>
+<li>常规赛赛季总得分/均分</li>
+<li>常规赛生涯总得分</li>
+<li>常规赛生涯最高分</li>
+<li>季后赛赛季总得分</li>
+<li>季后赛生涯总得分</li>
+<li>季后赛生涯最高分</li>
+</ul>
+</li>
+<li>修改比赛算法<ul>
+<li>添加核心球员（1-3个）</li>
+<li>添加主力、替补、不上场设置</li>
+<li>添加篮板，助攻，抢断，盖帽数据</li>
+<li>区分两分、三分</li>
+</ul>
+</li>
+<li>修改球员成长算法<ul>
+<li>添加年龄</li>
+<li>添加潜力</li>
+<li>把球员分为爆发型和持久型</li>
+</ul>
+</li>
+<li>优化新闻显示</li>
+<li>添加赛程面板</li>
+<li>往年荣誉记录统计<ul>
+<li>赛季常规赛冠军、总冠军</li>
+<li>赛季MVP、得分王、FMVP</li>
+</ul>
+</li>
+<li>球队数据统计<ul>
+<li>赛季均分/失分</li>
+</ul>
+</li>
+<li>修改排名规则，同胜率时场均分差更大的靠前</li>
+</ul>
+<p>完成列表：</p>
+<ul>
+<li>常规赛赛程</li>
+<li>季后赛赛程</li>
+<li>球队荣誉统计<ul>
+<li>常规赛冠军</li>
+<li>季后赛冠军</li>
+</ul>
+</li>
+<li>忘了</li>
+</ul>
 
       
     </div>

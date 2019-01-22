@@ -1,14 +1,74 @@
 class Game {
     static regularEndDay = 164;
+    static round1EndDay = 15;
+    static offSeasonGames = [
+        [{round: 'round1', pair: 0, home: 'up'}, {round: 'round1', pair: 2, home: 'up'}, {round: 'round1', pair: 5, home: 'up'}, {round: 'round1', pair: 7, home: 'up'}],
+        [{round: 'round1', pair: 1, home: 'up'}, {round: 'round1', pair: 3, home: 'up'}, {round: 'round1', pair: 4, home: 'up'}, {round: 'round1', pair: 6, home: 'up'}],
+        [{round: 'round1', pair: 0, home: 'up'}, {round: 'round1', pair: 2, home: 'up'}, {round: 'round1', pair: 5, home: 'up'}, {round: 'round1', pair: 7, home: 'up'}],
+        [{round: 'round1', pair: 1, home: 'up'}, {round: 'round1', pair: 3, home: 'up'}, {round: 'round1', pair: 4, home: 'up'}, {round: 'round1', pair: 6, home: 'up'}],
+        [{round: 'round1', pair: 0, home: 'down'}, {round: 'round1', pair: 2, home: 'down'}, {round: 'round1', pair: 5, home: 'down'}, {round: 'round1', pair: 7, home: 'down'}],
+        [{round: 'round1', pair: 1, home: 'down'}, {round: 'round1', pair: 3, home: 'down'}, {round: 'round1', pair: 4, home: 'down'}, {round: 'round1', pair: 6, home: 'down'}],
+        [{round: 'round1', pair: 0, home: 'down'}, {round: 'round1', pair: 2, home: 'down'}, {round: 'round1', pair: 5, home: 'down'}, {round: 'round1', pair: 7, home: 'down'}],
+        [{round: 'round1', pair: 1, home: 'down'}, {round: 'round1', pair: 3, home: 'down'}, {round: 'round1', pair: 4, home: 'down'}, {round: 'round1', pair: 6, home: 'down'}],
+        [{round: 'round1', pair: 0, home: 'up'}, {round: 'round1', pair: 2, home: 'up'}, {round: 'round1', pair: 5, home: 'up'}, {round: 'round1', pair: 7, home: 'up'}],
+        [{round: 'round1', pair: 1, home: 'up'}, {round: 'round1', pair: 3, home: 'up'}, {round: 'round1', pair: 4, home: 'up'}, {round: 'round1', pair: 6, home: 'up'}],
+        [{round: 'round1', pair: 0, home: 'down'}, {round: 'round1', pair: 2, home: 'down'}, {round: 'round1', pair: 5, home: 'down'}, {round: 'round1', pair: 7, home: 'down'}],
+        [{round: 'round1', pair: 1, home: 'down'}, {round: 'round1', pair: 3, home: 'down'}, {round: 'round1', pair: 4, home: 'down'}, {round: 'round1', pair: 6, home: 'down'}],
+        [{round: 'round1', pair: 0, home: 'up'}, {round: 'round1', pair: 2, home: 'up'}, {round: 'round1', pair: 5, home: 'up'}, {round: 'round1', pair: 7, home: 'up'}],
+        [{round: 'round1', pair: 1, home: 'up'}, {round: 'round1', pair: 3, home: 'up'}, {round: 'round1', pair: 4, home: 'up'}, {round: 'round1', pair: 6, home: 'up'}],
+        [{round: 'round2', pair: 0, home: 'up'}, {round: 'round2', pair: 3, home: 'up'}],
+        [{round: 'round2', pair: 1, home: 'up'}, {round: 'round2', pair: 2, home: 'up'}],
+        [{round: 'round2', pair: 0, home: 'up'}, {round: 'round2', pair: 3, home: 'up'}],
+        [{round: 'round2', pair: 1, home: 'up'}, {round: 'round2', pair: 2, home: 'up'}],
+        [{round: 'round2', pair: 0, home: 'down'}, {round: 'round2', pair: 3, home: 'down'}],
+        [{round: 'round2', pair: 1, home: 'down'}, {round: 'round2', pair: 2, home: 'down'}],
+        [{round: 'round2', pair: 0, home: 'down'}, {round: 'round2', pair: 3, home: 'down'}],
+        [{round: 'round2', pair: 1, home: 'down'}, {round: 'round2', pair: 2, home: 'down'}],
+        [{round: 'round2', pair: 0, home: 'up'}, {round: 'round2', pair: 3, home: 'up'}],
+        [{round: 'round2', pair: 1, home: 'up'}, {round: 'round2', pair: 2, home: 'up'}],
+        [{round: 'round2', pair: 0, home: 'down'}, {round: 'round2', pair: 3, home: 'down'}],
+        [{round: 'round2', pair: 1, home: 'down'}, {round: 'round2', pair: 2, home: 'down'}],
+        [{round: 'round2', pair: 0, home: 'up'}, {round: 'round2', pair: 3, home: 'up'}],
+        [{round: 'round2', pair: 1, home: 'up'}, {round: 'round2', pair: 2, home: 'up'}],
+        [{round: 'semi', pair: 0, home: 'up'}],
+        [{round: 'semi', pair: 1, home: 'up'}],
+        [{round: 'semi', pair: 0, home: 'up'}],
+        [{round: 'semi', pair: 1, home: 'up'}],
+        [{round: 'semi', pair: 0, home: 'down'}],
+        [{round: 'semi', pair: 1, home: 'down'}],
+        [{round: 'semi', pair: 0, home: 'down'}],
+        [{round: 'semi', pair: 1, home: 'down'}],
+        [{round: 'semi', pair: 0, home: 'up'}],
+        [{round: 'semi', pair: 1, home: 'up'}],
+        [{round: 'semi', pair: 0, home: 'down'}],
+        [{round: 'semi', pair: 1, home: 'down'}],
+        [{round: 'semi', pair: 0, home: 'up'}],
+        [{round: 'semi', pair: 1, home: 'up'}],
+        [{round: 'final', pair: 0, home: 'up'}],
+        [],
+        [{round: 'final', pair: 0, home: 'up'}],
+        [],
+        [{round: 'final', pair: 0, home: 'down'}],
+        [],
+        [{round: 'final', pair: 0, home: 'down'}],
+        [],
+        [{round: 'final', pair: 0, home: 'up'}],
+        [],
+        [{round: 'final', pair: 0, home: 'down'}],
+        [],
+        [{round: 'final', pair: 0, home: 'up'}],
+    ];
 
     public static getInitData():any {
-        return {
+        let result =  {
             teams: {
                 '0': {
                     name: '雄鹿',
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['46', '81', '124', '139', '148'],
                 },
                 '1': {
@@ -16,6 +76,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['11', '58', '65', '123', '140'],
                 },
                 '2': {
@@ -23,6 +85,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['4', '26', '44', '122', '141'],
                 },
                 '3': {
@@ -30,6 +94,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['31', '63', '64', '83', '121'],
                 },
                 '4': {
@@ -37,6 +103,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['36', '77', '82', '90', '92'],
                 },
                 '5': {
@@ -44,6 +112,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['13', '105', '125', '142', '149'],
                 },
                 '6': {
@@ -51,6 +121,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['34', '6', '104', '126', '143'],
                 },
                 '7': {
@@ -58,6 +130,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['7', '39', '91', '127', '144'],
                 },
                 '8': {
@@ -65,6 +139,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['8', '15', '23', '40', '67'],
                 },
                 '9': {
@@ -72,6 +148,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['17', '57', '60', '74', '128'],
                 },
                 '10': {
@@ -79,6 +157,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['50', '75', '99', '117', '119'],
                 },
                 '11': {
@@ -86,6 +166,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['11', '98', '107', '118', '129'],
                 },
                 '12': {
@@ -93,6 +175,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['21', '22', '59', '66', '68'],
                 },
                 '13': {
@@ -100,6 +184,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['3', '30', '13', '53', '103'],
                 },
                 '14': {
@@ -107,6 +193,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['16', '76', '80', '97', '102'],
                 },
                 '15': {
@@ -114,6 +202,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['61', '85', '109', '130', '145'],
                 },
                 '16': {
@@ -121,6 +211,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['47', '48', '69', '84', '108'],
                 },
                 '17': {
@@ -128,6 +220,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['12', '25', '41', '70', '131'],
                 },
                 '18': {
@@ -135,6 +229,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['5', '28', '0', '73', '93'],
                 },
                 '19': {
@@ -142,6 +238,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['19', '20', '88', '115', '120'],
                 },
                 '20': {
@@ -149,6 +247,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['72', '87', '94', '114', '132'],
                 },
                 '21': {
@@ -156,6 +256,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['52', '55', '56', '106', '133'],
                 },
                 '22': {
@@ -163,6 +265,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['18', '54', '86', '134', '146'],
                 },
                 '23': {
@@ -170,6 +274,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['29', '89', '95', '112', '135'],
                 },
                 '24': {
@@ -177,6 +283,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['27', '32', '35', '113', '136'],
                 },
                 '25': {
@@ -184,6 +292,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['7', '10', '49', '62', '100'],
                 },
                 '26': {
@@ -191,6 +301,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['24', '96', '111', '116', '137'],
                 },
                 '27': {
@@ -198,6 +310,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['51', '71', '78', '101', '110'],
                 },
                 '28': {
@@ -205,6 +319,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['14', '37', '79', '138', '147'],
                 },
                 '29': {
@@ -212,6 +328,8 @@ class Game {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['1', '2', '6', '33', '45'],
                 },
             },
@@ -272,7 +390,7 @@ class Game {
                     maxPoints: 0,
                 },
                 '11': {
-                    name: '佩奇',
+                    name: '野猪佩奇',
                     ability: 2,
                     maxPoints: 0,
                 },
@@ -974,13 +1092,52 @@ class Game {
                     content: '欢迎进入游戏，你的球队是 太阳'
                 }
             ],
+            offSeason: {
+                round1: {
+                    finished: false,
+                    pairs: []
+                },
+                round2: {
+                    finished: false,
+                    pairs: []
+                },
+                semi: {
+                    finished: false,
+                    pairs: []
+                },
+                final: {
+                    finished: false,
+                    pairs: []
+                }
+            },
             userTeam: '太阳',
             userTeamId: '29',
             currentSeason: 1,
             currentDay: 1,
             showState: ShowState.MyTeam,
         }
+        this.prepareGameData(result);
+        return result;
     };
+
+    public static prepareGameData(gameData: any): any {
+        const players = gameData.players;
+        for(let i in players) {
+            gameData.players[i].totalRegGameNum = 0;
+            gameData.players[i].seasonRegGameNum = 0;
+            gameData.players[i].totalOffGameNum = 0;
+            gameData.players[i].seasonOffGameNum = 0;
+            gameData.players[i].totalRegScore = 0;
+            gameData.players[i].seasonRegScore = 0;
+            gameData.players[i].totalOffScore = 0;
+            gameData.players[i].seasonOffScore = 0;
+            gameData.players[i].currentGameScore = 0;
+        }
+        for(let i = 0;i<30;i++) {
+            gameData.teams[i].championNum = 0;
+        }
+        this.resetOffSeasonData(gameData);
+    }
 
     private static playerGrow(id: any, gameData: any): any {
         let value = Math.random() * 6;
@@ -1001,6 +1158,26 @@ class Game {
         return gameData.teams[championId].name;
     }
 
+    private static setOffSeasonTeams(gameData: any): any {
+        const rank = this.getTeamRank(gameData);
+        gameData.offSeason.round1.pairs[0].up.team = rank[0].id;
+        gameData.offSeason.round1.pairs[0].down.team = rank[15].id;
+        gameData.offSeason.round1.pairs[1].up.team = rank[7].id;
+        gameData.offSeason.round1.pairs[1].down.team = rank[8].id;
+        gameData.offSeason.round1.pairs[2].up.team = rank[4].id;
+        gameData.offSeason.round1.pairs[2].down.team = rank[11].id;
+        gameData.offSeason.round1.pairs[3].up.team = rank[3].id;
+        gameData.offSeason.round1.pairs[3].down.team = rank[12].id;
+        gameData.offSeason.round1.pairs[4].up.team = rank[1].id;
+        gameData.offSeason.round1.pairs[4].down.team = rank[14].id;
+        gameData.offSeason.round1.pairs[5].up.team = rank[6].id;
+        gameData.offSeason.round1.pairs[5].down.team = rank[9].id;
+        gameData.offSeason.round1.pairs[6].up.team = rank[5].id;
+        gameData.offSeason.round1.pairs[6].down.team = rank[10].id;
+        gameData.offSeason.round1.pairs[7].up.team = rank[2].id;
+        gameData.offSeason.round1.pairs[7].down.team = rank[13].id;
+    }
+
     public static nextDay(gameData: any): any {
         gameData.showState = ShowState.News;
         if(gameData.currentDay <= Game.regularEndDay) {
@@ -1013,13 +1190,17 @@ class Game {
             gameData.currentDay += 1;
         } else if(gameData.currentDay === Game.regularEndDay + 1){
             let chamName = this.setRegularChampion(gameData);
+            this.setOffSeasonTeams(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
-                content: '常规赛冠军是' + chamName + '!, 恭喜!新的一年也要努力哦，点击模拟进入下一个赛季。',
+                content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
             });
             gameData.currentDay += 1;
-        }else if(gameData.currentDay === Game.regularEndDay + 2) {
+        }else if(gameData.currentDay < Game.regularEndDay + 57) {
+            this.offSeasonDay(gameData.currentDay - Game.regularEndDay - 2, gameData);
+            gameData.currentDay += 1;
+        }else if(gameData.currentDay === Game.regularEndDay + 57) {
             gameData.currentDay = 1;
             gameData.currentSeason += 1;
             for(let i = 0; i<30;i++) {
@@ -1027,12 +1208,185 @@ class Game {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            this.resetOffSeasonData(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '第' + gameData.currentSeason + '赛季开始了',
             });
         }
+    }
+
+    private static resetOffSeasonData(gameData: any) {
+        gameData.offSeason.round1.pairs = []
+        gameData.offSeason.round2.pairs = []
+        gameData.offSeason.semi.pairs = []
+        gameData.offSeason.final.pairs = []
+        for(let i = 0;i<8;i++) {
+            let pair = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.round1.pairs.push(pair);
+        }
+        for(let i = 0;i<4;i++) {
+            let pair = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.round2.pairs.push(pair);
+        }
+        for(let i = 0;i<2;i++) {
+            let pair = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.semi.pairs.push(pair);
+        }
+        let pair = {
+            finished: false,
+            gameNum: 0,
+            up: {
+                team: -1,
+                win: 0,
+            },
+            down: {
+                team: -1,
+                win: 0,
+            }
+        };
+        gameData.offSeason.final.pairs.push(pair);
+    }
+
+    private static offSeasonDay(dayNum: number, gameData: any): void {
+        let todayGames: any = Game.offSeasonGames[dayNum];
+        let dailyNews = [];
+        for(let i = 0;i<todayGames.length; i++) {
+            let theGame = todayGames[i];
+            let thePair = gameData.offSeason[theGame.round].pairs[theGame.pair];
+            if(thePair.finished) {
+                continue;
+            }
+            let homeTeamId: number;
+            let visitorId: number;
+            if(theGame.home === 'up') {
+                homeTeamId = thePair.up.team;
+                visitorId = thePair.down.team;
+            }else {
+                homeTeamId = thePair.down.team;
+                visitorId = thePair.up.team;
+            }
+            let gameResult: GameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+            let homeTeamName = gameData.teams[homeTeamId].name;
+            let visitorName = gameData.teams[visitorId].name;
+            if(homeTeamId == gameResult.winnerId) {
+                if(homeTeamId == thePair.up.team) {
+                    dailyNews.push(`${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}`);
+                }else {
+                    dailyNews.push(`${visitorName}(客)${gameResult.loserPoint}:${gameResult.winnerPoint}(主)${homeTeamName}`);
+                }
+            }else {
+                if(homeTeamId == thePair.up.team) {
+                    dailyNews.push(`${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}`);
+                }else {
+                    dailyNews.push(`${visitorName}(客)${gameResult.winnerPoint}:${gameResult.loserPoint}(主)${homeTeamName}`);
+                }
+            }
+            if(thePair.up.team == gameResult.winnerId) {
+                gameData.offSeason[theGame.round].pairs[theGame.pair].up.win += 1;
+                if(gameData.offSeason[theGame.round].pairs[theGame.pair].up.win == 4) {
+                    gameData.offSeason[theGame.round].pairs[theGame.pair].finished = true;
+                    this.upgradeToNextRound(theGame.round, theGame.pair, 'up', gameData);
+                }
+            }else {
+                gameData.offSeason[theGame.round].pairs[theGame.pair].down.win += 1;
+                if(gameData.offSeason[theGame.round].pairs[theGame.pair].down.win == 4) {
+                    gameData.offSeason[theGame.round].pairs[theGame.pair].finished = true;
+                    this.upgradeToNextRound(theGame.round, theGame.pair, 'down', gameData);
+                }
+            }
+        }
+        if(dailyNews.length > 0) {
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: dailyNews.join("<br />"),
+            });
+        }
+    }
+
+    private static upgradeToNextRound(round: any, pair: any, side: any, gameData: any) {
+        let nextPair = Math.floor(pair / 2);
+        let testVal = pair - nextPair * 2;
+        let nextSide = 'up';
+        let teamId = gameData.offSeason[round].pairs[pair][side].team;
+        if(testVal > 0) {
+            nextSide = 'down';
+        }
+        if(round == 'round1') {
+            gameData.offSeason['round2'].pairs[nextPair][nextSide].team = teamId;
+        }else if(round == 'round2') {
+            gameData.offSeason['semi'].pairs[nextPair][nextSide].team = teamId;
+        }else if(round == 'semi') {
+            gameData.offSeason['final'].pairs[nextPair][nextSide].team = teamId;
+        }else if(round == 'final') {
+            gameData.teams[teamId].championNum += 1;
+        }
+    }
+
+    private static playGameAndGetResult(homeTeamId: any, visitorId: any, gameData: any): GameResult {
+        let homeTeam = gameData.teams[homeTeamId];
+        let visitor = gameData.teams[visitorId];
+        let homeScore = 0;
+        let visitorScore = 0;
+        let homePlayers = homeTeam.players;
+        let visitorPlayers = visitor.players;
+        for(let i = 0; i < homePlayers.length; i ++) {
+            let player = gameData.players[homePlayers[i]];
+            let score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
+            homeScore += score;
+            this.playerGrow(homePlayers[i], gameData);
+        }
+        do {
+            for(let i = 0; i < visitorPlayers.length; i ++) {
+                let player = gameData.players[visitorPlayers[i]];
+                let score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
+                visitorScore += score;
+            }
+        }while(homeScore === visitorScore);
+        for(let i = 0; i < visitorPlayers.length; i ++) {
+            this.playerGrow(visitorPlayers[i], gameData);
+        }
+        if(homeScore > visitorScore) {
+            return new GameResult(homeTeamId, homeScore, visitorScore);
+        }else {
+            return new GameResult(visitorId, visitorScore, homeScore);
+        }
+        
     }
 
     public static nextGame(homeTeamId: any, visitorId: any, gameData: any): any {
@@ -1105,7 +1459,6 @@ class Game {
         result = result.sort((a: any, b: any) => {
             return b.ability - a.ability;
         });
-        console.log(result);
         return result;
     }
 
@@ -1120,6 +1473,7 @@ enum ShowState {
     News,
     Statistics,
     AttrRank,
+    OffSeason,
 }
 
 class GameSchedule {
@@ -1382,4 +1736,133 @@ class TemplateUtil {
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     }
+
+    private static offIdToName(offRound: any, pair: any, side: any, gameData: any, right: any = false): any {
+        let thePair = gameData.offSeason[offRound].pairs[pair];
+        let teamId = thePair[side].team;
+        let teamName = '';
+        let teamStyle = '';
+        let teamWin = thePair[side].win;
+        if(teamId == -1) {
+            teamName =  '未定'
+        }else {
+            teamName = gameData.teams[teamId].name;
+        }
+        let finished = thePair.finished;
+        if(finished && teamWin == 4) {
+            teamStyle = 'winDiv';
+        }else if(finished) {
+            teamStyle = 'lostDiv';
+        }else if(teamId != -1){
+            teamStyle = 'winDiv';
+        }else {
+            teamStyle = 'ordDiv';
+        }
+        let resultStr;
+        if(right) {
+            resultStr = `<div class='${teamStyle}'><span>${teamWin}</span><span class='nameRightSpan'>${teamName}</span></div>`;
+        }else {
+            resultStr = `<div class='${teamStyle}'><span class='nameSpan'>${teamName}</span><span>${teamWin}</span></div>`;
+        }
+        return resultStr;
+    }
+
+    public static createOffSeasonPane(gameData: any) {
+        const template = `
+        <div id='offSeasonPane'>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 0, 'up', gameData)}
+                    ${this.offIdToName('round1', 0, 'down', gameData)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 1, 'up', gameData)}
+                    ${this.offIdToName('round1', 1, 'down', gameData)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 2, 'up', gameData)}
+                    ${this.offIdToName('round1', 2, 'down', gameData)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 3, 'up', gameData)}
+                    ${this.offIdToName('round1', 3, 'down', gameData)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('round2', 0, 'up', gameData)}
+                    ${this.offIdToName('round2', 0, 'down', gameData)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round2', 1, 'up', gameData)}
+                    ${this.offIdToName('round2', 1, 'down', gameData)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('semi', 0, 'up', gameData)}
+                    ${this.offIdToName('semi', 0, 'down', gameData)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('final', 0, 'up', gameData)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('final', 0, 'down', gameData, true)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('semi', 1, 'up', gameData, true)}
+                    ${this.offIdToName('semi', 1, 'down', gameData, true)}
+                </div>
+            </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                        ${this.offIdToName('round2', 2, 'up', gameData, true)}
+                        ${this.offIdToName('round2', 2, 'down', gameData, true)}
+                    </div>
+                    <div class='batDiv'>
+                        ${this.offIdToName('round2', 3, 'up', gameData, true)}
+                        ${this.offIdToName('round2', 3, 'down', gameData, true)}
+                    </div>
+                </div>
+            <div class='offSeasonColumn'>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 4, 'up', gameData, true)}
+                    ${this.offIdToName('round1', 4, 'down', gameData, true)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 5, 'up', gameData, true)}
+                    ${this.offIdToName('round1', 5, 'down', gameData, true)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 6, 'up', gameData, true)}
+                    ${this.offIdToName('round1', 6, 'down', gameData, true)}
+                </div>
+                <div class='batDiv'>
+                    ${this.offIdToName('round1', 7, 'up', gameData, true)}
+                    ${this.offIdToName('round1', 7, 'down', gameData, true)}
+                </div>
+            </div>
+        </div>
+        `
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('#offSeasonPane');
+        return newNode;
+    }
+}
+
+class GameResult {
+    winnerId: number;
+    winnerPoint: number;
+    loserPoint: number;
+
+    constructor(winnerId: number, winnerPoint: number, loserPoint: number){
+        this.winnerId = winnerId;
+        this.winnerPoint = winnerPoint;
+        this.loserPoint = loserPoint;
+    };
 }

@@ -3,13 +3,15 @@ var Game = /** @class */ (function () {
     function Game() {
     }
     Game.getInitData = function () {
-        return {
+        var result = {
             teams: {
                 '0': {
                     name: '雄鹿',
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['46', '81', '124', '139', '148'],
                 },
                 '1': {
@@ -17,6 +19,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['11', '58', '65', '123', '140'],
                 },
                 '2': {
@@ -24,6 +28,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['4', '26', '44', '122', '141'],
                 },
                 '3': {
@@ -31,6 +37,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['31', '63', '64', '83', '121'],
                 },
                 '4': {
@@ -38,6 +46,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['36', '77', '82', '90', '92'],
                 },
                 '5': {
@@ -45,6 +55,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['13', '105', '125', '142', '149'],
                 },
                 '6': {
@@ -52,6 +64,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['34', '6', '104', '126', '143'],
                 },
                 '7': {
@@ -59,6 +73,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['7', '39', '91', '127', '144'],
                 },
                 '8': {
@@ -66,6 +82,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['8', '15', '23', '40', '67'],
                 },
                 '9': {
@@ -73,6 +91,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['17', '57', '60', '74', '128'],
                 },
                 '10': {
@@ -80,6 +100,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['50', '75', '99', '117', '119'],
                 },
                 '11': {
@@ -87,6 +109,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['11', '98', '107', '118', '129'],
                 },
                 '12': {
@@ -94,6 +118,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['21', '22', '59', '66', '68'],
                 },
                 '13': {
@@ -101,6 +127,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['3', '30', '13', '53', '103'],
                 },
                 '14': {
@@ -108,6 +136,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['16', '76', '80', '97', '102'],
                 },
                 '15': {
@@ -115,6 +145,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['61', '85', '109', '130', '145'],
                 },
                 '16': {
@@ -122,6 +154,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['47', '48', '69', '84', '108'],
                 },
                 '17': {
@@ -129,6 +163,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['12', '25', '41', '70', '131'],
                 },
                 '18': {
@@ -136,6 +172,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['5', '28', '0', '73', '93'],
                 },
                 '19': {
@@ -143,6 +181,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['19', '20', '88', '115', '120'],
                 },
                 '20': {
@@ -150,6 +190,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['72', '87', '94', '114', '132'],
                 },
                 '21': {
@@ -157,6 +199,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['52', '55', '56', '106', '133'],
                 },
                 '22': {
@@ -164,6 +208,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['18', '54', '86', '134', '146'],
                 },
                 '23': {
@@ -171,6 +217,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['29', '89', '95', '112', '135'],
                 },
                 '24': {
@@ -178,6 +226,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['27', '32', '35', '113', '136'],
                 },
                 '25': {
@@ -185,6 +235,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['7', '10', '49', '62', '100'],
                 },
                 '26': {
@@ -192,6 +244,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['24', '96', '111', '116', '137'],
                 },
                 '27': {
@@ -199,6 +253,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['51', '71', '78', '101', '110'],
                 },
                 '28': {
@@ -206,6 +262,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['14', '37', '79', '138', '147'],
                 },
                 '29': {
@@ -213,6 +271,8 @@ var Game = /** @class */ (function () {
                     gameNum: 0,
                     winNum: 0,
                     regularChampionNum: 0,
+                    seasonScore: 0,
+                    seasonOppScore: 0,
                     players: ['1', '2', '6', '33', '45'],
                 },
             },
@@ -273,7 +333,7 @@ var Game = /** @class */ (function () {
                     maxPoints: 0,
                 },
                 '11': {
-                    name: '佩奇',
+                    name: '野猪佩奇',
                     ability: 2,
                     maxPoints: 0,
                 },
@@ -975,14 +1035,52 @@ var Game = /** @class */ (function () {
                     content: '欢迎进入游戏，你的球队是 太阳'
                 }
             ],
+            offSeason: {
+                round1: {
+                    finished: false,
+                    pairs: []
+                },
+                round2: {
+                    finished: false,
+                    pairs: []
+                },
+                semi: {
+                    finished: false,
+                    pairs: []
+                },
+                final: {
+                    finished: false,
+                    pairs: []
+                }
+            },
             userTeam: '太阳',
             userTeamId: '29',
             currentSeason: 1,
             currentDay: 1,
             showState: ShowState.MyTeam,
         };
+        this.prepareGameData(result);
+        return result;
     };
     ;
+    Game.prepareGameData = function (gameData) {
+        var players = gameData.players;
+        for (var i in players) {
+            gameData.players[i].totalRegGameNum = 0;
+            gameData.players[i].seasonRegGameNum = 0;
+            gameData.players[i].totalOffGameNum = 0;
+            gameData.players[i].seasonOffGameNum = 0;
+            gameData.players[i].totalRegScore = 0;
+            gameData.players[i].seasonRegScore = 0;
+            gameData.players[i].totalOffScore = 0;
+            gameData.players[i].seasonOffScore = 0;
+            gameData.players[i].currentGameScore = 0;
+        }
+        for (var i = 0; i < 30; i++) {
+            gameData.teams[i].championNum = 0;
+        }
+        this.resetOffSeasonData(gameData);
+    };
     Game.playerGrow = function (id, gameData) {
         var value = Math.random() * 6;
         if (value < 1) {
@@ -1001,6 +1099,25 @@ var Game = /** @class */ (function () {
         gameData.teams[championId].regularChampionNum += 1;
         return gameData.teams[championId].name;
     };
+    Game.setOffSeasonTeams = function (gameData) {
+        var rank = this.getTeamRank(gameData);
+        gameData.offSeason.round1.pairs[0].up.team = rank[0].id;
+        gameData.offSeason.round1.pairs[0].down.team = rank[15].id;
+        gameData.offSeason.round1.pairs[1].up.team = rank[7].id;
+        gameData.offSeason.round1.pairs[1].down.team = rank[8].id;
+        gameData.offSeason.round1.pairs[2].up.team = rank[4].id;
+        gameData.offSeason.round1.pairs[2].down.team = rank[11].id;
+        gameData.offSeason.round1.pairs[3].up.team = rank[3].id;
+        gameData.offSeason.round1.pairs[3].down.team = rank[12].id;
+        gameData.offSeason.round1.pairs[4].up.team = rank[1].id;
+        gameData.offSeason.round1.pairs[4].down.team = rank[14].id;
+        gameData.offSeason.round1.pairs[5].up.team = rank[6].id;
+        gameData.offSeason.round1.pairs[5].down.team = rank[9].id;
+        gameData.offSeason.round1.pairs[6].up.team = rank[5].id;
+        gameData.offSeason.round1.pairs[6].down.team = rank[10].id;
+        gameData.offSeason.round1.pairs[7].up.team = rank[2].id;
+        gameData.offSeason.round1.pairs[7].down.team = rank[13].id;
+    };
     Game.nextDay = function (gameData) {
         gameData.showState = ShowState.News;
         if (gameData.currentDay <= Game.regularEndDay) {
@@ -1014,14 +1131,19 @@ var Game = /** @class */ (function () {
         }
         else if (gameData.currentDay === Game.regularEndDay + 1) {
             var chamName = this.setRegularChampion(gameData);
+            this.setOffSeasonTeams(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
-                content: '常规赛冠军是' + chamName + '!, 恭喜!新的一年也要努力哦，点击模拟进入下一个赛季。',
+                content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
             });
             gameData.currentDay += 1;
         }
-        else if (gameData.currentDay === Game.regularEndDay + 2) {
+        else if (gameData.currentDay < Game.regularEndDay + 57) {
+            this.offSeasonDay(gameData.currentDay - Game.regularEndDay - 2, gameData);
+            gameData.currentDay += 1;
+        }
+        else if (gameData.currentDay === Game.regularEndDay + 57) {
             gameData.currentDay = 1;
             gameData.currentSeason += 1;
             for (var i = 0; i < 30; i++) {
@@ -1029,11 +1151,188 @@ var Game = /** @class */ (function () {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            this.resetOffSeasonData(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '第' + gameData.currentSeason + '赛季开始了',
             });
+        }
+    };
+    Game.resetOffSeasonData = function (gameData) {
+        gameData.offSeason.round1.pairs = [];
+        gameData.offSeason.round2.pairs = [];
+        gameData.offSeason.semi.pairs = [];
+        gameData.offSeason.final.pairs = [];
+        for (var i = 0; i < 8; i++) {
+            var pair_1 = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.round1.pairs.push(pair_1);
+        }
+        for (var i = 0; i < 4; i++) {
+            var pair_2 = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.round2.pairs.push(pair_2);
+        }
+        for (var i = 0; i < 2; i++) {
+            var pair_3 = {
+                finished: false,
+                gameNum: 0,
+                up: {
+                    team: -1,
+                    win: 0,
+                },
+                down: {
+                    team: -1,
+                    win: 0,
+                }
+            };
+            gameData.offSeason.semi.pairs.push(pair_3);
+        }
+        var pair = {
+            finished: false,
+            gameNum: 0,
+            up: {
+                team: -1,
+                win: 0,
+            },
+            down: {
+                team: -1,
+                win: 0,
+            }
+        };
+        gameData.offSeason.final.pairs.push(pair);
+    };
+    Game.offSeasonDay = function (dayNum, gameData) {
+        var todayGames = Game.offSeasonGames[dayNum];
+        var dailyNews = [];
+        for (var i = 0; i < todayGames.length; i++) {
+            var theGame = todayGames[i];
+            var thePair = gameData.offSeason[theGame.round].pairs[theGame.pair];
+            if (thePair.finished) {
+                continue;
+            }
+            var homeTeamId = void 0;
+            var visitorId = void 0;
+            if (theGame.home === 'up') {
+                homeTeamId = thePair.up.team;
+                visitorId = thePair.down.team;
+            }
+            else {
+                homeTeamId = thePair.down.team;
+                visitorId = thePair.up.team;
+            }
+            var gameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+            var homeTeamName = gameData.teams[homeTeamId].name;
+            var visitorName = gameData.teams[visitorId].name;
+            if (homeTeamId == gameResult.winnerId) {
+                if (homeTeamId == thePair.up.team) {
+                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u5BA2)" + visitorName);
+                }
+                else {
+                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u4E3B)" + homeTeamName);
+                }
+            }
+            else {
+                if (homeTeamId == thePair.up.team) {
+                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u5BA2)" + visitorName);
+                }
+                else {
+                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u4E3B)" + homeTeamName);
+                }
+            }
+            if (thePair.up.team == gameResult.winnerId) {
+                gameData.offSeason[theGame.round].pairs[theGame.pair].up.win += 1;
+                if (gameData.offSeason[theGame.round].pairs[theGame.pair].up.win == 4) {
+                    gameData.offSeason[theGame.round].pairs[theGame.pair].finished = true;
+                    this.upgradeToNextRound(theGame.round, theGame.pair, 'up', gameData);
+                }
+            }
+            else {
+                gameData.offSeason[theGame.round].pairs[theGame.pair].down.win += 1;
+                if (gameData.offSeason[theGame.round].pairs[theGame.pair].down.win == 4) {
+                    gameData.offSeason[theGame.round].pairs[theGame.pair].finished = true;
+                    this.upgradeToNextRound(theGame.round, theGame.pair, 'down', gameData);
+                }
+            }
+        }
+        if (dailyNews.length > 0) {
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: dailyNews.join("<br />"),
+            });
+        }
+    };
+    Game.upgradeToNextRound = function (round, pair, side, gameData) {
+        var nextPair = Math.floor(pair / 2);
+        var testVal = pair - nextPair * 2;
+        var nextSide = 'up';
+        var teamId = gameData.offSeason[round].pairs[pair][side].team;
+        if (testVal > 0) {
+            nextSide = 'down';
+        }
+        if (round == 'round1') {
+            gameData.offSeason['round2'].pairs[nextPair][nextSide].team = teamId;
+        }
+        else if (round == 'round2') {
+            gameData.offSeason['semi'].pairs[nextPair][nextSide].team = teamId;
+        }
+        else if (round == 'semi') {
+            gameData.offSeason['final'].pairs[nextPair][nextSide].team = teamId;
+        }
+        else if (round == 'final') {
+            gameData.teams[teamId].championNum += 1;
+        }
+    };
+    Game.playGameAndGetResult = function (homeTeamId, visitorId, gameData) {
+        var homeTeam = gameData.teams[homeTeamId];
+        var visitor = gameData.teams[visitorId];
+        var homeScore = 0;
+        var visitorScore = 0;
+        var homePlayers = homeTeam.players;
+        var visitorPlayers = visitor.players;
+        for (var i = 0; i < homePlayers.length; i++) {
+            var player = gameData.players[homePlayers[i]];
+            var score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
+            homeScore += score;
+            this.playerGrow(homePlayers[i], gameData);
+        }
+        do {
+            for (var i = 0; i < visitorPlayers.length; i++) {
+                var player = gameData.players[visitorPlayers[i]];
+                var score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
+                visitorScore += score;
+            }
+        } while (homeScore === visitorScore);
+        for (var i = 0; i < visitorPlayers.length; i++) {
+            this.playerGrow(visitorPlayers[i], gameData);
+        }
+        if (homeScore > visitorScore) {
+            return new GameResult(homeTeamId, homeScore, visitorScore);
+        }
+        else {
+            return new GameResult(visitorId, visitorScore, homeScore);
         }
     };
     Game.nextGame = function (homeTeamId, visitorId, gameData) {
@@ -1105,13 +1404,70 @@ var Game = /** @class */ (function () {
         result = result.sort(function (a, b) {
             return b.ability - a.ability;
         });
-        console.log(result);
         return result;
     };
     Game.getPlayerInfo = function (id, gameData) {
         return gameData.players[id];
     };
     Game.regularEndDay = 164;
+    Game.round1EndDay = 15;
+    Game.offSeasonGames = [
+        [{ round: 'round1', pair: 0, home: 'up' }, { round: 'round1', pair: 2, home: 'up' }, { round: 'round1', pair: 5, home: 'up' }, { round: 'round1', pair: 7, home: 'up' }],
+        [{ round: 'round1', pair: 1, home: 'up' }, { round: 'round1', pair: 3, home: 'up' }, { round: 'round1', pair: 4, home: 'up' }, { round: 'round1', pair: 6, home: 'up' }],
+        [{ round: 'round1', pair: 0, home: 'up' }, { round: 'round1', pair: 2, home: 'up' }, { round: 'round1', pair: 5, home: 'up' }, { round: 'round1', pair: 7, home: 'up' }],
+        [{ round: 'round1', pair: 1, home: 'up' }, { round: 'round1', pair: 3, home: 'up' }, { round: 'round1', pair: 4, home: 'up' }, { round: 'round1', pair: 6, home: 'up' }],
+        [{ round: 'round1', pair: 0, home: 'down' }, { round: 'round1', pair: 2, home: 'down' }, { round: 'round1', pair: 5, home: 'down' }, { round: 'round1', pair: 7, home: 'down' }],
+        [{ round: 'round1', pair: 1, home: 'down' }, { round: 'round1', pair: 3, home: 'down' }, { round: 'round1', pair: 4, home: 'down' }, { round: 'round1', pair: 6, home: 'down' }],
+        [{ round: 'round1', pair: 0, home: 'down' }, { round: 'round1', pair: 2, home: 'down' }, { round: 'round1', pair: 5, home: 'down' }, { round: 'round1', pair: 7, home: 'down' }],
+        [{ round: 'round1', pair: 1, home: 'down' }, { round: 'round1', pair: 3, home: 'down' }, { round: 'round1', pair: 4, home: 'down' }, { round: 'round1', pair: 6, home: 'down' }],
+        [{ round: 'round1', pair: 0, home: 'up' }, { round: 'round1', pair: 2, home: 'up' }, { round: 'round1', pair: 5, home: 'up' }, { round: 'round1', pair: 7, home: 'up' }],
+        [{ round: 'round1', pair: 1, home: 'up' }, { round: 'round1', pair: 3, home: 'up' }, { round: 'round1', pair: 4, home: 'up' }, { round: 'round1', pair: 6, home: 'up' }],
+        [{ round: 'round1', pair: 0, home: 'down' }, { round: 'round1', pair: 2, home: 'down' }, { round: 'round1', pair: 5, home: 'down' }, { round: 'round1', pair: 7, home: 'down' }],
+        [{ round: 'round1', pair: 1, home: 'down' }, { round: 'round1', pair: 3, home: 'down' }, { round: 'round1', pair: 4, home: 'down' }, { round: 'round1', pair: 6, home: 'down' }],
+        [{ round: 'round1', pair: 0, home: 'up' }, { round: 'round1', pair: 2, home: 'up' }, { round: 'round1', pair: 5, home: 'up' }, { round: 'round1', pair: 7, home: 'up' }],
+        [{ round: 'round1', pair: 1, home: 'up' }, { round: 'round1', pair: 3, home: 'up' }, { round: 'round1', pair: 4, home: 'up' }, { round: 'round1', pair: 6, home: 'up' }],
+        [{ round: 'round2', pair: 0, home: 'up' }, { round: 'round2', pair: 3, home: 'up' }],
+        [{ round: 'round2', pair: 1, home: 'up' }, { round: 'round2', pair: 2, home: 'up' }],
+        [{ round: 'round2', pair: 0, home: 'up' }, { round: 'round2', pair: 3, home: 'up' }],
+        [{ round: 'round2', pair: 1, home: 'up' }, { round: 'round2', pair: 2, home: 'up' }],
+        [{ round: 'round2', pair: 0, home: 'down' }, { round: 'round2', pair: 3, home: 'down' }],
+        [{ round: 'round2', pair: 1, home: 'down' }, { round: 'round2', pair: 2, home: 'down' }],
+        [{ round: 'round2', pair: 0, home: 'down' }, { round: 'round2', pair: 3, home: 'down' }],
+        [{ round: 'round2', pair: 1, home: 'down' }, { round: 'round2', pair: 2, home: 'down' }],
+        [{ round: 'round2', pair: 0, home: 'up' }, { round: 'round2', pair: 3, home: 'up' }],
+        [{ round: 'round2', pair: 1, home: 'up' }, { round: 'round2', pair: 2, home: 'up' }],
+        [{ round: 'round2', pair: 0, home: 'down' }, { round: 'round2', pair: 3, home: 'down' }],
+        [{ round: 'round2', pair: 1, home: 'down' }, { round: 'round2', pair: 2, home: 'down' }],
+        [{ round: 'round2', pair: 0, home: 'up' }, { round: 'round2', pair: 3, home: 'up' }],
+        [{ round: 'round2', pair: 1, home: 'up' }, { round: 'round2', pair: 2, home: 'up' }],
+        [{ round: 'semi', pair: 0, home: 'up' }],
+        [{ round: 'semi', pair: 1, home: 'up' }],
+        [{ round: 'semi', pair: 0, home: 'up' }],
+        [{ round: 'semi', pair: 1, home: 'up' }],
+        [{ round: 'semi', pair: 0, home: 'down' }],
+        [{ round: 'semi', pair: 1, home: 'down' }],
+        [{ round: 'semi', pair: 0, home: 'down' }],
+        [{ round: 'semi', pair: 1, home: 'down' }],
+        [{ round: 'semi', pair: 0, home: 'up' }],
+        [{ round: 'semi', pair: 1, home: 'up' }],
+        [{ round: 'semi', pair: 0, home: 'down' }],
+        [{ round: 'semi', pair: 1, home: 'down' }],
+        [{ round: 'semi', pair: 0, home: 'up' }],
+        [{ round: 'semi', pair: 1, home: 'up' }],
+        [{ round: 'final', pair: 0, home: 'up' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'up' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'down' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'down' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'up' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'down' }],
+        [],
+        [{ round: 'final', pair: 0, home: 'up' }],
+    ];
     return Game;
 }());
 var ShowState;
@@ -1121,6 +1477,7 @@ var ShowState;
     ShowState[ShowState["News"] = 2] = "News";
     ShowState[ShowState["Statistics"] = 3] = "Statistics";
     ShowState[ShowState["AttrRank"] = 4] = "AttrRank";
+    ShowState[ShowState["OffSeason"] = 5] = "OffSeason";
 })(ShowState || (ShowState = {}));
 var GameSchedule = /** @class */ (function () {
     function GameSchedule() {
@@ -1368,5 +1725,54 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
+    TemplateUtil.offIdToName = function (offRound, pair, side, gameData, right) {
+        if (right === void 0) { right = false; }
+        var thePair = gameData.offSeason[offRound].pairs[pair];
+        var teamId = thePair[side].team;
+        var teamName = '';
+        var teamStyle = '';
+        var teamWin = thePair[side].win;
+        if (teamId == -1) {
+            teamName = '未定';
+        }
+        else {
+            teamName = gameData.teams[teamId].name;
+        }
+        var finished = thePair.finished;
+        if (finished && teamWin == 4) {
+            teamStyle = 'winDiv';
+        }
+        else if (finished) {
+            teamStyle = 'lostDiv';
+        }
+        else if (teamId != -1) {
+            teamStyle = 'winDiv';
+        }
+        else {
+            teamStyle = 'ordDiv';
+        }
+        var resultStr;
+        if (right) {
+            resultStr = "<div class='" + teamStyle + "'><span>" + teamWin + "</span><span class='nameRightSpan'>" + teamName + "</span></div>";
+        }
+        else {
+            resultStr = "<div class='" + teamStyle + "'><span class='nameSpan'>" + teamName + "</span><span>" + teamWin + "</span></div>";
+        }
+        return resultStr;
+    };
+    TemplateUtil.createOffSeasonPane = function (gameData) {
+        var template = "\n        <div id='offSeasonPane'>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 0, 'up', gameData) + "\n                    " + this.offIdToName('round1', 0, 'down', gameData) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 1, 'up', gameData) + "\n                    " + this.offIdToName('round1', 1, 'down', gameData) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 2, 'up', gameData) + "\n                    " + this.offIdToName('round1', 2, 'down', gameData) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 3, 'up', gameData) + "\n                    " + this.offIdToName('round1', 3, 'down', gameData) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('round2', 0, 'up', gameData) + "\n                    " + this.offIdToName('round2', 0, 'down', gameData) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round2', 1, 'up', gameData) + "\n                    " + this.offIdToName('round2', 1, 'down', gameData) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('semi', 0, 'up', gameData) + "\n                    " + this.offIdToName('semi', 0, 'down', gameData) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('final', 0, 'up', gameData) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('final', 0, 'down', gameData, true) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('semi', 1, 'up', gameData, true) + "\n                    " + this.offIdToName('semi', 1, 'down', gameData, true) + "\n                </div>\n            </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                        " + this.offIdToName('round2', 2, 'up', gameData, true) + "\n                        " + this.offIdToName('round2', 2, 'down', gameData, true) + "\n                    </div>\n                    <div class='batDiv'>\n                        " + this.offIdToName('round2', 3, 'up', gameData, true) + "\n                        " + this.offIdToName('round2', 3, 'down', gameData, true) + "\n                    </div>\n                </div>\n            <div class='offSeasonColumn'>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 4, 'up', gameData, true) + "\n                    " + this.offIdToName('round1', 4, 'down', gameData, true) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 5, 'up', gameData, true) + "\n                    " + this.offIdToName('round1', 5, 'down', gameData, true) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 6, 'up', gameData, true) + "\n                    " + this.offIdToName('round1', 6, 'down', gameData, true) + "\n                </div>\n                <div class='batDiv'>\n                    " + this.offIdToName('round1', 7, 'up', gameData, true) + "\n                    " + this.offIdToName('round1', 7, 'down', gameData, true) + "\n                </div>\n            </div>\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('#offSeasonPane');
+        return newNode;
+    };
     return TemplateUtil;
+}());
+var GameResult = /** @class */ (function () {
+    function GameResult(winnerId, winnerPoint, loserPoint) {
+        this.winnerId = winnerId;
+        this.winnerPoint = winnerPoint;
+        this.loserPoint = loserPoint;
+    }
+    ;
+    return GameResult;
 }());

@@ -21,6 +21,33 @@ br {
   text-align: right;
   margin-right: 5px; }
 
+#offSeasonPane {
+  padding: 10px;
+  display: flex;
+  flex-grow: 1;
+  align-items: stretch; }
+
+.offSeasonColumn {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; }
+  .offSeasonColumn .batDiv {
+    margin: 0 5px; }
+  .offSeasonColumn div {
+    border: 1px solid #AE4E26; }
+  .offSeasonColumn .ordDiv, .offSeasonColumn .winDiv, .offSeasonColumn .lostDiv {
+    display: flex;
+    padding: 0 5px; }
+  .offSeasonColumn .winDiv {
+    background-color: #9BC595; }
+  .offSeasonColumn .lostDiv {
+    background-color: #eee; }
+  .offSeasonColumn .nameSpan, .offSeasonColumn .nameRightSpan {
+    flex-grow: 1; }
+  .offSeasonColumn .nameRightSpan {
+    text-align: right; }
+
 .growSpan {
   flex-grow: 1; }
 
