@@ -278,7 +278,7 @@ var Game = /** @class */ (function () {
             },
             players: {
                 '0': {
-                    name: '测试',
+                    name: '科怀-伦纳德',
                     ability: 1,
                     maxPoints: 0,
                 },
@@ -1122,10 +1122,42 @@ var Game = /** @class */ (function () {
         gameData.showState = ShowState.News;
         if (gameData.currentDay <= Game.regularEndDay) {
             var games = GameSchedule.gamesOfDay(gameData.currentDay);
+            var dailyNews = [];
             for (var i = 0; i < games.length; i++) {
                 var homeTeamId = games[i][0];
                 var visitorId = games[i][1];
-                this.nextGame(homeTeamId, visitorId, gameData);
+                var gameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+                var homeTeam = gameData.teams[homeTeamId];
+                var visitor = gameData.teams[visitorId];
+                var homeTeamName = homeTeam.name;
+                var visitorName = visitor.name;
+                gameData.teams[homeTeamId].gameNum += 1;
+                gameData.teams[visitorId].gameNum += 1;
+                var homeScore = void 0;
+                var visitorScore = void 0;
+                if (gameResult.winnerId == homeTeamId) {
+                    gameData.teams[homeTeamId].winNum += 1;
+                    homeScore = gameResult.winnerPoint;
+                    visitorScore = gameResult.loserPoint;
+                }
+                else {
+                    gameData.teams[visitorId].winNum += 1;
+                    homeScore = gameResult.loserPoint;
+                    visitorScore = gameResult.winnerPoint;
+                }
+                dailyNews.push(homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName);
+                // gameData.news.push({
+                //     season: gameData.currentSeason,
+                //     day: gameData.currentDay,
+                //     content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
+                // });
+            }
+            if (dailyNews.length > 0) {
+                gameData.news.push({
+                    season: gameData.currentSeason,
+                    day: gameData.currentDay,
+                    content: dailyNews.join("<br />")
+                });
             }
             gameData.currentDay += 1;
         }
@@ -1303,6 +1335,11 @@ var Game = /** @class */ (function () {
         }
         else if (round == 'final') {
             gameData.teams[teamId].championNum += 1;
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: "\u606D\u559C" + gameData.teams[teamId].name + "\u559C\u63D0\u603B\u51A0\u519B\uFF01",
+            });
         }
     };
     Game.playGameAndGetResult = function (homeTeamId, visitorId, gameData) {
@@ -1334,45 +1371,6 @@ var Game = /** @class */ (function () {
         else {
             return new GameResult(visitorId, visitorScore, homeScore);
         }
-    };
-    Game.nextGame = function (homeTeamId, visitorId, gameData) {
-        var homeTeam = gameData.teams[homeTeamId];
-        var visitor = gameData.teams[visitorId];
-        var homeTeamName = homeTeam.name;
-        var visitorName = visitor.name;
-        var homeScore = 0;
-        var visitorScore = 0;
-        var homePlayers = homeTeam.players;
-        var visitorPlayers = visitor.players;
-        for (var i = 0; i < homePlayers.length; i++) {
-            var player = gameData.players[homePlayers[i]];
-            var score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
-            homeScore += score;
-            this.playerGrow(homePlayers[i], gameData);
-        }
-        do {
-            for (var i = 0; i < visitorPlayers.length; i++) {
-                var player = gameData.players[visitorPlayers[i]];
-                var score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
-                visitorScore += score;
-            }
-        } while (homeScore === visitorScore);
-        for (var i = 0; i < visitorPlayers.length; i++) {
-            this.playerGrow(visitorPlayers[i], gameData);
-        }
-        gameData.teams[homeTeamId].gameNum += 1;
-        gameData.teams[visitorId].gameNum += 1;
-        if (homeScore > visitorScore) {
-            gameData.teams[homeTeamId].winNum += 1;
-        }
-        else {
-            gameData.teams[visitorId].winNum += 1;
-        }
-        gameData.news.push({
-            season: gameData.currentSeason,
-            day: gameData.currentDay,
-            content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
-        });
     };
     Game.getTeamRank = function (gameData) {
         var teams = gameData.teams;

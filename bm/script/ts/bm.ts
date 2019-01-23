@@ -335,7 +335,7 @@ class Game {
             },
             players: {
                 '0': {
-                    name: '测试',
+                    name: '科怀-伦纳德',
                     ability: 1,
                     maxPoints: 0,
                 },
@@ -1182,10 +1182,41 @@ class Game {
         gameData.showState = ShowState.News;
         if(gameData.currentDay <= Game.regularEndDay) {
             let games = GameSchedule.gamesOfDay(gameData.currentDay);
+            let dailyNews = [];
             for(let i = 0; i < games.length; i ++) {
                 let homeTeamId = games[i][0];
                 let visitorId = games[i][1];
-                this.nextGame(homeTeamId, visitorId, gameData);
+                let gameResult: GameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+                let homeTeam = gameData.teams[homeTeamId];
+                let visitor = gameData.teams[visitorId];
+                const homeTeamName = homeTeam.name;
+                const visitorName = visitor.name;
+                gameData.teams[homeTeamId].gameNum += 1;
+                gameData.teams[visitorId].gameNum += 1;
+                let homeScore;
+                let visitorScore;
+                if(gameResult.winnerId == homeTeamId) {
+                    gameData.teams[homeTeamId].winNum += 1;
+                    homeScore = gameResult.winnerPoint;
+                    visitorScore = gameResult.loserPoint;
+                }else {
+                    gameData.teams[visitorId].winNum += 1;
+                    homeScore = gameResult.loserPoint;
+                    visitorScore = gameResult.winnerPoint;
+                }
+                dailyNews.push(`${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}`);
+                // gameData.news.push({
+                //     season: gameData.currentSeason,
+                //     day: gameData.currentDay,
+                //     content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
+                // });
+            }
+            if(dailyNews.length > 0) {
+                gameData.news.push({
+                    season: gameData.currentSeason,
+                    day: gameData.currentDay,
+                    content: dailyNews.join("<br />")
+                })
             }
             gameData.currentDay += 1;
         } else if(gameData.currentDay === Game.regularEndDay + 1){
@@ -1355,6 +1386,11 @@ class Game {
             gameData.offSeason['final'].pairs[nextPair][nextSide].team = teamId;
         }else if(round == 'final') {
             gameData.teams[teamId].championNum += 1;
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: `恭喜${gameData.teams[teamId].name}喜提总冠军！`,
+            });
         }
     }
 
@@ -1387,45 +1423,6 @@ class Game {
             return new GameResult(visitorId, visitorScore, homeScore);
         }
         
-    }
-
-    public static nextGame(homeTeamId: any, visitorId: any, gameData: any): any {
-        let homeTeam = gameData.teams[homeTeamId];
-        let visitor = gameData.teams[visitorId];
-        const homeTeamName = homeTeam.name;
-        const visitorName = visitor.name;
-        let homeScore = 0;
-        let visitorScore = 0;
-        let homePlayers = homeTeam.players;
-        let visitorPlayers = visitor.players;
-        for(let i = 0; i < homePlayers.length; i ++) {
-            let player = gameData.players[homePlayers[i]];
-            let score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
-            homeScore += score;
-            this.playerGrow(homePlayers[i], gameData);
-        }
-        do {
-            for(let i = 0; i < visitorPlayers.length; i ++) {
-                let player = gameData.players[visitorPlayers[i]];
-                let score = Math.floor((Math.random() * player.ability * 6) + Math.random() * 6);
-                visitorScore += score;
-            }
-        }while(homeScore === visitorScore);
-        for(let i = 0; i < visitorPlayers.length; i ++) {
-            this.playerGrow(visitorPlayers[i], gameData);
-        }
-        gameData.teams[homeTeamId].gameNum += 1;
-        gameData.teams[visitorId].gameNum += 1;
-        if(homeScore > visitorScore) {
-            gameData.teams[homeTeamId].winNum += 1;
-        }else {
-            gameData.teams[visitorId].winNum += 1;
-        }
-        gameData.news.push({
-            season: gameData.currentSeason,
-            day: gameData.currentDay,
-            content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
-        });
     }
 
     public static getTeamRank(gameData: any): any {
