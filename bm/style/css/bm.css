@@ -2,6 +2,7 @@ br {
   margin-bottom: 20px; }
 
 .gameLine, .leftLine, .navLine {
+  min-height: fit-content;
   display: flex;
   justify-content: center;
   padding: 1px 5px;
