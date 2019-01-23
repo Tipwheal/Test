@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 爱心链接： FirefoxChrome">
+  <meta name="description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
 <meta property="og:type" content="article">
 <meta property="og:title" content="请勿打开">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/01/17/bm-test/index.html">
 <meta property="og:site_name" content="小学生学习园地">
-<meta property="og:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 爱心链接： FirefoxChrome">
+<meta property="og:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-23T03:47:52.741Z">
+<meta property="og:updated_time" content="2019-01-23T15:14:46.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请勿打开">
-<meta name="twitter:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 爱心链接： FirefoxChrome">
+<meta name="twitter:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
 
 
 
@@ -401,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-23 11:47:52" itemprop="dateModified" datetime="2019-01-23T11:47:52+08:00">2019-01-23</time>
+                <time title="修改时间：2019-01-23 23:14:46" itemprop="dateModified" datetime="2019-01-23T23:14:46+08:00">2019-01-23</time>
               
             
           </span>
@@ -443,6 +443,7 @@
 
       
         <p>请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼</p>
+<p>手机QQ自带浏览器也ok了，虽然好像不能下载文件。</p>
 <p>爱心链接：</p>
 <p><a href="http://www.firefox.com.cn/" target="_blank" rel="noopener">Firefox</a><br><a href="https://chrome.en.softonic.com/" target="_blank" rel="noopener">Chrome</a></p>
 <a id="more"></a>
@@ -459,11 +460,11 @@
 <div id="mainWrapper">
     <div id="stateDiv">
         <span id="stateTitle">篮球经理Web版</span>
-        <span>第&nbsp;</span>
-        <span id="currentDay">0</span>
-        <span>&nbsp;天第&nbsp;</span>
         <span id="currentSeason">0</span>
         <span>&nbsp;赛季</span>
+        <span>第&nbsp;</span>
+        <span id="currentDay">0</span>
+        <span>&nbsp;天&nbsp;</span>
     </div>
     <div id="mainDiv">
         <div class="sideDiv">
@@ -509,7 +510,7 @@ function updateDay() {
 
 function updateSeason() {
     const dayNum = document.getElementById('currentSeason');
-    dayNum.innerText = gameState.currentSeason;
+    dayNum.innerText = `${gameState.currentSeason}-${gameState.currentSeason + 1}`;
 }
 
 function updateButton() {
@@ -611,10 +612,31 @@ function showTeamInfo(teamId) {
 function showAttrRank() {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
-    let players = Game.getAbilityRank(gameState);
+    let select = TemplateUtil.createSelect([]);
+    mainDiv.appendChild(select);
+    let players = Game.getAbilityRank(gameState, 'skillAverage');
     for(let i = 0; i < players.length; i++) {
         let player = players[i];
-        let line = TemplateUtil.createLine(player.name + '&nbsp' + player.ability);
+        let line = TemplateUtil.createAttrLine(i + 1, '综合能力', player.name, player.skillAverage);
+        mainDiv.appendChild(line);
+    }
+}
+
+function changeAttr() {
+    const mainDiv = document.getElementById('contentDiv');
+    const select = document.getElementById('attrSelect');
+    for(let i = mainDiv.childNodes.length - 1; i > 0; i--) {
+        mainDiv.removeChild(mainDiv.childNodes[i]);
+    }
+    const value = select.options[select.selectedIndex].value;
+    const attrName = select.options[select.selectedIndex].text;
+    let players = Game.getAbilityRank(gameState, value);
+    for(let i = 0; i < players.length; i++) {
+        let player = players[i];
+        if(player[value] == 0) {
+            break;
+        }
+        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.name, player[value]);
         mainDiv.appendChild(line);
     }
 }
@@ -720,6 +742,8 @@ function save() {
 </ul>
 </li>
 <li>比赛信息详情界面</li>
+<li>球员详细信息界面</li>
+<li>下载链接放到上面去</li>
 </ul>
 <p>正在做：</p>
 <ul>
@@ -736,6 +760,8 @@ function save() {
 </li>
 <li>修改配色方案</li>
 <li>优化新闻显示</li>
+<li>添加球员名单</li>
+<li>完整球员属性排行</li>
 <li>忘了</li>
 </ul>
 

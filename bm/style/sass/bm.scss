@@ -130,6 +130,23 @@ br {
     flex-grow: 1;
 }
 
+.selectLine {
+    @extend %baseLine;
+    padding: 0;
+}
+
+.gameSelect {
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: center;
+    background-color: $youth2;
+    flex-grow: 1;
+    margin: 0;
+    cursor: pointer;
+}
+
 #mainDiv {
     display: flex;
     flex-direction: row;

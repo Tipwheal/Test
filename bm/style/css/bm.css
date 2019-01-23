@@ -1,7 +1,7 @@
 br {
   margin-bottom: 20px; }
 
-.gameLine, .leftLine, .navLine {
+.gameLine, .leftLine, .navLine, .selectLine {
   min-height: fit-content;
   display: flex;
   justify-content: center;
@@ -88,6 +88,20 @@ br {
 
 #stateTitle {
   flex-grow: 1; }
+
+.selectLine {
+  padding: 0; }
+
+.gameSelect {
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  background-color: #9BC595;
+  flex-grow: 1;
+  margin: 0;
+  cursor: pointer; }
 
 #mainDiv {
   display: flex;
