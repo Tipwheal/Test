@@ -13177,6 +13177,14 @@ var Game = /** @class */ (function () {
             gameData.players[i].totalOffScore = 0;
             gameData.players[i].seasonOffScore = 0;
             gameData.players[i].currentGameScore = 0;
+            gameData.players[i].currentGameClose = 0;
+            gameData.players[i].currentGameCloseIn = 0;
+            gameData.players[i].currentGameMiddle = 0;
+            gameData.players[i].currentGameMiddleIn = 0;
+            gameData.players[i].currentGameThree = 0;
+            gameData.players[i].currentGameThreeIn = 0;
+            gameData.players[i].currentGameFree = 0;
+            gameData.players[i].currentGameFreeIn = 0;
             var teamId = gameData.players[i].team;
             if (teamId !== undefined && teamId >= 0) {
                 gameData.teams[teamId].players.push(i);
@@ -13228,6 +13236,8 @@ var Game = /** @class */ (function () {
         if (gameData.currentDay <= Game.regularEndDay) {
             var games = GameSchedule.gamesOfDay(gameData.currentDay);
             var dailyNews = [];
+            var maxId = 0;
+            var maxScore = 0;
             for (var i = 0; i < games.length; i++) {
                 var homeTeamId = games[i][0];
                 var visitorId = games[i][1];
@@ -13240,22 +13250,38 @@ var Game = /** @class */ (function () {
                 gameData.teams[visitorId].gameNum += 1;
                 var homeScore = void 0;
                 var visitorScore = void 0;
+                var homePScores = void 0;
+                var visitorPScores = void 0;
                 if (gameResult.winnerId == homeTeamId) {
                     gameData.teams[homeTeamId].winNum += 1;
                     homeScore = gameResult.winnerPoint;
                     visitorScore = gameResult.loserPoint;
+                    homePScores = gameResult.winnerScores;
+                    visitorPScores = gameResult.loserScores;
                 }
                 else {
                     gameData.teams[visitorId].winNum += 1;
                     homeScore = gameResult.loserPoint;
                     visitorScore = gameResult.winnerPoint;
+                    visitorPScores = gameResult.winnerScores;
+                    homePScores = gameResult.loserScores;
+                }
+                for (var s in homePScores) {
+                    if (homePScores[s] > maxScore) {
+                        maxScore = homePScores[s];
+                        maxId = s;
+                    }
+                }
+                for (var s in visitorPScores) {
+                    if (visitorPScores[s] > maxScore) {
+                        maxScore = visitorPScores[s];
+                        maxId = s;
+                    }
                 }
                 dailyNews.push(homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName);
-                // gameData.news.push({
-                //     season: gameData.currentSeason,
-                //     day: gameData.currentDay,
-                //     content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
-                // });
+            }
+            if (maxId != 0) {
+                dailyNews.push("\u4ECA\u65E5\u6570\u636E: " + gameData.players[maxId].name + "\u72C2\u780D" + maxScore + "\u5206\uFF01");
             }
             if (dailyNews.length > 0) {
                 gameData.news.push({
@@ -13448,34 +13474,130 @@ var Game = /** @class */ (function () {
         }
     };
     Game.playGameAndGetResult = function (homeTeamId, visitorId, gameData) {
-        var homeTeam = gameData.teams[homeTeamId];
-        var visitor = gameData.teams[visitorId];
-        var homeScore = 0;
-        var visitorScore = 0;
-        var homePlayers = homeTeam.players;
-        var visitorPlayers = visitor.players;
-        for (var i = 0; i < homePlayers.length; i++) {
-            var player = gameData.players[homePlayers[i]];
-            var score = Math.floor((Math.random() * player.skillAverage / 10 * 6) + Math.random() * 6);
-            homeScore += score;
-            this.playerGrow(homePlayers[i], gameData);
-        }
-        do {
-            for (var i = 0; i < visitorPlayers.length; i++) {
-                var player = gameData.players[visitorPlayers[i]];
-                var score = Math.floor((Math.random() * player.skillAverage / 10 * 6) + Math.random() * 6);
-                visitorScore += score;
+        var htStat = this.calcTeamScores(homeTeamId, gameData);
+        var viStat = this.calcTeamScores(visitorId, gameData);
+        while (htStat.total == viStat.total) {
+            var otHome = this.calcTeamScores(homeTeamId, gameData, 10);
+            htStat.total += otHome.total;
+            for (var i in otHome.pScores) {
+                htStat.pScores[i] += otHome.pScores[i];
             }
-        } while (homeScore === visitorScore);
-        for (var i = 0; i < visitorPlayers.length; i++) {
-            this.playerGrow(visitorPlayers[i], gameData);
+            var otVisitor = this.calcTeamScores(visitorId, gameData, 10);
+            viStat.total += otVisitor.total;
+            for (var i in otVisitor.scores) {
+                viStat.pScores[i] += otVisitor.pScores[i];
+            }
         }
-        if (homeScore > visitorScore) {
-            return new GameResult(homeTeamId, homeScore, visitorScore);
+        if (htStat.total > viStat.total) {
+            return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }
         else {
-            return new GameResult(visitorId, visitorScore, homeScore);
+            return new GameResult(visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
         }
+    };
+    Game.calcTeamScores = function (teamId, gameData, baseNum) {
+        if (baseNum === void 0) { baseNum = 100; }
+        var playerAndNum = {};
+        var players = gameData.teams[teamId].players;
+        var core = TeamMatchUtil.getCorePlayers(teamId, gameData);
+        var starter = TeamMatchUtil.getStarters(teamId, gameData);
+        var bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        if (core.length == 1) {
+            var times = RandomUtil.random(12, 25);
+            playerAndNum[core[0] + ''] = times;
+            baseNum -= times;
+        }
+        else {
+            for (var i = 0; i < core.length; i++) {
+                var times = RandomUtil.random(7, 16);
+                playerAndNum[core[i] + ''] = times;
+                baseNum -= times;
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            var times = RandomUtil.random(0, 11);
+            if (playerAndNum[starter[i] + ''] != undefined) {
+                playerAndNum[starter[i] + ''] += times;
+            }
+            else {
+                playerAndNum[starter[i] + ''] = times;
+            }
+            baseNum -= times;
+        }
+        for (var i = 0; i < bench.length; i++) {
+            var times = RandomUtil.random(0, 3);
+            if (playerAndNum[bench[i] + ''] != undefined) {
+                playerAndNum[bench[i] + ''] += times;
+            }
+            else {
+                playerAndNum[bench[i] + ''] = times;
+            }
+            baseNum -= times;
+            if (baseNum <= 0) {
+                break;
+            }
+        }
+        while (baseNum > 0) {
+            var times = RandomUtil.random(0, 5);
+            var index = RandomUtil.random(0, players.length);
+            if (playerAndNum[players[index]] != undefined) {
+                playerAndNum[players[index]] += times;
+            }
+            else {
+                playerAndNum[players[index]] = times;
+            }
+            baseNum -= times;
+        }
+        var totalScore = 0;
+        var scores = {};
+        for (var i in playerAndNum) {
+            var pScore = this.calcScoreWithTimes(i, playerAndNum[i], gameData);
+            totalScore += pScore;
+            scores[i + ''] = pScore;
+        }
+        return {
+            total: totalScore,
+            pScores: scores,
+        };
+    };
+    Game.calcScoreWithTimes = function (playerId, num, gameData) {
+        if (num == 0) {
+            return 0;
+        }
+        var player = gameData.players[playerId];
+        var interior = gameData.players[playerId].skillShotInterior;
+        var exterior = gameData.players[playerId].skillShotExterior;
+        var free = gameData.players[playerId].skillShotFree;
+        var closeNum = 0;
+        var middleNum = 0;
+        var outsideNum = 0;
+        var freeNum = Math.floor(num * RandomUtil.random(3, 7) / 10);
+        if (gameData.players[playerId].positionFirst <= 2) {
+            closeNum = Math.floor(num * 0.3);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }
+        else if (gameData.players[playerId].positionFirst == 3) {
+            closeNum = Math.floor(num * 0.5);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }
+        else if (gameData.players[playerId].positionFirst == 4) {
+            closeNum = Math.floor(num * 0.65);
+            middleNum = Math.floor(num * 0.3);
+            outsideNum = num - closeNum - middleNum;
+        }
+        else {
+            closeNum = Math.floor(num * 0.8);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }
+        var closeIn = closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst);
+        var middleIn = middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst);
+        var outsideIn = outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst);
+        var freeIn = freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst);
+        var score = Math.floor((closeIn + middleIn) * 2 + outsideIn * 3 + freeIn);
+        return score;
     };
     Game.getTeamRank = function (gameData) {
         var teams = gameData.teams;
@@ -13880,11 +14002,134 @@ var TemplateUtil = /** @class */ (function () {
     return TemplateUtil;
 }());
 var GameResult = /** @class */ (function () {
-    function GameResult(winnerId, winnerPoint, loserPoint) {
+    function GameResult(winnerId, winnerPoint, loserPoint, winnerScores, loserScores) {
         this.winnerId = winnerId;
         this.winnerPoint = winnerPoint;
         this.loserPoint = loserPoint;
+        this.winnerScores = winnerScores;
+        this.loserScores = loserScores;
     }
     ;
     return GameResult;
+}());
+var TeamMatchUtil = /** @class */ (function () {
+    function TeamMatchUtil() {
+    }
+    TeamMatchUtil.getCorePlayers = function (teamId, gameData) {
+        var team = gameData.teams[teamId];
+        var players = team.players;
+        var sortPlayers = players.sort(function (a, b) {
+            return gameData.players[b].skillAverage - gameData.players[a].skillAverage;
+        });
+        var beyond90 = sortPlayers.filter(function (p) { return gameData.players[p].skillAverage >= 90; }).slice(0, 3);
+        if (beyond90.length > 1) {
+            return beyond90;
+        }
+        else {
+            return [players[0]];
+        }
+    };
+    TeamMatchUtil.getStarters = function (teamId, gameData) {
+        var team = gameData.teams[teamId];
+        var players = team.players;
+        var starters = [-1, -1, -1, -1, -1];
+        var lostPlace = [];
+        var stillLost = [];
+        var _loop_1 = function (i) {
+            var currentPlace = players.filter(function (p) { return gameData.players[p].positionFirst == i; });
+            if (currentPlace.length > 0) {
+                starters[i] = currentPlace[0];
+            }
+            else {
+                lostPlace.push(i);
+            }
+        };
+        for (var i = 0; i < 5; i++) {
+            _loop_1(i);
+        }
+        var _loop_2 = function (i) {
+            var currentPlace = players.filter(function (p) { return !(starters.includes(p)); }).filter(function (p) { return gameData.players[p].positionSecond == i; });
+            if (currentPlace.length > 0) {
+                starters[i] = currentPlace[0];
+            }
+            else {
+                stillLost.push(i);
+            }
+        };
+        for (var i in lostPlace) {
+            _loop_2(i);
+        }
+        for (var i in stillLost) {
+            var currentPlace = players
+                .filter(function (p) { return !(p in starters); })
+                .sort(function (a, b) { return gameData.players[b].skillAverage - gameData.players[a].skillAverage; });
+            starters[i] = currentPlace[0];
+        }
+        return starters;
+    };
+    TeamMatchUtil.getBenchPlayers = function (teamId, gameData) {
+        var team = gameData.teams[teamId];
+        var starters = this.getStarters(teamId, gameData);
+        var players = team.players;
+        var bench = players.filter(function (p) { return !(starters.includes(p)); });
+        return bench;
+    };
+    TeamMatchUtil.skillToInside = function (skill, position) {
+        //中锋大前70时50%
+        //小前75时
+        //后卫80时
+        if (position >= 4) {
+            return RandomUtil.randn_bm(0, 1, 1 + (70 - skill) / 100);
+        }
+        else if (position >= 3) {
+            return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+        }
+        else {
+            return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        }
+    };
+    TeamMatchUtil.skillToMiddle = function (skill, position) {
+        //一律80
+        return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+    };
+    TeamMatchUtil.skillToOutside = function (skill, position) {
+        //一律90
+        return RandomUtil.randn_bm(0, 1, 1 + (90 - skill) / 100);
+    };
+    TeamMatchUtil.skillToFree = function (skill, position) {
+        //一律75
+        return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+    };
+    return TeamMatchUtil;
+}());
+var RandomUtil = /** @class */ (function () {
+    function RandomUtil() {
+    }
+    RandomUtil.random = function (start, end) {
+        return Math.floor(Math.random() * (end - start)) + start;
+    };
+    RandomUtil.randomrandom = function (start, end) {
+        var rand = 0;
+        for (var i = 0; i < 6; i++) {
+            rand += Math.random();
+        }
+        rand /= 6;
+        return rand * (end - start) + start;
+    };
+    RandomUtil.randn_bm = function (min, max, skew) {
+        var u = 0, v = 0;
+        while (u === 0)
+            u = Math.random();
+        while (v === 0)
+            v = Math.random();
+        var num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        num = num / 10.0 + 0.5;
+        if (num > 1 || num < 0)
+            num = this.randn_bm(min, max, skew);
+        num = Math.pow(num, skew);
+        num *= max - min;
+        num += min;
+        return num;
+    };
+    return RandomUtil;
 }());

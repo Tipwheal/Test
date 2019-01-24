@@ -13234,6 +13234,14 @@ class Game {
             gameData.players[i].totalOffScore = 0;
             gameData.players[i].seasonOffScore = 0;
             gameData.players[i].currentGameScore = 0;
+            gameData.players[i].currentGameClose = 0;
+            gameData.players[i].currentGameCloseIn = 0;
+            gameData.players[i].currentGameMiddle = 0;
+            gameData.players[i].currentGameMiddleIn = 0;
+            gameData.players[i].currentGameThree = 0;
+            gameData.players[i].currentGameThreeIn = 0;
+            gameData.players[i].currentGameFree = 0;
+            gameData.players[i].currentGameFreeIn = 0;
             let teamId = gameData.players[i].team;
             if(teamId !== undefined && teamId >= 0) {
                 gameData.teams[teamId].players.push(i);
@@ -13289,6 +13297,8 @@ class Game {
         if(gameData.currentDay <= Game.regularEndDay) {
             let games = GameSchedule.gamesOfDay(gameData.currentDay);
             let dailyNews = [];
+            let maxId: any = 0;
+            let maxScore: any = 0;
             for(let i = 0; i < games.length; i ++) {
                 let homeTeamId = games[i][0];
                 let visitorId = games[i][1];
@@ -13301,21 +13311,37 @@ class Game {
                 gameData.teams[visitorId].gameNum += 1;
                 let homeScore;
                 let visitorScore;
+                let homePScores :any;
+                let visitorPScores: any;
                 if(gameResult.winnerId == homeTeamId) {
                     gameData.teams[homeTeamId].winNum += 1;
                     homeScore = gameResult.winnerPoint;
                     visitorScore = gameResult.loserPoint;
+                    homePScores = gameResult.winnerScores;
+                    visitorPScores = gameResult.loserScores;
                 }else {
                     gameData.teams[visitorId].winNum += 1;
                     homeScore = gameResult.loserPoint;
                     visitorScore = gameResult.winnerPoint;
+                    visitorPScores = gameResult.winnerScores;
+                    homePScores = gameResult.loserScores;
+                }
+                for(let s in homePScores) {
+                    if(homePScores[s] > maxScore) {
+                        maxScore = homePScores[s];
+                        maxId = s;
+                    }
+                }
+                for(let s in visitorPScores) {
+                    if(visitorPScores[s] > maxScore) {
+                        maxScore = visitorPScores[s];
+                        maxId = s;
+                    }
                 }
                 dailyNews.push(`${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}`);
-                // gameData.news.push({
-                //     season: gameData.currentSeason,
-                //     day: gameData.currentDay,
-                //     content: homeTeamName + '(主)' + homeScore + ':' + visitorScore + '(客)' + visitorName,
-                // });
+            }
+            if(maxId != 0) {
+                dailyNews.push(`今日数据: ${gameData.players[maxId].name}狂砍${maxScore}分！`);
             }
             if(dailyNews.length > 0) {
                 gameData.news.push({
@@ -13501,34 +13527,123 @@ class Game {
     }
 
     private static playGameAndGetResult(homeTeamId: any, visitorId: any, gameData: any): GameResult {
-        let homeTeam = gameData.teams[homeTeamId];
-        let visitor = gameData.teams[visitorId];
-        let homeScore = 0;
-        let visitorScore = 0;
-        let homePlayers = homeTeam.players;
-        let visitorPlayers = visitor.players;
-        for(let i = 0; i < homePlayers.length; i ++) {
-            let player = gameData.players[homePlayers[i]];
-            let score = Math.floor((Math.random() * player.skillAverage / 10 * 6) + Math.random() * 6);
-            homeScore += score;
-            this.playerGrow(homePlayers[i], gameData);
-        }
-        do {
-            for(let i = 0; i < visitorPlayers.length; i ++) {
-                let player = gameData.players[visitorPlayers[i]];
-                let score = Math.floor((Math.random() * player.skillAverage / 10 * 6) + Math.random() * 6);
-                visitorScore += score;
+        let htStat = this.calcTeamScores(homeTeamId, gameData);
+        let viStat = this.calcTeamScores(visitorId, gameData);
+        while(htStat.total == viStat.total) {
+            let otHome = this.calcTeamScores(homeTeamId, gameData, 10);
+            htStat.total += otHome.total;
+            for(let i in otHome.pScores) {
+                htStat.pScores[i] += otHome.pScores[i];
             }
-        }while(homeScore === visitorScore);
-        for(let i = 0; i < visitorPlayers.length; i ++) {
-            this.playerGrow(visitorPlayers[i], gameData);
+            let otVisitor = this.calcTeamScores(visitorId, gameData, 10);
+            viStat.total += otVisitor.total;
+            for(let i in otVisitor.scores) {
+                viStat.pScores[i] += otVisitor.pScores[i];
+            }
         }
-        if(homeScore > visitorScore) {
-            return new GameResult(homeTeamId, homeScore, visitorScore);
+        if(htStat.total > viStat.total) {
+            return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }else {
-            return new GameResult(visitorId, visitorScore, homeScore);
+            return new GameResult(visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
         }
-        
+    }
+
+    private static calcTeamScores(teamId: any, gameData: any, baseNum = 100): any {
+        const playerAndNum: any = {};
+        const players = gameData.teams[teamId].players;
+        let core = TeamMatchUtil.getCorePlayers(teamId, gameData);
+        let starter = TeamMatchUtil.getStarters(teamId, gameData);
+        let bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        if(core.length == 1) {
+            let times = RandomUtil.random(12, 25);
+            playerAndNum[core[0] + ''] = times;
+            baseNum -= times;
+        }else {
+            for(let i = 0; i < core.length; i++) {
+                let times = RandomUtil.random(7, 16);
+                playerAndNum[core[i] + ''] = times;
+                baseNum -= times;
+            }
+        }
+        for(let i = 0; i < 5; i ++) {
+            let times = RandomUtil.random(0, 11);
+            if(playerAndNum[starter[i] + ''] != undefined) {
+                playerAndNum[starter[i] + ''] += times;
+            }else {
+                playerAndNum[starter[i] + ''] = times;
+            }
+            baseNum -= times;
+        }
+        for(let i = 0; i < bench.length; i ++) {
+            let times = RandomUtil.random(0, 3);
+            if(playerAndNum[bench[i] + ''] != undefined) {
+                playerAndNum[bench[i] + ''] += times;
+            }else {
+                playerAndNum[bench[i] + ''] = times;
+            }
+            baseNum -= times;
+            if(baseNum <= 0) {
+                break;
+            }
+        }
+        while(baseNum > 0) {
+            let times = RandomUtil.random(0, 5);
+            let index = RandomUtil.random(0, players.length);
+            if(playerAndNum[players[index]] != undefined) {
+                playerAndNum[players[index]] += times;
+            }else {
+                playerAndNum[players[index]] = times;
+            }
+            baseNum -= times;
+        }
+        let totalScore = 0;
+        let scores: any = {}
+        for(let i in playerAndNum) {
+            let pScore = this.calcScoreWithTimes(i, playerAndNum[i], gameData);
+            totalScore += pScore;
+            scores[i + ''] = pScore;
+        }
+        return {
+            total: totalScore,
+            pScores: scores,
+        };
+    }
+
+    private static calcScoreWithTimes(playerId: any, num: any, gameData: any) {
+        if(num == 0) {
+            return 0;
+        }
+        const player = gameData.players[playerId];
+        let interior = gameData.players[playerId].skillShotInterior;
+        let exterior = gameData.players[playerId].skillShotExterior;
+        let free = gameData.players[playerId].skillShotFree;
+        let closeNum = 0;
+        let middleNum = 0;
+        let outsideNum = 0;
+        let freeNum = Math.floor(num * RandomUtil.random(3, 7) / 10);
+        if(gameData.players[playerId].positionFirst <= 2) {
+            closeNum = Math.floor(num * 0.3);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }else if(gameData.players[playerId].positionFirst == 3) {
+            closeNum = Math.floor(num * 0.5);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }else if(gameData.players[playerId].positionFirst == 4){
+            closeNum = Math.floor(num * 0.65);
+            middleNum = Math.floor(num * 0.3);
+            outsideNum = num - closeNum - middleNum;
+        }else {
+            closeNum = Math.floor(num * 0.8);
+            middleNum = Math.floor(num * 0.2);
+            outsideNum = num - closeNum - middleNum;
+        }
+        let closeIn = closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst);
+        let middleIn = middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst);
+        let outsideIn = outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst);
+        let freeIn = freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst);
+        let score = Math.floor((closeIn + middleIn) * 2 + outsideIn * 3 + freeIn);
+        return score;
     }
 
     public static getTeamRank(gameData: any): any {
@@ -13995,10 +14110,128 @@ class GameResult {
     winnerId: number;
     winnerPoint: number;
     loserPoint: number;
+    winnerScores: {};
+    loserScores: {};
 
-    constructor(winnerId: number, winnerPoint: number, loserPoint: number){
+    constructor(winnerId: number, winnerPoint: number, loserPoint: number, winnerScores: any, loserScores: any) {
         this.winnerId = winnerId;
         this.winnerPoint = winnerPoint;
         this.loserPoint = loserPoint;
+        this.winnerScores = winnerScores;
+        this.loserScores = loserScores;
     };
+}
+
+class TeamMatchUtil {
+    public static getCorePlayers(teamId: any, gameData: any): any {
+        const team = gameData.teams[teamId];
+        let players = team.players;
+        let sortPlayers = players.sort((a: any, b: any) => {
+            return gameData.players[b].skillAverage - gameData.players[a].skillAverage;
+        });
+        let beyond90 = sortPlayers.filter((p: any) => gameData.players[p].skillAverage >= 90).slice(0, 3);
+        if(beyond90.length > 1) {
+            return beyond90;
+        }else {
+            return [players[0]];
+        }
+    }
+
+    public static getStarters(teamId: any, gameData: any): any {
+        const team = gameData.teams[teamId];
+        const players = team.players;
+        const starters: any = [-1, -1, -1, -1, -1];
+        const lostPlace = [];
+        const stillLost = [];
+        for(let i = 0;i < 5; i++) {
+            let currentPlace = players.filter((p: any) => gameData.players[p].positionFirst == i);
+            if(currentPlace.length > 0) {
+                starters[i] = currentPlace[0];
+            }else {
+                lostPlace.push(i);
+            }
+        }
+        for(let i in lostPlace) {
+            let currentPlace = players.filter((p: any) => !(starters.includes(p))).filter((p: any) => gameData.players[p].positionSecond == i);
+            if(currentPlace.length > 0) {
+                starters[i] = currentPlace[0];
+            }else {
+                stillLost.push(i);
+            }
+        }
+        for(let i in stillLost) {
+            let currentPlace = players
+                .filter((p: any) => !(p in starters))
+                .sort((a: any, b: any) => gameData.players[b].skillAverage - gameData.players[a].skillAverage);
+            starters[i] = currentPlace[0];
+            
+        }
+        return starters;
+    }
+
+    public static getBenchPlayers(teamId: any, gameData: any): any {
+        const team = gameData.teams[teamId];
+        const starters = this.getStarters(teamId, gameData);
+        const players = team.players;
+        const bench = players.filter((p: any) => !(starters.includes(p)));
+        return bench;
+    }
+
+    public static skillToInside(skill: any, position: any) {
+        //中锋大前70时50%
+        //小前75时
+        //后卫80时
+        if(position >= 4) {
+            return RandomUtil.randn_bm(0, 1, 1 + (70 - skill) / 100);
+        }else if(position >= 3) {
+            return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+        }else {
+            return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        }
+        
+    }
+
+    public static skillToMiddle(skill: any, position: any) {
+        //一律80
+        return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+    }
+
+    public static skillToOutside(skill: any, position: any) {
+        //一律90
+        return RandomUtil.randn_bm(0, 1, 1 + (90 - skill) / 100);
+    }
+
+    public static skillToFree(skill: any, position: any) {
+        //一律75
+        return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+    }
+}
+
+class RandomUtil {
+    public static random(start: number, end: number): any {
+        return Math.floor(Math.random() * (end - start)) + start;
+    }
+
+    public static randomrandom(start: number, end: number): any {
+        let rand = 0;
+        for(let i = 0; i < 6; i ++) {
+            rand += Math.random();
+        }
+        rand /= 6;
+        return rand * (end - start) + start;
+    }
+
+    public static randn_bm(min: number, max: number, skew: number) {
+        var u = 0, v = 0;
+        while(u === 0) u = Math.random();
+        while(v === 0) v = Math.random();
+        let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    
+        num = num / 10.0 + 0.5;
+        if (num > 1 || num < 0) num = this.randn_bm(min, max, skew);
+        num = Math.pow(num, skew);
+        num *= max - min;
+        num += min;
+        return num;
+    }
 }
