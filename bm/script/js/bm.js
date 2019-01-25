@@ -12569,33 +12569,6 @@ var Game = /** @class */ (function () {
                     yearsContract: 1,
                     yearsLeague: 75,
                 },
-                '456': {
-                    age: 41,
-                    draft: 199957,
-                    experience: 0,
-                    id: 456,
-                    loyalty: 1,
-                    name: '马努-吉诺比利',
-                    numsChampion: 4,
-                    positionFirst: 2,
-                    positionSecond: 1,
-                    potential: 11,
-                    salary: 2500000,
-                    skillAverage: 72,
-                    skillBlock: 60,
-                    skillPass: 63,
-                    skillPhysique: 60,
-                    skillRebound: 80,
-                    skillShotExterior: 67,
-                    skillShotFree: 70,
-                    skillShotInterior: 87,
-                    skillSteal: 70,
-                    stateEnergy: 72,
-                    stateInjury: 0,
-                    team: 20,
-                    yearsContract: 1,
-                    yearsLeague: 60,
-                },
                 '457': {
                     age: 22,
                     draft: 201629,
@@ -12622,141 +12595,6 @@ var Game = /** @class */ (function () {
                     team: 20,
                     yearsContract: 2,
                     yearsLeague: 61,
-                },
-                '458': {
-                    age: 43,
-                    draft: 199505,
-                    experience: 0,
-                    id: 458,
-                    loyalty: 1,
-                    name: '凯文-加内特',
-                    numsChampion: 1,
-                    positionFirst: 4,
-                    positionSecond: 5,
-                    potential: 11,
-                    salary: 573178,
-                    skillAverage: 69,
-                    skillBlock: 69,
-                    skillPass: 65,
-                    skillPhysique: 57,
-                    skillRebound: 57,
-                    skillShotExterior: 70,
-                    skillShotFree: 80,
-                    skillShotInterior: 80,
-                    skillSteal: 59,
-                    stateEnergy: 77,
-                    stateInjury: 0,
-                    team: 4,
-                    yearsContract: 57,
-                    yearsLeague: 23,
-                },
-                '459': {
-                    age: 40,
-                    draft: 199613,
-                    experience: 0,
-                    id: 459,
-                    loyalty: 5,
-                    name: '科比-布莱恩特',
-                    numsChampion: 5,
-                    positionFirst: 2,
-                    positionSecond: 1,
-                    potential: 11,
-                    salary: 595808,
-                    skillAverage: 78,
-                    skillBlock: 64,
-                    skillPass: 69,
-                    skillPhysique: 60,
-                    skillRebound: 60,
-                    skillShotExterior: 81,
-                    skillShotFree: 85,
-                    skillShotInterior: 84,
-                    skillSteal: 77,
-                    stateEnergy: 70,
-                    stateInjury: 0,
-                    team: 23,
-                    yearsContract: 60,
-                    yearsLeague: 20,
-                },
-                '460': {
-                    age: 43,
-                    draft: 199701,
-                    experience: 0,
-                    id: 460,
-                    loyalty: 5,
-                    name: '蒂姆-邓肯',
-                    numsChampion: 5,
-                    positionFirst: 4,
-                    positionSecond: 5,
-                    potential: 11,
-                    salary: 572521,
-                    skillAverage: 71,
-                    skillBlock: 72,
-                    skillPass: 66,
-                    skillPhysique: 57,
-                    skillRebound: 57,
-                    skillShotExterior: 66,
-                    skillShotFree: 80,
-                    skillShotInterior: 84,
-                    skillSteal: 66,
-                    stateEnergy: 87,
-                    stateInjury: 0,
-                    team: 20,
-                    yearsContract: 57,
-                    yearsLeague: 23,
-                },
-                '461': {
-                    age: 38,
-                    draft: 200201,
-                    experience: 0,
-                    id: 461,
-                    loyalty: 3,
-                    name: '姚明',
-                    numsChampion: 0,
-                    positionFirst: 5,
-                    positionSecond: 4,
-                    potential: 11,
-                    salary: 616384,
-                    skillAverage: 74,
-                    skillBlock: 72,
-                    skillPass: 67,
-                    skillPhysique: 62,
-                    skillRebound: 62,
-                    skillShotExterior: 71,
-                    skillShotFree: 88,
-                    skillShotInterior: 85,
-                    skillSteal: 62,
-                    stateEnergy: 81,
-                    stateInjury: 0,
-                    team: 19,
-                    yearsContract: 62,
-                    yearsLeague: 18,
-                },
-                '462': {
-                    age: 37,
-                    draft: 200130,
-                    experience: 0,
-                    id: 462,
-                    loyalty: 1,
-                    name: '吉尔波特-阿里纳斯',
-                    numsChampion: 0,
-                    positionFirst: 2,
-                    positionSecond: 1,
-                    potential: 10,
-                    salary: 0,
-                    skillAverage: 74,
-                    skillBlock: 58,
-                    skillPass: 70,
-                    skillPhysique: 63,
-                    skillRebound: 63,
-                    skillShotExterior: 74,
-                    skillShotFree: 81,
-                    skillShotInterior: 76,
-                    skillSteal: 73,
-                    stateEnergy: 70,
-                    stateInjury: 0,
-                    team: -1,
-                    yearsContract: 63,
-                    yearsLeague: 17,
                 },
                 '463': {
                     age: 40,
@@ -12785,60 +12623,6 @@ var Game = /** @class */ (function () {
                     yearsContract: 60,
                     yearsLeague: 20,
                 },
-                '464': {
-                    age: 35,
-                    draft: 200304,
-                    experience: 0,
-                    id: 464,
-                    loyalty: 3,
-                    name: '克里斯-波什',
-                    numsChampion: 2,
-                    positionFirst: 4,
-                    positionSecond: 5,
-                    potential: 10,
-                    salary: 0,
-                    skillAverage: 72,
-                    skillBlock: 66,
-                    skillPass: 68,
-                    skillPhysique: 65,
-                    skillRebound: 65,
-                    skillShotExterior: 66,
-                    skillShotFree: 79,
-                    skillShotInterior: 78,
-                    skillSteal: 63,
-                    stateEnergy: 74,
-                    stateInjury: 0,
-                    team: -1,
-                    yearsContract: 65,
-                    yearsLeague: 15,
-                },
-                '465': {
-                    age: 45,
-                    draft: 199602,
-                    experience: 0,
-                    id: 465,
-                    loyalty: 3,
-                    name: '马库斯-坎比',
-                    numsChampion: 0,
-                    positionFirst: 5,
-                    positionSecond: 4,
-                    potential: 10,
-                    salary: 0,
-                    skillAverage: 65,
-                    skillBlock: 71,
-                    skillPass: 68,
-                    skillPhysique: 55,
-                    skillRebound: 55,
-                    skillShotExterior: 60,
-                    skillShotFree: 77,
-                    skillShotInterior: 73,
-                    skillSteal: 68,
-                    stateEnergy: 76,
-                    stateInjury: 0,
-                    team: -1,
-                    yearsContract: 55,
-                    yearsLeague: 25,
-                },
                 '466': {
                     age: 40,
                     draft: 199617,
@@ -12866,168 +12650,6 @@ var Game = /** @class */ (function () {
                     yearsContract: 60,
                     yearsLeague: 20,
                 },
-                '467': {
-                    age: 40,
-                    draft: 199709,
-                    experience: 0,
-                    id: 467,
-                    loyalty: 5,
-                    name: '特雷西-麦克格雷迪',
-                    numsChampion: 0,
-                    positionFirst: 2,
-                    positionSecond: 3,
-                    potential: 11,
-                    salary: 603315,
-                    skillAverage: 75,
-                    skillBlock: 57,
-                    skillPass: 70,
-                    skillPhysique: 60,
-                    skillRebound: 60,
-                    skillShotExterior: 79,
-                    skillShotFree: 79,
-                    skillShotInterior: 84,
-                    skillSteal: 71,
-                    stateEnergy: 72,
-                    stateInjury: 0,
-                    team: 19,
-                    yearsContract: 60,
-                    yearsLeague: 20,
-                },
-                '468': {
-                    age: 46,
-                    draft: 199402,
-                    experience: 0,
-                    id: 468,
-                    loyalty: 2,
-                    name: '杰森-基德',
-                    numsChampion: 1,
-                    positionFirst: 1,
-                    positionSecond: 2,
-                    potential: 11,
-                    salary: 541589,
-                    skillAverage: 74,
-                    skillBlock: 53,
-                    skillPass: 84,
-                    skillPhysique: 54,
-                    skillRebound: 54,
-                    skillShotExterior: 67,
-                    skillShotFree: 81,
-                    skillShotInterior: 73,
-                    skillSteal: 75,
-                    stateEnergy: 79,
-                    stateInjury: 0,
-                    team: 6,
-                    yearsContract: 54,
-                    yearsLeague: 26,
-                },
-                '469': {
-                    age: 44,
-                    draft: 199601,
-                    experience: 0,
-                    id: 469,
-                    loyalty: 1,
-                    name: '阿伦-艾弗森',
-                    numsChampion: 0,
-                    positionFirst: 1,
-                    positionSecond: 2,
-                    potential: 11,
-                    salary: 563671,
-                    skillAverage: 75,
-                    skillBlock: 53,
-                    skillPass: 81,
-                    skillPhysique: 56,
-                    skillRebound: 56,
-                    skillShotExterior: 78,
-                    skillShotFree: 83,
-                    skillShotInterior: 80,
-                    skillSteal: 63,
-                    stateEnergy: 85,
-                    stateInjury: 0,
-                    team: 3,
-                    yearsContract: 56,
-                    yearsLeague: 24,
-                },
-                '470': {
-                    age: 44,
-                    draft: 199605,
-                    experience: 0,
-                    id: 470,
-                    loyalty: 4,
-                    name: '雷-阿伦',
-                    numsChampion: 2,
-                    positionFirst: 2,
-                    positionSecond: 1,
-                    potential: 11,
-                    salary: 564849,
-                    skillAverage: 73,
-                    skillBlock: 52,
-                    skillPass: 72,
-                    skillPhysique: 56,
-                    skillRebound: 56,
-                    skillShotExterior: 84,
-                    skillShotFree: 80,
-                    skillShotInterior: 75,
-                    skillSteal: 69,
-                    stateEnergy: 90,
-                    stateInjury: 0,
-                    team: 4,
-                    yearsContract: 56,
-                    yearsLeague: 24,
-                },
-                '471': {
-                    age: 41,
-                    draft: 199810,
-                    experience: 0,
-                    id: 471,
-                    loyalty: 3,
-                    name: '保罗-皮尔斯',
-                    numsChampion: 1,
-                    positionFirst: 3,
-                    positionSecond: 4,
-                    potential: 10,
-                    salary: 587205,
-                    skillAverage: 73,
-                    skillBlock: 62,
-                    skillPass: 68,
-                    skillPhysique: 59,
-                    skillRebound: 59,
-                    skillShotExterior: 71,
-                    skillShotFree: 83,
-                    skillShotInterior: 83,
-                    skillSteal: 67,
-                    stateEnergy: 89,
-                    stateInjury: 0,
-                    team: 4,
-                    yearsContract: 59,
-                    yearsLeague: 21,
-                },
-                '472': {
-                    age: 45,
-                    draft: 199615,
-                    experience: 0,
-                    id: 472,
-                    loyalty: 1,
-                    name: '史蒂夫-纳什',
-                    numsChampion: 0,
-                    positionFirst: 1,
-                    positionSecond: 2,
-                    potential: 11,
-                    salary: 550384,
-                    skillAverage: 72,
-                    skillBlock: 51,
-                    skillPass: 85,
-                    skillPhysique: 55,
-                    skillRebound: 55,
-                    skillShotExterior: 74,
-                    skillShotFree: 75,
-                    skillShotInterior: 82,
-                    skillSteal: 60,
-                    stateEnergy: 74,
-                    stateInjury: 0,
-                    team: 29,
-                    yearsContract: 55,
-                    yearsLeague: 25,
-                },
                 '473': {
                     age: 39,
                     draft: 199832,
@@ -13054,87 +12676,6 @@ var Game = /** @class */ (function () {
                     team: 17,
                     yearsContract: 61,
                     yearsLeague: 19,
-                },
-                '474': {
-                    age: 47,
-                    draft: 199201,
-                    experience: 0,
-                    id: 474,
-                    loyalty: 1,
-                    name: '沙奎尔-奥尼尔',
-                    numsChampion: 4,
-                    positionFirst: 5,
-                    positionSecond: 4,
-                    potential: 11,
-                    salary: 531123,
-                    skillAverage: 66,
-                    skillBlock: 63,
-                    skillPass: 60,
-                    skillPhysique: 53,
-                    skillRebound: 63,
-                    skillShotExterior: 67,
-                    skillShotFree: 62,
-                    skillShotInterior: 89,
-                    skillSteal: 60,
-                    stateEnergy: 74,
-                    stateInjury: 0,
-                    team: 23,
-                    yearsContract: 53,
-                    yearsLeague: 27,
-                },
-                '475': {
-                    age: 56,
-                    draft: 198403,
-                    experience: 0,
-                    id: 475,
-                    loyalty: 1,
-                    name: '迈克尔-乔丹',
-                    numsChampion: 6,
-                    positionFirst: 2,
-                    positionSecond: 3,
-                    potential: 11,
-                    salary: 440575,
-                    skillAverage: 67,
-                    skillBlock: 60,
-                    skillPass: 70,
-                    skillPhysique: 50,
-                    skillRebound: 50,
-                    skillShotExterior: 70,
-                    skillShotFree: 80,
-                    skillShotInterior: 79,
-                    skillSteal: 60,
-                    stateEnergy: 70,
-                    stateInjury: 0,
-                    team: 13,
-                    yearsContract: 44,
-                    yearsLeague: 36,
-                },
-                '476': {
-                    age: 58,
-                    draft: 0,
-                    experience: 0,
-                    id: 476,
-                    loyalty: 3,
-                    name: '威尔特-张伯伦',
-                    numsChampion: 2,
-                    positionFirst: 5,
-                    positionSecond: 4,
-                    potential: 11,
-                    salary: 420000,
-                    skillAverage: 44,
-                    skillBlock: 50,
-                    skillPass: 50,
-                    skillPhysique: 50,
-                    skillRebound: 50,
-                    skillShotExterior: 50,
-                    skillShotFree: 50,
-                    skillShotInterior: 50,
-                    skillSteal: 50,
-                    stateEnergy: 77,
-                    stateInjury: 0,
-                    team: 23,
-                    yearsContract: 42,
-                    yearsLeague: 38,
                 },
             },
             offSeason: {
@@ -13168,6 +12709,8 @@ var Game = /** @class */ (function () {
     Game.prepareGameData = function (gameData) {
         var players = gameData.players;
         for (var i in players) {
+            gameData.players[i].regMaxScore = 0;
+            gameData.players[i].offMaxScore = 0;
             gameData.players[i].totalRegGameNum = 0;
             gameData.players[i].seasonRegGameNum = 0;
             gameData.players[i].totalOffGameNum = 0;
@@ -13484,14 +13027,14 @@ var Game = /** @class */ (function () {
         var htStat = this.calcTeamScores(homeTeamId, gameData);
         var viStat = this.calcTeamScores(visitorId, gameData);
         while (htStat.total == viStat.total) {
-            var otHome = this.calcTeamScores(homeTeamId, gameData, 10);
+            var otHome = this.calcTeamScores(homeTeamId, gameData, 15);
             htStat.total += otHome.total;
             for (var i in otHome.pScores) {
                 for (var j in otHome.pScores[i]) {
                     htStat.pScores[i][j] += otHome.pScores[i][j];
                 }
             }
-            var otVisitor = this.calcTeamScores(visitorId, gameData, 10);
+            var otVisitor = this.calcTeamScores(visitorId, gameData, 15);
             viStat.total += otVisitor.total;
             for (var i in otVisitor.pScores) {
                 for (var j in otVisitor.pScores) {
@@ -13527,18 +13070,6 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonRegGameNum += 1;
             gameData.players[id].totalRegGameNum += 1;
         }
-        // console.log(htStat)
-        // console.log(viStat)
-        // console.log(gameData.teams[homeTeamId].name);
-        // for(let i in htStat.pScores) {
-        //     let player = gameData.players[i];
-        //     console.log(`${player.name}: ${htStat.pScores[i]}分`);
-        // }
-        // console.log(gameData.teams[visitorId].name);
-        // for(let i in viStat.pScores) {
-        //     let player = gameData.players[i];
-        //     console.log(`${player.name}: ${viStat.pScores[i]}分`);
-        // }
         if (htStat.total > viStat.total) {
             return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }
@@ -13552,8 +13083,25 @@ var Game = /** @class */ (function () {
         var players = gameData.teams[teamId].players;
         var core = TeamMatchUtil.getCorePlayers(teamId, gameData);
         var starter = TeamMatchUtil.getStarters(teamId, gameData);
+        function average(players) {
+            var total = 0;
+            for (var i in players) {
+                total += gameData.players[players[i]].skillAverage;
+            }
+            return total / players.length;
+        }
+        var starterAverage = average(starter);
+        if (starterAverage < 80) {
+            baseNum -= 10;
+        }
+        else if (starterAverage < 85) {
+            baseNum -= 5;
+        }
+        else if (starterAverage > 90) {
+            baseNum += 5;
+        }
         var bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
-        if (baseNum == 100) {
+        if (baseNum > 50) {
             if (core.length == 1) {
                 var times = RandomUtil.random(12, 25);
                 playerAndNum[core[0] + ''] = times;
@@ -13636,23 +13184,24 @@ var Game = /** @class */ (function () {
         var outsideNum = 0;
         var freeNum = Math.floor(num * RandomUtil.random(0, 7) / 10);
         if (gameData.players[playerId].positionFirst <= 2) {
-            closeNum = Math.floor(num * 0.3);
-            middleNum = Math.floor(num * 0.2);
-            outsideNum = num - closeNum - middleNum;
+            closeNum = Math.round(num * 0.3);
+            var outsideRate = TeamMatchUtil.skillToThreeRate(exterior, player.positionFirst);
+            outsideNum = Math.round(num * outsideRate);
+            middleNum = num - closeNum - outsideNum;
         }
         else if (gameData.players[playerId].positionFirst == 3) {
-            closeNum = Math.floor(num * 0.5);
-            middleNum = Math.floor(num * 0.2);
+            closeNum = Math.round(num * 0.5);
+            middleNum = Math.round(num * 0.2);
             outsideNum = num - closeNum - middleNum;
         }
         else if (gameData.players[playerId].positionFirst == 4) {
-            closeNum = Math.floor(num * 0.65);
-            middleNum = Math.floor(num * 0.3);
+            closeNum = Math.round(num * 0.65);
+            middleNum = Math.round(num * 0.3);
             outsideNum = num - closeNum - middleNum;
         }
         else {
-            closeNum = Math.floor(num * 0.8);
-            middleNum = Math.floor(num * 0.2);
+            closeNum = Math.round(num * 0.8);
+            middleNum = Math.round(num * 0.2);
             outsideNum = num - closeNum - middleNum;
         }
         var closeIn = Math.round(closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst));
@@ -14152,6 +13701,20 @@ var TeamMatchUtil = /** @class */ (function () {
         var players = team.players;
         var bench = players.filter(function (p) { return !(starters.includes(p)); });
         return bench;
+    };
+    TeamMatchUtil.skillToThreeRate = function (skill, position) {
+        if (skill > 95) {
+            return 0.5 * 2 * RandomUtil.randn_bm(0, 1, 1);
+        }
+        else if (skill > 90) {
+            return 0.4 * 2 * RandomUtil.randn_bm(0, 1, 1);
+        }
+        else if (skill > 80) {
+            return 0.3 * 2 * RandomUtil.randn_bm(0, 1, 1);
+        }
+        else {
+            return 0.2 * 2 * RandomUtil.randn_bm(0, 1, 1);
+        }
     };
     TeamMatchUtil.skillToInside = function (skill, position) {
         //中锋大前75时50%
