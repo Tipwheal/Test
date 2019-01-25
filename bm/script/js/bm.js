@@ -14029,7 +14029,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createStatsSelect = function (values) {
-        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5F97\u5206</option>\n            </select>\n        </div>\n        ";
+        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5F97\u5206</option>\n                <option value='seasonRegThreeIn'>\u8D5B\u5B63\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonRegThree'>\u8D5B\u5B63\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonRegFreeIn'>\u8D5B\u5B63\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonRegFree'>\u8D5B\u5B63\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonRegMiddleIn'>\u8D5B\u5B63\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonRegMiddle'>\u8D5B\u5B63\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonRegCloseIn'>\u8D5B\u5B63\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonRegClose'>\u8D5B\u5B63\u7981\u533A\u51FA\u624B</option>\n            </select>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
         return newNode;
     };

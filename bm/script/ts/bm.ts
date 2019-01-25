@@ -14043,6 +14043,14 @@ class TemplateUtil {
         <div class='selectLine'>
             <select class='gameSelect' id='statsSelect' onchange='changeStats()'>
                 <option value='seasonRegScore'>赛季得分</option>
+                <option value='seasonRegThreeIn'>赛季三分命中</option>
+                <option value='seasonRegThree'>赛季三分出手</option>
+                <option value='seasonRegFreeIn'>赛季罚球命中</option>
+                <option value='seasonRegFree'>赛季罚球出手</option>
+                <option value='seasonRegMiddleIn'>赛季中投命中</option>
+                <option value='seasonRegMiddle'>赛季中投出手</option>
+                <option value='seasonRegCloseIn'>赛季禁区命中</option>
+                <option value='seasonRegClose'>赛季禁区出手</option>
             </select>
         </div>
         `;
