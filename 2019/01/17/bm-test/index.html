@@ -108,17 +108,18 @@
 
 
 
-  <meta name="description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
+  <meta name="description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
+<meta name="keywords" content="游戏">
 <meta property="og:type" content="article">
-<meta property="og:title" content="请勿打开">
+<meta property="og:title" content="篮球经理Web版测试">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/01/17/bm-test/index.html">
 <meta property="og:site_name" content="小学生学习园地">
-<meta property="og:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
+<meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-23T15:14:46.265Z">
+<meta property="og:updated_time" content="2019-01-25T03:18:58.416Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="请勿打开">
-<meta name="twitter:description" content="请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。 爱心链接： FirefoxChrome">
+<meta name="twitter:title" content="篮球经理Web版测试">
+<meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>请勿打开 | 小学生学习园地</title>
+  <title>篮球经理Web版测试 | 小学生学习园地</title>
   
 
 
@@ -358,7 +359,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">请勿打开
+          <h1 class="post-title" itemprop="name headline">篮球经理Web版测试
               
             
           </h1>
@@ -401,11 +402,36 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-23 23:14:46" itemprop="dateModified" datetime="2019-01-23T23:14:46+08:00">2019-01-23</time>
+                <time title="修改时间：2019-01-25 11:18:58" itemprop="dateModified" datetime="2019-01-25T11:18:58+08:00">2019-01-25</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/游戏/" itemprop="url" rel="index"><span itemprop="name">游戏</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/游戏/篮球经理/" itemprop="url" rel="index"><span itemprop="name">篮球经理</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -442,10 +468,8 @@
       
 
       
-        <p>请使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼</p>
+        <p>建议使用<a href="http://www.firefox.com.cn/" target="_blank" rel="noopener">Firefox</a>或<a href="https://chrome.en.softonic.com/" target="_blank" rel="noopener">Chrome</a>打开, Edge也不是不行，但IE真的是魔鬼</p>
 <p>手机QQ自带浏览器也ok了，虽然好像不能下载文件。</p>
-<p>爱心链接：</p>
-<p><a href="http://www.firefox.com.cn/" target="_blank" rel="noopener">Firefox</a><br><a href="https://chrome.en.softonic.com/" target="_blank" rel="noopener">Chrome</a></p>
 <a id="more"></a>
 
 
@@ -471,7 +495,7 @@
             <div class="navLine" onclick="refreshPane(ShowState.MyTeam)"><span>我的球队</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.TeamRank)"><span>球队排行</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.AttrRank)"><span>属性排行</span></div>
-            <div class="navLine"><span>数据统计</span></div>
+            <div class="navLine" onclick="refreshPane(ShowState.StatsRank)"><span>数据统计</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.OffSeason)" id="offSeasonBtn"><span>季后赛程</span></div>
             <div class="navLine" onclick="nextDay()"><span>模拟一天</span></div>
             <div class="navLine" onclick="next30Day()" id="sim30Btn"><span>模拟30天</span></div>
@@ -609,6 +633,19 @@ function showTeamInfo(teamId) {
     }
 }
 
+function showStatsRank() {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    let select = TemplateUtil.createStatsSelect([]);
+    mainDiv.appendChild(select);
+    let players = Game.getAbilityRank(gameState, 'seasonRegScore');
+    for(let i = 0; i < players.length; i++) {
+        let player = players[i];
+        let line = TemplateUtil.createAttrLine(i + 1, '赛季得分', player.name, player.seasonRegScore);
+        mainDiv.appendChild(line);
+    }
+}
+
 function showAttrRank() {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
@@ -663,6 +700,8 @@ function refreshPane(prop) {
         showAttrRank();
     }else if(gameState.showState === ShowState.OffSeason) {
         showOffSeason();
+    }else if(gameState.showState === ShowState.StatsRank) {
+        showStatsRank();
     }
 }
 
@@ -710,10 +749,7 @@ function save() {
 </ul>
 </li>
 <li>修改比赛算法<ul>
-<li>添加核心球员（1-3个）</li>
-<li>添加主力、替补、不上场设置</li>
 <li>添加篮板，助攻，抢断，盖帽数据</li>
-<li>区分两分、三分</li>
 </ul>
 </li>
 <li>修改球员成长算法<ul>
@@ -738,7 +774,6 @@ function save() {
 <li>修改排名规则，同胜率时场均分差更大的靠前</li>
 <li>季后赛<ul>
 <li>模拟一轮</li>
-<li>显示冠军得主</li>
 </ul>
 </li>
 <li>比赛信息详情界面</li>
@@ -751,8 +786,18 @@ function save() {
 </ul>
 <p>完成列表：</p>
 <ul>
+<li>修改比赛算法<ul>
+<li>添加核心球员（1-3个）</li>
+<li>添加主力、替补</li>
+<li>区分内线得分、中投、三分、罚球</li>
+</ul>
+</li>
 <li>常规赛赛程</li>
-<li>季后赛赛程</li>
+<li>季后赛<ul>
+<li>赛程</li>
+<li>显示冠军得主</li>
+</ul>
+</li>
 <li>球队荣誉统计<ul>
 <li>常规赛冠军</li>
 <li>季后赛冠军</li>
@@ -781,6 +826,12 @@ function save() {
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/游戏/" rel="tag"># 游戏</a>
+          
+        </div>
       
 
       
@@ -909,7 +960,11 @@ function save() {
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1034,7 +1089,9 @@ function save() {
                     
                       
                     
-                    <span class="site-state-item-count">51</span>
+                      
+                    
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

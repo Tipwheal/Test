@@ -13233,15 +13233,22 @@ class Game {
             gameData.players[i].seasonRegScore = 0;
             gameData.players[i].totalOffScore = 0;
             gameData.players[i].seasonOffScore = 0;
-            gameData.players[i].currentGameScore = 0;
-            gameData.players[i].currentGameClose = 0;
-            gameData.players[i].currentGameCloseIn = 0;
-            gameData.players[i].currentGameMiddle = 0;
-            gameData.players[i].currentGameMiddleIn = 0;
-            gameData.players[i].currentGameThree = 0;
-            gameData.players[i].currentGameThreeIn = 0;
-            gameData.players[i].currentGameFree = 0;
-            gameData.players[i].currentGameFreeIn = 0;
+            gameData.players[i].seasonRegClose = 0;
+            gameData.players[i].seasonRegCloseIn = 0;
+            gameData.players[i].seasonRegMiddle = 0;
+            gameData.players[i].seasonRegMiddleIn = 0;
+            gameData.players[i].seasonRegThree = 0;
+            gameData.players[i].seasonRegThreeIn = 0;
+            gameData.players[i].seasonRegFree = 0;
+            gameData.players[i].seasonRegFreeIn = 0;
+            gameData.players[i].seasonOffClose = 0;
+            gameData.players[i].seasonOffCloseIn = 0;
+            gameData.players[i].seasonOffMiddle = 0;
+            gameData.players[i].seasonOffMiddleIn = 0;
+            gameData.players[i].seasonOffThree = 0;
+            gameData.players[i].seasonOffThreeIn = 0;
+            gameData.players[i].seasonOffFree = 0;
+            gameData.players[i].seasonOffFreeIn = 0;
             let teamId = gameData.players[i].team;
             if(teamId !== undefined && teamId >= 0) {
                 gameData.teams[teamId].players.push(i);
@@ -13327,14 +13334,14 @@ class Game {
                     homePScores = gameResult.loserScores;
                 }
                 for(let s in homePScores) {
-                    if(homePScores[s] > maxScore) {
-                        maxScore = homePScores[s];
+                    if(homePScores[s].score > maxScore) {
+                        maxScore = homePScores[s].score;
                         maxId = s;
                     }
                 }
                 for(let s in visitorPScores) {
-                    if(visitorPScores[s] > maxScore) {
-                        maxScore = visitorPScores[s];
+                    if(visitorPScores[s].score > maxScore) {
+                        maxScore = visitorPScores[s].score;
                         maxId = s;
                     }
                 }
@@ -13533,14 +13540,58 @@ class Game {
             let otHome = this.calcTeamScores(homeTeamId, gameData, 10);
             htStat.total += otHome.total;
             for(let i in otHome.pScores) {
-                htStat.pScores[i] += otHome.pScores[i];
+                for(let j in otHome.pScores[i]) {
+                    htStat.pScores[i][j] += otHome.pScores[i][j];
+                }
             }
             let otVisitor = this.calcTeamScores(visitorId, gameData, 10);
             viStat.total += otVisitor.total;
-            for(let i in otVisitor.scores) {
-                viStat.pScores[i] += otVisitor.pScores[i];
+            for(let i in otVisitor.pScores) {
+                for(let j in otVisitor.pScores) {
+                    viStat.pScores[i][j] += otVisitor.pScores[i][j];
+                }
             }
         }
+        for(let id in htStat.pScores) {
+            gameData.players[id].seasonRegClose += htStat.pScores[id].closeNum;
+            gameData.players[id].seasonRegCloseIn += htStat.pScores[id].closeIn;
+            gameData.players[id].seasonRegMiddle += htStat.pScores[id].middleNum;
+            gameData.players[id].seasonRegMiddleIn += htStat.pScores[id].middleIn;
+            gameData.players[id].seasonRegThree += htStat.pScores[id].outsideNum;
+            gameData.players[id].seasonRegThreeIn += htStat.pScores[id].outsideIn;
+            gameData.players[id].seasonRegFree += htStat.pScores[id].freeNum;
+            gameData.players[id].seasonRegFreeIn += htStat.pScores[id].freeIn;
+            gameData.players[id].seasonRegScore += htStat.pScores[id].score;
+            gameData.players[id].totalRegScore += htStat.pScores[id].score;
+            gameData.players[id].seasonRegGameNum += 1;
+            gameData.players[id].totalRegGameNum += 1;
+        }
+        for(let id in viStat.pScores) {
+            gameData.players[id].seasonRegClose += viStat.pScores[id].closeNum;
+            gameData.players[id].seasonRegCloseIn += viStat.pScores[id].closeIn;
+            gameData.players[id].seasonRegMiddle += viStat.pScores[id].middleNum;
+            gameData.players[id].seasonRegMiddleIn += viStat.pScores[id].middleIn;
+            gameData.players[id].seasonRegThree += viStat.pScores[id].outsideNum;
+            gameData.players[id].seasonRegThreeIn += viStat.pScores[id].outsideIn;
+            gameData.players[id].seasonRegFree += viStat.pScores[id].freeNum;
+            gameData.players[id].seasonRegFreeIn += viStat.pScores[id].freeIn;
+            gameData.players[id].seasonRegScore += viStat.pScores[id].score;
+            gameData.players[id].totalRegScore += viStat.pScores[id].score;
+            gameData.players[id].seasonRegGameNum += 1;
+            gameData.players[id].totalRegGameNum += 1;
+        }
+        // console.log(htStat)
+        // console.log(viStat)
+        // console.log(gameData.teams[homeTeamId].name);
+        // for(let i in htStat.pScores) {
+        //     let player = gameData.players[i];
+        //     console.log(`${player.name}: ${htStat.pScores[i]}分`);
+        // }
+        // console.log(gameData.teams[visitorId].name);
+        // for(let i in viStat.pScores) {
+        //     let player = gameData.players[i];
+        //     console.log(`${player.name}: ${viStat.pScores[i]}分`);
+        // }
         if(htStat.total > viStat.total) {
             return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }else {
@@ -13554,37 +13605,39 @@ class Game {
         let core = TeamMatchUtil.getCorePlayers(teamId, gameData);
         let starter = TeamMatchUtil.getStarters(teamId, gameData);
         let bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
-        if(core.length == 1) {
-            let times = RandomUtil.random(12, 25);
-            playerAndNum[core[0] + ''] = times;
-            baseNum -= times;
-        }else {
-            for(let i = 0; i < core.length; i++) {
-                let times = RandomUtil.random(7, 16);
-                playerAndNum[core[i] + ''] = times;
+        if(baseNum == 100) {
+            if(core.length == 1) {
+                let times = RandomUtil.random(12, 25);
+                playerAndNum[core[0] + ''] = times;
+                baseNum -= times;
+            }else {
+                for(let i = 0; i < core.length; i++) {
+                    let times = RandomUtil.random(7, 16);
+                    playerAndNum[core[i] + ''] = times;
+                    baseNum -= times;
+                }
+            }
+            for(let i = 0; i < 5; i ++) {
+                let times = RandomUtil.random(0, 11);
+                if(playerAndNum[starter[i] + ''] != undefined) {
+                    playerAndNum[starter[i] + ''] += times;
+                }else {
+                    playerAndNum[starter[i] + ''] = times;
+                }
                 baseNum -= times;
             }
-        }
-        for(let i = 0; i < 5; i ++) {
-            let times = RandomUtil.random(0, 11);
-            if(playerAndNum[starter[i] + ''] != undefined) {
-                playerAndNum[starter[i] + ''] += times;
-            }else {
-                playerAndNum[starter[i] + ''] = times;
-            }
-            baseNum -= times;
-        }
-        for(let i = 0; i < bench.length; i ++) {
-            let times = RandomUtil.random(0, 3);
-            if(playerAndNum[bench[i] + ''] != undefined) {
-                playerAndNum[bench[i] + ''] += times;
-            }else {
-                playerAndNum[bench[i] + ''] = times;
-            }
-            baseNum -= times;
-            if(baseNum <= 0) {
-                break;
-            }
+            for(let i = 0; i < bench.length; i ++) {
+                let times = RandomUtil.random(0, 3);
+                if(playerAndNum[bench[i] + ''] != undefined) {
+                    playerAndNum[bench[i] + ''] += times;
+                }else {
+                    playerAndNum[bench[i] + ''] = times;
+                }
+                baseNum -= times;
+                if(baseNum <= 0) {
+                    break;
+                }
+            } 
         }
         while(baseNum > 0) {
             let times = RandomUtil.random(0, 5);
@@ -13596,11 +13649,11 @@ class Game {
             }
             baseNum -= times;
         }
-        let totalScore = 0;
+        let totalScore: any = 0;
         let scores: any = {}
         for(let i in playerAndNum) {
-            let pScore = this.calcScoreWithTimes(i, playerAndNum[i], gameData);
-            totalScore += pScore;
+            let pScore: any = this.calcScoreWithTimes(i, playerAndNum[i], gameData);
+            totalScore += pScore.score;
             scores[i + ''] = pScore;
         }
         return {
@@ -13611,7 +13664,17 @@ class Game {
 
     private static calcScoreWithTimes(playerId: any, num: any, gameData: any) {
         if(num == 0) {
-            return 0;
+            return {
+                score: 0,
+                closeNum: 0,
+                closeIn: 0,
+                middleNum: 0,
+                middleIn: 0,
+                outsideNum: 0,
+                outsideIn: 0,
+                freeNum: 0,
+                freeIn: 0,
+            };
         }
         const player = gameData.players[playerId];
         let interior = gameData.players[playerId].skillShotInterior;
@@ -13620,7 +13683,7 @@ class Game {
         let closeNum = 0;
         let middleNum = 0;
         let outsideNum = 0;
-        let freeNum = Math.floor(num * RandomUtil.random(3, 7) / 10);
+        let freeNum = Math.floor(num * RandomUtil.random(0, 7) / 10);
         if(gameData.players[playerId].positionFirst <= 2) {
             closeNum = Math.floor(num * 0.3);
             middleNum = Math.floor(num * 0.2);
@@ -13638,12 +13701,22 @@ class Game {
             middleNum = Math.floor(num * 0.2);
             outsideNum = num - closeNum - middleNum;
         }
-        let closeIn = closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst);
-        let middleIn = middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst);
-        let outsideIn = outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst);
-        let freeIn = freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst);
+        let closeIn = Math.round(closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst));
+        let middleIn = Math.round(middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst));
+        let outsideIn = Math.round(outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst));
+        let freeIn = Math.round(freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst));
         let score = Math.floor((closeIn + middleIn) * 2 + outsideIn * 3 + freeIn);
-        return score;
+        return {
+            score: score,
+            closeNum: closeNum,
+            closeIn: closeIn,
+            middleNum: middleNum,
+            middleIn: middleIn,
+            outsideNum: outsideNum,
+            outsideIn: outsideIn,
+            freeNum: freeNum,
+            freeIn: freeIn,
+        };
     }
 
     public static getTeamRank(gameData: any): any {
@@ -13691,6 +13764,7 @@ enum ShowState {
     Statistics,
     AttrRank,
     OffSeason,
+    StatsRank,
 }
 
 class GameSchedule {
@@ -13964,6 +14038,18 @@ class TemplateUtil {
         return newNode;
     }
 
+    public static createStatsSelect(values: number[]):any {
+        const template = `
+        <div class='selectLine'>
+            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>
+                <option value='seasonRegScore'>赛季得分</option>
+            </select>
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
+        return newNode;
+    }
+
     public static createSelect(values: number[]):any {
         const template = `
         <div class='selectLine'>
@@ -14133,7 +14219,7 @@ class TeamMatchUtil {
         if(beyond90.length > 1) {
             return beyond90;
         }else {
-            return [players[0]];
+            return [players[0], players[1], players[2]];
         }
     }
 
@@ -14178,32 +14264,32 @@ class TeamMatchUtil {
     }
 
     public static skillToInside(skill: any, position: any) {
-        //中锋大前70时50%
-        //小前75时
-        //后卫80时
+        //中锋大前75时50%
+        //小前80时
+        //后卫85时
         if(position >= 4) {
-            return RandomUtil.randn_bm(0, 1, 1 + (70 - skill) / 100);
+            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
         }else if(position >= 3) {
-            return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
         }else {
-            return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
         }
         
     }
 
     public static skillToMiddle(skill: any, position: any) {
-        //一律80
+        //一律85
         return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
     }
 
     public static skillToOutside(skill: any, position: any) {
-        //一律90
-        return RandomUtil.randn_bm(0, 1, 1 + (90 - skill) / 100);
+        //一律95
+        return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
     }
 
     public static skillToFree(skill: any, position: any) {
-        //一律75
-        return RandomUtil.randn_bm(0, 1, 1 + (75 - skill) / 100);
+        //一律80
+        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
     }
 }
 
