@@ -12806,6 +12806,88 @@ class Game {
     }
 
     private static playerGrow(id: any, gameData: any): any {
+        let potential = gameData.players[id].potential;
+        let ageSub = 30 - gameData.players[id].age;
+        if(ageSub > 0) {
+            let mul = potential * ageSub;
+            let rand = RandomUtil.random(0, 1000);
+            if(rand < mul) {
+                let rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillBlock += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillPass += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillPhysique += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillRebound += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotExterior += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotFree += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotInterior += 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillSteal += 1;
+                }
+            }
+        }else {
+            ageSub = -ageSub;
+            let mul = (20 - potential) * ageSub;
+            let rand = RandomUtil.random(0, 1000);
+            if(rand < mul) {
+                let rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillBlock -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillPass -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillPhysique -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillRebound -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotExterior -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotFree -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillShotInterior -= 1;
+                }
+                rand = RandomUtil.random(0, 5);
+                if(rand == 0) {
+                    gameData.players[id].skillSteal -= 1;
+                }
+            }
+        }
+        const player = gameData.players[id];
+        gameData.players[id].skillAverage = SkillCalculator.getAverageForPosition(player.positionFirst, true, true, id, gameData);
+        gameData.players[id].skillAttack = SkillCalculator.getAverageForPosition(player.positionFirst, true, false, id, gameData);
+        gameData.players[id].skillDefense = SkillCalculator.getAverageForPosition(player.positionFirst, false, true, id, gameData);
         // let value = Math.random() * 6;
         // if(value < 1) {
         //     gameData.players[id].ability -= 1;
@@ -12931,10 +13013,14 @@ class Game {
                 content: '第' + gameData.currentSeason + '赛季开始了',
             });    
         }
+        for(let id in gameData.players) {
+            this.playerGrow(id, gameData);
+        }
     }
 
     private static resetSeasonStats(gameData: any) {
         for(let id in gameData.players) {
+            gameData.players[id].age += 1;
             gameData.players[id].seasonRegClose = 0;
             gameData.players[id].seasonRegCloseIn = 0;
             gameData.players[id].seasonRegMiddle = 0;
