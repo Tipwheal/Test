@@ -12867,11 +12867,36 @@ var Game = /** @class */ (function () {
             }
             gameData.news = [];
             this.resetOffSeasonData(gameData);
+            this.resetSeasonStats(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '第' + gameData.currentSeason + '赛季开始了',
             });
+        }
+    };
+    Game.resetSeasonStats = function (gameData) {
+        for (var id in gameData.players) {
+            gameData.players[id].seasonRegClose = 0;
+            gameData.players[id].seasonRegCloseIn = 0;
+            gameData.players[id].seasonRegMiddle = 0;
+            gameData.players[id].seasonRegMiddleIn = 0;
+            gameData.players[id].seasonRegThree = 0;
+            gameData.players[id].seasonRegThreeIn = 0;
+            gameData.players[id].seasonRegFree = 0;
+            gameData.players[id].seasonRegFreeIn = 0;
+            gameData.players[id].seasonRegScore = 0;
+            gameData.players[id].seasonRegGameNum = 0;
+            gameData.players[id].seasonOffClose = 0;
+            gameData.players[id].seasonOffCloseIn = 0;
+            gameData.players[id].seasonOffMiddle = 0;
+            gameData.players[id].seasonOffMiddleIn = 0;
+            gameData.players[id].seasonOffThree = 0;
+            gameData.players[id].seasonOffThreeIn = 0;
+            gameData.players[id].seasonOffFree = 0;
+            gameData.players[id].seasonOffFreeIn = 0;
+            gameData.players[id].seasonOffScore = 0;
+            gameData.players[id].seasonOffGameNum = 0;
         }
     };
     Game.resetOffSeasonData = function (gameData) {
@@ -13044,33 +13069,77 @@ var Game = /** @class */ (function () {
                 }
             }
         }
-        for (var id in htStat.pScores) {
-            gameData.players[id].seasonRegClose += htStat.pScores[id].closeNum;
-            gameData.players[id].seasonRegCloseIn += htStat.pScores[id].closeIn;
-            gameData.players[id].seasonRegMiddle += htStat.pScores[id].middleNum;
-            gameData.players[id].seasonRegMiddleIn += htStat.pScores[id].middleIn;
-            gameData.players[id].seasonRegThree += htStat.pScores[id].outsideNum;
-            gameData.players[id].seasonRegThreeIn += htStat.pScores[id].outsideIn;
-            gameData.players[id].seasonRegFree += htStat.pScores[id].freeNum;
-            gameData.players[id].seasonRegFreeIn += htStat.pScores[id].freeIn;
-            gameData.players[id].seasonRegScore += htStat.pScores[id].score;
-            gameData.players[id].totalRegScore += htStat.pScores[id].score;
-            gameData.players[id].seasonRegGameNum += 1;
-            gameData.players[id].totalRegGameNum += 1;
+        if (gameData.currentDay <= this.regularEndDay) {
+            for (var id in htStat.pScores) {
+                gameData.players[id].seasonRegClose += htStat.pScores[id].closeNum;
+                gameData.players[id].seasonRegCloseIn += htStat.pScores[id].closeIn;
+                gameData.players[id].seasonRegMiddle += htStat.pScores[id].middleNum;
+                gameData.players[id].seasonRegMiddleIn += htStat.pScores[id].middleIn;
+                gameData.players[id].seasonRegThree += htStat.pScores[id].outsideNum;
+                gameData.players[id].seasonRegThreeIn += htStat.pScores[id].outsideIn;
+                gameData.players[id].seasonRegFree += htStat.pScores[id].freeNum;
+                gameData.players[id].seasonRegFreeIn += htStat.pScores[id].freeIn;
+                gameData.players[id].seasonRegScore += htStat.pScores[id].score;
+                gameData.players[id].totalRegScore += htStat.pScores[id].score;
+                gameData.players[id].seasonRegGameNum += 1;
+                gameData.players[id].totalRegGameNum += 1;
+                if (htStat.pScores[id].score > gameData.players[id].regMaxScore) {
+                    gameData.players[id].regMaxScore = htStat.pScores[id].score;
+                }
+            }
+            for (var id in viStat.pScores) {
+                gameData.players[id].seasonRegClose += viStat.pScores[id].closeNum;
+                gameData.players[id].seasonRegCloseIn += viStat.pScores[id].closeIn;
+                gameData.players[id].seasonRegMiddle += viStat.pScores[id].middleNum;
+                gameData.players[id].seasonRegMiddleIn += viStat.pScores[id].middleIn;
+                gameData.players[id].seasonRegThree += viStat.pScores[id].outsideNum;
+                gameData.players[id].seasonRegThreeIn += viStat.pScores[id].outsideIn;
+                gameData.players[id].seasonRegFree += viStat.pScores[id].freeNum;
+                gameData.players[id].seasonRegFreeIn += viStat.pScores[id].freeIn;
+                gameData.players[id].seasonRegScore += viStat.pScores[id].score;
+                gameData.players[id].totalRegScore += viStat.pScores[id].score;
+                gameData.players[id].seasonRegGameNum += 1;
+                gameData.players[id].totalRegGameNum += 1;
+                if (viStat.pScores[id].score > gameData.players[id].regMaxScore) {
+                    gameData.players[id].regMaxScore = viStat.pScores[id].score;
+                }
+            }
         }
-        for (var id in viStat.pScores) {
-            gameData.players[id].seasonRegClose += viStat.pScores[id].closeNum;
-            gameData.players[id].seasonRegCloseIn += viStat.pScores[id].closeIn;
-            gameData.players[id].seasonRegMiddle += viStat.pScores[id].middleNum;
-            gameData.players[id].seasonRegMiddleIn += viStat.pScores[id].middleIn;
-            gameData.players[id].seasonRegThree += viStat.pScores[id].outsideNum;
-            gameData.players[id].seasonRegThreeIn += viStat.pScores[id].outsideIn;
-            gameData.players[id].seasonRegFree += viStat.pScores[id].freeNum;
-            gameData.players[id].seasonRegFreeIn += viStat.pScores[id].freeIn;
-            gameData.players[id].seasonRegScore += viStat.pScores[id].score;
-            gameData.players[id].totalRegScore += viStat.pScores[id].score;
-            gameData.players[id].seasonRegGameNum += 1;
-            gameData.players[id].totalRegGameNum += 1;
+        else {
+            for (var id in htStat.pScores) {
+                gameData.players[id].seasonOffClose += htStat.pScores[id].closeNum;
+                gameData.players[id].seasonOffCloseIn += htStat.pScores[id].closeIn;
+                gameData.players[id].seasonOffMiddle += htStat.pScores[id].middleNum;
+                gameData.players[id].seasonOffMiddleIn += htStat.pScores[id].middleIn;
+                gameData.players[id].seasonOffThree += htStat.pScores[id].outsideNum;
+                gameData.players[id].seasonOffThreeIn += htStat.pScores[id].outsideIn;
+                gameData.players[id].seasonOffFree += htStat.pScores[id].freeNum;
+                gameData.players[id].seasonOffFreeIn += htStat.pScores[id].freeIn;
+                gameData.players[id].seasonOffScore += htStat.pScores[id].score;
+                gameData.players[id].totalOffScore += htStat.pScores[id].score;
+                gameData.players[id].seasonOffGameNum += 1;
+                gameData.players[id].totalOffGameNum += 1;
+                if (htStat.pScores[id].score > gameData.players[id].offMaxScore) {
+                    gameData.players[id].offMaxScore = htStat.pScores[id].score;
+                }
+            }
+            for (var id in viStat.pScores) {
+                gameData.players[id].seasonOffClose += viStat.pScores[id].closeNum;
+                gameData.players[id].seasonOffCloseIn += viStat.pScores[id].closeIn;
+                gameData.players[id].seasonOffMiddle += viStat.pScores[id].middleNum;
+                gameData.players[id].seasonOffMiddleIn += viStat.pScores[id].middleIn;
+                gameData.players[id].seasonOffThree += viStat.pScores[id].outsideNum;
+                gameData.players[id].seasonOffThreeIn += viStat.pScores[id].outsideIn;
+                gameData.players[id].seasonOffFree += viStat.pScores[id].freeNum;
+                gameData.players[id].seasonOffFreeIn += viStat.pScores[id].freeIn;
+                gameData.players[id].seasonOffScore += viStat.pScores[id].score;
+                gameData.players[id].totalOffScore += viStat.pScores[id].score;
+                gameData.players[id].seasonOffGameNum += 1;
+                gameData.players[id].totalOffGameNum += 1;
+                if (viStat.pScores[id].score > gameData.players[id].offMaxScore) {
+                    gameData.players[id].offMaxScore = viStat.pScores[id].score;
+                }
+            }
         }
         if (htStat.total > viStat.total) {
             return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
@@ -13580,7 +13649,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createStatsSelect = function (values) {
-        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5F97\u5206</option>\n                <option value='seasonRegThreeIn'>\u8D5B\u5B63\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonRegThree'>\u8D5B\u5B63\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonRegFreeIn'>\u8D5B\u5B63\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonRegFree'>\u8D5B\u5B63\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonRegMiddleIn'>\u8D5B\u5B63\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonRegMiddle'>\u8D5B\u5B63\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonRegCloseIn'>\u8D5B\u5B63\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonRegClose'>\u8D5B\u5B63\u7981\u533A\u51FA\u624B</option>\n            </select>\n        </div>\n        ";
+        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u5F97\u5206</option>\n                <option value='seasonRegThreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonRegThree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonRegFreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonRegFree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonRegMiddleIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonRegMiddle'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonRegCloseIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonRegClose'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='seasonOffScore'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u5F97\u5206</option>\n                <option value='seasonOffThreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonOffThree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonOffFreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonOffFree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonOffMiddleIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonOffMiddle'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonOffCloseIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonOffClose'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='totalRegScore'>\u751F\u6DAF\u5E38\u89C4\u8D5B\u603B\u5F97\u5206</option>\n                <option value='totalOffScore'>\u751F\u6DAF\u5B63\u540E\u8D5B\u603B\u5F97\u5206</option>\n                <option value='regMaxScore'>\u5E38\u89C4\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n                <option value='offMaxScore'>\u5B63\u540E\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n            </select>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
         return newNode;
     };

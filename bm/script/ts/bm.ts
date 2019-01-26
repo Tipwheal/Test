@@ -12924,11 +12924,37 @@ class Game {
             }
             gameData.news = [];
             this.resetOffSeasonData(gameData);
+            this.resetSeasonStats(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '第' + gameData.currentSeason + '赛季开始了',
-            });
+            });    
+        }
+    }
+
+    private static resetSeasonStats(gameData: any) {
+        for(let id in gameData.players) {
+            gameData.players[id].seasonRegClose = 0;
+            gameData.players[id].seasonRegCloseIn = 0;
+            gameData.players[id].seasonRegMiddle = 0;
+            gameData.players[id].seasonRegMiddleIn = 0;
+            gameData.players[id].seasonRegThree = 0;
+            gameData.players[id].seasonRegThreeIn = 0;
+            gameData.players[id].seasonRegFree = 0;
+            gameData.players[id].seasonRegFreeIn = 0;
+            gameData.players[id].seasonRegScore = 0;
+            gameData.players[id].seasonRegGameNum = 0;
+            gameData.players[id].seasonOffClose = 0;
+            gameData.players[id].seasonOffCloseIn = 0;
+            gameData.players[id].seasonOffMiddle = 0;
+            gameData.players[id].seasonOffMiddleIn = 0;
+            gameData.players[id].seasonOffThree = 0;
+            gameData.players[id].seasonOffThreeIn = 0;
+            gameData.players[id].seasonOffFree = 0; 
+            gameData.players[id].seasonOffFreeIn = 0;
+            gameData.players[id].seasonOffScore = 0;
+            gameData.players[id].seasonOffGameNum = 0;
         }
     }
 
@@ -13097,33 +13123,76 @@ class Game {
                 }
             }
         }
-        for(let id in htStat.pScores) {
-            gameData.players[id].seasonRegClose += htStat.pScores[id].closeNum;
-            gameData.players[id].seasonRegCloseIn += htStat.pScores[id].closeIn;
-            gameData.players[id].seasonRegMiddle += htStat.pScores[id].middleNum;
-            gameData.players[id].seasonRegMiddleIn += htStat.pScores[id].middleIn;
-            gameData.players[id].seasonRegThree += htStat.pScores[id].outsideNum;
-            gameData.players[id].seasonRegThreeIn += htStat.pScores[id].outsideIn;
-            gameData.players[id].seasonRegFree += htStat.pScores[id].freeNum;
-            gameData.players[id].seasonRegFreeIn += htStat.pScores[id].freeIn;
-            gameData.players[id].seasonRegScore += htStat.pScores[id].score;
-            gameData.players[id].totalRegScore += htStat.pScores[id].score;
-            gameData.players[id].seasonRegGameNum += 1;
-            gameData.players[id].totalRegGameNum += 1;
-        }
-        for(let id in viStat.pScores) {
-            gameData.players[id].seasonRegClose += viStat.pScores[id].closeNum;
-            gameData.players[id].seasonRegCloseIn += viStat.pScores[id].closeIn;
-            gameData.players[id].seasonRegMiddle += viStat.pScores[id].middleNum;
-            gameData.players[id].seasonRegMiddleIn += viStat.pScores[id].middleIn;
-            gameData.players[id].seasonRegThree += viStat.pScores[id].outsideNum;
-            gameData.players[id].seasonRegThreeIn += viStat.pScores[id].outsideIn;
-            gameData.players[id].seasonRegFree += viStat.pScores[id].freeNum;
-            gameData.players[id].seasonRegFreeIn += viStat.pScores[id].freeIn;
-            gameData.players[id].seasonRegScore += viStat.pScores[id].score;
-            gameData.players[id].totalRegScore += viStat.pScores[id].score;
-            gameData.players[id].seasonRegGameNum += 1;
-            gameData.players[id].totalRegGameNum += 1;
+        if(gameData.currentDay <= this.regularEndDay) {
+            for(let id in htStat.pScores) {
+                gameData.players[id].seasonRegClose += htStat.pScores[id].closeNum;
+                gameData.players[id].seasonRegCloseIn += htStat.pScores[id].closeIn;
+                gameData.players[id].seasonRegMiddle += htStat.pScores[id].middleNum;
+                gameData.players[id].seasonRegMiddleIn += htStat.pScores[id].middleIn;
+                gameData.players[id].seasonRegThree += htStat.pScores[id].outsideNum;
+                gameData.players[id].seasonRegThreeIn += htStat.pScores[id].outsideIn;
+                gameData.players[id].seasonRegFree += htStat.pScores[id].freeNum;
+                gameData.players[id].seasonRegFreeIn += htStat.pScores[id].freeIn;
+                gameData.players[id].seasonRegScore += htStat.pScores[id].score;
+                gameData.players[id].totalRegScore += htStat.pScores[id].score;
+                gameData.players[id].seasonRegGameNum += 1;
+                gameData.players[id].totalRegGameNum += 1;
+                if(htStat.pScores[id].score > gameData.players[id].regMaxScore) {
+                    gameData.players[id].regMaxScore = htStat.pScores[id].score;
+                }
+            }
+            for(let id in viStat.pScores) {
+                gameData.players[id].seasonRegClose += viStat.pScores[id].closeNum;
+                gameData.players[id].seasonRegCloseIn += viStat.pScores[id].closeIn;
+                gameData.players[id].seasonRegMiddle += viStat.pScores[id].middleNum;
+                gameData.players[id].seasonRegMiddleIn += viStat.pScores[id].middleIn;
+                gameData.players[id].seasonRegThree += viStat.pScores[id].outsideNum;
+                gameData.players[id].seasonRegThreeIn += viStat.pScores[id].outsideIn;
+                gameData.players[id].seasonRegFree += viStat.pScores[id].freeNum;
+                gameData.players[id].seasonRegFreeIn += viStat.pScores[id].freeIn;
+                gameData.players[id].seasonRegScore += viStat.pScores[id].score;
+                gameData.players[id].totalRegScore += viStat.pScores[id].score;
+                gameData.players[id].seasonRegGameNum += 1;
+                gameData.players[id].totalRegGameNum += 1;
+                if(viStat.pScores[id].score > gameData.players[id].regMaxScore) {
+                    gameData.players[id].regMaxScore = viStat.pScores[id].score;
+                }
+            }
+        }else {
+            for(let id in htStat.pScores) {
+                gameData.players[id].seasonOffClose += htStat.pScores[id].closeNum;
+                gameData.players[id].seasonOffCloseIn += htStat.pScores[id].closeIn;
+                gameData.players[id].seasonOffMiddle += htStat.pScores[id].middleNum;
+                gameData.players[id].seasonOffMiddleIn += htStat.pScores[id].middleIn;
+                gameData.players[id].seasonOffThree += htStat.pScores[id].outsideNum;
+                gameData.players[id].seasonOffThreeIn += htStat.pScores[id].outsideIn;
+                gameData.players[id].seasonOffFree += htStat.pScores[id].freeNum;
+                gameData.players[id].seasonOffFreeIn += htStat.pScores[id].freeIn;
+                gameData.players[id].seasonOffScore += htStat.pScores[id].score;
+                gameData.players[id].totalOffScore += htStat.pScores[id].score;
+                gameData.players[id].seasonOffGameNum += 1;
+                gameData.players[id].totalOffGameNum += 1;
+                if(htStat.pScores[id].score > gameData.players[id].offMaxScore) {
+                    gameData.players[id].offMaxScore = htStat.pScores[id].score;
+                }
+            }
+            for(let id in viStat.pScores) {
+                gameData.players[id].seasonOffClose += viStat.pScores[id].closeNum;
+                gameData.players[id].seasonOffCloseIn += viStat.pScores[id].closeIn;
+                gameData.players[id].seasonOffMiddle += viStat.pScores[id].middleNum;
+                gameData.players[id].seasonOffMiddleIn += viStat.pScores[id].middleIn;
+                gameData.players[id].seasonOffThree += viStat.pScores[id].outsideNum;
+                gameData.players[id].seasonOffThreeIn += viStat.pScores[id].outsideIn;
+                gameData.players[id].seasonOffFree += viStat.pScores[id].freeNum;
+                gameData.players[id].seasonOffFreeIn += viStat.pScores[id].freeIn;
+                gameData.players[id].seasonOffScore += viStat.pScores[id].score;
+                gameData.players[id].totalOffScore += viStat.pScores[id].score;
+                gameData.players[id].seasonOffGameNum += 1;
+                gameData.players[id].totalOffGameNum += 1;
+                if(viStat.pScores[id].score > gameData.players[id].offMaxScore) {
+                    gameData.players[id].offMaxScore = viStat.pScores[id].score;
+                }
+            }
         }
         if(htStat.total > viStat.total) {
             return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
@@ -13591,15 +13660,28 @@ class TemplateUtil {
         const template = `
         <div class='selectLine'>
             <select class='gameSelect' id='statsSelect' onchange='changeStats()'>
-                <option value='seasonRegScore'>赛季得分</option>
-                <option value='seasonRegThreeIn'>赛季三分命中</option>
-                <option value='seasonRegThree'>赛季三分出手</option>
-                <option value='seasonRegFreeIn'>赛季罚球命中</option>
-                <option value='seasonRegFree'>赛季罚球出手</option>
-                <option value='seasonRegMiddleIn'>赛季中投命中</option>
-                <option value='seasonRegMiddle'>赛季中投出手</option>
-                <option value='seasonRegCloseIn'>赛季禁区命中</option>
-                <option value='seasonRegClose'>赛季禁区出手</option>
+                <option value='seasonRegScore'>赛季常规赛得分</option>
+                <option value='seasonRegThreeIn'>赛季常规赛三分命中</option>
+                <option value='seasonRegThree'>赛季常规赛三分出手</option>
+                <option value='seasonRegFreeIn'>赛季常规赛罚球命中</option>
+                <option value='seasonRegFree'>赛季常规赛罚球出手</option>
+                <option value='seasonRegMiddleIn'>赛季常规赛中投命中</option>
+                <option value='seasonRegMiddle'>赛季常规赛中投出手</option>
+                <option value='seasonRegCloseIn'>赛季常规赛禁区命中</option>
+                <option value='seasonRegClose'>赛季常规赛禁区出手</option>
+                <option value='seasonOffScore'>赛季季后赛得分</option>
+                <option value='seasonOffThreeIn'>赛季季后赛三分命中</option>
+                <option value='seasonOffThree'>赛季季后赛三分出手</option>
+                <option value='seasonOffFreeIn'>赛季季后赛罚球命中</option>
+                <option value='seasonOffFree'>赛季季后赛罚球出手</option>
+                <option value='seasonOffMiddleIn'>赛季季后赛中投命中</option>
+                <option value='seasonOffMiddle'>赛季季后赛中投出手</option>
+                <option value='seasonOffCloseIn'>赛季季后赛禁区命中</option>
+                <option value='seasonOffClose'>赛季季后赛禁区出手</option>
+                <option value='totalRegScore'>生涯常规赛总得分</option>
+                <option value='totalOffScore'>生涯季后赛总得分</option>
+                <option value='regMaxScore'>常规赛单场最高分</option>
+                <option value='offMaxScore'>季后赛单场最高分</option>
             </select>
         </div>
         `;
