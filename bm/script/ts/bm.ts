@@ -12792,6 +12792,8 @@ class Game {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
+            gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
             let teamId = gameData.players[i].team;
             if(teamId !== undefined && teamId >= 0) {
                 gameData.teams[teamId].players.push(i);
@@ -13610,6 +13612,8 @@ class TemplateUtil {
         <div class='selectLine'>
             <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>
                 <option value='skillAverage'>综合能力</option>
+                <option value='skillAttack'>进攻能力</option>
+                <option value='skillDefense'>防守能力</option>
                 <option value='skillRebound'>篮板</option>
                 <option value='skillShotInterior'>内线投篮</option>
                 <option value='skillShotExterior'>外线投篮</option>
@@ -13886,5 +13890,96 @@ class RandomUtil {
         num *= max - min;
         num += min;
         return num;
+    }
+}
+
+class SkillCalculator {
+    public static getBaseOfPosition(position: any, skill: any): number {
+        const positionSkill = [
+            [10, 10, 11, 12, 14], //身体
+            [3, 5, 10, 14, 15], //盖帽
+            [14, 12, 11, 6, 5], //抢断
+            [9, 9, 11, 13, 14], //篮板
+            [17, 15, 11, 8, 6], //传球
+            [6, 9, 11, 14, 16], //内线
+            [14, 14, 11, 9, 6], //外线
+            [12, 11, 10, 9, 8], //罚球
+            [33, 33, 40, 44, 47], //进攻
+            [49, 48, 41, 37, 34], //防守
+            [81, 81, 81, 81, 81], //总能力
+        ];
+        return positionSkill[skill - 1][position - 1];
+    }
+
+    public static getAverageForPosition(position: number, attack: boolean, defence: boolean, playerId: any, gameData: any): number {
+        let average = 0;
+        const player = gameData.players[playerId];
+
+        if(attack) {
+            let pass = player.skillPass;
+            let basePass = SkillCalculator.getBaseOfPosition(position, 5);
+            let mulPass = pass * basePass;
+
+            let shotInterior = player.skillShotInterior;
+            let shotInteriorBase = SkillCalculator.getBaseOfPosition(position, 6);
+            let mulShotInterior = shotInterior * shotInteriorBase;
+
+            mulPass += mulShotInterior;
+
+            let shotExterior = player.skillShotExterior;
+            let shotExteriorBase = SkillCalculator.getBaseOfPosition(position, 7);
+            let mulShotExterior = shotExterior * shotExteriorBase;
+
+            mulPass += mulShotExterior;
+
+            let shotFree = player.skillShotFree;
+            let shotFreeBase = SkillCalculator.getBaseOfPosition(position, 8);
+            let mulShotFree = shotFree * shotFreeBase;
+
+            mulPass += mulShotFree;
+            average += mulPass;
+        }
+
+        if(defence) {
+            let physique = player.skillPhysique;
+            let physiqueBase = SkillCalculator.getBaseOfPosition(position, 1);
+            let mulPhysique = physique * physiqueBase;
+
+            let block = player.skillBlock;
+            let blockBase = SkillCalculator.getBaseOfPosition(position, 2);
+            let mulBlock = block * blockBase;
+
+            mulPhysique += mulBlock;
+
+            let steal = player.skillSteal;
+            let stealBase = SkillCalculator.getBaseOfPosition(position, 3);
+            let mulSteal = steal * stealBase;
+
+            mulPhysique += mulSteal;
+
+            let rebound = player.skillRebound;
+            let reboundBase = SkillCalculator.getBaseOfPosition(position, 4);
+            let mulRebound = rebound * reboundBase;
+
+            mulPhysique += mulRebound;
+            average += mulPhysique;
+        }
+
+        if(attack && defence) {
+            average /= SkillCalculator.getBaseOfPosition(position, 11);
+        }else if(attack) {
+            average /= SkillCalculator.getBaseOfPosition(position, 10);
+        }else {
+            average /= SkillCalculator.getBaseOfPosition(position, 9);
+        }
+
+        average = average / 0.75 - 25;
+
+        if(average > 99.0) {
+            return 99;
+        }else if(average < 40.0) {
+            return 40;
+        }
+        return Math.round(average);
     }
 }

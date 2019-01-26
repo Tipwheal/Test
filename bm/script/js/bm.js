@@ -12735,6 +12735,8 @@ var Game = /** @class */ (function () {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
+            gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
             var teamId = gameData.players[i].team;
             if (teamId !== undefined && teamId >= 0) {
                 gameData.teams[teamId].players.push(i);
@@ -13583,7 +13585,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createSelect = function (values) {
-        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>\n                <option value='skillAverage'>\u7EFC\u5408\u80FD\u529B</option>\n                <option value='skillRebound'>\u7BEE\u677F</option>\n                <option value='skillShotInterior'>\u5185\u7EBF\u6295\u7BEE</option>\n                <option value='skillShotExterior'>\u5916\u7EBF\u6295\u7BEE</option>\n                <option value='numsChampion'>\u51A0\u519B\u6570\u91CF</option>\n                <option value='skillShotFree'>\u7F5A\u7403\u80FD\u529B</option>\n                <option value='salary'>\u85AA\u6C34</option>\n                <option value='skillPhysique'>\u4F53\u529B</option>\n                <option value='skillPass'>\u4F20\u7403\u80FD\u529B</option>\n                <option value='age'>\u5E74\u9F84</option>\n                <option value='yearsLeague'>\u7403\u9F84</option>\n                <option value='skillSteal'>\u62A2\u65AD\u80FD\u529B</option>\n                <option value='stateInjury'>\u4F24\u505C\u65F6\u957F</option>\n            </select>\n        </div>\n        ";
+        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>\n                <option value='skillAverage'>\u7EFC\u5408\u80FD\u529B</option>\n                <option value='skillAttack'>\u8FDB\u653B\u80FD\u529B</option>\n                <option value='skillDefense'>\u9632\u5B88\u80FD\u529B</option>\n                <option value='skillRebound'>\u7BEE\u677F</option>\n                <option value='skillShotInterior'>\u5185\u7EBF\u6295\u7BEE</option>\n                <option value='skillShotExterior'>\u5916\u7EBF\u6295\u7BEE</option>\n                <option value='numsChampion'>\u51A0\u519B\u6570\u91CF</option>\n                <option value='skillShotFree'>\u7F5A\u7403\u80FD\u529B</option>\n                <option value='salary'>\u85AA\u6C34</option>\n                <option value='skillPhysique'>\u4F53\u529B</option>\n                <option value='skillPass'>\u4F20\u7403\u80FD\u529B</option>\n                <option value='age'>\u5E74\u9F84</option>\n                <option value='yearsLeague'>\u7403\u9F84</option>\n                <option value='skillSteal'>\u62A2\u65AD\u80FD\u529B</option>\n                <option value='stateInjury'>\u4F24\u505C\u65F6\u957F</option>\n            </select>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
         return newNode;
     };
@@ -13774,4 +13776,82 @@ var RandomUtil = /** @class */ (function () {
         return num;
     };
     return RandomUtil;
+}());
+var SkillCalculator = /** @class */ (function () {
+    function SkillCalculator() {
+    }
+    SkillCalculator.getBaseOfPosition = function (position, skill) {
+        var positionSkill = [
+            [10, 10, 11, 12, 14],
+            [3, 5, 10, 14, 15],
+            [14, 12, 11, 6, 5],
+            [9, 9, 11, 13, 14],
+            [17, 15, 11, 8, 6],
+            [6, 9, 11, 14, 16],
+            [14, 14, 11, 9, 6],
+            [12, 11, 10, 9, 8],
+            [33, 33, 40, 44, 47],
+            [49, 48, 41, 37, 34],
+            [81, 81, 81, 81, 81],
+        ];
+        return positionSkill[skill - 1][position - 1];
+    };
+    SkillCalculator.getAverageForPosition = function (position, attack, defence, playerId, gameData) {
+        var average = 0;
+        var player = gameData.players[playerId];
+        if (attack) {
+            var pass = player.skillPass;
+            var basePass = SkillCalculator.getBaseOfPosition(position, 5);
+            var mulPass = pass * basePass;
+            var shotInterior = player.skillShotInterior;
+            var shotInteriorBase = SkillCalculator.getBaseOfPosition(position, 6);
+            var mulShotInterior = shotInterior * shotInteriorBase;
+            mulPass += mulShotInterior;
+            var shotExterior = player.skillShotExterior;
+            var shotExteriorBase = SkillCalculator.getBaseOfPosition(position, 7);
+            var mulShotExterior = shotExterior * shotExteriorBase;
+            mulPass += mulShotExterior;
+            var shotFree = player.skillShotFree;
+            var shotFreeBase = SkillCalculator.getBaseOfPosition(position, 8);
+            var mulShotFree = shotFree * shotFreeBase;
+            mulPass += mulShotFree;
+            average += mulPass;
+        }
+        if (defence) {
+            var physique = player.skillPhysique;
+            var physiqueBase = SkillCalculator.getBaseOfPosition(position, 1);
+            var mulPhysique = physique * physiqueBase;
+            var block = player.skillBlock;
+            var blockBase = SkillCalculator.getBaseOfPosition(position, 2);
+            var mulBlock = block * blockBase;
+            mulPhysique += mulBlock;
+            var steal = player.skillSteal;
+            var stealBase = SkillCalculator.getBaseOfPosition(position, 3);
+            var mulSteal = steal * stealBase;
+            mulPhysique += mulSteal;
+            var rebound = player.skillRebound;
+            var reboundBase = SkillCalculator.getBaseOfPosition(position, 4);
+            var mulRebound = rebound * reboundBase;
+            mulPhysique += mulRebound;
+            average += mulPhysique;
+        }
+        if (attack && defence) {
+            average /= SkillCalculator.getBaseOfPosition(position, 11);
+        }
+        else if (attack) {
+            average /= SkillCalculator.getBaseOfPosition(position, 10);
+        }
+        else {
+            average /= SkillCalculator.getBaseOfPosition(position, 9);
+        }
+        average = average / 0.75 - 25;
+        if (average > 99.0) {
+            return 99;
+        }
+        else if (average < 40.0) {
+            return 40;
+        }
+        return Math.round(average);
+    };
+    return SkillCalculator;
 }());
