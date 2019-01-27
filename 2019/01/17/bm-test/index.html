@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-26T09:28:18.467Z">
+<meta property="og:updated_time" content="2019-01-27T14:39:07.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-26 17:28:18" itemprop="dateModified" datetime="2019-01-26T17:28:18+08:00">2019-01-26</time>
+                <time title="修改时间：2019-01-27 22:39:07" itemprop="dateModified" datetime="2019-01-27T22:39:07+08:00">2019-01-27</time>
               
             
           </span>
@@ -540,11 +540,14 @@ function updateSeason() {
 function updateButton() {
     const sim30Button = document.getElementById('sim30Btn');
     const day = gameState.currentDay;
-    if(day >= 166) {
+    if(day >= 221) {
+        $("#sim30Btn").attr('style', 'display:none;');
+    }else if(day >= 166) {
         sim30Button.innerText = '模拟一轮';
     }else if(day + 30 >= 166) {
         sim30Button.innerText = '直达季后赛';
     }else {
+        $("#sim30Btn").attr('style', 'display:block;');
         sim30Button.innerText = '模拟30天';
     }
     const offSeasonButton = document.getElementById('offSeasonBtn');
@@ -813,8 +816,15 @@ function save() {
 <li>常规赛季后赛得分分开</li>
 <li>球龄有bug</li>
 <li>球员冠军数量统计</li>
+<li>我突然有一个 让玩家给选秀的球员取名的想法</li>
 </ul>
 <p>正在做：</p>
+<ul>
+<li>选秀<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <p>完成列表：</p>
 <ul>
 <li>修改比赛算法<ul>
@@ -858,6 +868,13 @@ function save() {
 </li>
 <li>年龄增长</li>
 <li>球员成长算法修改</li>
+</ul>
+<p>1.27更新:</p>
+<ul>
+<li>优化界面显示</li>
+<li>添加球员退役</li>
+<li>修复首发球员计算的bug</li>
+<li>每赛季获得一个随机新秀</li>
 </ul>
 
       
@@ -1156,6 +1173,11 @@ function save() {
               
                 <span class="links-of-author-item">
                   <a href="https://github.com/tipwheal" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:674714966@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               

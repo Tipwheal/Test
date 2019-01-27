@@ -12758,6 +12758,7 @@ class Game {
             currentSeason: 2018,
             currentDay: 1,
             showState: ShowState.News,
+            nextPlayerId: 474,
         }
         this.prepareGameData(result);
         return result;
@@ -12998,6 +12999,19 @@ class Game {
             this.offSeasonDay(gameData.currentDay - Game.regularEndDay - 2, gameData);
             gameData.currentDay += 1;
         }else if(gameData.currentDay === Game.regularEndDay + 57) {
+            this.manageRetire(gameData);
+            gameData.currentDay += 1;
+        }else if(gameData.currentDay === Game.regularEndDay + 58) {
+            for(let i = 0; i < 30; i ++) {
+                PlayerGenerator.getRandomPlayer(i, gameData);
+            }
+            gameData.currentDay += 1;
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: `你获得了一名新秀~快去队里查看吧~`,
+            });
+        }else if(gameData.currentDay === Game.regularEndDay + 59) {
             gameData.currentDay = 1;
             gameData.currentSeason += 1;
             for(let i = 0; i<30;i++) {
@@ -13016,6 +13030,45 @@ class Game {
         for(let id in gameData.players) {
             this.playerGrow(id, gameData);
         }
+    }
+
+    private static manageRetire(gameData: any) {
+        const players = gameData.players;
+        const maybeList = [];
+        const retireNewsList = [];
+        for(let id in players) {
+            if(players[id].team == -2) {
+                continue;
+            }
+            if(players[id].skillAverage < 75 && players[id].age >= 36) {
+                maybeList.push(id);
+            }else if(players[id].skillAverage < 70 && players[id].age >= 30) {
+                maybeList.push(id);
+            }else if(players[id].skillAverage < 50 && players[id].team == -1) {
+                maybeList.push(id);
+            }
+        }
+        for(let i = 0; i < maybeList.length; i ++) {
+            let id = maybeList[i];
+            console.log(id);
+            let rand = RandomUtil.random(0, 3);
+            if(rand == 0) {
+                const player = gameData.players[id];
+                if(player.team != -1) {
+                    const team = gameData.teams[player.team];
+                    retireNewsList.push(`${team.name}的${player.name}退役，${player.age}岁`);
+                    gameData.teams[player.team].players.splice(team.players.indexOf(id), 1);
+                }else {
+                    retireNewsList.push(`自由球员${player.name}退役，${player.age}岁`);
+                }
+                gameData.players[id].team = -2;
+            }
+        }
+        gameData.news.push({
+            season: gameData.currentSeason,
+            day: gameData.currentDay,
+            content: `本赛季退役的球员： ${retireNewsList.length}<br />${retireNewsList.join('<br />')}`,
+        }); 
     }
 
     private static resetSeasonStats(gameData: any) {
@@ -13964,7 +14017,8 @@ class TeamMatchUtil {
                 lostPlace.push(i);
             }
         }
-        for(let i in lostPlace) {
+        for(let j = 0; j < lostPlace.length; j ++) {
+            let i = lostPlace[j];
             let currentPlace = players.filter((p: any) => !(starters.includes(p))).filter((p: any) => gameData.players[p].positionSecond == i);
             if(currentPlace.length > 0) {
                 starters[i] = currentPlace[0];
@@ -13972,7 +14026,8 @@ class TeamMatchUtil {
                 stillLost.push(i);
             }
         }
-        for(let i in stillLost) {
+        for(let j = 0; j < stillLost.length; j ++) {
+            let i = stillLost[j];
             let currentPlace = players
                 .filter((p: any) => !(p in starters))
                 .sort((a: any, b: any) => gameData.players[b].skillAverage - gameData.players[a].skillAverage);
@@ -14150,4 +14205,119 @@ class SkillCalculator {
         }
         return Math.round(average);
     }
+}
+
+class PlayerGenerator {
+    static usFirstNames = ['雅各布', '迈克尔', '伊桑', '约书亚', '亚历山大', '安东尼', '威廉', '克里斯托弗', '杰顿', '安德鲁', 
+        '约瑟夫', '大卫', '诺阿', '艾顿', '詹姆斯', '莱恩', '罗根', '约翰', '内森', '伊莱贾', '克里斯', '加布里尔', '本杰明',
+        '乔纳森', '泰勒', '塞缪尔', '尼古拉斯', '加文', '迪兰', '杰克逊', '布兰顿', '凯勒布', '梅森', '安吉尔', '艾萨克', '埃文',
+        '杰克', '凯文', '乔斯', '以赛亚', '卢克', '兰登', '贾斯汀', '卢卡斯', '扎克里', '乔丹', '罗伯特', '艾伦', '布雷登', 
+        '托马斯', '卡梅伦', '亨特', '奥斯汀', '艾德里安', '康纳', '欧文', '艾丹', '贾森', '朱利安', '怀亚特', '查尔斯', '路易斯', 
+        '卡特', '胡安', '蔡斯', '蒂亚戈', '杰里米', '布罗迪', '泽维尔', '亚当', '卡洛斯', '利亚姆', '海顿', '杰西斯', '伊恩', 
+        '特里斯坦', '布莱恩', '肖恩', '科尔', '亚力克斯', '埃里克', '卡森', '布莱克', '库珀', '多米尼克', '凯尔', '伊莱', '大卫',
+        '布兰登', '丹尼尔', '丹尼尔斯', '斯蒂芬', '斯蒂夫', '肯特', '里基', '特伦斯', '维克多', '亚伯拉罕', '沃恩', '伯纳德'];
+    static usLastNames = ['史密斯', '约翰逊', '威廉姆斯', '布朗', '琼斯', '米勒', '戴维斯', '加西亚', '罗德里格斯', '威尔逊', 
+        '马丁', '马丁内兹', '安德森', '泰勒', '托马斯', '赫尔南德斯', '摩尔', '杰克逊', '汤普森', '怀特', '洛佩兹', '李', '冈萨雷斯',
+        '哈里斯', '克拉克', '刘易斯', '罗宾逊', '沃克', '佩雷斯', '霍尔', '杨', '艾伦', '桑切斯', '赖特', '金', '斯科特', '格林',
+        '贝克', '亚当斯', '纳尔逊', '希尔', '坎贝尔', '米切尔', '罗伯茨', '卡特', '菲利普斯', '埃文斯', '托雷斯', '特纳', '西蒙斯',
+        '格兰迪', '格兰特', '皮克', '奥多姆', '张伯伦', '保罗', '欧文', '威尔基', '杜波伊斯', '福尔摩斯', '亚罗', '皮尔斯', '阿伦',
+        '加内特', '邓肯', '帕克', '吉诺比利', '诺维茨基', '艾顿', '福克斯', '巴克利', '萨克斯顿', '詹姆斯', '克劳福德', '里弗斯',
+        '特朗普', '希拉里奥', '格里斯科姆', '霍福德', '霍华德', '詹金斯', '詹宁斯', '拉奇', '费斯克', '加索尔', '布洛克', '多利弗',
+        '波特', '福特汉姆', '莫里斯', '布朗', '坦普尔', '巴图姆', '理查德森', '梅尔斯', '奥巴马', '菲利希奥', '富兰克林', '威廉姆斯', 
+        '威廉姆森', '克里斯', '布莱恩特', '马龙', '奥尼尔', '布鲁克斯', '布鲁克', '格里芬', '福尼尔', '卡罗尔', '本内特', '伍德', 
+        '巴恩斯', '科尔曼', '佩里', '鲍威尔', '帕特森', '哈密尔顿', '华莱士', '欧文斯', '费舍尔', '克鲁兹', '马绍尔', '塔克', '肯尼迪',
+        '戈登', '莱斯', '罗伯特森', '布莱克', '米尔斯', '罗斯', '邓恩', '斯宾塞', '马修斯', '雷', '哈特', '安德鲁斯', '瑞兹', '莱利',
+        '奥古斯汀', '劳伦斯', '阿姆斯特朗', '伦纳德', '韦斯利', '维金斯', '唐斯', '斯通', '阿尔斯通', '奈特', '斯蒂文斯', '韦伯',
+        '埃利斯', '蒙克', '韦斯特', '海耶斯', '科克斯', '墨菲', '贝尔', '库克', '斯图尔特', '克拉克', '爱迪生', '阿尔德里奇',
+        '安', '阿尔索普', '安东尼', '亚瑟', '培根', '巴里', '贝拉米', '伯克利', '比顿', '布莱尔', '布雷', '布莱特', '布鲁诺', '卡门',
+        '马克思', '夏洛特', '丘吉尔', '柯林斯', '坎南', '科波菲尔', '克罗夫特', '达尔文', '昆西', '迪克', '多利', '道尔', '杜邦',
+        '爱德华', '埃里奥特', '艾玛', '尤根', '法拉第', '费尔顿', '菲尔丁', '弗朗西斯', '芬克', '乔治', '高尔德', '格雷', '格雷斯',
+        '盖伊', '哈里', '海沃德', '霍尔特', '豪斯', '霍恩比', '雅各布', '简', '约翰', '乔丹', '约瑟夫', '基德', '兰姆', '罗',
+        '林肯', '卢卡斯', '麦当劳', '麦基', '马克', '麦卡锡', '麦卡杜', '门罗', '摩根', '默里', '内尔', '南斯', '尼克松', '诺埃尔',
+        '奥卡姆', '奥兰多', '潘西', '彼得', '波尔', '里德', '罗伊', '帕森斯', '索尔', '辛普森', '库里', '杜兰特', '沃尔', '斯诺',
+        '斯诺登', '斯普林霍尔', '斯威夫特', '托尼', '塔特尔', '范', '文森特', '沃伦', '瓦特'];
+
+    public static getRandomPlayer(teamId: any, gameData: any): any {
+        let rand = RandomUtil.random(0, PlayerGenerator.usFirstNames.length);
+        const firstName = PlayerGenerator.usFirstNames[rand];
+        rand = RandomUtil.random(0, PlayerGenerator.usLastNames.length);
+        const lastName= PlayerGenerator.usLastNames[rand];
+        this.getRandomPlayerWithName(teamId, firstName + '-' + lastName, gameData);
+    }
+
+    public static getRandomPlayerWithName(teamId: any, name: any, gameData: any): any {
+        let age = RandomUtil.random(18, 23);
+        let id = gameData.nextPlayerId;
+        let positionFirst = RandomUtil.random(1, 6);
+        let positionSecond = RandomUtil.random(1, 6);
+        let potential = RandomUtil.random(1, 11);
+        gameData.nextPlayerId += 1;
+        let skillBlock = RandomUtil.random(50, 95);
+        let skillPass = RandomUtil.random(50, 95);
+        let skillPhysique = RandomUtil.random(50, 95);
+        let skillRebound = RandomUtil.random(50, 95);
+        let skillShotExterior = RandomUtil.random(50, 95);
+        let skillShotInterior = RandomUtil.random(50, 95);
+        let skillShotFree = RandomUtil.random(50, 95);
+        let skillSteal = RandomUtil.random(50, 95);
+        const player =  {
+            age: age,
+            draft: 0,
+            experience: 0,
+            id: id,
+            loyalty: 1,
+            name: name,
+            numsChampion: 0,
+            positionFirst: positionFirst,
+            positionSecond: positionSecond,
+            potential: potential,
+            salary: 900000,
+            skillAverage: 91,
+            skillBlock: skillBlock,
+            skillPass: skillPass,
+            skillPhysique: skillPhysique,
+            skillRebound: skillRebound,
+            skillShotExterior: skillShotExterior,
+            skillShotFree: skillShotFree,
+            skillShotInterior: skillShotInterior,
+            skillSteal: skillSteal,
+            stateEnergy: 100,
+            stateInjury: 0,
+            team: teamId,
+            yearsContract: 3,
+            yearsLeague: 0,
+        }
+        gameData.players[id + ''] = player;
+        gameData.teams[teamId].players.push(id + '');
+        gameData.players[id].skillAverage = SkillCalculator.getAverageForPosition(positionFirst, true, true, id, gameData);
+        gameData.players[id].skillAttack = SkillCalculator.getAverageForPosition(positionFirst, true, false, id, gameData);
+        gameData.players[id].skillDefense = SkillCalculator.getAverageForPosition(positionFirst, false, true, id, gameData);
+        gameData.players[id].regMaxScore = 0;
+        gameData.players[id].offMaxScore = 0;
+        gameData.players[id].totalRegGameNum = 0;
+        gameData.players[id].seasonRegGameNum = 0;
+        gameData.players[id].totalOffGameNum = 0;
+        gameData.players[id].seasonOffGameNum = 0;
+        gameData.players[id].totalRegScore = 0;
+        gameData.players[id].seasonRegScore = 0;
+        gameData.players[id].totalOffScore = 0;
+        gameData.players[id].seasonOffScore = 0;
+        gameData.players[id].seasonRegClose = 0;
+        gameData.players[id].seasonRegCloseIn = 0;
+        gameData.players[id].seasonRegMiddle = 0;
+        gameData.players[id].seasonRegMiddleIn = 0;
+        gameData.players[id].seasonRegThree = 0;
+        gameData.players[id].seasonRegThreeIn = 0;
+        gameData.players[id].seasonRegFree = 0;
+        gameData.players[id].seasonRegFreeIn = 0;
+        gameData.players[id].seasonOffClose = 0;
+        gameData.players[id].seasonOffCloseIn = 0;
+        gameData.players[id].seasonOffMiddle = 0;
+        gameData.players[id].seasonOffMiddleIn = 0;
+        gameData.players[id].seasonOffThree = 0;
+        gameData.players[id].seasonOffThreeIn = 0;
+        gameData.players[id].seasonOffFree = 0;
+        gameData.players[id].seasonOffFreeIn = 0;
+    }
+    
 }
