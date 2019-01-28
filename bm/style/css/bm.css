@@ -170,7 +170,8 @@ br {
   flex-direction: row;
   overflow: auto;
   height: 400px;
-  flex-grow: 1; }
+  flex-grow: 1;
+  z-index: 99; }
 
 #sideDiv {
   min-width: 100px; }
