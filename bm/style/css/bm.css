@@ -14,6 +14,9 @@ br {
   .gameLine:hover, .navLine:hover {
     background-color: #79E8D0; }
 
+.removable br {
+  margin-bottom: 0; }
+
 .playerPane .playerTitle {
   padding: 0 5px;
   color: #AE4E26; }
