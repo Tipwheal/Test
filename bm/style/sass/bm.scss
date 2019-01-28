@@ -180,11 +180,12 @@ br {
     border-left: 1px solid $youth3;
     overflow-y: auto;
     background-color: $youth1;
+    margin-top: 0 !important;
 }
 
 #mainWrapper {
     background-color: $youth4;
-    margin-top: $middleMargin;
+    // margin-top: $middleMargin;
     display: flex;
     align-content: start;
     font-size: 12px;

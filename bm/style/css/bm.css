@@ -123,11 +123,11 @@ br {
   flex-grow: 1;
   border-left: 1px solid #AE4E26;
   overflow-y: auto;
-  background-color: #FDFFD0; }
+  background-color: #FDFFD0;
+  margin-top: 0 !important; }
 
 #mainWrapper {
   background-color: #A2CEB3;
-  margin-top: 20px;
   display: flex;
   align-content: start;
   font-size: 12px;
