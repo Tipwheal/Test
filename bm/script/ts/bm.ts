@@ -13751,7 +13751,7 @@ class TemplateUtil {
     public static createNewsLine(day: any, season: any, content: any): any {
         const template = `
         <div class='leftLine'>
-            <span>
+            <span class='growSpan'>
                 <span>第${season}赛季</span><span>第${day}天&nbsp;</span>
                 <br />
                 ${content}

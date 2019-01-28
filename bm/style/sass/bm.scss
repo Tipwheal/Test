@@ -157,6 +157,8 @@ br {
 .leftLine {
     @extend %baseLine;
     justify-content: start;
+    text-align: start;
+    display: flex;
     br {
         margin-bottom: 0;
     }

@@ -105,7 +105,9 @@ br {
   flex-grow: 1; }
 
 .leftLine {
-  justify-content: start; }
+  justify-content: start;
+  text-align: start;
+  display: flex; }
   .leftLine br {
     margin-bottom: 0; }
 

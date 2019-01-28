@@ -13770,7 +13770,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createNewsLine = function (day, season, content) {
-        var template = "\n        <div class='leftLine'>\n            <span>\n                <span>\u7B2C" + season + "\u8D5B\u5B63</span><span>\u7B2C" + day + "\u5929&nbsp;</span>\n                <br />\n                " + content + "\n            </span>\n        </div>\n        ";
+        var template = "\n        <div class='leftLine'>\n            <span class='growSpan'>\n                <span>\u7B2C" + season + "\u8D5B\u5B63</span><span>\u7B2C" + day + "\u5929&nbsp;</span>\n                <br />\n                " + content + "\n            </span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
         return newNode;
     };
