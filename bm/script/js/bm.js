@@ -13765,7 +13765,7 @@ var TemplateUtil = /** @class */ (function () {
     function TemplateUtil() {
     }
     TemplateUtil.createPlayerLine = function (player) {
-        var lineTemplate = "\n        <div class='gameLine'>\n            <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n        </div>\n        ";
+        var lineTemplate = "\n        <div class='gameLine' onclick='showPlayerInfo(" + player.id + ")'>\n            <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
@@ -13787,8 +13787,31 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
-    TemplateUtil.createAttrLine = function (rank, attrName, playerName, value) {
-        var lineTemplate = "\n        <div class='gameLine'>\n            <span class='rankSpan'>" + rank + "</span><span class='growSpan'>" + playerName + "</span><span>" + attrName + "&nbsp;" + value + "</span>\n        </div>\n        ";
+    TemplateUtil.createPlayerPane = function (playerId, gameData) {
+        var player = gameData.players[playerId];
+        var team = { name: '无' };
+        if (player.team >= 0) {
+            team = gameData.teams[player.team];
+        }
+        var position = DataUtil.positionToName(player.positionFirst);
+        if (player.positionFirst != player.positionSecond) {
+            position += '/' + DataUtil.positionToName(player.positionSecond);
+        }
+        var freeRate = player.seasonRegFreeIn / player.seasonRegFree;
+        var doubleRate = (player.seasonRegCloseIn + player.seasonRegMiddleIn) / (player.seasonRegMiddle + player.seasonRegClose);
+        var tripleRate = player.seasonRegThreeIn / player.seasonRegThree;
+        var score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFree;
+        var avgScore = (score / player.seasonRegGameNum).toFixed(2);
+        var extra = '';
+        if (player.team == gameData.userTeamId) {
+            extra = "\n            <button>\u4F4D\u7F6E\u8BBE\u5B9A</button>\n            <button>\u57F9\u517B\u65B9\u5411</button>\n            ";
+        }
+        var teamplate = "\n        <div class='playerPane'>\n            <div class='playerTitle'>\n                <div>\u57FA\u672C\u4FE1\u606F</div>\n            </div>\n            <hr />\n            <div class='playerContent'>\n                <div>\u59D3\u540D: " + player.name + "</div>\n                <div>\u7403\u961F: " + team.name + "</div>\n                <div>\u5E74\u9F84: " + player.age + "</div>\n                <div>\u4F4D\u7F6E: " + position + "</div>\n                <div>\u6F5C\u529B: " + player.potential + "</div>\n                <div>\u7403\u9F84: " + player.yearsLeague + "</div>\n                <div>\u85AA\u91D1: " + player.salary + "</div>\n                <div>\u5408\u540C\u5E74\u9650: " + player.yearsContract + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u6570\u636E\u7EDF\u8BA1</div>\n            </div>\n            <hr />\n            <div class='playerStats'>\n                <div class='statsTitle'>\u7F5A\u7403(" + player.seasonRegFreeIn + "/" + player.seasonRegFree + ")</div>\n                <div class='statsTitle'>2\u5206(" + (player.seasonRegCloseIn + player.seasonRegMiddleIn) + "/" + (player.seasonRegClose + player.seasonRegMiddle) + ")</div>\n                <div class='statsTitle'>3\u5206(" + player.seasonRegThreeIn + "/" + player.seasonRegThree + ")</div>\n                <div class='statsTitle'>\u5F97\u5206(" + score + ")</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(freeRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(doubleRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(tripleRate) + "</div>\n                <div class='statsContent'>" + avgScore + "</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u52A9\u653B</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsTitle'>\u573A\u6B21</div>\n                <div class='statsTitle'>\u65F6\u95F4</div>\n                <div class='statsTitle'>\u72AF\u89C4</div>\n                <div class='statsTitle'>\u5931\u8BEF</div>\n                <div class='statsContent'>" + player.seasonRegGameNum + "</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u5C5E\u6027(" + player.skillAverage + ")</div>\n            </div>\n            <hr />\n            <div class='playerAttrs'>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F20\u7403</div>\n                <div class='statsTitle'>\u5185\u7EBF</div>\n                <div class='statsTitle'>\u5916\u7EBF</div>\n                <div class='statsTitle'>\u7F5A\u7403</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u8FDB\u653B</div>\n                <div class='statsContent'>" + player.skillPass + "</div>\n                <div class='statsContent'>" + player.skillShotInterior + "</div>\n                <div class='statsContent'>" + player.skillShotExterior + "</div>\n                <div class='statsContent'>" + player.skillShotFree + "</div>\n                <div class='statsContent'>" + player.skillAttack + "</div>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F53\u529B</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u9632\u5B88</div>\n                <div class='statsContent'>" + player.skillPhysique + "</div>\n                <div class='statsContent'>" + player.skillBlock + "</div>\n                <div class='statsContent'>" + player.skillRebound + "</div>\n                <div class='statsContent'>" + player.skillSteal + "</div>\n                <div class='statsContent'>" + player.skillDefense + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u64CD\u4F5C</div>\n            </div>\n            <hr />\n            <div class='controls'>\n                <button onclick='showTeamInfo(" + player.team + ")'>\u524D\u5F80\u7403\u961F</button>\n                " + extra + "\n            </div>\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(teamplate, 'text/html').querySelector('.playerPane');
+        return newNode;
+    };
+    TemplateUtil.createAttrLine = function (rank, attrName, playerId, playerName, value) {
+        var lineTemplate = "\n        <div class='gameLine' onclick='showPlayerInfo(" + playerId + ")'>\n            <span class='rankSpan'>" + rank + "</span><span class='growSpan'>" + playerName + "</span><span>" + attrName + "&nbsp;" + value + "</span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
@@ -14181,6 +14204,48 @@ var PlayerGenerator = /** @class */ (function () {
         '盖伊', '哈里', '海沃德', '霍尔特', '豪斯', '霍恩比', '雅各布', '简', '约翰', '乔丹', '约瑟夫', '基德', '兰姆', '罗',
         '林肯', '卢卡斯', '麦当劳', '麦基', '马克', '麦卡锡', '麦卡杜', '门罗', '摩根', '默里', '内尔', '南斯', '尼克松', '诺埃尔',
         '奥卡姆', '奥兰多', '潘西', '彼得', '波尔', '里德', '罗伊', '帕森斯', '索尔', '辛普森', '库里', '杜兰特', '沃尔', '斯诺',
-        '斯诺登', '斯普林霍尔', '斯威夫特', '托尼', '塔特尔', '范', '文森特', '沃伦', '瓦特'];
+        '斯诺登', '斯普林霍尔', '斯威夫特', '托尼', '塔特尔', '范', '文森特', '沃伦', '瓦特', '范弗里特', '韦德', '丁宁', '丁利',
+        '丁格尔', '万斯', '丘比特', '丘纳德', '丹伯里', '丹佛', '丹多', '丹尼尔', '丹尼斯', '丹尼特', '丹特利', '丹德里奇', '丹麦',
+        '丹顿', '乌兰', '乐福', '乔伊斯', '乔伊特', '乔利', '乔布斯', '乔布森', '乔恩', '伊利', '伊巴卡', '什里夫', '伊文斯', '伊扎德',
+        '伊斯特', '伊斯特林', '伊斯特兰', '伊斯特布鲁克', '伊斯特伍德', '英格尔斯', '英格拉姆', '伍兹', '乌尔曼', '乌尔森', '伍德豪斯',
+        '舒伯特', '舒特', '敦克尔', '伯克斯', '伯克特', '克兰普顿', '克兰', '克利夫兰', '克利夫特', '克拉克森', '克罗姆', '克罗波西',
+        '克莱格', '克里斯特', '兰斯', '兰贝思', '兰顿', '内尔姆斯', '凯', '凯克', '凯伊', '凯特', '切斯特', '开罗', '利拉德', '麦克格雷迪',
+        '麦克伦姆', '利特', '利物浦', '利特尔', '黎曼', '利米', '利维', '利维克', '加勒特', '加特林', '加罗', '卓别林', '博尔特',
+        '博文', '博登', '卡尔迪', '卡文迪许', '卡斯特', '卡斯特里', '卡文', '卡普林', '卢斯', '卢比奥', '卢瑟福', '古丁', '古尔丁',
+        '古德哈特', '史密斯威克', '史蒂文森', '史蒂芬森', '吉普', '吉普森', '哈勃', '哈勒尔', '哈勃特', '哈姆雷特', '哈尼', '哈巴特',
+        '哈弗利切克', '哈德森', '哈德利', '哈文', '哈蒙', '哈达威', '哥德尔', '唐克斯', '唐宁', '唐纳', '图克', '图姆', '圣伊斯',
+        '圣卢西亚', '圣约翰', '埃塞尔', '艾尔', '埃尔登', '埃尔森', '埃弗斯', '艾格尔', '基', '基尔', '基特尔斯', '塔伦', '塞尔', '多特',
+        '多比', '多拉德', '奈史密斯', '奥克兰', '奥克利', '奥克斯', '奥卡福', '奥布莱恩', '奥拉朱旺', '奥斯曼', '奥兹', '威尔士',
+        '威尔莫特', '威尔肯斯', '威斯布鲁克', '威灵', '威特', '威玛', '尼克斯', '尼克尔', '尼克尔斯', '山姆', '巴扎德', '巴斯', '巴特勒',
+        '德罗赞', '德莱', '德莱尼', '德比', '德克尔', '德雷克斯勒', '德鲁', '德鲁伊', '怀特赛德', '惠特尼', '戈麦斯', '戴尔', '拉塞尔',
+        '拉斐尔', '拉普利', '拉斯金', '拉特', '拜纳姆', '拜罗姆', '莫尔斯', '文森特', '斯伯丁'];
     return PlayerGenerator;
+}());
+var DataUtil = /** @class */ (function () {
+    function DataUtil() {
+    }
+    DataUtil.rateToVal = function (rate) {
+        if (rate + '' == 'NaN') {
+            return '--';
+        }
+        return (rate * 100).toFixed(2) + '%';
+    };
+    DataUtil.positionToName = function (position) {
+        if (position == 1) {
+            return 'PG';
+        }
+        else if (position == 2) {
+            return 'SG';
+        }
+        else if (position == 3) {
+            return 'SF';
+        }
+        else if (position == 4) {
+            return 'PF';
+        }
+        else {
+            return 'C';
+        }
+    };
+    return DataUtil;
 }());

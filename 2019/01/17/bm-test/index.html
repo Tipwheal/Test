@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-27T14:39:07.160Z">
+<meta property="og:updated_time" content="2019-01-28T07:14:16.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼 手机QQ自带浏览器也ok了，虽然好像不能下载文件。">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-27 22:39:07" itemprop="dateModified" datetime="2019-01-27T22:39:07+08:00">2019-01-27</time>
+                <time title="修改时间：2019-01-28 15:14:16" itemprop="dateModified" datetime="2019-01-28T15:14:16+08:00">2019-01-28</time>
               
             
           </span>
@@ -593,6 +593,13 @@ function showUserTeam() {
     }
 }
 
+function showPlayerInfo(playerId) {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    let pane = TemplateUtil.createPlayerPane(playerId, gameState);
+    mainDiv.appendChild(pane);
+}
+
 function showTeamRank() {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
@@ -647,7 +654,7 @@ function showStatsRank() {
         if(player.seasonRegScore == 0) {
             break;
         }
-        let line = TemplateUtil.createAttrLine(i + 1, '赛季得分', player.name, player.seasonRegScore);
+        let line = TemplateUtil.createAttrLine(i + 1, '赛季得分', player.id, player.name, player.seasonRegScore);
         mainDiv.appendChild(line);
     }
 }
@@ -666,7 +673,7 @@ function changeStats() {
         if(player[value] == 0) {
             break;
         }
-        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.name, player[value]);
+        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, player[value]);
         mainDiv.appendChild(line);
     }
 }
@@ -679,7 +686,7 @@ function showAttrRank() {
     let players = Game.getAbilityRank(gameState, 'skillAverage');
     for(let i = 0; i < players.length; i++) {
         let player = players[i];
-        let line = TemplateUtil.createAttrLine(i + 1, '综合能力', player.name, player.skillAverage);
+        let line = TemplateUtil.createAttrLine(i + 1, '综合能力', player.id, player.name, player.skillAverage);
         mainDiv.appendChild(line);
     }
 }
@@ -698,7 +705,7 @@ function changeAttr() {
         if(player[value] == 0) {
             break;
         }
-        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.name, player[value]);
+        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, player[value]);
         mainDiv.appendChild(line);
     }
 }
@@ -812,18 +819,16 @@ function save() {
 </li>
 <li>修改排名规则</li>
 <li>比赛信息详情界面</li>
-<li>球员详细信息界面</li>
 <li>常规赛季后赛得分分开</li>
 <li>球龄有bug</li>
 <li>球员冠军数量统计</li>
 <li>我突然有一个 让玩家给选秀的球员取名的想法</li>
+<li>增加名人堂</li>
 </ul>
 <p>正在做：</p>
 <ul>
-<li>选秀<ul>
-<li></li>
-</ul>
-</li>
+<li>选秀</li>
+<li>球员信息显示</li>
 </ul>
 <p>完成列表：</p>
 <ul>
@@ -875,6 +880,11 @@ function save() {
 <li>添加球员退役</li>
 <li>修复首发球员计算的bug</li>
 <li>每赛季获得一个随机新秀</li>
+</ul>
+<p>1.28更新：</p>
+<ul>
+<li>添加更多英文姓氏</li>
+<li>添加球员详细信息界面</li>
 </ul>
 
       

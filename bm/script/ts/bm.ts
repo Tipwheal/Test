@@ -13740,7 +13740,7 @@ class FileUtil {
 class TemplateUtil {
     public static createPlayerLine(player: any): any {
         const lineTemplate = `
-        <div class='gameLine'>
+        <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
             <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
         </div>
         `;
@@ -13785,9 +13785,121 @@ class TemplateUtil {
         return newNode;
     }
 
-    public static createAttrLine(rank: any, attrName: any, playerName: any, value: any): any {
+    public static createPlayerPane(playerId: any, gameData: any): any {
+        const player = gameData.players[playerId];
+        let team = {name: '无'}
+        if(player.team >= 0) {
+            team = gameData.teams[player.team];
+        }
+        let position = DataUtil.positionToName(player.positionFirst);
+        if(player.positionFirst != player.positionSecond) {
+            position += '/' + DataUtil.positionToName(player.positionSecond);
+        }
+        const freeRate = player.seasonRegFreeIn / player.seasonRegFree;
+        const doubleRate = (player.seasonRegCloseIn + player.seasonRegMiddleIn) / (player.seasonRegMiddle + player.seasonRegClose);
+        const tripleRate = player.seasonRegThreeIn / player.seasonRegThree;
+        const score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFree;
+        const avgScore = (score / player.seasonRegGameNum).toFixed(2);
+        let extra = '';
+        if(player.team == gameData.userTeamId) {
+            extra = `
+            <button>位置设定</button>
+            <button>培养方向</button>
+            `;
+        }
+        const teamplate = `
+        <div class='playerPane'>
+            <div class='playerTitle'>
+                <div>基本信息</div>
+            </div>
+            <hr />
+            <div class='playerContent'>
+                <div>姓名: ${player.name}</div>
+                <div>球队: ${team.name}</div>
+                <div>年龄: ${player.age}</div>
+                <div>位置: ${position}</div>
+                <div>潜力: ${player.potential}</div>
+                <div>球龄: ${player.yearsLeague}</div>
+                <div>薪金: ${player.salary}</div>
+                <div>合同年限: ${player.yearsContract}</div>
+            </div>
+            <div class='playerTitle'>
+                <div>数据统计</div>
+            </div>
+            <hr />
+            <div class='playerStats'>
+                <div class='statsTitle'>罚球(${player.seasonRegFreeIn}/${player.seasonRegFree})</div>
+                <div class='statsTitle'>2分(${player.seasonRegCloseIn+player.seasonRegMiddleIn}/${player.seasonRegClose+player.seasonRegMiddle})</div>
+                <div class='statsTitle'>3分(${player.seasonRegThreeIn}/${player.seasonRegThree})</div>
+                <div class='statsTitle'>得分(${score})</div>
+                <div class='statsContent'>${DataUtil.rateToVal(freeRate)}</div>
+                <div class='statsContent'>${DataUtil.rateToVal(doubleRate)}</div>
+                <div class='statsContent'>${DataUtil.rateToVal(tripleRate)}</div>
+                <div class='statsContent'>${avgScore}</div>
+                <div class='statsTitle'>篮板</div>
+                <div class='statsTitle'>盖帽</div>
+                <div class='statsTitle'>抢断</div>
+                <div class='statsTitle'>助攻</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsTitle'>场次</div>
+                <div class='statsTitle'>时间</div>
+                <div class='statsTitle'>犯规</div>
+                <div class='statsTitle'>失误</div>
+                <div class='statsContent'>${player.seasonRegGameNum}</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>0.0</div>
+            </div>
+            <div class='playerTitle'>
+                <div>属性(${player.skillAverage})</div>
+            </div>
+            <hr />
+            <div class='playerAttrs'>
+                <div class='statsTitle' style='text-align: start;'>类型</div>
+                <div class='statsTitle'>传球</div>
+                <div class='statsTitle'>内线</div>
+                <div class='statsTitle'>外线</div>
+                <div class='statsTitle'>罚球</div>
+                <div class='statsTitle'>综合</div>
+                <div class='statsContent' style='text-align: start;'>进攻</div>
+                <div class='statsContent'>${player.skillPass}</div>
+                <div class='statsContent'>${player.skillShotInterior}</div>
+                <div class='statsContent'>${player.skillShotExterior}</div>
+                <div class='statsContent'>${player.skillShotFree}</div>
+                <div class='statsContent'>${player.skillAttack}</div>
+                <div class='statsTitle' style='text-align: start;'>类型</div>
+                <div class='statsTitle'>体力</div>
+                <div class='statsTitle'>盖帽</div>
+                <div class='statsTitle'>篮板</div>
+                <div class='statsTitle'>抢断</div>
+                <div class='statsTitle'>综合</div>
+                <div class='statsContent' style='text-align: start;'>防守</div>
+                <div class='statsContent'>${player.skillPhysique}</div>
+                <div class='statsContent'>${player.skillBlock}</div>
+                <div class='statsContent'>${player.skillRebound}</div>
+                <div class='statsContent'>${player.skillSteal}</div>
+                <div class='statsContent'>${player.skillDefense}</div>
+            </div>
+            <div class='playerTitle'>
+                <div>操作</div>
+            </div>
+            <hr />
+            <div class='controls'>
+                <button onclick='showTeamInfo(${player.team})'>前往球队</button>
+                ${extra}
+            </div>
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(teamplate, 'text/html').querySelector('.playerPane');
+        return newNode;
+    }
+
+    public static createAttrLine(rank: any, attrName: any, playerId: any, playerName: any, value: any): any {
         const lineTemplate = `
-        <div class='gameLine'>
+        <div class='gameLine' onclick='showPlayerInfo(${playerId})'>
             <span class='rankSpan'>${rank}</span><span class='growSpan'>${playerName}</span><span>${attrName}&nbsp;${value}</span>
         </div>
         `;
@@ -14235,7 +14347,21 @@ class PlayerGenerator {
         '盖伊', '哈里', '海沃德', '霍尔特', '豪斯', '霍恩比', '雅各布', '简', '约翰', '乔丹', '约瑟夫', '基德', '兰姆', '罗',
         '林肯', '卢卡斯', '麦当劳', '麦基', '马克', '麦卡锡', '麦卡杜', '门罗', '摩根', '默里', '内尔', '南斯', '尼克松', '诺埃尔',
         '奥卡姆', '奥兰多', '潘西', '彼得', '波尔', '里德', '罗伊', '帕森斯', '索尔', '辛普森', '库里', '杜兰特', '沃尔', '斯诺',
-        '斯诺登', '斯普林霍尔', '斯威夫特', '托尼', '塔特尔', '范', '文森特', '沃伦', '瓦特'];
+        '斯诺登', '斯普林霍尔', '斯威夫特', '托尼', '塔特尔', '范', '文森特', '沃伦', '瓦特', '范弗里特', '韦德', '丁宁', '丁利',
+        '丁格尔', '万斯', '丘比特', '丘纳德', '丹伯里', '丹佛', '丹多', '丹尼尔', '丹尼斯', '丹尼特', '丹特利', '丹德里奇', '丹麦',
+        '丹顿', '乌兰', '乐福', '乔伊斯', '乔伊特', '乔利', '乔布斯', '乔布森', '乔恩', '伊利', '伊巴卡', '什里夫', '伊文斯', '伊扎德',
+        '伊斯特', '伊斯特林', '伊斯特兰', '伊斯特布鲁克', '伊斯特伍德', '英格尔斯', '英格拉姆', '伍兹', '乌尔曼', '乌尔森', '伍德豪斯',
+        '舒伯特', '舒特', '敦克尔', '伯克斯', '伯克特', '克兰普顿', '克兰', '克利夫兰', '克利夫特', '克拉克森', '克罗姆', '克罗波西',
+        '克莱格', '克里斯特', '兰斯', '兰贝思', '兰顿', '内尔姆斯', '凯', '凯克', '凯伊', '凯特', '切斯特', '开罗', '利拉德', '麦克格雷迪',
+        '麦克伦姆', '利特', '利物浦', '利特尔', '黎曼', '利米', '利维', '利维克', '加勒特', '加特林', '加罗', '卓别林', '博尔特',
+        '博文', '博登', '卡尔迪', '卡文迪许', '卡斯特', '卡斯特里', '卡文', '卡普林', '卢斯', '卢比奥', '卢瑟福', '古丁', '古尔丁',
+        '古德哈特', '史密斯威克', '史蒂文森', '史蒂芬森', '吉普', '吉普森', '哈勃', '哈勒尔', '哈勃特', '哈姆雷特', '哈尼', '哈巴特', 
+        '哈弗利切克', '哈德森', '哈德利', '哈文', '哈蒙', '哈达威', '哥德尔', '唐克斯', '唐宁', '唐纳', '图克', '图姆', '圣伊斯', 
+        '圣卢西亚', '圣约翰', '埃塞尔', '艾尔', '埃尔登', '埃尔森', '埃弗斯', '艾格尔', '基', '基尔', '基特尔斯', '塔伦', '塞尔', '多特',
+        '多比', '多拉德', '奈史密斯', '奥克兰', '奥克利', '奥克斯', '奥卡福', '奥布莱恩', '奥拉朱旺', '奥斯曼', '奥兹', '威尔士',
+        '威尔莫特', '威尔肯斯', '威斯布鲁克', '威灵', '威特', '威玛', '尼克斯', '尼克尔', '尼克尔斯', '山姆', '巴扎德', '巴斯', '巴特勒', 
+        '德罗赞', '德莱', '德莱尼', '德比', '德克尔', '德雷克斯勒', '德鲁', '德鲁伊', '怀特赛德', '惠特尼', '戈麦斯', '戴尔', '拉塞尔',
+        '拉斐尔', '拉普利', '拉斯金', '拉特', '拜纳姆', '拜罗姆', '莫尔斯', '文森特', '斯伯丁'];
 
     public static getRandomPlayer(teamId: any, gameData: any): any {
         let rand = RandomUtil.random(0, PlayerGenerator.usFirstNames.length);
@@ -14319,5 +14445,27 @@ class PlayerGenerator {
         gameData.players[id].seasonOffFree = 0;
         gameData.players[id].seasonOffFreeIn = 0;
     }
-    
+}
+
+class DataUtil {
+    public static rateToVal(rate: any) {
+        if(rate + '' == 'NaN') {
+            return '--';
+        }
+        return (rate * 100).toFixed(2) + '%';
+    }
+
+    public static positionToName(position: any) {
+        if(position == 1) {
+            return 'PG';
+        }else if(position == 2) {
+            return 'SG';
+        }else if(position == 3) {
+            return 'SF';
+        }else if(position == 4) {
+            return 'PF';
+        }else {
+            return 'C';
+        }
+    }
 }

@@ -14,6 +14,55 @@ br {
   .gameLine:hover, .navLine:hover {
     background-color: #79E8D0; }
 
+.playerPane .playerTitle {
+  padding: 0 5px;
+  color: #AE4E26; }
+.playerPane .playerContent {
+  padding: 0 5px;
+  display: flex;
+  flex-wrap: wrap; }
+  .playerPane .playerContent div {
+    width: 50%; }
+.playerPane .controls {
+  display: flex;
+  justify-content: space-around; }
+  .playerPane .controls button {
+    margin-top: 2px;
+    background-color: #9BC595; }
+.playerPane .playerAttrs {
+  padding: 0 5px;
+  display: flex;
+  flex-wrap: wrap; }
+  .playerPane .playerAttrs div {
+    text-align: center;
+    width: calc(100%/6); }
+  .playerPane .playerAttrs .statsTitle {
+    font-size: 0.65rem;
+    margin: 0 0 -8px 0;
+    color: #AE4E26; }
+  .playerPane .playerAttrs .statsContent {
+    font-size: 0.8rem;
+    margin: 0; }
+.playerPane .playerStats {
+  padding: 0 5px;
+  display: flex;
+  flex-wrap: wrap; }
+  .playerPane .playerStats div {
+    text-align: center;
+    width: calc(100%/4); }
+  .playerPane .playerStats .statsTitle {
+    font-size: 0.65rem;
+    margin: 0 0 -8px 0;
+    color: #AE4E26; }
+  .playerPane .playerStats .statsContent {
+    font-size: 0.8rem;
+    margin: 0; }
+.playerPane hr {
+  margin: 0;
+  height: 1px;
+  background-color: #AE4E26;
+  background-image: none; }
+
 .gameLine {
   background-color: #FDFFD0; }
 

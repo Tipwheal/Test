@@ -27,6 +27,71 @@ br {
     }
 }
 
+.playerPane {
+    .playerTitle {
+        padding: 0 5px;
+        color: $youth3;
+    }
+    .playerContent {
+        padding: 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+        div {
+            width: 50%;
+        }
+    }
+    .controls {
+        display: flex;
+        justify-content: space-around;
+        button {
+            margin-top: 2px;
+            background-color: $youth2;
+        }
+    }
+    .playerAttrs {
+        padding: 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+        div {
+            text-align: center;
+            width: calc(100%/6);
+        }
+        .statsTitle {
+            font-size: 0.65rem;
+            margin: 0 0 -8px 0;
+            color: $youth3;
+        }
+        .statsContent {
+            font-size: 0.8rem; 
+            margin: 0; 
+        }
+    }
+    .playerStats {
+        padding: 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+        div {
+            text-align: center;
+            width: calc(100%/4);
+        }
+        .statsTitle {
+            font-size: 0.65rem;
+            margin: 0 0 -8px 0;
+            color: $youth3;
+        }
+        .statsContent {
+            font-size: 0.8rem; 
+            margin: 0; 
+        }
+    }
+    hr {
+        margin: 0;
+        height: 1px;
+        background-color: $youth3;
+        background-image: none;
+    }
+}
+
 .gameLine {
     @extend %baseLine;
     @extend %hoverLine;
