@@ -220,6 +220,15 @@ br {
     cursor: pointer;
 }
 
+.fullDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
 #mainDiv {
     display: flex;
     flex-direction: row;
