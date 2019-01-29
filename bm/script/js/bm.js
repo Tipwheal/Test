@@ -13456,6 +13456,18 @@ var Game = /** @class */ (function () {
         });
         return result;
     };
+    Game.getPlayerAbility = function (playerId, gameData, optName) {
+        var player = gameData.players[playerId];
+        if (optName in player) {
+            return player[optName];
+        }
+        else if (optName == 'seasonRegAvgScore') {
+            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+        }
+        else {
+            return 0;
+        }
+    };
     Game.getAbilityRank = function (gameData, optName) {
         var players = gameData.players;
         var result = [];
@@ -13463,7 +13475,15 @@ var Game = /** @class */ (function () {
             result.push(players[i + '']);
         }
         result = result.sort(function (a, b) {
-            return b[optName] - a[optName];
+            if (optName in a) {
+                return b[optName] - a[optName];
+            }
+            else if (optName == 'seasonRegAvgScore') {
+                return b.seasonRegScore / b.seasonRegGameNum - a.seasonRegScore / a.seasonRegGameNum;
+            }
+            else {
+                return 0;
+            }
         });
         return result;
     };
@@ -13816,7 +13836,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createStatsSelect = function (values) {
-        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u5F97\u5206</option>\n                <option value='seasonRegThreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonRegThree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonRegFreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonRegFree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonRegMiddleIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonRegMiddle'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonRegCloseIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonRegClose'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='seasonOffScore'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u5F97\u5206</option>\n                <option value='seasonOffThreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonOffThree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonOffFreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonOffFree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonOffMiddleIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonOffMiddle'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonOffCloseIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonOffClose'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='totalRegScore'>\u751F\u6DAF\u5E38\u89C4\u8D5B\u603B\u5F97\u5206</option>\n                <option value='totalOffScore'>\u751F\u6DAF\u5B63\u540E\u8D5B\u603B\u5F97\u5206</option>\n                <option value='regMaxScore'>\u5E38\u89C4\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n                <option value='offMaxScore'>\u5B63\u540E\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n            </select>\n        </div>\n        ";
+        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='statsSelect' onchange='changeStats()'>\n                <option value='seasonRegScore'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u5F97\u5206</option>\n                <option value='seasonRegAvgScore'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u573A\u5747\u5F97\u5206</option>\n                <option value='seasonRegThreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonRegThree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonRegFreeIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonRegFree'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonRegMiddleIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonRegMiddle'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonRegCloseIn'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonRegClose'>\u8D5B\u5B63\u5E38\u89C4\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='seasonOffScore'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u5F97\u5206</option>\n                <option value='seasonOffThreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u547D\u4E2D</option>\n                <option value='seasonOffThree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E09\u5206\u51FA\u624B</option>\n                <option value='seasonOffFreeIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u547D\u4E2D</option>\n                <option value='seasonOffFree'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7F5A\u7403\u51FA\u624B</option>\n                <option value='seasonOffMiddleIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u547D\u4E2D</option>\n                <option value='seasonOffMiddle'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u4E2D\u6295\u51FA\u624B</option>\n                <option value='seasonOffCloseIn'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u547D\u4E2D</option>\n                <option value='seasonOffClose'>\u8D5B\u5B63\u5B63\u540E\u8D5B\u7981\u533A\u51FA\u624B</option>\n                <option value='totalRegScore'>\u751F\u6DAF\u5E38\u89C4\u8D5B\u603B\u5F97\u5206</option>\n                <option value='totalOffScore'>\u751F\u6DAF\u5B63\u540E\u8D5B\u603B\u5F97\u5206</option>\n                <option value='regMaxScore'>\u5E38\u89C4\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n                <option value='offMaxScore'>\u5B63\u540E\u8D5B\u5355\u573A\u6700\u9AD8\u5206</option>\n            </select>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
         return newNode;
     };

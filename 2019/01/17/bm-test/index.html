@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-29T09:26:43.686Z">
+<meta property="og:updated_time" content="2019-01-29T16:14:24.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-29 17:26:43" itemprop="dateModified" datetime="2019-01-29T17:26:43+08:00">2019-01-29</time>
+                <time title="修改时间：2019-01-30 00:14:24" itemprop="dateModified" datetime="2019-01-30T00:14:24+08:00">2019-01-30</time>
               
             
           </span>
@@ -683,7 +683,8 @@ function changeStats() {
         if(player[value] == 0) {
             break;
         }
-        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, player[value]);
+        let statsValue = Game.getPlayerAbility(player.id, gameState, value);
+        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, statsValue);
         mainDiv.appendChild(line);
     }
 }
@@ -933,6 +934,7 @@ function remove() {
 <li>添加本地存档读档</li>
 <li>适应手机屏幕大小显示</li>
 <li>左侧侧边栏移动到APP中</li>
+<li>场均得分统计</li>
 </ul>
 </li>
 </ul>

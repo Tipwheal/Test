@@ -13497,6 +13497,17 @@ class Game {
         return result;
     }
 
+    public static getPlayerAbility(playerId: any, gameData: any, optName: any): any {
+        const player = gameData.players[playerId];
+        if(optName in player) {
+            return player[optName];
+        }else if(optName == 'seasonRegAvgScore') {
+            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+        }else {
+            return 0;
+        }
+    }
+
     public static getAbilityRank(gameData: any, optName: string): any {
         const players = gameData.players;
         let result = [];
@@ -13504,7 +13515,13 @@ class Game {
             result.push(players[i + '']);
         }
         result = result.sort((a: any, b: any) => {
-            return b[optName] - a[optName];
+            if(optName in a) {
+                return b[optName] - a[optName];
+            }else if(optName == 'seasonRegAvgScore') {
+                return b.seasonRegScore / b.seasonRegGameNum - a.seasonRegScore / a.seasonRegGameNum;
+            }else {
+                return 0;
+            }
         });
         return result;
     }
@@ -13912,6 +13929,7 @@ class TemplateUtil {
         <div class='selectLine'>
             <select class='gameSelect' id='statsSelect' onchange='changeStats()'>
                 <option value='seasonRegScore'>赛季常规赛得分</option>
+                <option value='seasonRegAvgScore'>赛季常规赛场均得分</option>
                 <option value='seasonRegThreeIn'>赛季常规赛三分命中</option>
                 <option value='seasonRegThree'>赛季常规赛三分出手</option>
                 <option value='seasonRegFreeIn'>赛季常规赛罚球命中</option>
