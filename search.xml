@@ -111,9 +111,9 @@
         <category>计算机图形学</category>
       </categories>
       <tags>
-        <tag>图形学</tag>
         <tag>矩阵</tag>
         <tag>线性代数</tag>
+        <tag>图形学</tag>
       </tags>
   </entry>
   <entry>
@@ -124,8 +124,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>隐马尔可夫模型</tag>
         <tag>自然语言处理</tag>
+        <tag>隐马尔可夫模型</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -137,10 +137,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
+        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -250,8 +250,8 @@
       </categories>
       <tags>
         <tag>c++</tag>
-        <tag>opengl</tag>
         <tag>图形学</tag>
+        <tag>opengl</tag>
       </tags>
   </entry>
   <entry>
@@ -295,8 +295,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>学习</tag>
+        <tag>算法</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
