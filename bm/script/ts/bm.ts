@@ -12807,9 +12807,94 @@ class Game {
             gameData.teams[i].starterC = -1;
             gameData.teams[i].bench = [];
             gameData.teams[i].dnp = [];
-            gameData.lockLineup = true;
+            gameData.lockLineup = false;
         }
         this.resetOffSeasonData(gameData);
+    }
+
+    public static setCore(playerId: any, gameData: any) {
+        gameData.lockLineup = true;
+        const teamId = gameData.players[playerId].team;
+        const team = gameData.teams[teamId];
+        if(team.cores.length < 3) {
+            gameData.teams[teamId].cores.push(playerId + '');
+        }else {
+            gameData.teams[teamId].cores.splice(2, 1, playerId + '');
+        }
+        if(team.dnp.includes(playerId + '')) {
+            this.setPlayerRole(playerId, 'bench', gameData);
+        }
+        showPlayerInfo(playerId);
+    }
+
+    public static unsetCore(playerId: any, gameData: any) {
+        gameData.lockLineup = true;
+        const teamId = gameData.players[playerId].team;
+        const team = gameData.teams[teamId];
+        gameData.teams[teamId].cores.splice(team.cores.indexOf(playerId + ''), 1);
+        showPlayerInfo(playerId);
+    }
+
+    private static removeRole(playerId: any, gameData: any) {
+        const teamId = gameData.players[playerId].team;
+        const team = gameData.teams[teamId];
+        playerId += '';
+        if(team.starterPG + '' == playerId + '') {
+            console.log('hhhhhher')
+            gameData.teams[teamId].starterPG = -1;
+            console.log(gameData.teams[teamId].starterPG)
+        }else if(team.starterSG == playerId) {
+            gameData.teams[teamId].starterSG = -1;
+        }else if(team.starterSF == playerId) {
+            gameData.teams[teamId].starterSF = -1;
+        }else if(team.starterPF == playerId) {
+            gameData.teams[teamId].starterPF = -1;
+        }else if(team.starterC == playerId) {
+            gameData.teams[teamId].starterC = -1;
+        }else if(team.dnp.includes(playerId + '')) {
+            gameData.teams[teamId].dnp.splice(team.dnp.indexOf(playerId + ''), 1)
+        }else if(team.bench.includes(playerId + '')) {
+            gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1)
+        }
+    }
+
+    public static setPlayerRole(playerId: any, role: any, gameData: any) {
+        gameData.lockLineup = true;
+        const teamId = gameData.players[playerId].team;
+        this.removeRole(playerId, gameData);
+        if(role == 'starterPG') {
+            if(gameData.teams[teamId].starterPG != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterPG + '');
+            }
+            gameData.teams[teamId].starterPG = playerId;
+        }else if(role == 'starterSG') {
+            if(gameData.teams[teamId].starterSG != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterSG + '');
+            }
+            gameData.teams[teamId].starterSG = playerId;
+        }else if(role == 'starterSF') {
+            if(gameData.teams[teamId].starterSF != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterSF + '');
+            }
+            gameData.teams[teamId].starterSF = playerId;
+        }else if(role == 'starterPF') {
+            if(gameData.teams[teamId].starterPF != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterPF + '');
+            }
+            gameData.teams[teamId].starterPF = playerId;
+        }else if(role == 'starterC') {
+            if(gameData.teams[teamId].starterC != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterC + '');
+            }
+            gameData.teams[teamId].starterC = playerId;
+        }else if(role == 'dnp') {
+            if(gameData.teams[teamId].cores.includes(playerId + '')) {
+                this.unsetCore(playerId, gameData);
+            }
+            gameData.teams[teamId].dnp.push(playerId + '');
+        }else if(role == 'bench') {
+            gameData.teams[teamId].bench.push(playerId + '');
+        }
     }
 
     private static playerGrow(id: any, gameData: any): any {
@@ -13274,7 +13359,7 @@ class Game {
             let otVisitor = this.calcTeamScores(visitorId, gameData, 15);
             viStat.total += otVisitor.total;
             for(let i in otVisitor.pScores) {
-                for(let j in otVisitor.pScores) {
+                for(let j in otVisitor.pScores[i]) {
                     viStat.pScores[i][j] += otVisitor.pScores[i][j];
                 }
             }
@@ -13830,9 +13915,11 @@ class TemplateUtil {
     }
 
     public static createTeamPane(teamId: any, gameData: any): any {
-        TeamMatchUtil.getCorePlayers(teamId, gameData);
-        TeamMatchUtil.getStarters(teamId, gameData);
-        TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        if(!gameData.lockLineup) {
+            TeamMatchUtil.getCorePlayers(teamId, gameData);
+            TeamMatchUtil.getStarters(teamId, gameData);
+            TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        }
         let teamName = gameData.teams[teamId].name;
         let title: string;
         if(teamId == gameData.userTeamId) {
@@ -13921,6 +14008,27 @@ class TemplateUtil {
             `;
             benchLine += line;
         }
+        let dnpLine = `
+        <div class='titleLine'>
+            <span>不上场</span>
+        </div>
+        `;
+        for(let i = 0; i < team.dnp.length; i++) {
+            let player = Game.getPlayerInfo(team.dnp[i], gameData);
+            let line = `
+            <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
+                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+            </div>
+            `;
+            dnpLine += line;
+        }
+        if(team.dnp.length == 0) {
+            dnpLine += `
+            <div class='gameLine'>
+                <span class='growSpan'>没有不上场的球员</span>
+            </div>
+            `
+        }
         const template = `
         <div class='teamPane'>
             ${firstLine}
@@ -13928,6 +14036,7 @@ class TemplateUtil {
             ${coreLine}
             ${starterLine}
             ${benchLine}
+            ${dnpLine}
         </div>
         `;
         let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.teamPane');
@@ -13987,10 +14096,61 @@ class TemplateUtil {
         let extra = '';
         if(player.team == gameData.userTeamId) {
             extra = `
-            <button>位置设定</button>
+            <select class='roleSelect' id='roleSelect' onchange='changeTeamRole(${playerId})'>
+            `
+            let allNot = true;
+            if((<any>team).starterPG == playerId) {
+                allNot = false;
+                extra += `<option value='starterPG' selected='selected'>首发控卫</option>`;
+            }else {
+                extra += `<option value='starterPG'>首发控卫</option>`
+            }
+            if((<any>team).starterSG == playerId) {
+                allNot = false;
+                extra += `<option value='starterSG' selected='selected'>首发分卫</option>`;
+            }else {
+                extra += `<option value='starterSG'>首发分卫</option>`
+            }
+            if((<any>team).starterSF == playerId) {
+                allNot = false;
+                extra += `<option value='starterSF' selected='selected'>首发小前</option>`;
+            }else {
+                extra += `<option value='starterSF'>首发小前</option>`
+            }
+            if((<any>team).starterPF == playerId) {
+                allNot = false;
+                extra += `<option value='starterPF' selected='selected'>首发大前</option>`;
+            }else {
+                extra += `<option value='starterPF'>首发大前</option>`
+            }
+            if((<any>team).starterC == playerId) {
+                allNot = false;
+                extra += `<option value='starterC' selected='selected'>首发中锋</option>`;
+            }else {
+                extra += `<option value='starterC'>首发中锋</option>`
+            }
+            if((<any>team).dnp.includes(playerId + "")) {
+                allNot = false;
+                extra += `<option value='dnp' selected='selected'>不上场</option>`;
+            }else {
+                extra += `<option value='dnp'>不上场</option>`;
+            }
+            if(allNot) {
+                extra += `<option value='bench' selected='selected'>替补</option>`;
+            }else {
+                extra += `<option value='bench'>替补</option>`;
+            }
+            extra += `
+            </select>
             <button>培养方向</button>
             `;
+            if((<any>team).cores.includes(playerId + "")) {
+                extra += `<button onclick='Game.unsetCore(${playerId}, gameState)'>取消核心</button>`;
+            }else {
+                extra += `<button onclick='Game.setCore(${playerId}, gameState)'>设为核心</button>`
+            }
         }
+        
         let follow = `
         <button onclick='Game.followPlayer(${playerId}, gameState)'>关注球员</button>
         `;
@@ -14297,6 +14457,9 @@ class GameResult {
 
 class TeamMatchUtil {
     public static getCorePlayers(teamId: any, gameData: any): any {
+        if(teamId == gameData.userTeamId && gameData.lockLineup) {
+            return gameData.teams[teamId].cores;
+        }
         const team = gameData.teams[teamId];
         let players = team.players;
         let sortPlayers = players.sort((a: any, b: any) => {
@@ -14313,6 +14476,15 @@ class TeamMatchUtil {
     }
 
     public static getStarters(teamId: any, gameData: any): any {
+        if(teamId == gameData.userTeamId && gameData.lockLineup) {
+            return [
+                gameData.teams[teamId].starterPG,
+                gameData.teams[teamId].starterSG,
+                gameData.teams[teamId].starterSF,
+                gameData.teams[teamId].starterPF,
+                gameData.teams[teamId].starterC,
+            ];
+        }
         const team = gameData.teams[teamId];
         const players = team.players;
         const starters: any = [-1, -1, -1, -1, -1];
@@ -14357,6 +14529,9 @@ class TeamMatchUtil {
     }
 
     public static getBenchPlayers(teamId: any, gameData: any): any {
+        if(teamId == gameData.userTeamId && gameData.lockLineup) {
+            return gameData.teams[teamId].bench;
+        }
         const team = gameData.teams[teamId];
         const starters = this.getStarters(teamId, gameData);
         const players = team.players;

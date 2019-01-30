@@ -12749,9 +12749,103 @@ var Game = /** @class */ (function () {
             gameData.teams[i].starterC = -1;
             gameData.teams[i].bench = [];
             gameData.teams[i].dnp = [];
-            gameData.lockLineup = true;
+            gameData.lockLineup = false;
         }
         this.resetOffSeasonData(gameData);
+    };
+    Game.setCore = function (playerId, gameData) {
+        gameData.lockLineup = true;
+        var teamId = gameData.players[playerId].team;
+        var team = gameData.teams[teamId];
+        if (team.cores.length < 3) {
+            gameData.teams[teamId].cores.push(playerId + '');
+        }
+        else {
+            gameData.teams[teamId].cores.splice(2, 1, playerId + '');
+        }
+        if (team.dnp.includes(playerId + '')) {
+            this.setPlayerRole(playerId, 'bench', gameData);
+        }
+        showPlayerInfo(playerId);
+    };
+    Game.unsetCore = function (playerId, gameData) {
+        gameData.lockLineup = true;
+        var teamId = gameData.players[playerId].team;
+        var team = gameData.teams[teamId];
+        gameData.teams[teamId].cores.splice(team.cores.indexOf(playerId + ''), 1);
+        showPlayerInfo(playerId);
+    };
+    Game.removeRole = function (playerId, gameData) {
+        var teamId = gameData.players[playerId].team;
+        var team = gameData.teams[teamId];
+        playerId += '';
+        if (team.starterPG + '' == playerId + '') {
+            console.log('hhhhhher');
+            gameData.teams[teamId].starterPG = -1;
+            console.log(gameData.teams[teamId].starterPG);
+        }
+        else if (team.starterSG == playerId) {
+            gameData.teams[teamId].starterSG = -1;
+        }
+        else if (team.starterSF == playerId) {
+            gameData.teams[teamId].starterSF = -1;
+        }
+        else if (team.starterPF == playerId) {
+            gameData.teams[teamId].starterPF = -1;
+        }
+        else if (team.starterC == playerId) {
+            gameData.teams[teamId].starterC = -1;
+        }
+        else if (team.dnp.includes(playerId + '')) {
+            gameData.teams[teamId].dnp.splice(team.dnp.indexOf(playerId + ''), 1);
+        }
+        else if (team.bench.includes(playerId + '')) {
+            gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1);
+        }
+    };
+    Game.setPlayerRole = function (playerId, role, gameData) {
+        gameData.lockLineup = true;
+        var teamId = gameData.players[playerId].team;
+        this.removeRole(playerId, gameData);
+        if (role == 'starterPG') {
+            if (gameData.teams[teamId].starterPG != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterPG + '');
+            }
+            gameData.teams[teamId].starterPG = playerId;
+        }
+        else if (role == 'starterSG') {
+            if (gameData.teams[teamId].starterSG != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterSG + '');
+            }
+            gameData.teams[teamId].starterSG = playerId;
+        }
+        else if (role == 'starterSF') {
+            if (gameData.teams[teamId].starterSF != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterSF + '');
+            }
+            gameData.teams[teamId].starterSF = playerId;
+        }
+        else if (role == 'starterPF') {
+            if (gameData.teams[teamId].starterPF != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterPF + '');
+            }
+            gameData.teams[teamId].starterPF = playerId;
+        }
+        else if (role == 'starterC') {
+            if (gameData.teams[teamId].starterC != -1) {
+                gameData.teams[teamId].bench.push(gameData.teams[teamId].starterC + '');
+            }
+            gameData.teams[teamId].starterC = playerId;
+        }
+        else if (role == 'dnp') {
+            if (gameData.teams[teamId].cores.includes(playerId + '')) {
+                this.unsetCore(playerId, gameData);
+            }
+            gameData.teams[teamId].dnp.push(playerId + '');
+        }
+        else if (role == 'bench') {
+            gameData.teams[teamId].bench.push(playerId + '');
+        }
     };
     Game.playerGrow = function (id, gameData) {
         var potential = gameData.players[id].potential;
@@ -13222,7 +13316,7 @@ var Game = /** @class */ (function () {
             var otVisitor = this.calcTeamScores(visitorId, gameData, 15);
             viStat.total += otVisitor.total;
             for (var i in otVisitor.pScores) {
-                for (var j in otVisitor.pScores) {
+                for (var j in otVisitor.pScores[i]) {
                     viStat.pScores[i][j] += otVisitor.pScores[i][j];
                 }
             }
@@ -13836,9 +13930,11 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createTeamPane = function (teamId, gameData) {
-        TeamMatchUtil.getCorePlayers(teamId, gameData);
-        TeamMatchUtil.getStarters(teamId, gameData);
-        TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        if (!gameData.lockLineup) {
+            TeamMatchUtil.getCorePlayers(teamId, gameData);
+            TeamMatchUtil.getStarters(teamId, gameData);
+            TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        }
         var teamName = gameData.teams[teamId].name;
         var title;
         if (teamId == gameData.userTeamId) {
@@ -13880,7 +13976,16 @@ var TemplateUtil = /** @class */ (function () {
             var line = "\n            <div class='gameLine' onclick='showPlayerInfo(" + player.id + ")'>\n                <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n            </div>\n            ";
             benchLine += line;
         }
-        var template = "\n        <div class='teamPane'>\n            " + firstLine + "\n            " + dataPane + "\n            " + coreLine + "\n            " + starterLine + "\n            " + benchLine + "\n        </div>\n        ";
+        var dnpLine = "\n        <div class='titleLine'>\n            <span>\u4E0D\u4E0A\u573A</span>\n        </div>\n        ";
+        for (var i = 0; i < team.dnp.length; i++) {
+            var player = Game.getPlayerInfo(team.dnp[i], gameData);
+            var line = "\n            <div class='gameLine' onclick='showPlayerInfo(" + player.id + ")'>\n                <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n            </div>\n            ";
+            dnpLine += line;
+        }
+        if (team.dnp.length == 0) {
+            dnpLine += "\n            <div class='gameLine'>\n                <span class='growSpan'>\u6CA1\u6709\u4E0D\u4E0A\u573A\u7684\u7403\u5458</span>\n            </div>\n            ";
+        }
+        var template = "\n        <div class='teamPane'>\n            " + firstLine + "\n            " + dataPane + "\n            " + coreLine + "\n            " + starterLine + "\n            " + benchLine + "\n            " + dnpLine + "\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.teamPane');
         return newNode;
     };
@@ -13919,7 +14024,63 @@ var TemplateUtil = /** @class */ (function () {
         var avgScore = (score / player.seasonRegGameNum).toFixed(2);
         var extra = '';
         if (player.team == gameData.userTeamId) {
-            extra = "\n            <button>\u4F4D\u7F6E\u8BBE\u5B9A</button>\n            <button>\u57F9\u517B\u65B9\u5411</button>\n            ";
+            extra = "\n            <select class='roleSelect' id='roleSelect' onchange='changeTeamRole(" + playerId + ")'>\n            ";
+            var allNot = true;
+            if (team.starterPG == playerId) {
+                allNot = false;
+                extra += "<option value='starterPG' selected='selected'>\u9996\u53D1\u63A7\u536B</option>";
+            }
+            else {
+                extra += "<option value='starterPG'>\u9996\u53D1\u63A7\u536B</option>";
+            }
+            if (team.starterSG == playerId) {
+                allNot = false;
+                extra += "<option value='starterSG' selected='selected'>\u9996\u53D1\u5206\u536B</option>";
+            }
+            else {
+                extra += "<option value='starterSG'>\u9996\u53D1\u5206\u536B</option>";
+            }
+            if (team.starterSF == playerId) {
+                allNot = false;
+                extra += "<option value='starterSF' selected='selected'>\u9996\u53D1\u5C0F\u524D</option>";
+            }
+            else {
+                extra += "<option value='starterSF'>\u9996\u53D1\u5C0F\u524D</option>";
+            }
+            if (team.starterPF == playerId) {
+                allNot = false;
+                extra += "<option value='starterPF' selected='selected'>\u9996\u53D1\u5927\u524D</option>";
+            }
+            else {
+                extra += "<option value='starterPF'>\u9996\u53D1\u5927\u524D</option>";
+            }
+            if (team.starterC == playerId) {
+                allNot = false;
+                extra += "<option value='starterC' selected='selected'>\u9996\u53D1\u4E2D\u950B</option>";
+            }
+            else {
+                extra += "<option value='starterC'>\u9996\u53D1\u4E2D\u950B</option>";
+            }
+            if (team.dnp.includes(playerId + "")) {
+                allNot = false;
+                extra += "<option value='dnp' selected='selected'>\u4E0D\u4E0A\u573A</option>";
+            }
+            else {
+                extra += "<option value='dnp'>\u4E0D\u4E0A\u573A</option>";
+            }
+            if (allNot) {
+                extra += "<option value='bench' selected='selected'>\u66FF\u8865</option>";
+            }
+            else {
+                extra += "<option value='bench'>\u66FF\u8865</option>";
+            }
+            extra += "\n            </select>\n            <button>\u57F9\u517B\u65B9\u5411</button>\n            ";
+            if (team.cores.includes(playerId + "")) {
+                extra += "<button onclick='Game.unsetCore(" + playerId + ", gameState)'>\u53D6\u6D88\u6838\u5FC3</button>";
+            }
+            else {
+                extra += "<button onclick='Game.setCore(" + playerId + ", gameState)'>\u8BBE\u4E3A\u6838\u5FC3</button>";
+            }
         }
         var follow = "\n        <button onclick='Game.followPlayer(" + playerId + ", gameState)'>\u5173\u6CE8\u7403\u5458</button>\n        ";
         if (gameData.followList.includes(playerId)) {
@@ -14001,6 +14162,9 @@ var TeamMatchUtil = /** @class */ (function () {
     function TeamMatchUtil() {
     }
     TeamMatchUtil.getCorePlayers = function (teamId, gameData) {
+        if (teamId == gameData.userTeamId && gameData.lockLineup) {
+            return gameData.teams[teamId].cores;
+        }
         var team = gameData.teams[teamId];
         var players = team.players;
         var sortPlayers = players.sort(function (a, b) {
@@ -14017,6 +14181,15 @@ var TeamMatchUtil = /** @class */ (function () {
         }
     };
     TeamMatchUtil.getStarters = function (teamId, gameData) {
+        if (teamId == gameData.userTeamId && gameData.lockLineup) {
+            return [
+                gameData.teams[teamId].starterPG,
+                gameData.teams[teamId].starterSG,
+                gameData.teams[teamId].starterSF,
+                gameData.teams[teamId].starterPF,
+                gameData.teams[teamId].starterC,
+            ];
+        }
         var team = gameData.teams[teamId];
         var players = team.players;
         var starters = [-1, -1, -1, -1, -1];
@@ -14067,6 +14240,9 @@ var TeamMatchUtil = /** @class */ (function () {
         return starters;
     };
     TeamMatchUtil.getBenchPlayers = function (teamId, gameData) {
+        if (teamId == gameData.userTeamId && gameData.lockLineup) {
+            return gameData.teams[teamId].bench;
+        }
         var team = gameData.teams[teamId];
         var starters = this.getStarters(teamId, gameData);
         var players = team.players;

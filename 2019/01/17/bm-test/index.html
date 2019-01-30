@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-30T11:21:51.810Z">
+<meta property="og:updated_time" content="2019-01-30T16:30:33.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-30 19:21:51" itemprop="dateModified" datetime="2019-01-30T19:21:51+08:00">2019-01-30</time>
+                <time title="修改时间：2019-01-31 00:30:33" itemprop="dateModified" datetime="2019-01-31T00:30:33+08:00">2019-01-31</time>
               
             
           </span>
@@ -545,6 +545,27 @@ function finishInit(teamId) {
         season: 1,
         day: 1,
         content: '欢迎进入游戏，你的球队是 ' + gameState.userTeam,
+    });
+    gameState.news.push({
+        season: 1,
+        day: 1,
+        content: `此版本为web版，可以使用电脑浏览器进行游戏，手机端建议安装APP以获得更好的游戏体验。<br />
+        详情请加入qq群（191376904）。欢迎大家的体验和反馈！<br />
+        <br />
+        1.30更新：<br />
+        - 添加关注/取关球员功能（1.4版APP有查看关注球员功能）<br />
+        - 球员赛季成长情况<br />
+        - 削弱肯巴沃克 哈里斯<br />
+        - 显示球队首发替补等角色<br />
+        - 修复一些bug<br />
+        - 添加开始游戏时的球队选择<br />
+        - 可调整首发替补，球队核心<br />
+        - 可设置球员不上场<br />
+        <br />
+        注意事项：<br />
+        - 手机APP菜单栏在左侧侧滑栏，请向右滑出<br />
+        - 季后赛为前16名进行比赛，不分区<br />
+        `
     });
     initGameData();
 }
@@ -800,6 +821,12 @@ function loadLocal() {
     initGameData();
 }
 
+function changeTeamRole(playerId) {
+    let select = document.getElementById('roleSelect');
+    const value = select.options[select.selectedIndex].value;
+    Game.setPlayerRole(playerId, value, gameState);
+}
+
 function changeName() {
     let theSpan = document.getElementById("state");
     theSpan.innerText = fileName;
@@ -874,7 +901,6 @@ function remove() {
 <li>新秀取名</li>
 <li>新秀排行</li>
 <li>每日数据球队显示</li>
-<li>可调整首发替补!!!</li>
 <li>阵容检查</li>
 </ul>
 <p>完成列表：</p>
@@ -951,6 +977,7 @@ function remove() {
 <li>显示首发替补等角色</li>
 <li>修复奇怪的bug</li>
 <li>添加开始游戏时的球队选择</li>
+<li>可调整首发替补</li>
 </ul>
 
       
