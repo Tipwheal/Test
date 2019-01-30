@@ -12753,6 +12753,7 @@ class Game {
                     pairs: []
                 }
             },
+            followList: [],
             userTeam: '太阳',
             userTeamId: '29',
             currentSeason: 2018,
@@ -13030,6 +13031,16 @@ class Game {
         for(let id in gameData.players) {
             this.playerGrow(id, gameData);
         }
+    }
+    
+    public static followPlayer(playerId: any, gameData: any) {
+        gameData.followList.push(playerId);
+        showPlayerInfo(playerId);
+    }
+
+    public static unfollowPlayer(playerId: any, gameData: any) {
+        gameData.followList.splice(gameData.followList.indexOf(playerId), 1);
+        showPlayerInfo(playerId);
     }
 
     private static manageRetire(gameData: any) {
@@ -13778,6 +13789,16 @@ class TemplateUtil {
         let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
         return newNode;
     }
+
+    public static createWaitingPane(info: any): any {
+        const template = `
+        <div class='waitingPane'>
+            <span>${info}</span>
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.waitingPane');
+        return newNode;
+    }
     
     public static createLine(text: any): any {
         const lineTemplate = `
@@ -13823,6 +13844,14 @@ class TemplateUtil {
             <button>位置设定</button>
             <button>培养方向</button>
             `;
+        }
+        let follow = `
+        <button onclick='Game.followPlayer(${playerId}, gameState)'>关注球员</button>
+        `;
+        if(gameData.followList.includes(playerId)) {
+            follow = `
+            <button onclick='Game.unfollowPlayer(${playerId}, gameState)'>取关球员</button>
+            `
         }
         const teamplate = `
         <div class='playerPane'>
@@ -13906,6 +13935,7 @@ class TemplateUtil {
             <hr />
             <div class='controls'>
                 <button onclick='showTeamInfo(${player.team})'>前往球队</button>
+                ${follow}
                 ${extra}
             </div>
         </div>

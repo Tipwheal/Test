@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-29T16:14:24.522Z">
+<meta property="og:updated_time" content="2019-01-30T04:57:20.667Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-30 00:14:24" itemprop="dateModified" datetime="2019-01-30T00:14:24+08:00">2019-01-30</time>
+                <time title="修改时间：2019-01-30 12:57:20" itemprop="dateModified" datetime="2019-01-30T12:57:20+08:00">2019-01-30</time>
               
             
           </span>
@@ -509,6 +509,7 @@
             <div class="navLine" onclick="nextDay()"><span>模拟一天</span></div>
             <div class="navLine" onclick="next30Day()" id="sim30Btn"><span>模拟30天</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.News)"><span>新闻查看</span></div>
+            <div class="navLine" onclick="showFollowList()">关注列表</div>
         </div>
         <div id="contentDiv"></div>
     </div>
@@ -626,6 +627,21 @@ function showNews() {
     const news = gameState.news;
     for(let i = news.length - 1;i >= 0; i--) {
         let line = TemplateUtil.createNewsLine(news[i].day, news[i].season, news[i].content);
+        mainDiv.appendChild(line);
+    }
+}
+
+function showFollowList() {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    const followList = gameState.followList;
+    for(let i = 0; i < followList.length; i++) {
+        const player = gameState.players[followList[i]];
+        let line = TemplateUtil.createPlayerLine(player);
+        mainDiv.appendChild(line);
+    }
+    if(followList.length == 0) {
+        let line = TemplateUtil.createLine('可以到球员详情界面点击关注哦~');
         mainDiv.appendChild(line);
     }
 }
@@ -760,31 +776,36 @@ function nextDay() {
 }
 
 function next30Day() {
+    const mainDiv = document.getElementById('contentDiv');
     if(gameState.currentDay < 165) {
         for(let i = 0;i<30;i++) {
             if(gameState.currentDay <= 165) {
-                nextDay();
+                Game.nextDay(gameState);
+                mainDiv.innerHTML = "";
+                const waiting = TemplateUtil.createWaitingPane(`进度${i + 1}/30`);
+                mainDiv.appendChild(waiting);
             }else {
                 break;
             }
         }
     }else if(gameState.currentDay < 179) {
         while(gameState.currentDay <= 179) {
-            nextDay();
+            Game.nextDay(gameState);
         }
     }else if(gameState.currentDay < 193) {
         while(gameState.currentDay <= 193) {
-            nextDay();
+            Game.nextDay(gameState);
         }
     }else if(gameState.currentDay < 207) {
         while(gameState.currentDay <= 207) {
-            nextDay();
+            Game.nextDay(gameState);
         }
     }else if(gameState.currentDay < 220) {
         while(gameState.currentDay <= 220) {
-            nextDay();
+            Game.nextDay(gameState);
         }
     }
+    refreshPane();
 }
 
 function saveLocal() {
@@ -870,7 +891,11 @@ function remove() {
 <p>正在做：</p>
 <ul>
 <li>选秀</li>
-<li>球员信息显示</li>
+<li>成长情况</li>
+<li>新秀取名</li>
+<li>新秀排行</li>
+<li>首发替补显示</li>
+<li>每日数据可点击</li>
 </ul>
 <p>完成列表：</p>
 <ul>
@@ -934,9 +959,13 @@ function remove() {
 <li>添加本地存档读档</li>
 <li>适应手机屏幕大小显示</li>
 <li>左侧侧边栏移动到APP中</li>
-<li>场均得分统计</li>
 </ul>
 </li>
+<li>场均得分统计</li>
+</ul>
+<p>1.30更新：</p>
+<ul>
+<li>添加关注/取关球员功能</li>
 </ul>
 
       

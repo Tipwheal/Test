@@ -17,6 +17,11 @@ br {
 .removable br {
   margin-bottom: 0; }
 
+.waitingPane {
+  margin: auto;
+  display: flex;
+  justify-content: center; }
+
 .playerPane .playerTitle {
   padding: 0 5px;
   color: #AE4E26; }
@@ -30,8 +35,9 @@ br {
   display: flex;
   justify-content: space-around; }
   .playerPane .controls button {
-    margin-top: 2px;
-    background-color: #9BC595; }
+    margin: 10px 0;
+    background-color: #9BC595;
+    border: 1px solid #AE4E26; }
 .playerPane .playerAttrs {
   padding: 0 5px;
   display: flex;
