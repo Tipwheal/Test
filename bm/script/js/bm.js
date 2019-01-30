@@ -276,13 +276,7 @@ var Game = /** @class */ (function () {
                     players: [],
                 },
             },
-            news: [
-                {
-                    season: 1,
-                    day: 1,
-                    content: '欢迎进入游戏，你的球队是 太阳'
-                }
-            ],
+            news: [],
             players: {
                 '1': {
                     age: 31,
@@ -12697,8 +12691,8 @@ var Game = /** @class */ (function () {
                 }
             },
             followList: [],
-            userTeam: '太阳',
-            userTeamId: '29',
+            userTeam: '',
+            userTeamId: '',
             currentSeason: 2018,
             currentDay: 1,
             showState: ShowState.News,
@@ -12737,6 +12731,7 @@ var Game = /** @class */ (function () {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
             var teamId = gameData.players[i].team;
@@ -12746,6 +12741,15 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < 30; i++) {
             gameData.teams[i].championNum = 0;
+            gameData.teams[i].cores = [];
+            gameData.teams[i].starterPG = -1;
+            gameData.teams[i].starterSG = -1;
+            gameData.teams[i].starterSF = -1;
+            gameData.teams[i].starterPF = -1;
+            gameData.teams[i].starterC = -1;
+            gameData.teams[i].bench = [];
+            gameData.teams[i].dnp = [];
+            gameData.lockLineup = true;
         }
         this.resetOffSeasonData(gameData);
     };
@@ -13050,6 +13054,7 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonOffFreeIn = 0;
             gameData.players[id].seasonOffScore = 0;
             gameData.players[id].seasonOffGameNum = 0;
+            gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     };
     Game.resetOffSeasonData = function (gameData) {
@@ -13471,7 +13476,15 @@ var Game = /** @class */ (function () {
             return player[optName];
         }
         else if (optName == 'seasonRegAvgScore') {
-            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+            if (player.seasonRegGameNum > 0) {
+                return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+            }
+            else {
+                return 0;
+            }
+        }
+        else if (optName == 'skillUp') {
+            return player.skillAverage - player.lastSkillAverage;
         }
         else {
             return 0;
@@ -13488,7 +13501,16 @@ var Game = /** @class */ (function () {
                 return b[optName] - a[optName];
             }
             else if (optName == 'seasonRegAvgScore') {
+                if (a.seasonRegGameNum == 0) {
+                    return 1;
+                }
+                else if (b.seasonRegGameNum == 0) {
+                    return -1;
+                }
                 return b.seasonRegScore / b.seasonRegGameNum - a.seasonRegScore / a.seasonRegGameNum;
+            }
+            else if (optName == 'skillUp') {
+                return (b.skillAverage - b.lastSkillAverage) - (a.skillAverage - a.lastSkillAverage);
             }
             else {
                 return 0;
@@ -13813,6 +13835,65 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
+    TemplateUtil.createTeamPane = function (teamId, gameData) {
+        TeamMatchUtil.getCorePlayers(teamId, gameData);
+        TeamMatchUtil.getStarters(teamId, gameData);
+        TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        var teamName = gameData.teams[teamId].name;
+        var title;
+        if (teamId == gameData.userTeamId) {
+            title = "\u6211\u7684\u7403\u961F-" + teamName;
+        }
+        else {
+            title = "\u522B\u4EBA\u7684\u7403\u961F-" + teamName;
+        }
+        var firstLine = "\n        <div class='gameLine'>\n            <span>" + title + "</span>\n        </div>\n        ";
+        var regChampionNum = gameData.teams[teamId].regularChampionNum;
+        var championNum = gameData.teams[teamId].championNum;
+        var dataPane = "\n        <div class='gameLine'>\n            <span>\u5E38\u89C4\u8D5B\u51A0\u519B\uFF1A&nbsp;" + regChampionNum + "&nbsp;\u603B\u51A0\u519B\uFF1A&nbsp;" + championNum + "</span>\n        </div>\n        ";
+        var team = gameData.teams[teamId];
+        var coreLine = "\n        <div class='titleLine'>\n            <span>\u6838\u5FC3\u7403\u5458</span>\n        </div>\n        ";
+        for (var i = 0; i < team.cores.length; i++) {
+            var player = Game.getPlayerInfo(team.cores[i], gameData);
+            var line = "\n            <div class='gameLine' onclick='showPlayerInfo(" + player.id + ")'>\n                <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n            </div>\n            ";
+            coreLine += line;
+        }
+        var starterLine = "\n        <div class='titleLine'>\n            <span>\u9996\u53D1</span>\n        </div>\n        ";
+        if (team.starterPG != -1) {
+            starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterPG + ")'>\n                <span class='growSpan'>PG:&nbsp;" + gameData.players[team.starterPG].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterPG].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterPG].skillAverage + "</span>\n            </div>\n            ";
+        }
+        if (team.starterSG != -1) {
+            starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterSG + ")'>\n                <span class='growSpan'>SG:&nbsp;" + gameData.players[team.starterSG].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterSG].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterSG].skillAverage + "</span>\n            </div>\n            ";
+        }
+        if (team.starterSF != -1) {
+            starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterSF + ")'>\n                <span class='growSpan'>SF:&nbsp;" + gameData.players[team.starterSF].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterSF].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterSF].skillAverage + "</span>\n            </div>\n            ";
+        }
+        if (team.starterPF != -1) {
+            starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterPF + ")'>\n                <span class='growSpan'>PF:&nbsp;" + gameData.players[team.starterPF].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterPF].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterPF].skillAverage + "</span>\n            </div>\n            ";
+        }
+        if (team.starterC != -1) {
+            starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterC + ")'>\n                <span class='growSpan'>C:&nbsp;" + gameData.players[team.starterC].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterC].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterC].skillAverage + "</span>\n            </div>\n            ";
+        }
+        var benchLine = "\n        <div class='titleLine'>\n            <span>\u66FF\u8865</span>\n        </div>\n        ";
+        for (var i = 0; i < team.bench.length; i++) {
+            var player = Game.getPlayerInfo(team.bench[i], gameData);
+            var line = "\n            <div class='gameLine' onclick='showPlayerInfo(" + player.id + ")'>\n                <span class='growSpan'>" + player.name + "</span><span>\u5E74\u9F84&nbsp;" + player.age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + player.skillAverage + "</span>\n            </div>\n            ";
+            benchLine += line;
+        }
+        var template = "\n        <div class='teamPane'>\n            " + firstLine + "\n            " + dataPane + "\n            " + coreLine + "\n            " + starterLine + "\n            " + benchLine + "\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.teamPane');
+        return newNode;
+    };
+    TemplateUtil.createSelectTeamPane = function (gameData) {
+        var teams = "";
+        for (var i = 0; i < 30; i++) {
+            var team = gameData.teams[i];
+            teams += "\n            <div class='gameLine' onclick='finishInit(" + i + ")'>\n                <span class='growSpan'>" + team.name + "</span>\n            </div>\n            ";
+        }
+        var template = "\n        <div class='gamePane'>\n            <div class='titleLine'>\n                <span class='growSpan'>\u8BF7\u9009\u62E9\u7403\u961F</span>\n            </div>\n            " + teams + "\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.gamePane');
+        return newNode;
+    };
     TemplateUtil.createTeamLine = function (rank, teamId, gameData) {
         var teamName = gameData.teams[teamId].name;
         var win = gameData.teams[teamId].winNum;
@@ -13859,7 +13940,7 @@ var TemplateUtil = /** @class */ (function () {
         return newNode;
     };
     TemplateUtil.createSelect = function (values) {
-        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>\n                <option value='skillAverage'>\u7EFC\u5408\u80FD\u529B</option>\n                <option value='skillAttack'>\u8FDB\u653B\u80FD\u529B</option>\n                <option value='skillDefense'>\u9632\u5B88\u80FD\u529B</option>\n                <option value='skillRebound'>\u7BEE\u677F</option>\n                <option value='skillShotInterior'>\u5185\u7EBF\u6295\u7BEE</option>\n                <option value='skillShotExterior'>\u5916\u7EBF\u6295\u7BEE</option>\n                <option value='numsChampion'>\u51A0\u519B\u6570\u91CF</option>\n                <option value='skillShotFree'>\u7F5A\u7403\u80FD\u529B</option>\n                <option value='salary'>\u85AA\u6C34</option>\n                <option value='skillPhysique'>\u4F53\u529B</option>\n                <option value='skillPass'>\u4F20\u7403\u80FD\u529B</option>\n                <option value='age'>\u5E74\u9F84</option>\n                <option value='yearsLeague'>\u7403\u9F84</option>\n                <option value='skillSteal'>\u62A2\u65AD\u80FD\u529B</option>\n                <option value='stateInjury'>\u4F24\u505C\u65F6\u957F</option>\n            </select>\n        </div>\n        ";
+        var template = "\n        <div class='selectLine'>\n            <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>\n                <option value='skillAverage'>\u7EFC\u5408\u80FD\u529B</option>\n                <option value='skillUp'>\u8D5B\u5B63\u6210\u957F</option>\n                <option value='skillAttack'>\u8FDB\u653B\u80FD\u529B</option>\n                <option value='skillDefense'>\u9632\u5B88\u80FD\u529B</option>\n                <option value='skillRebound'>\u7BEE\u677F</option>\n                <option value='skillShotInterior'>\u5185\u7EBF\u6295\u7BEE</option>\n                <option value='skillShotExterior'>\u5916\u7EBF\u6295\u7BEE</option>\n                <option value='numsChampion'>\u51A0\u519B\u6570\u91CF</option>\n                <option value='skillShotFree'>\u7F5A\u7403\u80FD\u529B</option>\n                <option value='salary'>\u85AA\u6C34</option>\n                <option value='skillPhysique'>\u4F53\u529B</option>\n                <option value='skillPass'>\u4F20\u7403\u80FD\u529B</option>\n                <option value='age'>\u5E74\u9F84</option>\n                <option value='yearsLeague'>\u7403\u9F84</option>\n                <option value='skillSteal'>\u62A2\u65AD\u80FD\u529B</option>\n                <option value='stateInjury'>\u4F24\u505C\u65F6\u957F</option>\n            </select>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.selectLine');
         return newNode;
     };
@@ -13927,9 +14008,11 @@ var TeamMatchUtil = /** @class */ (function () {
         });
         var beyond90 = sortPlayers.filter(function (p) { return gameData.players[p].skillAverage >= 90; }).slice(0, 3);
         if (beyond90.length > 1) {
+            gameData.teams[teamId].cores = beyond90;
             return beyond90;
         }
         else {
+            gameData.teams[teamId].cores = [players[0], players[1], players[2]];
             return [players[0], players[1], players[2]];
         }
     };
@@ -13940,7 +14023,9 @@ var TeamMatchUtil = /** @class */ (function () {
         var lostPlace = [];
         var stillLost = [];
         var _loop_1 = function (i) {
-            var currentPlace = players.filter(function (p) { return gameData.players[p].positionFirst == i; });
+            var currentPlace = players
+                .filter(function (p) { return gameData.players[p].positionFirst == i + 1; })
+                .sort(function (a, b) { return gameData.players[b].skillAverage - gameData.players[a].skillAverage; });
             if (currentPlace.length > 0) {
                 starters[i] = currentPlace[0];
             }
@@ -13953,7 +14038,10 @@ var TeamMatchUtil = /** @class */ (function () {
         }
         var _loop_2 = function (j) {
             var i = lostPlace[j];
-            var currentPlace = players.filter(function (p) { return !(starters.includes(p)); }).filter(function (p) { return gameData.players[p].positionSecond == i; });
+            var currentPlace = players
+                .filter(function (p) { return !(starters.includes(p)); })
+                .filter(function (p) { return gameData.players[p].positionSecond == i + 1; })
+                .sort(function (a, b) { return gameData.players[b].skillAverage - gameData.players[a].skillAverage; });
             if (currentPlace.length > 0) {
                 starters[i] = currentPlace[0];
             }
@@ -13971,6 +14059,11 @@ var TeamMatchUtil = /** @class */ (function () {
                 .sort(function (a, b) { return gameData.players[b].skillAverage - gameData.players[a].skillAverage; });
             starters[i] = currentPlace[0];
         }
+        gameData.teams[teamId].starterPG = starters[0];
+        gameData.teams[teamId].starterSG = starters[1];
+        gameData.teams[teamId].starterSF = starters[2];
+        gameData.teams[teamId].starterPF = starters[3];
+        gameData.teams[teamId].starterC = starters[4];
         return starters;
     };
     TeamMatchUtil.getBenchPlayers = function (teamId, gameData) {
@@ -13978,6 +14071,7 @@ var TeamMatchUtil = /** @class */ (function () {
         var starters = this.getStarters(teamId, gameData);
         var players = team.players;
         var bench = players.filter(function (p) { return !(starters.includes(p)); });
+        gameData.teams[teamId].bench = bench;
         return bench;
     };
     TeamMatchUtil.skillToThreeRate = function (skill, position) {
@@ -14010,15 +14104,15 @@ var TeamMatchUtil = /** @class */ (function () {
     };
     TeamMatchUtil.skillToMiddle = function (skill, position) {
         //一律85
-        return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
     };
     TeamMatchUtil.skillToOutside = function (skill, position) {
         //一律95
         return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
     };
     TeamMatchUtil.skillToFree = function (skill, position) {
-        //一律80
-        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        //一律65
+        return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
     };
     return TeamMatchUtil;
 }());
@@ -14214,6 +14308,7 @@ var PlayerGenerator = /** @class */ (function () {
         gameData.players[id].seasonOffThreeIn = 0;
         gameData.players[id].seasonOffFree = 0;
         gameData.players[id].seasonOffFreeIn = 0;
+        gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     };
     PlayerGenerator.usFirstNames = ['雅各布', '迈克尔', '伊桑', '约书亚', '亚历山大', '安东尼', '威廉', '克里斯托弗', '杰顿', '安德鲁',
         '约瑟夫', '大卫', '诺阿', '艾顿', '詹姆斯', '莱恩', '罗根', '约翰', '内森', '伊莱贾', '克里斯', '加布里尔', '本杰明',

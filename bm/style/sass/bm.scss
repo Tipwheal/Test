@@ -111,6 +111,13 @@ br {
     background-color: $youth1;
 }
 
+.titleLine {
+    @extend %baseLine;
+    justify-content: start;
+    padding-left: 0;
+    color: $youth3;
+}
+
 .rankSpan {
     min-width: 15px;
     text-align: right;

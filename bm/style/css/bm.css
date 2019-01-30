@@ -1,7 +1,7 @@
 br {
   margin-bottom: 20px; }
 
-.gameLine, .leftLine, .navLine, .selectLine {
+.gameLine, .titleLine, .leftLine, .navLine, .selectLine {
   min-height: fit-content;
   display: flex;
   justify-content: center;
@@ -74,6 +74,11 @@ br {
 
 .gameLine {
   background-color: #FDFFD0; }
+
+.titleLine {
+  justify-content: start;
+  padding-left: 0;
+  color: #AE4E26; }
 
 .rankSpan {
   min-width: 15px;

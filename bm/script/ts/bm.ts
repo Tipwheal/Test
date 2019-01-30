@@ -334,11 +334,6 @@ class Game {
                 },
             },
             news: [
-                {
-                    season: 1,
-                    day: 1,
-                    content: '欢迎进入游戏，你的球队是 太阳'
-                }
             ],
             players: {
                 '1': {
@@ -12754,8 +12749,8 @@ class Game {
                 }
             },
             followList: [],
-            userTeam: '太阳',
-            userTeamId: '29',
+            userTeam: '',
+            userTeamId: '',
             currentSeason: 2018,
             currentDay: 1,
             showState: ShowState.News,
@@ -12794,6 +12789,7 @@ class Game {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
             let teamId = gameData.players[i].team;
@@ -12803,6 +12799,15 @@ class Game {
         }
         for(let i = 0;i<30;i++) {
             gameData.teams[i].championNum = 0;
+            gameData.teams[i].cores = [];
+            gameData.teams[i].starterPG = -1;
+            gameData.teams[i].starterSG = -1;
+            gameData.teams[i].starterSF = -1;
+            gameData.teams[i].starterPF = -1;
+            gameData.teams[i].starterC = -1;
+            gameData.teams[i].bench = [];
+            gameData.teams[i].dnp = [];
+            gameData.lockLineup = true;
         }
         this.resetOffSeasonData(gameData);
     }
@@ -13105,6 +13110,7 @@ class Game {
             gameData.players[id].seasonOffFreeIn = 0;
             gameData.players[id].seasonOffScore = 0;
             gameData.players[id].seasonOffGameNum = 0;
+            gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     }
 
@@ -13513,7 +13519,13 @@ class Game {
         if(optName in player) {
             return player[optName];
         }else if(optName == 'seasonRegAvgScore') {
-            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+            if(player.seasonRegGameNum > 0) {
+                return (player.seasonRegScore / player.seasonRegGameNum).toFixed(1);
+            }else {
+                return 0;
+            }
+        }else if(optName == 'skillUp') {
+            return player.skillAverage - player.lastSkillAverage;
         }else {
             return 0;
         }
@@ -13529,7 +13541,14 @@ class Game {
             if(optName in a) {
                 return b[optName] - a[optName];
             }else if(optName == 'seasonRegAvgScore') {
+                if(a.seasonRegGameNum == 0) {
+                    return 1;
+                }else if(b.seasonRegGameNum == 0) {
+                    return -1;
+                }
                 return b.seasonRegScore / b.seasonRegGameNum - a.seasonRegScore / a.seasonRegGameNum;
+            }else if(optName == 'skillUp') {
+                return ( b.skillAverage - b.lastSkillAverage) - (a.skillAverage - a.lastSkillAverage);
             }else {
                 return 0;
             }
@@ -13810,6 +13829,133 @@ class TemplateUtil {
         return newNode;
     }
 
+    public static createTeamPane(teamId: any, gameData: any): any {
+        TeamMatchUtil.getCorePlayers(teamId, gameData);
+        TeamMatchUtil.getStarters(teamId, gameData);
+        TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        let teamName = gameData.teams[teamId].name;
+        let title: string;
+        if(teamId == gameData.userTeamId) {
+            title = `我的球队-${teamName}`
+        }else {
+            title = `别人的球队-${teamName}`
+        }
+        const firstLine = `
+        <div class='gameLine'>
+            <span>${title}</span>
+        </div>
+        `;
+        let regChampionNum = gameData.teams[teamId].regularChampionNum;
+        let championNum = gameData.teams[teamId].championNum;
+        const dataPane = `
+        <div class='gameLine'>
+            <span>常规赛冠军：&nbsp;${regChampionNum}&nbsp;总冠军：&nbsp;${championNum}</span>
+        </div>
+        `;
+        let team = gameData.teams[teamId];
+        let coreLine = `
+        <div class='titleLine'>
+            <span>核心球员</span>
+        </div>
+        `;
+        for(let i = 0; i < team.cores.length; i++) {
+            let player = Game.getPlayerInfo(team.cores[i], gameData);
+            let line = `
+            <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
+                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+            </div>
+            `;
+            coreLine += line;
+        }
+        let starterLine = `
+        <div class='titleLine'>
+            <span>首发</span>
+        </div>
+        `
+        if(team.starterPG != -1) {
+            starterLine += `
+            <div class='gameLine' onclick='showPlayerInfo(${team.starterPG})'>
+                <span class='growSpan'>PG:&nbsp;${gameData.players[team.starterPG].name}</span><span>年龄&nbsp;${gameData.players[team.starterPG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPG].skillAverage}</span>
+            </div>
+            `
+        }
+        if(team.starterSG != -1) {
+            starterLine += `
+            <div class='gameLine' onclick='showPlayerInfo(${team.starterSG})'>
+                <span class='growSpan'>SG:&nbsp;${gameData.players[team.starterSG].name}</span><span>年龄&nbsp;${gameData.players[team.starterSG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSG].skillAverage}</span>
+            </div>
+            `
+        }
+        if(team.starterSF != -1) {
+            starterLine += `
+            <div class='gameLine' onclick='showPlayerInfo(${team.starterSF})'>
+                <span class='growSpan'>SF:&nbsp;${gameData.players[team.starterSF].name}</span><span>年龄&nbsp;${gameData.players[team.starterSF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSF].skillAverage}</span>
+            </div>
+            `
+        }
+        if(team.starterPF != -1) {
+            starterLine += `
+            <div class='gameLine' onclick='showPlayerInfo(${team.starterPF})'>
+                <span class='growSpan'>PF:&nbsp;${gameData.players[team.starterPF].name}</span><span>年龄&nbsp;${gameData.players[team.starterPF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPF].skillAverage}</span>
+            </div>
+            `
+        }
+        if(team.starterC != -1) {
+            starterLine += `
+            <div class='gameLine' onclick='showPlayerInfo(${team.starterC})'>
+                <span class='growSpan'>C:&nbsp;${gameData.players[team.starterC].name}</span><span>年龄&nbsp;${gameData.players[team.starterC].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterC].skillAverage}</span>
+            </div>
+            `
+        }
+        let benchLine = `
+        <div class='titleLine'>
+            <span>替补</span>
+        </div>
+        `;
+        for(let i = 0; i < team.bench.length; i++) {
+            let player = Game.getPlayerInfo(team.bench[i], gameData);
+            let line = `
+            <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
+                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+            </div>
+            `;
+            benchLine += line;
+        }
+        const template = `
+        <div class='teamPane'>
+            ${firstLine}
+            ${dataPane}
+            ${coreLine}
+            ${starterLine}
+            ${benchLine}
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.teamPane');
+        return newNode;
+    }
+
+    public static createSelectTeamPane(gameData: any): any {
+        let teams = "";
+        for(let i = 0; i < 30; i++) {
+            const team = gameData.teams[i];
+            teams += `
+            <div class='gameLine' onclick='finishInit(${i})'>
+                <span class='growSpan'>${team.name}</span>
+            </div>
+            `;
+        }
+        const template = `
+        <div class='gamePane'>
+            <div class='titleLine'>
+                <span class='growSpan'>请选择球队</span>
+            </div>
+            ${teams}
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.gamePane');
+        return newNode;
+    }
+
     public static createTeamLine(rank: any, teamId: any, gameData: any): any {
         const teamName = gameData.teams[teamId].name;
         const win = gameData.teams[teamId].winNum;
@@ -13993,6 +14139,7 @@ class TemplateUtil {
         <div class='selectLine'>
             <select class='gameSelect' id='attrSelect' onchange='changeAttr()'>
                 <option value='skillAverage'>综合能力</option>
+                <option value='skillUp'>赛季成长</option>
                 <option value='skillAttack'>进攻能力</option>
                 <option value='skillDefense'>防守能力</option>
                 <option value='skillRebound'>篮板</option>
@@ -14157,8 +14304,10 @@ class TeamMatchUtil {
         });
         let beyond90 = sortPlayers.filter((p: any) => gameData.players[p].skillAverage >= 90).slice(0, 3);
         if(beyond90.length > 1) {
+            gameData.teams[teamId].cores = beyond90;
             return beyond90;
         }else {
+            gameData.teams[teamId].cores = [players[0], players[1], players[2]];
             return [players[0], players[1], players[2]];
         }
     }
@@ -14170,7 +14319,9 @@ class TeamMatchUtil {
         const lostPlace = [];
         const stillLost = [];
         for(let i = 0;i < 5; i++) {
-            let currentPlace = players.filter((p: any) => gameData.players[p].positionFirst == i);
+            let currentPlace = players
+                .filter((p: any) => gameData.players[p].positionFirst == i + 1)
+                .sort((a: any, b: any) => gameData.players[b].skillAverage - gameData.players[a].skillAverage);
             if(currentPlace.length > 0) {
                 starters[i] = currentPlace[0];
             }else {
@@ -14179,7 +14330,10 @@ class TeamMatchUtil {
         }
         for(let j = 0; j < lostPlace.length; j ++) {
             let i = lostPlace[j];
-            let currentPlace = players.filter((p: any) => !(starters.includes(p))).filter((p: any) => gameData.players[p].positionSecond == i);
+            let currentPlace = players
+                .filter((p: any) => !(starters.includes(p)))
+                .filter((p: any) => gameData.players[p].positionSecond == i + 1)
+                .sort((a: any, b: any) => gameData.players[b].skillAverage - gameData.players[a].skillAverage);
             if(currentPlace.length > 0) {
                 starters[i] = currentPlace[0];
             }else {
@@ -14194,6 +14348,11 @@ class TeamMatchUtil {
             starters[i] = currentPlace[0];
             
         }
+        gameData.teams[teamId].starterPG = starters[0];
+        gameData.teams[teamId].starterSG = starters[1];
+        gameData.teams[teamId].starterSF = starters[2];
+        gameData.teams[teamId].starterPF = starters[3];
+        gameData.teams[teamId].starterC = starters[4];
         return starters;
     }
 
@@ -14202,6 +14361,7 @@ class TeamMatchUtil {
         const starters = this.getStarters(teamId, gameData);
         const players = team.players;
         const bench = players.filter((p: any) => !(starters.includes(p)));
+        gameData.teams[teamId].bench = bench;
         return bench;
     }
 
@@ -14233,7 +14393,7 @@ class TeamMatchUtil {
 
     public static skillToMiddle(skill: any, position: any) {
         //一律85
-        return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
     }
 
     public static skillToOutside(skill: any, position: any) {
@@ -14242,8 +14402,8 @@ class TeamMatchUtil {
     }
 
     public static skillToFree(skill: any, position: any) {
-        //一律80
-        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        //一律65
+        return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
     }
 }
 
@@ -14492,6 +14652,7 @@ class PlayerGenerator {
         gameData.players[id].seasonOffThreeIn = 0;
         gameData.players[id].seasonOffFree = 0;
         gameData.players[id].seasonOffFreeIn = 0;
+        gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     }
 }
 

@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-30T04:57:20.667Z">
+<meta property="og:updated_time" content="2019-01-30T11:21:51.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-30 12:57:20" itemprop="dateModified" datetime="2019-01-30T12:57:20+08:00">2019-01-30</time>
+                <time title="修改时间：2019-01-30 19:21:51" itemprop="dateModified" datetime="2019-01-30T19:21:51+08:00">2019-01-30</time>
               
             
           </span>
@@ -535,6 +535,17 @@ function init() {
     gameState = Game.getInitData();
     fileName = 'BM-INIT.json';
     changeName();
+    showTeamSelection();
+}
+
+function finishInit(teamId) {
+    gameState.userTeam = gameState.teams[teamId].name;
+    gameState.userTeamId = teamId;
+    gameState.news.push({
+        season: 1,
+        day: 1,
+        content: '欢迎进入游戏，你的球队是 ' + gameState.userTeam,
+    });
     initGameData();
 }
 
@@ -586,24 +597,6 @@ function load() {
     }
 }
 
-function showUserTeam() {
-    const mainDiv = document.getElementById('contentDiv');
-    mainDiv.innerHTML = "";
-    let title = TemplateUtil.createLine('我的球队-' + gameState.userTeam);
-    let regularChampionNum = gameState.teams[gameState.userTeamId].regularChampionNum;
-    let championNum = gameState.teams[gameState.userTeamId].championNum;
-    let regChampNum = TemplateUtil.createLine('常规赛冠军：' + regularChampionNum + '&nbsp总冠军：' + championNum);
-    mainDiv.appendChild(title);
-    mainDiv.appendChild(regChampNum);
-    let team = gameState.teams[gameState.userTeamId];
-    let teamPlayers = team.players;
-    for(let i = 0; i < teamPlayers.length; i++) {
-        let player = Game.getPlayerInfo(teamPlayers[i], gameState);
-        let line = TemplateUtil.createPlayerLine(player);
-        mainDiv.appendChild(line);
-    }
-}
-
 function showPlayerInfo(playerId) {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
@@ -631,6 +624,13 @@ function showNews() {
     }
 }
 
+function showTeamSelection() {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    let pane = TemplateUtil.createSelectTeamPane(gameState);
+    mainDiv.appendChild(pane);
+}
+
 function showFollowList() {
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
@@ -647,26 +647,10 @@ function showFollowList() {
 }
 
 function showTeamInfo(teamId) {
-    if(teamId == gameState.userTeamId) {
-        showUserTeam();
-        return;
-    }
     const mainDiv = document.getElementById('contentDiv');
     mainDiv.innerHTML = "";
-    let teamName = gameState.teams[teamId].name;
-    let title = TemplateUtil.createLine('别人的球队-' + teamName);
-    let regularChampionNum = gameState.teams[teamId].regularChampionNum;
-    let championNum = gameState.teams[teamId].championNum;
-    let regChampNum = TemplateUtil.createLine('常规赛冠军：' + regularChampionNum + '&nbsp总冠军：' + championNum);
-    mainDiv.appendChild(title);
-    mainDiv.appendChild(regChampNum);
-    let team = gameState.teams[teamId];
-    let teamPlayers = team.players;
-    for(let i = 0; i < teamPlayers.length; i++) {
-        let player = Game.getPlayerInfo(teamPlayers[i], gameState);
-        let line = TemplateUtil.createPlayerLine(player);
-        mainDiv.appendChild(line);
-    }
+    let pane = TemplateUtil.createTeamPane(teamId, gameState);
+    mainDiv.appendChild(pane);
 }
 
 function showStatsRank() {
@@ -732,7 +716,8 @@ function changeAttr() {
         if(player[value] == 0) {
             break;
         }
-        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, player[value]);
+        let attrValue = Game.getPlayerAbility(player.id, gameState, value);
+        let line = TemplateUtil.createAttrLine(i + 1, attrName, player.id, player.name, attrValue);
         mainDiv.appendChild(line);
     }
 }
@@ -750,7 +735,7 @@ function refreshPane(prop) {
         gameState.showState = prop;
     }
     if(gameState.showState === ShowState.MyTeam) {
-        showUserTeam();
+        showTeamInfo(gameState.userTeamId);
     }else if(gameState.showState === ShowState.TeamRank) {
         showTeamRank();
     }else if(gameState.showState === ShowState.News) {
@@ -781,9 +766,6 @@ function next30Day() {
         for(let i = 0;i<30;i++) {
             if(gameState.currentDay <= 165) {
                 Game.nextDay(gameState);
-                mainDiv.innerHTML = "";
-                const waiting = TemplateUtil.createWaitingPane(`进度${i + 1}/30`);
-                mainDiv.appendChild(waiting);
             }else {
                 break;
             }
@@ -859,7 +841,6 @@ function remove() {
 </li>
 <li>修改比赛算法<ul>
 <li>添加篮板，助攻，抢断，盖帽数据</li>
-<li>把肯巴沃克 哈里斯 等削了</li>
 </ul>
 </li>
 <li>修改球员成长算法<ul>
@@ -890,12 +871,11 @@ function remove() {
 </ul>
 <p>正在做：</p>
 <ul>
-<li>选秀</li>
-<li>成长情况</li>
 <li>新秀取名</li>
 <li>新秀排行</li>
-<li>首发替补显示</li>
-<li>每日数据可点击</li>
+<li>每日数据球队显示</li>
+<li>可调整首发替补!!!</li>
+<li>阵容检查</li>
 </ul>
 <p>完成列表：</p>
 <ul>
@@ -966,6 +946,11 @@ function remove() {
 <p>1.30更新：</p>
 <ul>
 <li>添加关注/取关球员功能</li>
+<li>球员赛季成长情况</li>
+<li>把肯巴沃克 哈里斯 等人削了</li>
+<li>显示首发替补等角色</li>
+<li>修复奇怪的bug</li>
+<li>添加开始游戏时的球队选择</li>
 </ul>
 
       
