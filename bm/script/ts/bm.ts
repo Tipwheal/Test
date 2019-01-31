@@ -12813,6 +12813,7 @@ class Game {
     }
 
     public static setCore(playerId: any, gameData: any) {
+        playerId += '';
         gameData.lockLineup = true;
         const teamId = gameData.players[playerId].team;
         const team = gameData.teams[teamId];
@@ -12828,6 +12829,7 @@ class Game {
     }
 
     public static unsetCore(playerId: any, gameData: any) {
+        playerId += '';
         gameData.lockLineup = true;
         const teamId = gameData.players[playerId].team;
         const team = gameData.teams[teamId];
@@ -12836,6 +12838,7 @@ class Game {
     }
 
     private static removeRole(playerId: any, gameData: any) {
+        playerId += '';
         const teamId = gameData.players[playerId].team;
         const team = gameData.teams[teamId];
         playerId += '';
@@ -12853,12 +12856,17 @@ class Game {
             gameData.teams[teamId].starterC = -1;
         }else if(team.dnp.includes(playerId + '')) {
             gameData.teams[teamId].dnp.splice(team.dnp.indexOf(playerId + ''), 1)
+            console.log('remove dnp')
         }else if(team.bench.includes(playerId + '')) {
+            console.log('remove bench')
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1)
         }
+        console.log(team.dnp)
+        console.log(team.bench)
     }
 
     public static setPlayerRole(playerId: any, role: any, gameData: any) {
+        playerId += '';
         gameData.lockLineup = true;
         const teamId = gameData.players[playerId].team;
         this.removeRole(playerId, gameData);
@@ -12895,6 +12903,7 @@ class Game {
         }else if(role == 'bench') {
             gameData.teams[teamId].bench.push(playerId + '');
         }
+        console.log(gameData.teams[teamId]);
     }
 
     private static playerGrow(id: any, gameData: any): any {
@@ -13918,8 +13927,8 @@ class TemplateUtil {
         if(!gameData.lockLineup) {
             TeamMatchUtil.getCorePlayers(teamId, gameData);
             TeamMatchUtil.getStarters(teamId, gameData);
-            TeamMatchUtil.getBenchPlayers(teamId, gameData);
         }
+        TeamMatchUtil.getBenchPlayers(teamId, gameData);
         let teamName = gameData.teams[teamId].name;
         let title: string;
         if(teamId == gameData.userTeamId) {
@@ -14529,13 +14538,14 @@ class TeamMatchUtil {
     }
 
     public static getBenchPlayers(teamId: any, gameData: any): any {
-        if(teamId == gameData.userTeamId && gameData.lockLineup) {
-            return gameData.teams[teamId].bench;
-        }
+        // if(teamId == gameData.userTeamId && gameData.lockLineup) {
+        //     return gameData.teams[teamId].bench;
+        // }
         const team = gameData.teams[teamId];
         const starters = this.getStarters(teamId, gameData);
         const players = team.players;
-        const bench = players.filter((p: any) => !(starters.includes(p)));
+        const dnp = team.dnp;
+        const bench = players.filter((p: any) => !(starters.includes(p) || dnp.includes(p)));
         gameData.teams[teamId].bench = bench;
         return bench;
     }

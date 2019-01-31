@@ -12754,6 +12754,7 @@ var Game = /** @class */ (function () {
         this.resetOffSeasonData(gameData);
     };
     Game.setCore = function (playerId, gameData) {
+        playerId += '';
         gameData.lockLineup = true;
         var teamId = gameData.players[playerId].team;
         var team = gameData.teams[teamId];
@@ -12769,6 +12770,7 @@ var Game = /** @class */ (function () {
         showPlayerInfo(playerId);
     };
     Game.unsetCore = function (playerId, gameData) {
+        playerId += '';
         gameData.lockLineup = true;
         var teamId = gameData.players[playerId].team;
         var team = gameData.teams[teamId];
@@ -12776,6 +12778,7 @@ var Game = /** @class */ (function () {
         showPlayerInfo(playerId);
     };
     Game.removeRole = function (playerId, gameData) {
+        playerId += '';
         var teamId = gameData.players[playerId].team;
         var team = gameData.teams[teamId];
         playerId += '';
@@ -12798,12 +12801,17 @@ var Game = /** @class */ (function () {
         }
         else if (team.dnp.includes(playerId + '')) {
             gameData.teams[teamId].dnp.splice(team.dnp.indexOf(playerId + ''), 1);
+            console.log('remove dnp');
         }
         else if (team.bench.includes(playerId + '')) {
+            console.log('remove bench');
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1);
         }
+        console.log(team.dnp);
+        console.log(team.bench);
     };
     Game.setPlayerRole = function (playerId, role, gameData) {
+        playerId += '';
         gameData.lockLineup = true;
         var teamId = gameData.players[playerId].team;
         this.removeRole(playerId, gameData);
@@ -12846,6 +12854,7 @@ var Game = /** @class */ (function () {
         else if (role == 'bench') {
             gameData.teams[teamId].bench.push(playerId + '');
         }
+        console.log(gameData.teams[teamId]);
     };
     Game.playerGrow = function (id, gameData) {
         var potential = gameData.players[id].potential;
@@ -13933,8 +13942,8 @@ var TemplateUtil = /** @class */ (function () {
         if (!gameData.lockLineup) {
             TeamMatchUtil.getCorePlayers(teamId, gameData);
             TeamMatchUtil.getStarters(teamId, gameData);
-            TeamMatchUtil.getBenchPlayers(teamId, gameData);
         }
+        TeamMatchUtil.getBenchPlayers(teamId, gameData);
         var teamName = gameData.teams[teamId].name;
         var title;
         if (teamId == gameData.userTeamId) {
@@ -14240,13 +14249,14 @@ var TeamMatchUtil = /** @class */ (function () {
         return starters;
     };
     TeamMatchUtil.getBenchPlayers = function (teamId, gameData) {
-        if (teamId == gameData.userTeamId && gameData.lockLineup) {
-            return gameData.teams[teamId].bench;
-        }
+        // if(teamId == gameData.userTeamId && gameData.lockLineup) {
+        //     return gameData.teams[teamId].bench;
+        // }
         var team = gameData.teams[teamId];
         var starters = this.getStarters(teamId, gameData);
         var players = team.players;
-        var bench = players.filter(function (p) { return !(starters.includes(p)); });
+        var dnp = team.dnp;
+        var bench = players.filter(function (p) { return !(starters.includes(p) || dnp.includes(p)); });
         gameData.teams[teamId].bench = bench;
         return bench;
     };
