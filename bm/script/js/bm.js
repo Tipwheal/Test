@@ -13121,6 +13121,7 @@ var Game = /** @class */ (function () {
                     var team = gameData.teams[player.team];
                     retireNewsList.push(team.name + "\u7684" + player.name + "\u9000\u5F79\uFF0C" + player.age + "\u5C81");
                     gameData.teams[player.team].players.splice(team.players.indexOf(id), 1);
+                    this.removeRole(id, gameData);
                 }
                 else {
                     retireNewsList.push("\u81EA\u7531\u7403\u5458" + player.name + "\u9000\u5F79\uFF0C" + player.age + "\u5C81");

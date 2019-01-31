@@ -124,8 +124,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>隐马尔可夫模型</tag>
         <tag>自然语言处理</tag>
+        <tag>隐马尔可夫模型</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -137,10 +137,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
+        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -177,8 +177,8 @@
         <category>微积分</category>
       </categories>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
         <tag>常微分方程</tag>
       </tags>
   </entry>
@@ -341,7 +341,7 @@
   <entry>
     <title><![CDATA[Effective C++ 的笔记]]></title>
     <url>%2Fblog%2F2018%2F10%2F09%2Fcpp-learning%2F</url>
-    <content type="text"><![CDATA[写在前面为什么这些东西要写在前面，因为人有的时候就是喜欢说一些废话。特别是像我这样的话痨，就会说很多废话。不知道别人怎么想，但是实际上我是不把这些废话当废话的，因为我的话实在是太多了，我说过的没有营养的话比这一小段多了很多。 我觉得作为一个喜欢编程的人不会写C++好像有点说不过去。虽然我一直在写Java,然后也一直觉得C++写起来非常麻烦。不过就算是麻烦也应该先写一段时间再说对不对。至少C++是非常有趣，非常强大的，值得深入学习，虽然学不会。 emm，我还是不废话了吧。这边是我记的Effective C++的笔记。有时间我再去看一看More Effective C++和C++ Primer, C++ Primer Plus。先记在计划里吧。 这本书里面介绍了55个守则，如果我们熟悉了这些守则，对我们在C++的开发是很有好处的，至少是前人总结的非常优秀的经验。我觉得一个写了三年多代码的人来看这本书还是比较轻松的，当然还是需要有一定的C++基础。Primer的书太厚了，一时半会儿看不完，有机会再看吧。 今天是2019年1月11日，我正在看这本书，我看过的部分就做一些总结，没看过的部分当然也没有总结。当然其实也说不上总结，就是在这边整理一下笔记，如果我以后回来看看，我可能会想起来自己学了什么，可能会让自己回想起一些有用的细节。 01: View C++ as a federation of languages 视C++为一个语言联邦这是一个非常有趣的东西。我经常听人说C++庞大，复杂。大概是这么个意思。它可以使用很多种方式来进行开发，比如面向对象或者函数式编程…等。 这本书里把C++总结为了4个次语言组成的联邦： C,也就是C++中C的部分 Object-Oriented C++ Template C++，我不是很懂这个。在Java里模板和面向对象是一起愉快使用的啊？ STL。是一个Template程序库 啊总之当我们在使用其中的某一个次语言的时候应该遵守相应的规范或者守则，尽管这可能会违背在另一个次语言中的规范。 02: Prefer consts, enums, and inlines to #defines 尽量以const, enum, inline替换#define嗯这个条款是说，我们尽量把事情丢给编译器而不是预处理器。毕竟defines只是一个简单的替换。 这里有几个坏处。 比如如下的代码： 1#define ASPECT_RATIO 1.653 那么每当使用ASPECT_RATIO的时候实际上进了编译器里都被替换为了1.653而不是同一个常量或者变量。 也就是编译器并不知道有一个记号名称叫ASPECT_RATIO。这里有一个记号表的概念我想是编译器里面的。有机会我应该会接触这个东西。 这个方式导致的问题可能是我们在获得一个编译错误的时候可能会感到很困惑，因为我们看见了一个没有名字的数值，这使人费解。 解决之道： 1const double AspectRatio = 1.653; emm,这里我们发现一个常量的命名方式…好像是有点奇怪呢。不过据说大写是宏里面使用的方式，那么常量就使用双驼峰吧。这个和Java里面的类名一样。这使我感到有点难过，只是一点。毕竟，除了使用java的时候我都会因为命名方式感到困惑。 这么做比起用宏还有一个好处，可能会使代码的量更少。可能一个浮点数使用的空间会比一个记号要来得更大一些。如果宏里面是一个更大的东西那就更不用说了。]]></content>
+    <content type="text"><![CDATA[写在前面我觉得作为一个喜欢编程的人不会写C++好像有点说不过去。虽然我一直在写Java,然后也一直觉得C++写起来非常麻烦。不过就算是麻烦也应该先写一段时间再说对不对。至少C++是非常有趣，非常强大的，值得深入学习，虽然学不会。 这边是我记的Effective C++的笔记。有时间我再去看一看More Effective C++和C++ Primer, C++ Primer Plus。先记在计划里吧。 这本书里面介绍了55个守则，如果我们熟悉了这些守则，对我们在C++的开发是很有好处的，至少是前人总结的非常优秀的经验。我觉得一个写了三年多代码的人来看这本书还是比较轻松的，当然还是需要有一定的C++基础。Primer的书太厚了，一时半会儿看不完，有机会再看吧。 01: View C++ as a federation of languages 视C++为一个语言联邦这是一个非常有趣的东西。我们可以使用很多种方式来使用C++，比如面向对象或者函数式编程…等。 这本书里把C++总结为了4个次语言组成的联邦： C,也就是C++中C的部分 Object-Oriented C++ Template C++，我不是很懂这个。在Java里模板和面向对象是一起愉快使用的啊？ STL。是一个Template程序库 而我们在开发的时候总是选取了其中的某种次语言来进行，当我们在使用其中的某一个次语言的时候应该遵守相应的规范或者守则，尽管这可能会违背在另一个次语言中的规范。 02: Prefer consts, enums, and inlines to #defines 尽量以const, enum, inline替换#define这个条款大意是，我们应尽量把事情丢给编译器而不是预处理器，因为defines只是一个在预处理器中的简单的替换。 比如如下的代码： 1#define ASPECT_RATIO 1.653 每当使用ASPECT_RATIO的时候实际上进了编译器里都被替换为了1.653而不是同一个常量或者变量。 也就是编译器并不知道有一个记号名称叫ASPECT_RATIO。这里有一个记号表的概念我想是编译器里面的。有机会我应该会接触这个东西。 这个方式导致的问题可能是我们在获得一个编译错误的时候可能会感到很困惑，因为我们看见了一个没有名字的数值，这使人费解。 解决之道： 1const double AspectRatio = 1.653; 注意这里的命名方式，一个常量的命名方式竟然是双驼峰。大写则是宏里面常用的方式。 （我有一个问题，类名的命名方式是怎么样的） 这么做比起用宏还有一个好处，可能会使代码的量更少。可能一个浮点数使用的空间会比一个记号要来得更大一些，使用的浮点数宏越多，那么占用的空间也会越大。如果宏里面是一个更大的东西那就更不用说了。 03：Use const whenever possible 尽可能使用const04: Make sure that objects are initialized before they’re used 确定对象被使用前已先被初始化05: Know that functions C++ silently writes and calls 了解C++默默编写并调用哪些函数06: Expicitly disallow the use of compiler-generated functions you do not want 若不想使用编译器自动生成的函数，就该明确拒绝07: Declare destructors virtual in polymorphic base classes 为多态基类声明virtual析构函数08: Prevent exceptions from leaving destructors 别让异常逃离析构函数09: Never call virtual functions during constructino or destruction 绝不在构造和析构过程中调用virtual函数10: Have assignment operators return a reference to this 令operator=返回一个reference to this11: Handle assignment to self in operator= 在operator=中处理“自我赋值”12: Copy all parts of an object 复制对象时勿忘其每一个成分13: Use objects to manage resources 以对象管理资源14: Think carefully about copying behavior in resource-managing classes 在资源管理类中小心copying行为15: Provide access to raw resources in resource-managing classed 在资源管理类中提供对原始资源的访问16: use the same form in corresponding uses of new and delete 成对使用new和delete时要采取相同形式17: Store newed objects in smart pointers in standalone statements 以独立语句将newed对象置入智能指针18: Make interfaces easy to use correctly and hard to use incorrectly 让接口容易被正确使用，不易被误用19: Treat class design as type design 设计class犹如设计type20: Prefer pass-by-reference-to-const to pass-by-value 宁以pass-by-reference-to-const替换pass-by-value21: Don’t try to return a reference when you must return an object 必须返回对象时，别妄想返回其reference22: Declare data members private 将成员变量声明为private23: Prefer non-member non-friend functions to member functions 宁以non-member、non-friend替换member函数24: Declare non-member functions when type conversions should apply to all parameters 若所有参数皆需类型转换，请为此采用non-member函数25: Consider support for a noon-throwing swap 考虑写出一个不抛异常的swap函数艹, C++又把我看晕了]]></content>
       <categories>
         <category>编程</category>
         <category>C++</category>
@@ -371,8 +371,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Ftrigonometric-series%2F</url>
     <content type="text"><![CDATA[三角级数$\quad$一般地，以$A_k\sin(kx+\varphi_k)$为项作成的无穷级数 $$\sum\limits_{k=0}^{\infty}A_k\sin(kx+\varphi_k)$$ 称为三角级数.（所以首先三角级数都是无穷级数） 但是有时候也会取如下形式： $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}(a_k\cos{kx}+b_k\sin{kx})。$$ 周期函数周期函数有初相,振幅,频率 正弦级数给三角级数中所有的$a_k$取$0$，可以得到如下的正弦级数: $$\sum\limits_{k=1}^{\infty}b_k\sin{kx}$$ 余弦级数类似的操作可以得到余弦级数 $$\frac{a_0}{2}+\sum\limits_{k=1}^{\infty}a_k\cos{kx}$$ 傅里叶级数$$\begin{split}A_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\cos{nx}\mathtt{d}x \\B_n&amp;=\frac{1}{\pi}\int_0^{2\pi}f(x)\sin{nx}\mathtt{d}x\end{split}$$ 这里用的符号和上面不一样呢 应该打屁股]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
         <tag>级数</tag>
       </tags>
   </entry>
@@ -381,8 +381,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2Fcurve-line-integral%2F</url>
     <content type="text"><![CDATA[曲线积分第一类曲线积分第一类曲线积分用来求一个曲线物体的质量.当物体的密度是一个常值时，只需要将密度乘以弧长就可以得到质量.当物体的密度不均匀时，我们将密度表示为函数$f$，并对函数在曲线上积分，称为第一类曲线积分或者对弧长的曲线积分,记为$\int_Cf(x,y)\mathtt{d}s$，即 $$\int_Cf(x,y)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i)\Delta{s_i}$$ 其中$f(x,y)$称为被积函数,$C$称为积分曲线,$\mathtt{d}s$成为弧微分. 我们可以把这个概念扩展到三维空间或者更高维的空间中： $$\int_Cf(x,y,z)\mathtt{d}s=\lim_{\lambda\to{0}}\sum_{i=1}^nf(\xi_i,\eta_i,\zeta_i)\Delta{s_i}$$ 第二类曲线积分和第一类曲线积分不同，第二类曲线积分可以用来表示变力沿曲线做的功，是有方向的.第二类曲线积分记为: $$\int_CP(x,y)dx+Q(x,y)dy\quad或\quad\int_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$ 特别地，还可以有对某个方向的曲线积分 沿曲线$C$对坐标$x$的曲线积分$$\int_CP(x,y)dx=\lim_{\lambda\to{0}}\sum_{i=1}^nP(\xi_i,\eta_i)\Delta{x_i}$$ 沿曲线$C$对坐标$y$的曲线积分$$\int_CQ(x,y)dy=\lim_{\lambda\to{0}}\sum_{i=1}^nQ(\xi_i,\eta_i)\Delta{y_i}$$ 既然如此，应该还可以对一个特定的方向积分，就是不知道怎么表示. 如果曲线$C$为闭曲线，则记第二类曲线积分为 $$\oint_CP(x,y)dx+Q(x,y)dy\quad或\quad\oint_C\boldsymbol{F}(x,y)·\mathtt{d}\boldsymbol{r}$$]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
@@ -390,8 +390,8 @@
     <url>%2Fblog%2F2018%2F10%2F09%2FGreen-Formula%2F</url>
     <content type="text"><![CDATA[格林公式的定义和一些练习学习一下格林公式~ 简单闭曲线$\quad$设曲线$C$的参数方程为 $$\begin{cases}x=\varphi(t), \\y=\psi(t)\end{cases}\quad(\alpha\le{t}\le\beta).$$ 如果$\varphi,\psi$连续，且对不同的参数$t_1,t_2\in[\alpha,\beta]$(不妨设$t_1\le{t_2}$),$(\varphi(t_1),\psi(t_1))=(\varphi(t_2),\psi(t_2))$当且仅当$t_1=\alpha,t_2=\beta$,则称$C$为简单闭曲线 单连通区域$\quad$设有一个平面区域$D$,若$D$内的任意一条简单闭曲线所围的部分仍属于$D$，则称$D$为单连通区域，否则称为多连通区域. 格林公式$\quad$设有界闭区域$D$由逐段光滑曲线$C$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则 $$\begin{split}\oint_C{P}\mathtt{d}x+Q\mathtt{d}y=\iint\limits_D\left(\frac{\partial{Q}}{\partial{x}}-\frac{\partial{P}}{\partial{y}}\right)\mathtt{d}x\mathtt{d}y\end{split}$$ 用途通常这些东西总是有用的，我们观察上面的式子。 左边一部分是对光滑曲线$C$的第二类曲线积分，格林公式告诉我们它会与在由曲线围成的平面区域$D$上对两个方向的分量在另一个方向的偏导之差的积分相等. 证明为了加深理解，我们来看一下证明.证明格林公式的时候是拆开证的，也就是 $$\oint_CP\mathtt{d}x=-\iint\limits_D\frac{\partial{P}}{\partial{y}}\mathtt{d}x\mathtt{d}y, \quad\oint_CQ\mathtt{d}y=\iint\frac{\partial{Q}}{\partial{x}}\mathtt{d}x\mathtt{d}y$$ 分以下三种情况讨论: $D$由曲线$y=\varphi_1(x),y=\varphi_2(x)$，及直线$x=a,x=b$围成，即 $$D=\{(x,y)\mid\varphi_1(x)\le{y}\le\varphi_2(x),a\le{x}\le{b}\}$$ $D$是单连通区域，且与某些与$y$轴平行的直线相交多于两点 $D$是多联通区域 做题环节题目1求椭圆$x=a\cos\theta,y=b\sin\theta$所围图形面积. 解： 我们可以从格林公式中得到一个简单的应用： 当$P=-y,Q=x$时，公式就变成了 $$\begin{split}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y=2\iint\limits_D\mathtt{d}x\mathtt{d}y\end{split}$$ 也就是闭区域$D$的面积$A$为: $$\begin{split}A=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y\end{split}$$ 那么求椭圆面积就变为了求解上述式子,有: $$\begin{split}A&amp;=\frac{1}{2}\oint_C{-y}\mathtt{d}x+x\mathtt{d}y \\&amp;=\frac{1}{2}\int_0^{2\pi}{-b\sin\theta}\mathtt{d}{a\cos\theta}+a\cos\theta\mathtt{d}b\sin\theta \\&amp;=\frac{1}{2}\int_0^{2\pi}{ab\sin^2\theta}\mathtt{d}{\theta}+ab\cos^2\theta\mathtt{d}\theta \\&amp;=\frac{1}{2}ab·2\pi \\&amp;=ab\pi\end{split}$$]]></content>
       <tags>
-        <tag>数学</tag>
         <tag>微积分</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
 </search>

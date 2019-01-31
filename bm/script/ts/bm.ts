@@ -13168,6 +13168,7 @@ class Game {
                     const team = gameData.teams[player.team];
                     retireNewsList.push(`${team.name}的${player.name}退役，${player.age}岁`);
                     gameData.teams[player.team].players.splice(team.players.indexOf(id), 1);
+                    this.removeRole(id, gameData);
                 }else {
                     retireNewsList.push(`自由球员${player.name}退役，${player.age}岁`);
                 }

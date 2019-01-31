@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2018/10/09/cpp-learning/</loc>
+    
+    <lastmod>2019-01-31T12:00:36.010Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2019/01/17/bm-test/</loc>
     
     <lastmod>2019-01-31T07:07:57.395Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>https://tipwheal.github.io/blog/2019/01/13/synth-piano/</loc>
     
     <lastmod>2019-01-13T05:29:33.799Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/cpp-learning/</loc>
-    
-    <lastmod>2019-01-11T13:52:05.481Z</lastmod>
     
   </url>
   
