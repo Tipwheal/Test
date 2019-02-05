@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/02/05/vis-random/</loc>
+    <lastmod>2019-02-05T08:24:58.573Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
+    <lastmod>2019-02-05T07:21:23.955Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/17/bm-test/</loc>
     <lastmod>2019-02-05T02:34:23.713Z</lastmod>
   </url>  <url>
@@ -12,9 +18,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/15/tfjs-test/</loc>
     <lastmod>2019-01-17T04:59:18.132Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
-    <lastmod>2019-01-15T15:45:23.476Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/12/audio-test/</loc>
     <lastmod>2019-01-14T09:31:17.761Z</lastmod>

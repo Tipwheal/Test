@@ -622,6 +622,223 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/02/05/vis-random/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小学生学习园地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/02/05/vis-random/" itemprop="url">
+                  看看随机的效果
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：16:24:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+<div>
+    <button onclick="testRandom()" class="btn">生成一个图</button>
+    <svg width="600" height="400"/>
+</div>
+
+<script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
+<script src="https://cdn.bootcss.com/d3-random/1.1.0/d3-random.js"></script>
+
+<script>
+function testRandom() {
+    let rand = d3.randomNormal(0, 25);
+    let dataset = [];
+    for(let i = 0; i < 100; i++) {
+        dataset.push( rand() );
+    }
+
+    let bin_num = 15;
+    let histogram = d3.histogram()
+                        .domain([-50, 50]);
+    let data = histogram(dataset);
+    console.log(data);
+
+    let max_height = 300;
+    let rect_step = 30;
+    let heights = [];
+    for(let i = 0; i < data.length; i++) {
+        heights.push( data[i].length );
+    }
+    let yScale = d3.scaleLinear()
+                    .domain([d3.min(heights), d3.max(heights)])
+                    .range([0, max_height]);
+    const svg = d3.select('svg');
+    svg.select('g').remove();
+    const graphics = svg.append('g');
+    graphics.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr('x', (d, i) => i * rect_step)
+            .attr('y', (d, i) => max_height - yScale(d.length))
+            .attr('width', (d, i) => rect_step - 2)
+            .attr('height', (d, i) => yScale(d.length))
+            .attr('fill', 'steelblue');
+    graphics.append('line')
+            .attr('stroke', 'black')
+            .attr("stroke-width", "1px")
+			.attr("x1", 0)
+			.attr("y1", max_height)
+			.attr("x2", data.length * rect_step)
+            .attr("y2", max_height);
+    graphics.selectAll(".linetick")
+			.data(data)
+			.enter()
+			.append("line")
+			.attr("stroke","black")
+			.attr("stroke-width","1px")
+			.attr("x1", (d, i) => i * rect_step + rect_step / 2)
+			.attr("y1", max_height)
+			.attr("x2", (d, i) => i * rect_step + rect_step / 2)
+			.attr("y2", max_height + 5);
+    graphics.selectAll("text")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("font-size", "10px")
+			.attr("x", (d, i) => i * rect_step)
+			.attr("y", (d, i) => max_height)
+			.attr("dx", rect_step / 2 - 8)
+			.attr("dy", "15px")
+			.text(d => Math.floor(d.x0));
+}
+testRandom();
+</script>
+
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/01/17/bm-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2362,164 +2579,6 @@ setInterval(() => {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/12/09/visualize-lib-js/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小学生学习园地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/12/09/visualize-lib-js/" itemprop="url">
-                  JS的数据可视化工具收集
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-09 10:52:26" itemprop="dateCreated datePublished" datetime="2018-12-09T10:52:26+08:00">2018-12-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-05 15:05:22" itemprop="dateModified" datetime="2019-01-05T15:05:22+08:00">2019-01-05</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="D3-js"><a href="#D3-js" class="headerlink" title="D3.js"></a>D3.js</h3><p><a href="https://d3js.org/" target="_blank" rel="noopener">官网</a>有一些文档和例子<br><a href="http://d3.decembercafe.org/" target="_blank" rel="noopener">中文站</a></p>
-<p><a href="https://beta.observablehq.com/@mbostock/graphviz" target="_blank" rel="noopener">流程图</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/12/09/visualize-lib-js/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2571,7 +2630,7 @@ setInterval(() => {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2747,7 +2806,9 @@ setInterval(() => {
                     
                       
                     
-                    <span class="site-state-item-count">52</span>
+                      
+                    
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3358,9 +3419,9 @@ setInterval(() => {
       
     
       
-        
-      
     
+      
+        
       
     
       
