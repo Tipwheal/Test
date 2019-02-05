@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-31T07:07:57.395Z">
+<meta property="og:updated_time" content="2019-02-05T02:34:23.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-31 15:07:57" itemprop="dateModified" datetime="2019-01-31T15:07:57+08:00">2019-01-31</time>
+                <time title="修改时间：2019-02-05 10:34:23" itemprop="dateModified" datetime="2019-02-05T10:34:23+08:00">2019-02-05</time>
               
             
           </span>
@@ -489,6 +489,7 @@
 <button class="btn" onclick="load()">读取</button>
 <button class="btn" onclick="save()">保存</button>
 <button class="btn" onclick="init()">开始新游戏</button>
+<!-- <button class='btn' onclick='test()'>测试</button> -->
 
 <div id="mainWrapper">
     <div id="stateDiv">
@@ -521,6 +522,7 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 <script src="/blog/bm/script/js/bm.js"></script>
+<script src="/blog/bm/script/js/simulator.js"></script>
 
 <script>
 let fileName = '';
@@ -530,6 +532,10 @@ let viewState = {
     showNav: true,
 }
 let gameState = {};
+
+function test() {
+    new MatchSimulator().simulateSection(720);
+}
 
 function init() {
     gameState = Game.getInitData();
@@ -549,7 +555,9 @@ function finishInit(teamId) {
     gameState.news.push({
         season: 1,
         day: 1,
-        content: `此版本为web版，可以使用电脑浏览器进行游戏，手机端建议安装APP以获得更好的游戏体验。<br />
+        content: `
+        新年快乐！<br />
+        此版本为web版，可以使用电脑浏览器进行游戏，手机端建议安装APP以获得更好的游戏体验。<br />
         详情请加入qq群（191376904）。欢迎大家的体验和反馈！<br />
         <br />
         1.30更新：<br />

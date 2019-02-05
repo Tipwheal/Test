@@ -14539,9 +14539,6 @@ class TeamMatchUtil {
     }
 
     public static getBenchPlayers(teamId: any, gameData: any): any {
-        // if(teamId == gameData.userTeamId && gameData.lockLineup) {
-        //     return gameData.teams[teamId].bench;
-        // }
         const team = gameData.teams[teamId];
         const starters = this.getStarters(teamId, gameData);
         const players = team.players;
@@ -14605,6 +14602,10 @@ class RandomUtil {
         }
         rand /= 6;
         return rand * (end - start) + start;
+    }
+
+    public static justRandom(start: number, end: number): any {
+        return Math.random() * (end - start) + start;
     }
 
     public static randn_bm(min: number, max: number, skew: number) {
@@ -14863,4 +14864,911 @@ class DataUtil {
             return 'C';
         }
     }
+}
+
+class MatchSimulator {
+    static sideMap: any = {
+        e1: {
+            name: 'changeHandler',
+            description: '控球人改变为现在之外的一人'
+        },
+        e2: {
+            name: 'changeTeam',
+            description: '球权交给另一个球队'
+        },
+        e3: {
+            name: 'randomHandler',
+            description: '球队内任意一人拿到球',
+        },
+        e4: {
+            name: 'oppRandomHandler',
+            description: '对手任意一人拿到球',
+        },
+        e5: {
+            name: 'rstRoundTime',
+            description: '重置回合计时为24',
+        },
+        e6: {
+            name: 'rstHalfTime',
+            description: '重置回合计时为14',
+        },
+        e7: {
+            name: 'threeIn',
+            description: '球员三分出手命中各加一',
+        },
+        e8: {
+            name: 'threeOut',
+            description: '球员三分出手加一',
+        },
+        e9: {
+            name: 'middleIn',
+            description: '球员中距离出手命中各加一',
+        },
+        e10: {
+            name: 'middleOut',
+            description: '球员中距离出手加一',
+        },
+        e11: {
+            name: 'insideIn',
+            description: '球员禁区出手命中各加一',
+        },
+        e12: {
+            name: 'insideOut',
+            description: '球员禁区出手加一',
+        },
+    }
+    static actionMap: any = {
+        A: {
+            description: 'O过半场',
+            sideEffect: [],
+            minTime: 2,
+            maxTime: 5,
+        },
+        B: {
+            description: 'O运至三分线外',
+            sideEffect: [],
+            minTime: 1,
+            maxTime: 4,
+        },
+        C: {
+            description: 'O运至中距离',
+            sideEffect: [],
+            minTime: 1,
+            maxTime: 4,
+        },
+        D: {
+            description: 'O运至禁区',
+            sideEffect: [],
+            minTime: 1,
+            maxTime: 4,
+        },
+        E: {
+            description: 'O传球至外线的N',
+            sideEffect: ['e1'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        F: {
+            description: 'O传球至中距离的N',
+            sideEffect: ['e1'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        G: {
+            description: 'O传球至禁区N',
+            sideEffect: ['e1'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        H: {
+            description: 'O将球拿起',
+            sideEffect: [],
+            minTime: 0,
+            maxTime: 1,
+        },
+        I: {
+            description: 'O三分进',
+            sideEffect: ['e7', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        J: {
+            description: 'O三分不进，弹回场内',
+            sideEffect: ['e8', 'e5'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        K: {
+            description: 'O发球给N',
+            sideEffect: ['e1'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        L: {
+            description: 'O三分不进，出界',
+            sideEffect: ['e8', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        M: {
+            description: 'R在禁区拿到前场篮板',
+            sideEffect: ['e3'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        N: {
+            description: 'R捡到前场篮板',
+            sideEffect: ['e3'],
+            minTime: 0,
+            maxTime: 3,
+        },
+        O: {
+            description: 'P拿到后场篮板',
+            sideEffect: ['e2', 'e4'],
+            minTime: 0,
+            maxTime: 2,
+        },
+        P: {
+            description: 'P抢断了O',
+            sideEffect: ['e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        Q: {
+            description: 'O三分出手，被P盖帽',
+            sideEffect: ['e8'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        R: {
+            description: 'O三分出手被P盖到界外',
+            sideEffect: ['e8', 'e3'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        S: {
+            description: 'P投篮犯规，三罚',
+            sideEffect: ['e5'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        T: {
+            description: 'P犯规，犯规次数未到',
+            sideEffect: ['e3', 'e6'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        U: {
+            description: 'O最后一罚进',
+            sideEffect: ['e2', 'e4'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        V: {
+            description: 'O最后一罚不进',
+            sideEffect: [],
+            minTime: 0,
+            maxTime: 0,
+        },
+        W: {
+            description: 'P犯规，犯规次数已到',
+            sideEffect: ['e5'],
+            minTime: 0,
+            maxTime: 0,
+        },
+        X: {
+            description: 'O中距离出手命中',
+            sideEffect: ['e9', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        Y: {
+            description: 'O中距离出手不中，球弹回场内',
+            sideEffect: ['e10', 'e2', 'e4'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        Z: {
+            description: 'O中距离出手不中，球出界外',
+            sideEffect: ['e10', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AA: {
+            description: 'O中距离出手，被P盖到场内',
+            sideEffect: ['e10'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AB: {
+            description: 'O中距离出手，被P盖出界外',
+            sideEffect: ['e10', 'e3', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AC: {
+            description: 'O中距离出手不进，P打手犯规',
+            sideEffect: ['e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AD: {
+            description: 'O三分出手命中，P打手犯规',
+            sideEffect: ['e7', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AE: {
+            description: 'O中距离出手命中，P打手犯规',
+            sideEffect: ['e9', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AF: {
+            description: 'O禁区出手命中，P打手犯规',
+            sideEffect: ['e11', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AG: {
+            description: 'O禁区出手命中',
+            sideEffect: ['e11', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AH: {
+            description: 'O禁区出手不中，球弹回场内',
+            sideEffect: ['e12', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AI: {
+            description: 'O禁区出手不中，球出界外',
+            sideEffect: ['e12', 'e2', 'e4', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AJ: {
+            description: 'O禁区出手，被P盖到场内',
+            sideEffect: ['e12'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AK: {
+            description: 'O禁区出手，被P盖出界外',
+            sideEffect: ['e12', 'e3', 'e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+        AL: {
+            description: 'O禁区出手不进，P打手犯规',
+            sideEffect: ['e5'],
+            minTime: 0,
+            maxTime: 1,
+        },
+    }
+    static statesMap: any = {
+        s1: {
+            description: 'O在后场运球',
+            actions: {
+                A: {
+                    target: 's2',
+                    base: 180,
+                },
+                E: {
+                    target: 's2',
+                    base: 10,
+                },
+                F: {
+                    target: 's3',
+                    base: 8,
+                },
+                G: {
+                    target: 's4',
+                    base: 4,
+                },
+                I: {
+                    target: 's8',
+                    base: 1,
+                },
+                L: {
+                    target: 's8',
+                    base: 2,
+                },
+                R: {
+                    target: 's8',
+                    base: 1,
+                },
+                J: {
+                    target: 's9',
+                    base: 1,
+                },
+                Q: {
+                    target: 's9',
+                    base: 1,
+                },
+                S: {
+                    target: 's11',
+                    base: 1,
+                },
+            }
+        },
+        s2: {
+            description: 'O在外线运球',
+            actions: {
+                B: {
+                    target: 's2',
+                    base: 40,
+                },
+                E: {
+                    target: 's2',
+                    base: 20,
+                },
+                C: {
+                    target: 's3',
+                    base: 40,
+                },
+                F: {
+                    target: 's3',
+                    base: 30,
+                },
+                G: {
+                    target: 's4',
+                    base: 5,
+                },
+                H: {
+                    target: 's5',
+                    base: 7,
+                },
+                I: {
+                    target: 's8',
+                    base: 3,
+                },
+                L: {
+                    target: 's8',
+                    base: 2,
+                },
+                R: {
+                    target: 's8',
+                    base: 1,
+                },
+                J: {
+                    target: 's9',
+                    base: 3,
+                },
+                Q: {
+                    target: 's9',
+                    base: 1,
+                },
+                S: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 3,
+                },
+                AD: {
+                    target: 's11',
+                    base: 1,
+                },
+            }
+        },
+        s3: {
+            description: 'O在中距离运球',
+            actions: {
+                B: {
+                    target: 's2',
+                    base: 1,
+                },
+                E: {
+                    target: 's2',
+                    base: 1,
+                },
+                C: {
+                    target: 's3',
+                    base: 1,
+                },
+                F: {
+                    target: 's3',
+                    base: 1,
+                },
+                D: {
+                    target: 's4',
+                    base: 1,
+                },
+                G: {
+                    target: 's4',
+                    base: 1,
+                },
+                H: {
+                    target: 's6',
+                    base: 1,
+                },
+                X: {
+                    target: 's8',
+                    base: 1,
+                },
+                Z: {
+                    target: 's8',
+                    base: 1,
+                },
+                AB: {
+                    target: 's8',
+                    base: 1,
+                },
+                Y: {
+                    target: 's9',
+                    base: 1,
+                },
+                AA: {
+                    target: 's9',
+                    base: 1,
+                },
+                AC: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 1,
+                },
+                AE: {
+                    target: 's11',
+                    base: 1,
+                }
+            }
+        },
+        s4: {
+            description: 'O在禁区运球',
+            actions: {
+                E: {
+                    target: 's2',
+                    base: 1,
+                },
+                C: {
+                    target: 's3',
+                    base: 1,
+                },
+                F: {
+                    target: 's3',
+                    base: 1,
+                },
+                D: {
+                    target: 's4',
+                    base: 1,
+                },
+                G: {
+                    target: 's4',
+                    base: 1,
+                },
+                H: {
+                    target: 's7',
+                    base: 1,
+                },
+                AG: {
+                    target: 's8',
+                    base: 1,
+                },
+                AI: {
+                    target: 's8',
+                    base: 1,
+                },
+                AK: {
+                    target: 's8',
+                    base: 1,
+                },
+                AH: {
+                    target: 's9',
+                    base: 1,
+                },
+                AJ: {
+                    target: 's9',
+                    base: 1,
+                },
+                AL: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 1,
+                },
+                AF: {
+                    target: 's11',
+                    base: 1,
+                }
+            }
+        },
+        s5: {
+            description: 'O在外线持球',
+            actions: {
+                E: {
+                    target: 's2',
+                    base: 1,
+                },
+                F: {
+                    target: 's3',
+                    base: 1,
+                },
+                G: {
+                    target: 's4',
+                    base: 1,
+                },
+                I: {
+                    target: 's8',
+                    base: 1,
+                },
+                L: {
+                    target: 's8',
+                    base: 1,
+                },
+                R: {
+                    target: 's8',
+                    base: 1,
+                },
+                J: {
+                    target: 's9',
+                },
+                Q: {
+                    target: 's9',
+                    base: 1,
+                },
+                S: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 1,
+                },
+                AD: {
+                    target: 's11',
+                    base: 1,
+                },
+            }
+        },
+        s6: {
+            description: 'O在中距离持球',
+            actions: {
+                E: {
+                    target: 's2',
+                    base: 1,
+                },
+                F: {
+                    target: 's3',
+                    base: 1,
+                },
+                G: {
+                    target: 's4',
+                    base: 1,
+                },
+                X: {
+                    target: 's8',
+                    base: 1,
+                },
+                Z: {
+                    target: 's8',
+                    base: 1,
+                },
+                AB: {
+                    target: 's8',
+                    base: 1,
+                },
+                Y: {
+                    target: 's9',
+                    base: 1,
+                },
+                AA: {
+                    target: 's9',
+                    base: 1,
+                },
+                AC: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 1,
+                },
+                AE: {
+                    target: 's11',
+                    base: 1,
+                },
+            }
+        },
+        s7: {
+            description: 'O在禁区持球',
+            actions: {
+                E: {
+                    target: 's2',
+                    base: 1,
+                },
+                F: {
+                    target: 's3',
+                    base: 1,
+                },
+                G: {
+                    target: 's4',
+                    base: 1,
+                },
+                AG: {
+                    target: 's8',
+                    base: 1,
+                },
+                AI: {
+                    target: 's8',
+                    base: 1,
+                },
+                AK: {
+                    target: 's8',
+                    base: 1,
+                },
+                AH: {
+                    target: 's9',
+                    base: 1,
+                },
+                AJ: {
+                    target: 's9',
+                    base: 1,
+                },
+                AL: {
+                    target: 's11',
+                    base: 1,
+                },
+                P: {
+                    target: 's1',
+                    base: 1,
+                },
+                AF: {
+                    target: 's11',
+                    base: 1,
+                },
+            }
+        },
+        s8: {
+            description: '准备发后场球',
+            actions: {
+                K: {
+                    target: 's1',
+                    base: 1,
+                }
+            }
+        },
+        s9: {
+            description: '抢篮板',
+            actions: {
+                O: {
+                    target: 's1',
+                    base: 1,
+                },
+                N: {
+                    target: 's3',
+                    base: 1,
+                },
+                M: {
+                    target: 's4',
+                    base: 1,
+                },
+            }
+        },
+        s10: {
+            description: 'O准备发前场球',
+            actions: {
+                U: {
+                    target: 's8',
+                    base: 1,
+                },
+            }
+        },
+        s11: {
+            description: 'O在罚球',
+            actions: {
+                V: {
+                    target: 's9',
+                    base: 1,
+                },
+                U: {
+                    target: 's8',
+                    base: 1,
+                }
+            }
+        },
+    }
+    gameData: any;
+
+    constructor(gameData: any) {
+        this.gameData = gameData;
+    }
+
+    public simulate(homeTeamId: any, visitorId: any) {
+        const homeTeam = this.gameData.teams[homeTeamId];
+        const visitor = this.gameData.teams[visitorId];
+        // current
+    }
+
+    public simulateSection(seconds: number) {
+        const match = {
+            timeLeft: seconds,
+            roundLeft: 24,
+            state: 's1',
+            handleTeam: 'home',
+            handler: '',
+            homeTeamName: '凯尔特人',
+            visitorName: '湖人',
+            homeMember: {
+                pg: {
+                    name: '凯尔特人控位',
+                },
+                sg: {
+                    name: '凯尔特人分位',
+                },
+                sf: {
+                    name: '凯尔特人小前',
+                },
+                pf: {
+                    name: '凯尔特人大前',
+                },
+                c: {
+                    name: '凯尔特人中锋',
+                }
+            },
+            visitorMember: {
+                pg: {
+                    name: '湖人控卫',
+                },
+                sg: {
+                    name: '湖人分卫',
+                },
+                sf: {
+                    name: '湖人小前',
+                },
+                pf: {
+                    name: '湖人大前',
+                },
+                c: {
+                    name: '湖人中锋',
+                }
+            }
+        }
+        this.getHandler(match);
+        while(match.timeLeft > 0) {
+            this.describeState(match);
+            this.updateState(match);
+        }
+    }
+
+    public getPlayerExceptPlace(p: string, match: any, side: string) {
+        let place = this.getPlaceExcept(p);
+        if(side == 'home') {
+            return match.homeMember[place];
+        }else {
+            return match.visitorMember[place];
+        }
+    }
+
+    public getPlaceExcept(p: string) {
+        const t = ['pg', 'sg', 'sf', 'pf', 'c'];
+        let rand = RandomUtil.random(0, 5);
+        while(t[rand] == p) {
+            rand = RandomUtil.random(0, 5);
+        }
+        return t[rand];
+    }
+
+    public getHandler(match: any) {
+        match.handleTeam = 'home',
+        match.handler = 'pg';
+    }
+
+    public getTeamName(match: any) {
+        if(match.handleTeam == 'home') {
+            return match.homeTeamName;
+        }
+        return match.visitorName;
+    }
+
+    public getHandlerName(match: any) {
+        if(match.handleTeam == 'home') {
+            return match.homeMember[match.handler].name;
+        }
+        return match.visitorMember[match.handler].name;
+    }
+
+    public getPlaceName(place: any, match: any) {
+        if(match.handleTeam == 'home') {
+            return match.homeMember[place].name;
+        }
+        return match.visitorMember[place].name;
+    }
+
+    public getOppName(place: any, match: any) {
+        if(match.handleTeam == 'visitor') {
+            return match.homeMember[match.handler].name;
+        }
+        return match.visitorMember[match.handler].name;
+    }
+
+    public describeState(match: any) {
+        let des = `${MatchSimulator.statesMap[match.state].description}`.replace('O', `${this.getTeamName(match)}的${this.getHandlerName(match)}`);
+        console.log(des);
+    }
+
+    //需要重写一下，有一些是动作前的？有一些是动作后的？
+    public describeActionAndDoSideEffect(name: any, match: any) {
+        this.calcActionTime(name, match);
+        let action = MatchSimulator.actionMap[name];
+        const places = ['pg', 'sg', 'sf', 'pf', 'c'];
+        let O = match.handler;
+        let oName = this.getPlaceName(O, match);
+        let N = places[RandomUtil.random(0, 4)];
+        let nName = this.getPlaceName(N, match);
+        let R = places[RandomUtil.random(0, 4)];
+        let rName = this.getPlaceName(R, match);
+        let P = places[RandomUtil.random(0, 4)];
+        let pName = this.getOppName(P, match);
+        if(action.sideEffect.length > 0) {
+            for(let i = 0; i < action.sideEffect.length; i ++) {
+                let effect = action.sideEffect[i];
+                if(effect == 'e1') {
+                    let currentHandler = match.handler;
+                    match.handler = this.getPlaceExcept(currentHandler);
+                    N = match.handler;
+                    nName = this.getPlaceName(N, match);
+                }else if(effect == 'e3') {
+                    let rand = RandomUtil.random(0, 4);
+                    match.handler = places[rand];
+                    R = match.handler;
+                    rName = this.getPlaceName(R, match);
+                }else if(effect == 'e4') {
+                    let rand = RandomUtil.random(0, 4);
+                    match.handler = places[rand];
+                    P = match.handler;
+                    pName = this.getPlaceName(P, match);
+                }else if(effect == 'e2') {
+                    if(match.handleTeam == 'home') {
+                        match.handleTeam = 'visitor';
+                    }else {
+                        match.handleTeam = 'home';
+                    }
+                }else if(effect == 'e5') {
+                    match.roundLeft = 24;
+                }else if(effect == 'e6') {
+                    if(match.roundLeft < 14) {
+                        match.roundLeft = 14;
+                    }
+                }
+            }
+        }
+        console.log(action.description
+            .replace('O', oName)
+            .replace('N', nName)
+            .replace('R', rName)
+            .replace('P', pName));
+    }
+
+    private calcActionTime(action: any, match: any) {
+        let minTime = MatchSimulator.actionMap[action].minTime;
+        let maxTime = MatchSimulator.actionMap[action].maxTime;
+        let time = RandomUtil.justRandom(minTime, maxTime);
+        match.timeLeft -= time;
+        match.roundLeft -= time;
+        return time;
+    }
+
+    public updateState(match: any) {
+        const currentState = match.state;
+        const actions = MatchSimulator.statesMap[currentState].actions;
+        const aAndN = [];
+        for(let i in actions) {
+            aAndN.push(i);
+        }
+        let rand = RandomUtil.random(0, aAndN.length);
+        const actionName = aAndN[rand];
+        this.describeActionAndDoSideEffect(actionName, match);
+        match.state = actions[actionName].target;
+        // console.log(`回合剩余时间${match.roundLeft.toFixed(2)}，本节剩余时间${match.timeLeft.toFixed(2)}`)
+        // console.log(aAndN);
+    }
+    
 }
