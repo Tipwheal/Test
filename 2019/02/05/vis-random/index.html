@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="生成一个图            function testRandom() {     let rand = d3.randomNormal(0, 25);     let dataset = [];     for(let i = 0; i &amp;lt; 100; i++) {         dataset.push( rand() );     }      let bin_num =">
-<meta name="keywords" content="随机,可视化">
+  <meta name="description" content="生成一个图            function testRandom() {     let rand = d3.randomLogNormal(0, 1);     let dataset = [];     for(let i = 0; i &amp;lt; 10000; i++) {         dataset.push( rand() );     }      let histo">
+<meta name="keywords" content="可视化,随机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="看看随机的效果">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/02/05/vis-random/index.html">
 <meta property="og:site_name" content="小学生学习园地">
-<meta property="og:description" content="生成一个图            function testRandom() {     let rand = d3.randomNormal(0, 25);     let dataset = [];     for(let i = 0; i &amp;lt; 100; i++) {         dataset.push( rand() );     }      let bin_num =">
+<meta property="og:description" content="生成一个图            function testRandom() {     let rand = d3.randomLogNormal(0, 1);     let dataset = [];     for(let i = 0; i &amp;lt; 10000; i++) {         dataset.push( rand() );     }      let histo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-05T08:24:58.573Z">
+<meta property="og:updated_time" content="2019-02-05T15:59:58.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="看看随机的效果">
-<meta name="twitter:description" content="生成一个图            function testRandom() {     let rand = d3.randomNormal(0, 25);     let dataset = [];     for(let i = 0; i &amp;lt; 100; i++) {         dataset.push( rand() );     }      let bin_num =">
+<meta name="twitter:description" content="生成一个图            function testRandom() {     let rand = d3.randomLogNormal(0, 1);     let dataset = [];     for(let i = 0; i &amp;lt; 10000; i++) {         dataset.push( rand() );     }      let histo">
 
 
 
@@ -385,7 +385,7 @@
                 
               
 
-              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：16:24:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
+              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：23:59:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
             
 
             
@@ -443,17 +443,16 @@
 
 <script>
 function testRandom() {
-    let rand = d3.randomNormal(0, 25);
+    let rand = d3.randomLogNormal(0, 1);
     let dataset = [];
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < 10000; i++) {
         dataset.push( rand() );
     }
 
-    let bin_num = 15;
     let histogram = d3.histogram()
-                        .domain([-50, 50]);
+                        .domain([0, 10])
+                        .thresholds(20);
     let data = histogram(dataset);
-    console.log(data);
 
     let max_height = 300;
     let rect_step = 30;
@@ -528,9 +527,9 @@ testRandom();
       
         <div class="post-tags">
           
-            <a href="/blog/tags/随机/" rel="tag"># 随机</a>
-          
             <a href="/blog/tags/可视化/" rel="tag"># 可视化</a>
+          
+            <a href="/blog/tags/随机/" rel="tag"># 随机</a>
           
         </div>
       

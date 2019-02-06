@@ -669,7 +669,7 @@
                 
               
 
-              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：16:24:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
+              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：23:59:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
             
 
             
@@ -721,17 +721,16 @@
 
 <script>
 function testRandom() {
-    let rand = d3.randomNormal(0, 25);
+    let rand = d3.randomLogNormal(0, 1);
     let dataset = [];
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < 10000; i++) {
         dataset.push( rand() );
     }
 
-    let bin_num = 15;
     let histogram = d3.histogram()
-                        .domain([-50, 50]);
+                        .domain([0, 10])
+                        .thresholds(20);
     let data = histogram(dataset);
-    console.log(data);
 
     let max_height = 300;
     let rect_step = 30;
