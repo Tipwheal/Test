@@ -622,6 +622,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/02/06/union-find/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小学生学习园地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/02/06/union-find/" itemprop="url">
+                  并查集&算法分析的方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-06 20:45:59" itemprop="dateCreated datePublished" datetime="2019-02-06T20:45:59+08:00">2019-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-09 11:29:17" itemprop="dateModified" datetime="2019-02-09T11:29:17+08:00">2019-02-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这里是Coursera上Algrithm Part 1的笔记</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2019/02/06/union-find/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/02/05/vis-random/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -669,12 +844,24 @@
                 
               
 
-              <time title="创建时间：2019-02-05 15:21:04 / 修改时间：23:59:58" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
+              <time title="创建时间：2019-02-05 15:21:04" itemprop="dateCreated datePublished" datetime="2019-02-05T15:21:04+08:00">2019-02-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-07 09:14:51" itemprop="dateModified" datetime="2019-02-07T09:14:51+08:00">2019-02-07</time>
               
             
           </span>
@@ -708,85 +895,14 @@
 
       
         
-          
-            
-
-<div>
-    <button onclick="testRandom()" class="btn">生成一个图</button>
-    <svg width="600" height="400"/>
-</div>
-
-<script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
-<script src="https://cdn.bootcss.com/d3-random/1.1.0/d3-random.js"></script>
-
-<script>
-function testRandom() {
-    let rand = d3.randomLogNormal(0, 1);
-    let dataset = [];
-    for(let i = 0; i < 10000; i++) {
-        dataset.push( rand() );
-    }
-
-    let histogram = d3.histogram()
-                        .domain([0, 10])
-                        .thresholds(20);
-    let data = histogram(dataset);
-
-    let max_height = 300;
-    let rect_step = 30;
-    let heights = [];
-    for(let i = 0; i < data.length; i++) {
-        heights.push( data[i].length );
-    }
-    let yScale = d3.scaleLinear()
-                    .domain([d3.min(heights), d3.max(heights)])
-                    .range([0, max_height]);
-    const svg = d3.select('svg');
-    svg.select('g').remove();
-    const graphics = svg.append('g');
-    graphics.selectAll("rect")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr('x', (d, i) => i * rect_step)
-            .attr('y', (d, i) => max_height - yScale(d.length))
-            .attr('width', (d, i) => rect_step - 2)
-            .attr('height', (d, i) => yScale(d.length))
-            .attr('fill', 'steelblue');
-    graphics.append('line')
-            .attr('stroke', 'black')
-            .attr("stroke-width", "1px")
-			.attr("x1", 0)
-			.attr("y1", max_height)
-			.attr("x2", data.length * rect_step)
-            .attr("y2", max_height);
-    graphics.selectAll(".linetick")
-			.data(data)
-			.enter()
-			.append("line")
-			.attr("stroke","black")
-			.attr("stroke-width","1px")
-			.attr("x1", (d, i) => i * rect_step + rect_step / 2)
-			.attr("y1", max_height)
-			.attr("x2", (d, i) => i * rect_step + rect_step / 2)
-			.attr("y2", max_height + 5);
-    graphics.selectAll("text")
-			.data(data)
-			.enter()
-			.append("text")
-			.attr("font-size", "10px")
-			.attr("x", (d, i) => i * rect_step)
-			.attr("y", (d, i) => max_height)
-			.attr("dx", rect_step / 2 - 8)
-			.attr("dy", "15px")
-			.text(d => Math.floor(d.x0));
-}
-testRandom();
-</script>
-
-
-
-          
+          <p>把内容关起来</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2019/02/05/vis-random/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2419,165 +2535,6 @@ setInterval(() => {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/12/13/docker-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小学生学习园地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/12/13/docker-learning/" itemprop="url">
-                  Docker的一些有趣的东西
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-13 09:46:10" itemprop="dateCreated datePublished" datetime="2018-12-13T09:46:10+08:00">2018-12-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-14 13:24:27" itemprop="dateModified" datetime="2018-12-14T13:24:27+08:00">2018-12-14</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Docker命令相关"><a href="#Docker命令相关" class="headerlink" title="Docker命令相关"></a>Docker命令相关</h2><h3 id="创建一个网络"><a href="#创建一个网络" class="headerlink" title="创建一个网络"></a>创建一个网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create --subnet=172.18.0.0/16 mynetwork</span><br></pre></td></tr></table></figure>
-<p>docker默认使用的网络是172.17.0.0/16，所以创建网络应该从内网的其他部分选取。</p>
-<h3 id="列出网络"><a href="#列出网络" class="headerlink" title="列出网络"></a>列出网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network ls</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/12/13/docker-learning/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2629,7 +2586,7 @@ setInterval(() => {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2807,7 +2764,11 @@ setInterval(() => {
                     
                       
                     
-                    <span class="site-state-item-count">53</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3406,21 +3367,21 @@ setInterval(() => {
       
     
       
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
         
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
       
     
       

@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2019/02/06/union-find/</loc>
+    
+    <lastmod>2019-02-09T03:29:17.070Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/11/06/draft/</loc>
+    
+    <lastmod>2019-02-08T14:21:59.467Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
     
-    <lastmod>2019-02-06T12:28:43.631Z</lastmod>
+    <lastmod>2019-02-08T06:44:42.420Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://tipwheal.github.io/blog/2019/02/05/vis-random/</loc>
     
-    <lastmod>2019-02-05T15:59:58.681Z</lastmod>
+    <lastmod>2019-02-07T01:14:51.642Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2018/10/09/chinese-learning/</loc>
+    
+    <lastmod>2019-02-06T14:34:27.696Z</lastmod>
     
   </url>
   
@@ -68,13 +89,6 @@
     <loc>https://tipwheal.github.io/blog/2018/10/26/bezier-curve/</loc>
     
     <lastmod>2019-01-09T02:38:45.036Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/06/draft/</loc>
-    
-    <lastmod>2019-01-07T13:27:45.068Z</lastmod>
     
   </url>
   
@@ -187,13 +201,6 @@
     <loc>https://tipwheal.github.io/blog/2018/11/15/ordinary-differential-equation/</loc>
     
     <lastmod>2018-11-19T04:34:02.120Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/chinese-learning/</loc>
-    
-    <lastmod>2018-11-16T07:32:54.181Z</lastmod>
     
   </url>
   
