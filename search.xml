@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[并查集&算法分析的方法]]></title>
     <url>%2Fblog%2F2019%2F02%2F06%2Funion-find%2F</url>
-    <content type="text"><![CDATA[这里是Coursera上Algrithm Part 1的笔记 并查集(Union-Find)并查集是一种数据结构，可以用来描述多个实体之间的连接关系，至少在这个课程中，它是一个为了解决特定的问题而简化过的模型。 一开始是一堆互不连接的点，我们使用union操作可以将它们两两连接起来，但是在我们使用的数据结构中，我们无法判断是哪两个具体的点连在了一起，也不能使用断开连接的操作。我们只需要知道，这几个点是连在一起的，这种关系叫做connected。 也就是说在并查集中有两种操作，一种是connected,一种是union，connected只是一个判断两个节点是否连通的操作，union则是把两个点连接起来(如果它们已经连通了，就跳过)。我们需要解决的问题就是判断某些点是否互相连通。 这里的连通关系(connected)有三个性质(非常常见的性质)： (自反)自己和自己是连通的 (对称)如果p和q连通，那么q和p连通(if p is connected to q, q is connected to p) (传递)a和b连通，b和c连通，那么a和c连通。 此时我们需要来个图： function showIntro() { const svg = d3.select('#intro'); const size = 50; const data = []; function blockLayout(data) { let index = 0; for(let i = 0; i < 10; i++) { for(let j = 0; j < 10; j++) { } } } svg.attr('viewBox', '5, 15, 30, 30') svg.append('rect') .attr('x', 10) .attr('y', 20) .attr('width', 20) .attr('height', 20) .attr('fill', 'black'); } showIntro(); （对不起 图还在路上） 关于算法的复杂度有几种需要区分开来的表示算法时间复杂度的标记方法。 第一个是~(tilde notation)，用来标记一个比较具体的近似的复杂度。 比如当一个算法的时间复杂度为$\frac{1}{6}N^3+2N^2+\log{N}时$，我们可以把它的时间复杂度标记为$~\frac{1}{6}N^3$,我们的理由如下： $$\lim_{x\to \infty}\frac{\frac{1}{6}N^3+2N^2+\log{N}}{\frac{1}{6}N^3}=1$$ ~(tilde notation)就是通过这种方式来表示一个算法的时间复杂度，当然它的具体的复杂度需要别的方法自行判断。 还有常见的方式是使用$O$, $\Theta$, $\Omega$来表示，这几种方式和~都是有差别的，其中： $O$表示的是上界，比如一个算法的复杂度小于$N^3$时我们都可以使用$O(N^3)$来表示 $\Omega$则是下界，和大$O$相反。 $\Theta$则只能表示确切的增长速度，很多时候我们应该用$\Theta(N^3)$来表示一个算法的时间复杂度增长类别是$N^3$ $O$, $\Theta$和$\Omega$是表示根据输入的大小的增长速度来分类的，我们可以在括号里填$1$, $N$, $\log{N}$, $N\log{N}$, $N^2$, $2^N$等…表示不同的增长速度，而~则是一个具体的表示。也就是在这一种分类表示方法的前面加上一个系数。 分析算法复杂度的方法我们介绍一个常见有效的方法，有以下五个步骤 Observe 就是，观察一个问题 Hypothesize 然后我们假设一下 Predict 用这个假设来预测 Verify 验证我们的预测 Validates 重复上述步骤知道假设和观测一致]]></content>
+    <content type="text"><![CDATA[这里是Coursera上Algrithm Part 1的笔记 并查集(Union-Find)并查集是一种数据结构，可以用来描述多个实体之间的连接关系，至少在这个课程中，它是一个为了解决特定的问题而简化过的模型。 一开始是一堆互不连接的点，我们使用union操作可以将它们两两连接起来，但是在我们使用的数据结构中，我们无法判断是哪两个具体的点连在了一起，也不能使用断开连接的操作。我们只需要知道，这几个点是连在一起的，这种关系叫做connected。 也就是说在并查集中有两种操作，一种是connected,一种是union，connected只是一个判断两个节点是否连通的操作，union则是把两个点连接起来(如果它们已经连通了，就跳过)。我们需要解决的问题就是判断某些点是否互相连通。 这里的连通关系(connected)有三个性质(非常常见的性质)： (自反)自己和自己是连通的 (对称)如果p和q连通，那么q和p连通(if p is connected to q, q is connected to p) (传递)a和b连通，b和c连通，那么a和c连通。 此时我们需要来个图： #introWrapper { margin-top: 20px; } #ahaFather { display: flex; flex-direction: column; justify-content: start; } .aha { display: flex; justify-content: space-around; } .btn + .btn { margin: 0; } let data = []; function showIntro() { const svg = d3.select('#intro'); const size = 50; function randomOpen() { return Math.random() > 0.41; } function blockLayout(data) { let index = 0; for(let i = 0; i < 50; i++) { for(let j = 0; j < 50; j++) { data.push({ x: j * size, y: i * size, open: randomOpen(), }); } } } blockLayout(data); svg.attr('viewBox', '0, 0, 2500, 2500') svg.selectAll('rect') .data(data) .enter() .append('rect') .attr('x', (d, i) => d.x) .attr('y', (d, i) => d.y) .attr('width', size) .attr('height', size) .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111'); } showIntro(); function draw() { const id = []; const sz = []; for(let i = 0; i 50) { return i - 50; }else { return null; } } function getDown(i) { if(i]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -317,8 +317,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>

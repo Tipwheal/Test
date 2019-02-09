@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="这里是Coursera上Algrithm Part 1的笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-09T03:29:17.070Z">
+<meta property="og:updated_time" content="2019-02-09T14:47:57.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并查集&amp;算法分析的方法">
 <meta name="twitter:description" content="这里是Coursera上Algrithm Part 1的笔记">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-09 11:29:17" itemprop="dateModified" datetime="2019-02-09T11:29:17+08:00">2019-02-09</time>
+                <time title="修改时间：2019-02-09 22:47:57" itemprop="dateModified" datetime="2019-02-09T22:47:57+08:00">2019-02-09</time>
               
             
           </span>
@@ -475,36 +475,227 @@
 <p>此时我们需要来个图：</p>
 
 
-<svg id="intro" height="400px" width="400px">
+<div id="ahaFather">
+<div class="aha">
+<svg id="intro" height="300px" width="300px">
 </svg>
+</div>
+<div id="introWrapper">
+</div>
+</div>
+
+<style>
+#introWrapper {
+    margin-top: 20px;
+}
+
+#ahaFather {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.aha {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn + .btn {
+    margin: 0;
+}
+</style>
 
 <script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
 <script>
+let data = [];
 function showIntro() {
     const svg = d3.select('#intro');
     const size = 50;
-    const data = [];
+    function randomOpen() {
+        return Math.random() > 0.41;
+    }
     function blockLayout(data) {
         let index = 0;
-        for(let i = 0; i < 10; i++) {
-            for(let j = 0; j < 10; j++) {
-
+        for(let i = 0; i < 50; i++) {
+            for(let j = 0; j < 50; j++) {
+                data.push({
+                    x: j * size,
+                    y: i * size,
+                    open: randomOpen(),
+                });
             }
         }
     }
-    svg.attr('viewBox', '5, 15, 30, 30')
-    svg.append('rect')
-        .attr('x', 10)
-        .attr('y', 20)
-        .attr('width', 20)
-        .attr('height', 20)
-        .attr('fill', 'black');
+    blockLayout(data);
+    svg.attr('viewBox', '0, 0, 2500, 2500')
+    svg.selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('x', (d, i) => d.x)
+        .attr('y', (d, i) => d.y)
+        .attr('width', size)
+        .attr('height', size)
+        .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111');
 }
 showIntro();
+function draw() {
+    const id = [];
+    const sz = [];
+    for(let i = 0; i <= 2501; i++) {
+        id.push(i);
+        sz.push(1);
+    }
+    function getUp(i) {
+        if(i > 50) {
+            return i - 50;
+        }else {
+            return null;
+        }
+    }
+    function getDown(i) {
+        if(i <= 2450) {
+            return i + 50;
+        }else {
+            return null;
+        }
+    }
+    function getLeft(i) {
+        if(i % 50 == 1) {
+            return null;
+        }else {
+            return i - 1;
+        }
+    }
+    function getRight(i) {
+        if(i % 50 == 0) {
+            return null;
+        }else {
+            return i + 1;
+        }
+    }
+    function root(i) {
+        let r = i;
+        while(r != id[r]) {
+            r = id[r];
+        }
+        while(i != r) {
+            let p = id[i];
+            id[i] = r;
+            i = p;
+        }
+        return r;
+    }
+    function union(a, b) {
+        let rootA = root(a);
+        let rootB = root(b);
+        if(rootA == rootB) {
+            return;
+        }
+        if(sz[rootA] < sz[rootB]) {
+            id[rootA] = rootB;
+            sz[rootB] += sz[rootA];
+        }else {
+            id[rootB] = rootA;
+            sz[rootA] += sz[rootB];
+        }
+    }
+    function connected(a, b) {
+        return root(a) == root(b);
+    }
+    for(let i = 1; i <= 50; i ++) {
+        if(data[i - 1].open) {
+            union(0, i);
+        }
+    }
+    for(let i = 1; i <= 2500; i ++) {
+        if(!data[i - 1].open) {
+            continue;
+        }
+        let c = getUp(i);
+        if(c != null) {
+            if(data[c - 1].open) {
+                union(i, c);
+            }
+        }
+        c = getDown(i);
+        if(c != null) {
+            if(data[c - 1].open) {
+                union(i, c);
+            }
+        }
+        c = getLeft(i);
+        if(c != null) {
+            if(data[c - 1].open) {
+                union(i, c);
+            }
+        }
+        c = getRight(i);
+        if(c != null) {
+            if(data[c - 1].open) {
+                union(i, c);
+            }
+        }
+    }
+    const svg = d3.select('#intro');
+    svg.selectAll('rect')
+        .data(data)
+        .attr('fill', (d, i) => connected(0, i + 1) ? '#5566CC' : (d.open? '#EEEEEE' : '#111111'));
+}
+function withdraw() {
+    const svg = d3.select('#intro');
+    svg.selectAll('rect')
+        .data(data)
+        .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111');
+}
+function refresh() {
+    function randomOpen() {
+        return Math.random() > 0.41;
+    }
+    const size = 50;
+    const svg = d3.select('#intro');
+    data = [];
+    for(let i = 0; i < 50; i++) {
+        for(let j = 0; j < 50; j++) {
+            data.push({
+                x: j * size,
+                y: i * size,
+                open: randomOpen(),
+            });
+        }
+    }
+    svg.selectAll('rect')
+        .data(data)
+        .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111');
+}
+function move() {
+    const wrapper = document.getElementById('introWrapper');
+    if(wrapper.children.length > 1) {
+        return;
+    }
+    const movable = document.getElementById('movable');
+    const parent = movable.parentNode;
+    parent.remove(movable);
+    wrapper.appendChild(movable);
+}
 </script>
 
 
-<p>（对不起 图还在路上）</p>
+<p>（对不起 好像不应该是这个图）</p>
+<p>不过既然都放错了…</p>
+<p>这个图是用在一类叫渗漏问题的问题上(percolation)。我们假设有$50*50$的方块，黑色的是不能通过的方块，白色的是可以通过的方块，那么如果我们在最上面浇层水，它能流到最下面一层我们就说它渗漏了。</p>
+<p>然后我们想寻找一个比例$p$，当我们一个一个将黑色的方块打通时，大概到多少的比例时整个方块可以渗漏。</p>
+<p>我们可以使用蒙特卡洛方法来寻找这个比例。就是不停地尝试最后得到一个稳定的结果。</p>
+<h4 id="渗漏问题"><a href="#渗漏问题" class="headerlink" title="渗漏问题"></a>渗漏问题</h4><p>上面的图是随机的，它可能可以让水渗到底，也可能不行，我们可以点一下下面的按钮倒一杯水试试，它应该能在$N+M\lg{*}N$的时间内把水倒进去。</p>
+
+<div>
+<div class="aha" id="movable">
+<button class="btn" onclick="draw()">放水</button>
+<button class="btn" onclick="withdraw()">抽水</button>
+<button class="btn" onclick="refresh()">换张图</button>
+</div>
+</div>
+
+<p><br><br>如果感觉这几个按钮位置不太对也可以点<button class="btn" onclick="move()">这里</button>挪上去</p>
 <h3 id="关于算法的复杂度"><a href="#关于算法的复杂度" class="headerlink" title="关于算法的复杂度"></a>关于算法的复杂度</h3><p>有几种需要区分开来的表示算法时间复杂度的标记方法。</p>
 <p>第一个是~(tilde notation)，用来标记一个比较具体的近似的复杂度。</p>
 <p>比如当一个算法的时间复杂度为$\frac{1}{6}N^3+2N^2+\log{N}时$，我们可以把它的时间复杂度标记为$~\frac{1}{6}N^3$,我们的理由如下：</p>
@@ -523,7 +714,7 @@ showIntro();
 <li>Hypothesize 然后我们假设一下</li>
 <li>Predict 用这个假设来预测</li>
 <li>Verify 验证我们的预测</li>
-<li>Validates 重复上述步骤知道假设和观测一致</li>
+<li>Validates 重复上述步骤直到假设和观测一致</li>
 </ul>
 
       
@@ -894,7 +1085,7 @@ showIntro();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集-Union-Find"><span class="nav-number">1.</span> <span class="nav-text">并查集(Union-Find)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于算法的复杂度"><span class="nav-number">2.</span> <span class="nav-text">关于算法的复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析算法复杂度的方法"><span class="nav-number">2.1.</span> <span class="nav-text">分析算法复杂度的方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集-Union-Find"><span class="nav-number">1.</span> <span class="nav-text">并查集(Union-Find)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#渗漏问题"><span class="nav-number">1.1.</span> <span class="nav-text">渗漏问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于算法的复杂度"><span class="nav-number">2.</span> <span class="nav-text">关于算法的复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析算法复杂度的方法"><span class="nav-number">2.1.</span> <span class="nav-text">分析算法复杂度的方法</span></a></li></ol></li></ol></div>
             
 
           </div>
