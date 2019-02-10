@@ -622,6 +622,219 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/02/10/encrypt-js-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小学生学习园地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/02/10/encrypt-js-code/" itemprop="url">
+                  加密羞耻的JS代码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-10 10:01:15 / 修改时间：10:58:14" itemprop="dateCreated datePublished" datetime="2019-02-10T10:01:15+08:00">2019-02-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+<input id="theInput">
+<button class="btn" onclick="dec()">确定</button>
+<div class="bhb">
+<span id="theSpan">你好啊…只有知道密码的人才能看到这一页的效果哦</span>
+</div>
+
+<style>
+.bhb {
+    display: flex;
+    justify-content: space-around;
+}
+</style>
+
+<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/index.js"></script>
+<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/core.js"></script>
+<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.js"></script>
+<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/aes.js"></script>
+<script src="https://cdn.bootcss.com/d3/5.8.0/d3.js"></script>
+
+<script>
+// const plainText = `
+// `
+// let encryptedData = CryptoJS.AES.encrypt(plainText, key, {
+//     mode: CryptoJS.mode.ECB,
+//     padding: CryptoJS.pad.Pkcs7
+// });
+// encryptedData = encryptedData.ciphertext.toString();
+// console.log("加密后：" + encryptedData);
+
+function dec() {
+    let text = document.getElementById('theInput').value;
+    console.log(text);
+    const key = CryptoJS.enc.Utf8.parse(text);
+    const encryptedData = 'b7cff6162daab657c26844f60e00fada1bb98c1d7f14eabe350e61742f1c5e08a151ce72b57bd8a8d5c6b14ed06102f53876a31f5d3f714dbe1724665f0b37cc944b1fbeb3b031abd4f713a86e68a70722303d2e81358e7155e71a122e94c702d9043428437505f63f32d70610fc8ca73951763531133025d4713cb5104e8ad2';
+    const encryptedHexStr = CryptoJS.enc.Hex.parse(encryptedData);
+    const encryptedBase64Str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    const decryptedData = CryptoJS.AES.decrypt(encryptedBase64Str, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+    });
+    const decryptedStr = decryptedData.toString(CryptoJS.enc.Utf8);
+    eval(decryptedStr);
+}
+</script>
+
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/02/06/union-find/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -686,7 +899,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-09 23:33:05" itemprop="dateModified" datetime="2019-02-09T23:33:05+08:00">2019-02-09</time>
+                <time title="修改时间：2019-02-10 00:21:09" itemprop="dateModified" datetime="2019-02-10T00:21:09+08:00">2019-02-10</time>
               
             
           </span>
@@ -2349,192 +2562,6 @@ setInterval(() => {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/12/16/notes-caida/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小学生学习园地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/12/16/notes-caida/" itemprop="url">
-                  计算机算法笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-16 20:21:40" itemprop="dateCreated datePublished" datetime="2018-12-16T20:21:40+08:00">2018-12-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-04 18:24:25" itemprop="dateModified" datetime="2019-01-04T18:24:25+08:00">2019-01-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/编程/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="分析算法和问题：原理和例子"><a href="#分析算法和问题：原理和例子" class="headerlink" title="分析算法和问题：原理和例子"></a>分析算法和问题：原理和例子</h2><h3 id="算法可解的"><a href="#算法可解的" class="headerlink" title="算法可解的"></a>算法可解的</h3><p>说一个问题是<strong>算法可解的</strong>，意味着：</p>
-<p>可以编写一个计算机程序，在足够的时间和空间内，这个程序可以为任意输入处理出一个正确的结果。</p>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>20世纪30年代，计算机出现之前，数学家们已经在积极地定义和研究算法的概念。</p>
-<p>算法被解释成：</p>
-<p>一套清楚的简单指令，按照这套指令可以解决某个问题和计算某个函数。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/12/16/notes-caida/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2586,7 +2613,7 @@ setInterval(() => {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2635,7 +2662,9 @@ setInterval(() => {
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2768,7 +2797,9 @@ setInterval(() => {
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3367,9 +3398,9 @@ setInterval(() => {
       
     
       
-        
-      
     
+      
+        
       
     
       
