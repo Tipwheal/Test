@@ -669,7 +669,7 @@
                 
               
 
-              <time title="创建时间：2019-02-10 10:01:15 / 修改时间：11:01:58" itemprop="dateCreated datePublished" datetime="2019-02-10T10:01:15+08:00">2019-02-10</time>
+              <time title="创建时间：2019-02-10 10:01:15 / 修改时间：21:11:59" itemprop="dateCreated datePublished" datetime="2019-02-10T10:01:15+08:00">2019-02-10</time>
             
 
             
@@ -733,59 +733,16 @@
 
       
         
-          
-            
-
-<div class="bhb">
-<input id="theInput">
-<button style="margin-left: 5px" class="btn" onclick="dec()">确定</button>
-</div>
-<div class="bhb">
-<span id="theSpan">你好啊…只有知道密码的人才能看到这一页的效果哦</span>
-</div>
-
-<style>
-.bhb {
-    display: flex;
-    justify-content: center;
-}
-</style>
-
-<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/index.js"></script>
-<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/core.js"></script>
-<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.js"></script>
-<script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/aes.js"></script>
-<script src="https://cdn.bootcss.com/d3/5.8.0/d3.js"></script>
-
-<script>
-// const plainText = `
-// `
-// let encryptedData = CryptoJS.AES.encrypt(plainText, key, {
-//     mode: CryptoJS.mode.ECB,
-//     padding: CryptoJS.pad.Pkcs7
-// });
-// encryptedData = encryptedData.ciphertext.toString();
-// console.log("加密后：" + encryptedData);
-
-function dec() {
-    let text = document.getElementById('theInput').value;
-    console.log(text);
-    const key = CryptoJS.enc.Utf8.parse(text);
-    const encryptedData = 'b7cff6162daab657c26844f60e00fada1bb98c1d7f14eabe350e61742f1c5e08a151ce72b57bd8a8d5c6b14ed06102f53876a31f5d3f714dbe1724665f0b37cc944b1fbeb3b031abd4f713a86e68a70722303d2e81358e7155e71a122e94c702d9043428437505f63f32d70610fc8ca73951763531133025d4713cb5104e8ad2';
-    const encryptedHexStr = CryptoJS.enc.Hex.parse(encryptedData);
-    const encryptedBase64Str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    const decryptedData = CryptoJS.AES.decrypt(encryptedBase64Str, key, {
-        mode: CryptoJS.mode.ECB,
-        padding: CryptoJS.pad.Pkcs7
-    });
-    const decryptedStr = decryptedData.toString(CryptoJS.enc.Utf8);
-    eval(decryptedStr);
-}
-</script>
-
-
-
-          
+          <p>这里是一段不为人知的代码，有着不为人知的效果，就算有人点进来，也不能知道到底是什么效果。</p>
+<p>除非，猜中密码或者暴力破解了……</p>
+<p>F12也没有用哦[doge]</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2019/02/10/encrypt-js-code/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
