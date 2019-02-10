@@ -3,14 +3,14 @@
   <entry>
     <title><![CDATA[加密羞耻的JS代码]]></title>
     <url>%2Fblog%2F2019%2F02%2F10%2Fencrypt-js-code%2F</url>
-    <content type="text"><![CDATA[确定 你好啊…只有知道密码的人才能看到这一页的效果哦 .bhb { display: flex; justify-content: space-around; } // const plainText = ` // ` // let encryptedData = CryptoJS.AES.encrypt(plainText, key, { // mode: CryptoJS.mode.ECB, // padding: CryptoJS.pad.Pkcs7 // }); // encryptedData = encryptedData.ciphertext.toString(); // console.log("加密后：" + encryptedData); function dec() { let text = document.getElementById('theInput').value; console.log(text); const key = CryptoJS.enc.Utf8.parse(text); const encryptedData = 'b7cff6162daab657c26844f60e00fada1bb98c1d7f14eabe350e61742f1c5e08a151ce72b57bd8a8d5c6b14ed06102f53876a31f5d3f714dbe1724665f0b37cc944b1fbeb3b031abd4f713a86e68a70722303d2e81358e7155e71a122e94c702d9043428437505f63f32d70610fc8ca73951763531133025d4713cb5104e8ad2'; const encryptedHexStr = CryptoJS.enc.Hex.parse(encryptedData); const encryptedBase64Str = CryptoJS.enc.Base64.stringify(encryptedHexStr); const decryptedData = CryptoJS.AES.decrypt(encryptedBase64Str, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }); const decryptedStr = decryptedData.toString(CryptoJS.enc.Utf8); eval(decryptedStr); }]]></content>
+    <content type="text"><![CDATA[确定 你好啊…只有知道密码的人才能看到这一页的效果哦 .bhb { display: flex; justify-content: center; } // const plainText = ` // ` // let encryptedData = CryptoJS.AES.encrypt(plainText, key, { // mode: CryptoJS.mode.ECB, // padding: CryptoJS.pad.Pkcs7 // }); // encryptedData = encryptedData.ciphertext.toString(); // console.log("加密后：" + encryptedData); function dec() { let text = document.getElementById('theInput').value; console.log(text); const key = CryptoJS.enc.Utf8.parse(text); const encryptedData = 'b7cff6162daab657c26844f60e00fada1bb98c1d7f14eabe350e61742f1c5e08a151ce72b57bd8a8d5c6b14ed06102f53876a31f5d3f714dbe1724665f0b37cc944b1fbeb3b031abd4f713a86e68a70722303d2e81358e7155e71a122e94c702d9043428437505f63f32d70610fc8ca73951763531133025d4713cb5104e8ad2'; const encryptedHexStr = CryptoJS.enc.Hex.parse(encryptedData); const encryptedBase64Str = CryptoJS.enc.Base64.stringify(encryptedHexStr); const decryptedData = CryptoJS.AES.decrypt(encryptedBase64Str, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }); const decryptedStr = decryptedData.toString(CryptoJS.enc.Utf8); eval(decryptedStr); }]]></content>
       <categories>
         <category>编程</category>
         <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
         <tag>加密</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -116,9 +116,9 @@
     <url>%2Fblog%2F2018%2F12%2F09%2Fvisualize-lib-js%2F</url>
     <content type="text"><![CDATA[D3.js官网有一些文档和例子中文站 流程图 据说这个叫力导向图 var dataset = { nodes: [ { name: "Adam" }, { name: "Bob" }, { name: "Carrie" }, { name: "Donovan" }, { name: "Edward" }, { name: "Felicity" }, { name: "George" }, { name: "Hannah" }, { name: "Iris" }, { name: "Jerry" }, { name: "Kkk" }, { name: "Llull" }, { name: "Mnn" }, { name: "Nmm" }, { name: "Ok" }, ], links: [ { source: 0, target: 1 }, { source: 0, target: 2 }, { source: 0, target: 3 }, { source: 0, target: 4 }, { source: 1, target: 5 }, { source: 2, target: 5 }, { source: 2, target: 5 }, { source: 3, target: 4 }, { source: 3, target: 14 }, { source: 5, target: 8 }, { source: 5, target: 9 }, { source: 6, target: 7 }, { source: 7, target: 8 }, { source: 8, target: 9 }, { source: 8, target: 11 }, { source: 8, target: 14 }, { source: 10, target: 11}, { source: 12, target: 13}, { source: 12, target: 14}, { source: 13, target: 14}, ] }; var svg = d3.select('svg'), width = +svg.attr('width'), height = +svg.attr('height'), colors = d3.scaleOrdinal(d3.schemeCategory10); var simulation = d3.forceSimulation(dataset.nodes) .force('charge', d3.forceManyBody()) .force('link', d3.forceLink(dataset.links)) .force('center', d3.forceCenter(width / 2, height / 2)); var link = svg.append('g') .attr('class', 'links') .selectAll('line') .data(dataset.links) .enter().append('line') .attr('stroke', '#ccc') .attr('stroke-width', 1); var node = svg.append('g') .attr('class', 'nodes') .selectAll('circle') .data(dataset.nodes) .enter().append('circle') .attr('r', 10) .attr('fill', function(d, i) { return colors(i); }) .call(d3.drag() .on('start', dragstarted) .on('drag', dragged) .on('end', dragended)); node.append('title') .text(function(d) { return d.name; }); simulation .nodes(dataset.nodes) .on('tick', ticked); simulation.force('link') .links(dataset.links); function ticked() { link .attr('x1', function(d) { return d.source.x; }) .attr('y1', function(d) { return d.source.y; }) .attr('x2', function(d) { return d.target.x; }) .attr('y2', function(d) { return d.target.y; }) node .attr('cx', function(d) { return d.x; }) .attr('cy', function(d) { return d.y; }) } function dragstarted(d) { if (!d3.event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; } function dragged(d) { d.fx = d3.event.x; d.fy = d3.event.y; } function dragended(d) { if (!d3.event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; } 这个是一个可以折叠的树的效果： let dx = 20 let dy = 162.5 let data = { name: "开始", children: [ { name: "初始化数据", children: [ {name: "输入a"}, {name: "输入b"}, {name: "瞎分配一些内存空间"} ] }, { name: "运行", children: [ {name: "计算a+b，结果存在c"}, {name: "将c除以2"} ] }, { name: "结束", children: [ {name: "回收分配的内存空间"}, {name: "返回c"} ] } ] } let margin = ({top: 10, right: 120, bottom: 10, left: 40}) let tree = d3.tree().nodeSize([dx, dy]) let diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x) chart = () => { const root = d3.hierarchy(data); root.x0 = dy / 2; root.y0 = 0; root.descendants().forEach((d, i) => { d.id = i; d._children = d.children; if (d.depth && d.data.name.length !== 7) d.children = null; }); const svg = d3.create("svg") .attr("width", width) .attr("height", dx) .attr("viewBox", [-margin.left, -margin.top, width, dx]) .style("font", "12px sans-serif") .style("user-select", "none"); const gLink = svg.append("g") .attr("fill", "none") .attr("stroke", "#555") .attr("stroke-opacity", 0.4) .attr("stroke-width", 1.5); const gNode = svg.append("g") .attr("cursor", "pointer"); function update(source) { const duration = d3.event && d3.event.altKey ? 2500 : 250; const nodes = root.descendants().reverse(); const links = root.links(); // Compute the new tree layout. tree(root); let left = root; let right = root; root.eachBefore(node => { if (node.x < left.x) left = node; if (node.x > right.x) right = node; }); const height = right.x - left.x + margin.top + margin.bottom; const transition = svg.transition() .duration(duration) .attr("height", height) .attr("viewBox", [-margin.left, left.x - margin.top, width, height]) .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle")); // Update the nodes… const node = gNode.selectAll("g") .data(nodes, d => d.id); // Enter any new nodes at the parent's previous position. const nodeEnter = node.enter().append("g") .attr("transform", d => `translate(${source.y0},${source.x0})`) .attr("fill-opacity", 0) .attr("stroke-opacity", 0) .on("click", d => { d.children = d.children ? null : d._children; update(d); }); nodeEnter.append("circle") .attr("r", 2.5) .attr("fill", d => d._children ? "#555" : "#999"); nodeEnter.append("text") .attr("dy", "0.31em") .attr("x", d => d._children ? -6 : 6) .attr("text-anchor", d => d._children ? "end" : "start") .text(d => d.data.name) .clone(true).lower() .attr("stroke-linejoin", "round") .attr("stroke-width", 3) .attr("stroke", "white"); // Transition nodes to their new position. const nodeUpdate = node.merge(nodeEnter).transition(transition) .attr("transform", d => `translate(${d.y},${d.x})`) .attr("fill-opacity", 1) .attr("stroke-opacity", 1); // Transition exiting nodes to the parent's new position. const nodeExit = node.exit().transition(transition).remove() .attr("transform", d => `translate(${source.y},${source.x})`) .attr("fill-opacity", 0) .attr("stroke-opacity", 0); // Update the links… const link = gLink.selectAll("path") .data(links, d => d.target.id); // Enter any new links at the parent's previous position. const linkEnter = link.enter().append("path") .attr("d", d => { const o = {x: source.x0, y: source.y0}; return diagonal({source: o, target: o}); }); // Transition links to their new position. link.merge(linkEnter).transition(transition) .attr("d", diagonal); // Transition exiting nodes to the parent's new position. link.exit().transition(transition).remove() .attr("d", d => { const o = {x: source.x, y: source.y}; return diagonal({source: o, target: o}); }); // Stash the old positions for transition. root.eachBefore(d => { d.x0 = d.x; d.y0 = d.y; }); } update(root); return svg.node(); } let c = chart(); document.querySelector('#svg-div').appendChild(c); EchartsinfoVisCesiumHighChartsFusionChartsAnyChartamChartChart.jsChartist.jsGoogle ChartLeafletDygraphsichartsflowchart.jsflotn3-chartsEmber ChartsChartKickMeteorChartsEJS ChartuvCharts]]></content>
       <tags>
+        <tag>JavaScript</tag>
         <tag>可视化</tag>
         <tag>js</tag>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -159,8 +159,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>隐马尔可夫模型</tag>
+        <tag>自然语言处理</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -172,10 +172,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
+        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
-        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -330,8 +330,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
