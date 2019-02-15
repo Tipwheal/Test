@@ -146,9 +146,9 @@
         <category>计算机图形学</category>
       </categories>
       <tags>
+        <tag>图形学</tag>
         <tag>矩阵</tag>
         <tag>线性代数</tag>
-        <tag>图形学</tag>
       </tags>
   </entry>
   <entry>
@@ -285,8 +285,8 @@
       </categories>
       <tags>
         <tag>c++</tag>
-        <tag>图形学</tag>
         <tag>opengl</tag>
+        <tag>图形学</tag>
       </tags>
   </entry>
   <entry>
@@ -357,8 +357,8 @@
         <category>草稿</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>汉语</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
