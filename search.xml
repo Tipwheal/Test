@@ -16,7 +16,7 @@
   <entry>
     <title><![CDATA[并查集&算法分析的方法]]></title>
     <url>%2Fblog%2F2019%2F02%2F06%2Funion-find%2F</url>
-    <content type="text"><![CDATA[这里是Coursera上Algrithm Part 1的笔记 并查集(Union-Find)并查集是一种数据结构，可以用来描述多个实体之间的连接关系，至少在这个课程中，它是一个为了解决特定的问题而简化过的模型。 一开始是一堆互不连接的点，我们使用union操作可以将它们两两连接起来，但是在我们使用的数据结构中，我们无法判断是哪两个具体的点连在了一起，也不能使用断开连接的操作。我们只需要知道，这几个点是连在一起的，这种关系叫做connected。 也就是说在并查集中有两种操作，一种是connected,一种是union，connected只是一个判断两个节点是否连通的操作，union则是把两个点连接起来(如果它们已经连通了，就跳过)。我们需要解决的问题就是判断某些点是否互相连通。 这里的连通关系(connected)有三个性质(非常常见的性质)： (自反)自己和自己是连通的 (对称)如果p和q连通，那么q和p连通(if p is connected to q, q is connected to p) (传递)a和b连通，b和c连通，那么a和c连通。 此时我们需要来个图： #introWrapper { margin-top: 20px; } #ahaFather { display: flex; flex-direction: column; justify-content: start; } .aha { display: flex; justify-content: space-around; } .btn + .btn { margin: 0; } let data = []; function showIntro() { const svg = d3.select('#intro'); const size = 50; function randomOpen() { return Math.random() > 0.41; } function blockLayout(data) { let index = 0; for(let i = 0; i < 50; i++) { for(let j = 0; j < 50; j++) { data.push({ x: j * size, y: i * size, open: randomOpen(), }); } } } blockLayout(data); svg.attr('viewBox', '0, 0, 2500, 2500') svg.selectAll('rect') .data(data) .enter() .append('rect') .attr('x', (d, i) => d.x) .attr('y', (d, i) => d.y) .attr('width', size) .attr('height', size) .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111'); } showIntro(); function draw() { const id = []; const sz = []; for(let i = 0; i 50) { return i - 50; }else { return null; } } function getDown(i) { if(i]]></content>
+    <content type="text"><![CDATA[这里是Coursera上Algrithm Part 1的笔记 并查集(Union-Find)并查集是一种数据结构，可以用来描述多个实体之间的连接关系，至少在这个课程中，它是一个为了解决特定的问题而简化过的模型。 一开始是一堆互不连接的点，我们使用union操作可以将它们两两连接起来，但是在我们使用的数据结构中，我们无法判断是哪两个具体的点连在了一起，也不能使用断开连接的操作。我们只需要知道，这几个点是连在一起的，这种关系叫做connected。 也就是说在并查集中有两种操作，一种是connected,一种是union，connected只是一个判断两个节点是否连通的操作，union则是把两个点连接起来(如果它们已经连通了，就跳过)。我们需要解决的问题就是判断某些点是否互相连通。 此外还有一个在connected和union中的辅助操作find，用来获取某个实体对应的集合的id。 这里的连通关系(connected)有三个性质(非常常见的性质)： (自反)自己和自己是连通的 (对称)如果p和q连通，那么q和p连通(if p is connected to q, q is connected to p) (传递)a和b连通，b和c连通，那么a和c连通。 此时我们需要来个图： #introWrapper { margin-top: 20px; } #ahaFather { display: flex; flex-direction: column; justify-content: start; } .aha { display: flex; justify-content: space-around; } .btn + .btn { margin: 0; } let data = []; function showIntro() { const svg = d3.select('#intro'); const size = 50; function randomOpen() { return Math.random() > 0.41; } function blockLayout(data) { let index = 0; for(let i = 0; i < 50; i++) { for(let j = 0; j < 50; j++) { data.push({ x: j * size, y: i * size, open: randomOpen(), }); } } } blockLayout(data); svg.attr('viewBox', '0, 0, 2500, 2500') svg.selectAll('rect') .data(data) .enter() .append('rect') .attr('x', (d, i) => d.x) .attr('y', (d, i) => d.y) .attr('width', size) .attr('height', size) .attr('fill', (d, i) => d.open? '#EEEEEE' : '#111111'); } showIntro(); function draw() { const id = []; const sz = []; for(let i = 0; i 50) { return i - 50; }else { return null; } } function getDown(i) { if(i]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -345,8 +345,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>编程</tag>
         <tag>ruby</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
@@ -357,8 +357,8 @@
         <category>草稿</category>
       </categories>
       <tags>
-        <tag>汉语</tag>
         <tag>学习</tag>
+        <tag>汉语</tag>
       </tags>
   </entry>
   <entry>
@@ -397,8 +397,8 @@
       </categories>
       <tags>
         <tag>学习</tag>
-        <tag>Java</tag>
         <tag>编程</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
