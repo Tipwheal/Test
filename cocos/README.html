@@ -1,0 +1,83 @@
+<h1 id="Cocos2d-JS-Single-File-Engine-User-Guide"><a href="#Cocos2d-JS-Single-File-Engine-User-Guide" class="headerlink" title="Cocos2d-JS Single File Engine User Guide"></a>Cocos2d-JS Single File Engine User Guide</h1><p>This guide is for the usage of single file engine of Cocos2d-JS which can be retrieved from <a href="http://cocos2d-x.org/filecenter/jsbuilder/">the online downloader</a>.</p>
+<p>You may have downloaded one of these three versions:</p>
+<ul>
+<li><p><strong>Full Version</strong>: Full Version engine contains all features and all extensions for Cocos2d-JS, it can help you explore its great possibility. You can refer to the feature list in <a href="http://www.cocos2d-x.org/docs/manual/framework/html5/en">Cocos2d-JS documentation page</a></p>
+</li>
+<li><p><strong>Cocos2d-JS Lite Version</strong>: Lite Version contains some core features of Cocos2d-JS, it’s extremely easy to use and light as a feather. Its features are listing below:</p>
+<ul>
+<li>Canvas renderer (No WebGL support)</li>
+<li>Scene and Layers</li>
+<li>Event Manager</li>
+<li>Scheduler</li>
+<li>Sprite and Texture2D</li>
+<li>LabelTTF</li>
+<li>Audio</li>
+<li>Actions</li>
+<li>Menu and MenuItems</li>
+</ul>
+</li>
+<li><p><strong>Customized Version</strong>: Customize your own version of Cocos2d-JS with the features you need, you should know the meaning of these features to construct a suitable version. All the features you chose will be included in the downloaded engine js file.</p>
+</li>
+</ul>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>The usage have been demonstrated in the downloaded package, you can see the cocos2d-js-v3.0[-lite].js is embeded in the HelloWorld.html, after the window loading you will be able to use Cocos2d-JS API in your custom js code.</p>
+<p>You need to host these files on a web server or local web server to see the result.</p>
+<h2 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links"></a>Useful links</h2><ul>
+<li><a href="http://www.cocos2d-x.org/reference/html5-js/V3.0/index.html">Online API reference</a></li>
+<li><a href="http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-API.zip">Downloadable API Reference</a></li>
+<li><a href="http://cocos2d-x.org/docs/manual/framework/html5/en">Document root</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-js">Github repository</a></li>
+<li><a href="http://discuss.cocos2d-x.org/category/javascript">Online forum</a></li>
+<li><a href="http://cocos2d-x.org/js-tests/">Online test cases</a></li>
+</ul>
+<h2 id="About-Closure-Compiler"><a href="#About-Closure-Compiler" class="headerlink" title="About Closure Compiler"></a>About Closure Compiler</h2><p>You can use <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> to compress all js files to a smaller size even if you downloaded the compressed version. Steps are showing below:</p>
+<ol>
+<li>Download Closure Compiler’s jar app</li>
+<li>Configure the build.xml with your own configurations</li>
+<li>Run <code>ant</code> in the terminal</li>
+<li>Replace the embeded js files in HelloWorld.html with the single output file <code>game.min.js</code></li>
+</ol>
+<p>Please be noticed that you can not write any js code in your html file, all js codes should be compressed at the same time, otherwise errors will be triggered.</p>
+<h2 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h2><p>While openning the HelloWorld.html, you will receive an error:<br>“Failed to load resource: the server responded with a status of 404 (Not Found)” for the file <code>project.json</code></p>
+<p>It’s not a problem, you can simply igore it, or you can get rid of this error by creating an empty <code>project.json</code> file.</p>
+<p>=========================</p>
+<h1 id="Cocos2d-JS单文件引擎使用指引"><a href="#Cocos2d-JS单文件引擎使用指引" class="headerlink" title="Cocos2d-JS单文件引擎使用指引"></a>Cocos2d-JS单文件引擎使用指引</h1><p>这篇指引主要介绍如何使用从<a href="http://cocos2d-x.org/filecenter/jsbuilder/">在线下载工具</a>下载下来的Cocos2d-JS的单文件引擎。</p>
+<p>你有可能下载了下面三个版本中的一个：</p>
+<ul>
+<li><p><strong>Full Version</strong>: 完整版引擎包含Cocos2d-JS引擎的所有功能特性以及所有扩展，使用这个版本可以帮助你发掘Cocos2d-JS令人惊艳的创造力和可能性。你可以从<a href="http://www.cocos2d-x.org/docs/manual/framework/html5/en">官方文档首页</a>中查看Cocos2d-JS所支持的特性列表。</p>
+</li>
+<li><p><strong>Cocos2d-JS Lite Version</strong>: 精简版本只包含Cocos2d-JS的核心特性，它的优势是稳定，轻量，简单易用。它所包含的特性列表如下：</p>
+<ul>
+<li>Canvas渲染器 (不支持WebGL)</li>
+<li>场景和图层</li>
+<li>事件管理器</li>
+<li>计时器</li>
+<li>精灵和贴图</li>
+<li>TTF文本</li>
+<li>声音</li>
+<li>动作</li>
+<li>菜单和菜单项</li>
+</ul>
+</li>
+<li><p><strong>Customized Version</strong>: 如果你选择了定制版本的引擎，引擎脚本文件将包含你所选择的所有特性。</p>
+</li>
+</ul>
+<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>单文件引擎的使用方式和其他Web库完全一样，你只需要将脚本嵌入到你的页面中即可，可以参考下载目录中的HelloWorld.html。在window的加载过程结束之后，你将可以在你的用户脚本中使用Cocos2d-JS的API。</p>
+<p>你需要将这些文件放到一个本地服务器或在线服务器并通过服务器访问才可以看到正确的结果。</p>
+<h2 id="帮助链接"><a href="#帮助链接" class="headerlink" title="帮助链接"></a>帮助链接</h2><ul>
+<li><a href="http://www.cocos2d-x.org/reference/html5-js/V3.0/index.html">在线API reference</a></li>
+<li><a href="http://www.cocos2d-x.org/filedown/Cocos2d-JS-v3.0-API.zip">下载API Reference</a></li>
+<li><a href="http://cocos2d-x.org/docs/manual/framework/html5/en">文档目录</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-js">Github仓库</a></li>
+<li><a href="http://www.cocoachina.com/bbs/thread.php?fid=59">在线论坛</a></li>
+<li><a href="http://cocos2d-x.org/js-tests/">在线测试例</a></li>
+</ul>
+<h2 id="关于脚本压缩"><a href="#关于脚本压缩" class="headerlink" title="关于脚本压缩"></a>关于脚本压缩</h2><p>你可以使用<a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a>来将所有js文件压缩成一个文件，Closure Compiler的高级压缩压缩比非常高，即便你下载的是压缩版引擎，也可以获得可观的压缩比。具体压缩步骤如下：</p>
+<ol>
+<li>下载Closure Compiler的jar程序文件</li>
+<li>按照自己的环境配置build.xml</li>
+<li>在控制台运行ant命令</li>
+<li>将页面中的所有js引用删除，引入打包出的<code>game.min.js</code></li>
+</ol>
+<p>请注意，你不可以在html页面中写任何js脚本，所有js脚本都必须一起打包起来，否则会引起错误。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>当你通过服务器访问游戏页面的时候，你将在控制台中发现一个错误提示：<br>“Failed to load resource: the server responded with a status of 404 (Not Found)”，提示<code>project.json</code>文件找不到</p>
+<p>这是正常现象，并不是问题，你可以忽略它。或者可以添加一个空的<code>project.json</code>文件来避免这个错误报告。</p>

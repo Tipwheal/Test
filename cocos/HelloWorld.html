@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Cocos2d-JS</title>
+</head>
+<body>   
+    <canvas id="gameCanvas"></canvas>
+    <script type="text/javascript" src="cocos2d-js-v3.13.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            cc.game.onStart = function(){
+              //load resources
+                cc.view.setDesignResolutionSize(320, 480, cc.ResolutionPolicy.SHOW_ALL);
+                cc.LoaderScene.preload(["itxia.jpg"], function () {
+                    var MyScene = cc.Scene.extend({
+                        onEnter:function () {
+                            this._super();
+                            var size = cc.director.getWinSize();
+                            var sprite = cc.Sprite.create("itxia.jpg", cc.rect(0, 0, 97, 130));
+                            var actionTo = cc.moveBy(3, cc.p(size.width / 3 - 40, size.height / 3 - 40));
+                            sprite.setRotation(20.3);
+                            sprite.runAction(actionTo);
+                            sprite.setPosition(size.width / 2, size.height / 2);
+                            sprite.setScale(0.8);
+                            this.addChild(sprite, 0);
+
+                            var sprite2 = cc.Sprite.create("itxia.jpg", cc.rect(98.5, 0, 108, 130));
+                            var actionTwo = cc.moveBy(3, cc.p(- size.width / 3 + 40, - size.height / 3 + 40));
+                            sprite2.setPosition(size.width / 2 - 100, size.height / 2 + 40);
+                            sprite2.runAction(actionTwo);
+                            sprite2.setScale(0.8);
+                            this.addChild(sprite2, 1);
+                        }
+                    });
+                    cc.director.runScene(new MyScene());
+                }, this);
+            };
+            cc.game.run("gameCanvas");
+        };
+    </script>
+</body>
+</html>

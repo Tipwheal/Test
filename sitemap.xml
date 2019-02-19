@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tipwheal.github.io/blog/2019/02/06/union-find/</loc>
+    <loc>https://tipwheal.github.io/blog/2018/11/06/draft/</loc>
     
-    <lastmod>2019-02-16T01:51:40.005Z</lastmod>
+    <lastmod>2019-02-18T15:38:40.519Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://tipwheal.github.io/blog/about/index.html</loc>
     
-    <lastmod>2019-02-15T15:38:14.614Z</lastmod>
+    <lastmod>2019-02-18T15:38:20.527Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2019/02/17/cocos-test/</loc>
+    
+    <lastmod>2019-02-17T07:09:29.218Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/2019/02/06/union-find/</loc>
+    
+    <lastmod>2019-02-16T01:51:40.005Z</lastmod>
     
   </url>
   
@@ -33,13 +47,6 @@
     <loc>https://tipwheal.github.io/blog/2019/02/10/encrypt-js-code/</loc>
     
     <lastmod>2019-02-10T13:44:35.622Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/11/06/draft/</loc>
-    
-    <lastmod>2019-02-08T14:21:59.467Z</lastmod>
     
   </url>
   
