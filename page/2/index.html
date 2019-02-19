@@ -336,6 +336,296 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/01/05/red-black-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小学生学习园地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/01/05/red-black-tree/" itemprop="url">
+                  我尝试在这里画一棵红黑树
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-05 10:43:32" itemprop="dateCreated datePublished" datetime="2019-01-05T10:43:32+08:00">2019-01-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-01-07 16:49:02" itemprop="dateModified" datetime="2019-01-07T16:49:02+08:00">2019-01-07</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>但是进度有点慢，我应该打住了</p>
+
+
+<div id="main-div">
+</div>
+
+<script src="https://cdn.bootcss.com/d3/5.7.0/d3.js"></script>
+<script>
+let dataset = [];
+function getChart(change) {
+    const width = 300;
+    const height = 100;
+    const root = d3.hierarchy(dataset);
+
+    root.descendants().forEach((d, i) => {
+        d.id = i;
+        d._children = d.children;
+        console.log(d)
+    });
+
+    r = 20;
+    d3.select("#main-div").selectAll("*").remove();
+    let svg = d3.select("#main-div")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [-50, 0, width, height]);
+
+    // let c = svg.selectAll("svg")
+        // .data(dataset)
+        // .enter()
+        // .append("svg")
+
+    let circle = svg.append("circle")
+        .attr("stroke-width", 1)
+        .attr("stroke", "black")
+        .attr("cx", width / 2)
+        .attr("cy",25)
+        .attr("r",r)
+        .attr("fill", d => d.color);
+
+    let group = svg.append('g')
+        .attr("stroke", '#555')
+        .attr("stroke-width", 1.5);
+
+    function update(source) {
+        const duration = 200;
+        const nodes = root.descendants().reverse();
+        const links = root.links();
+
+        const node = group.selectAll('g')
+            .data(nodes, d => d.id);
+        const nodeEnter = node.enter().append('g');
+
+        nodeEnter.append("circle")
+            .attr("r", r)
+            .attr("fill", d => d.color);
+
+        update(source.children.left);
+        update(source.children.right);
+    }
+
+    update(root);
+    // let text = c.append("text").attr("x", (d, i) => i * 50 + 13).attr("y",75).attr("fill", "black").text(d => d.value);
+    // if (change !== undefined) {
+        // rec.transition().duration(800).attr("x", (d, i) => change[i] * 50 + 1)
+        // text.transition().duration((d, i) => 800)
+            // .attr("x", (d, i) => change[i] * 50 + 13)
+    // }
+}
+function updateData(change) {
+    let backup = [].concat(dataset);
+    for(let i = 0;i<change.length;i++) {
+        console.log(change[i]);
+        dataset[i] = backup[change[i]];
+    }
+    console.log(dataset);
+}
+let step = 0;
+let auto = false;
+let changeList = [
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [0, 1, 3, 2, 4],
+        [0, 1, 2, 4, 3],
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [0, 1, 3, 2, 4],
+        [1, 0, 2, 3, 4],
+        [0, 2, 1, 3, 4],
+        [1, 0, 2, 3, 4],
+    ];
+function reset() {
+    dataset = {
+        value: 25,
+        color: 'black',
+        children: {
+            left: {
+                value: 17,
+                color: 'red',
+                children: {
+                    left: {
+                        value: 2,
+                        color: 'black',
+                    },
+                    right: {
+                        value: 1,
+                        color: 'black',
+                    },
+                }
+            },
+            right: {
+                value: 13,
+                color: 'red',
+            },
+        }
+    },
+    step = 0;
+    getChart();
+}
+function start() {
+    if (step >= changeList.length) {
+        auto = false;
+        return;
+    }
+    let next = changeList[step];
+    getChart(next);
+    updateData(next);
+    step += 1;
+}
+reset();
+setInterval(() => {
+    if(auto) {
+        start();
+    }
+}, 1000);
+</script>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/12/18/visualize-lib-py/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2477,194 +2767,11 @@ function loadShader(gl, type, source) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/11/24/name-entities-recognition/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小学生学习园地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/11/24/name-entities-recognition/" itemprop="url">
-                  命名实体识别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-24 11:00:15 / 修改时间：23:26:44" itemprop="dateCreated datePublished" datetime="2018-11-24T11:00:15+08:00">2018-11-24</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/自然语言处理/" itemprop="url" rel="index"><span itemprop="name">自然语言处理</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>收集一些命名实体识别相关的知识</p>
-<h3 id="收集一下名词"><a href="#收集一下名词" class="headerlink" title="收集一下名词"></a>收集一下名词</h3><ul>
-<li>条件随机场CRF</li>
-<li>召回率</li>
-<li>F值</li>
-<li>viterbi算法</li>
-<li>序列标注任务</li>
-<li>最大似然迭代算法</li>
-<li>MEMM标记偏置</li>
-<li>线性条件随机场</li>
-<li>层叠条件随机场</li>
-<li>前向后向算法</li>
-<li>N-最短路径的切分排歧策略</li>
-<li>互信息</li>
-<li>二值特征函数</li>
-<li>L-BGFS算法</li>
-<li>牛顿方法</li>
-</ul>
-<h3 id="收集一些工具"><a href="#收集一些工具" class="headerlink" title="收集一些工具"></a>收集一些工具</h3><ul>
-<li>CRF++</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/11/24/name-entities-recognition/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2711,7 +2818,7 @@ function loadShader(gl, type, source) {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2762,7 +2869,9 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2901,7 +3010,11 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">57</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3500,9 +3613,9 @@ function loadShader(gl, type, source) {
       
     
       
-        
-      
     
+      
+        
       
     
       
