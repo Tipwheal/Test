@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/02/17/cocos-test/</loc>
+    <lastmod>2019-02-21T10:12:12.404Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/02/19/quanda/</loc>
     <lastmod>2019-02-19T14:54:39.743Z</lastmod>
   </url>  <url>
@@ -12,9 +15,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
     <lastmod>2019-02-19T01:05:52.271Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2019/02/17/cocos-test/</loc>
-    <lastmod>2019-02-17T07:09:29.218Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/02/06/union-find/</loc>
     <lastmod>2019-02-16T01:51:40.005Z</lastmod>

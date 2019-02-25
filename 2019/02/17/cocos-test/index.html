@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="为什么是null呢，为什么呢">
+  <meta name="description" content="nmd，为什么">
 <meta name="keywords" content="哦，天哪">
 <meta property="og:type" content="article">
 <meta property="og:title" content="哦，天哪">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/02/17/cocos-test/index.html">
 <meta property="og:site_name" content="小学生学习园地">
-<meta property="og:description" content="为什么是null呢，为什么呢">
+<meta property="og:description" content="nmd，为什么">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-17T07:09:29.218Z">
+<meta property="og:updated_time" content="2019-02-21T10:12:12.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="哦，天哪">
-<meta name="twitter:description" content="为什么是null呢，为什么呢">
+<meta name="twitter:description" content="nmd，为什么">
 
 
 
@@ -385,12 +385,24 @@
                 
               
 
-              <time title="创建时间：2019-02-17 11:27:36 / 修改时间：15:09:29" itemprop="dateCreated datePublished" datetime="2019-02-17T11:27:36+08:00">2019-02-17</time>
+              <time title="创建时间：2019-02-17 11:27:36" itemprop="dateCreated datePublished" datetime="2019-02-17T11:27:36+08:00">2019-02-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-21 18:12:12" itemprop="dateModified" datetime="2019-02-21T18:12:12+08:00">2019-02-21</time>
               
             
           </span>
@@ -431,10 +443,64 @@
       
 
       
-        <p>为什么是null呢，为什么呢</p>
+        <p>nmd，为什么</p>
 <a id="more"></a>
-<p>这究竟是为什么呢</p>
-<p>是人性的扭曲，还是道德的沦丧</p>
+
+<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.js"></script>
+<script src="https://cdn.bootcss.com/marked/0.6.1/marked.js"></script>
+
+<button class="btn copy-button" id="clip" data-clipboard-action="copy" data-clipboard-target="#output">
+复制</button>
+
+<div id="tam">
+<!-- <div id='input-wrapper'> -->
+<textarea id="input" oninput="generateHTML(event)">
+</textarea>
+<!-- </div> -->
+<div id="output">
+</div>
+</div>
+
+<style>
+#tam {
+    display: flex;
+    justify-content: space-between;
+}
+
+#input {
+    width: 45%;
+    height: 600px;
+}
+
+#output {
+    width: 45%;
+}
+</style>
+
+<script>
+let clipboard = new ClipboardJS('#clip');
+
+// clipboard.on('success', function(e) {
+// 	 alert('复制成功!')
+// 	 e.clearSelection();
+// });
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+});
+
+function generateHTML(event) {
+    document.getElementById('output').innerHTML = marked(event.target.value);
+}
+</script>
+
 
       
     </div>
