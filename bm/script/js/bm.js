@@ -13178,6 +13178,11 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonRegFreeIn = 0;
             gameData.players[id].seasonRegScore = 0;
             gameData.players[id].seasonRegGameNum = 0;
+            gameData.players[id].seasonRegRebound = 0;
+            gameData.players[id].seasonRegSteal = 0;
+            gameData.players[id].seasonRegAssist = 0;
+            gameData.players[id].seasonRegTurnover = 0;
+            gameData.players[id].seasonRegBlock = 0;
             gameData.players[id].seasonOffClose = 0;
             gameData.players[id].seasonOffCloseIn = 0;
             gameData.players[id].seasonOffMiddle = 0;
@@ -13188,6 +13193,11 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonOffFreeIn = 0;
             gameData.players[id].seasonOffScore = 0;
             gameData.players[id].seasonOffGameNum = 0;
+            gameData.players[id].seasonOffRebound = 0;
+            gameData.players[id].seasonOffSteal = 0;
+            gameData.players[id].seasonOffAssist = 0;
+            gameData.players[id].seasonOffTurnover = 0;
+            gameData.players[id].seasonOffBlock = 0;
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     };
