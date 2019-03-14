@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/01/17/bm-test/</loc>
+    <lastmod>2019-03-14T14:44:57.507Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
-    <lastmod>2019-03-14T02:02:06.062Z</lastmod>
+    <lastmod>2019-03-14T12:19:52.855Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/05/red-black-tree/</loc>
     <lastmod>2019-02-28T08:58:11.999Z</lastmod>
@@ -30,9 +33,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/chinese-learning/</loc>
     <lastmod>2019-02-06T14:34:27.696Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2019/01/17/bm-test/</loc>
-    <lastmod>2019-02-05T02:34:23.713Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/cpp-learning/</loc>
     <lastmod>2019-01-31T12:00:36.010Z</lastmod>

@@ -12764,15 +12764,45 @@ class Game {
         const players = gameData.players;
         for(let i in players) {
             gameData.players[i].regMaxScore = 0;
+            gameData.players[i].regMaxAssist = 0;
+            gameData.players[i].regMaxSteal = 0;
+            gameData.players[i].regMaxBlock = 0;
+            gameData.players[i].regMaxRebound = 0;
+            gameData.players[i].regMaxTurnover = 0;
             gameData.players[i].offMaxScore = 0;
+            gameData.players[i].offMaxAssist = 0;
+            gameData.players[i].offMaxSteal = 0;
+            gameData.players[i].offMaxBlock = 0;
+            gameData.players[i].offMaxRebound = 0;
+            gameData.players[i].offMaxTurnover = 0;
             gameData.players[i].totalRegGameNum = 0;
             gameData.players[i].seasonRegGameNum = 0;
             gameData.players[i].totalOffGameNum = 0;
             gameData.players[i].seasonOffGameNum = 0;
             gameData.players[i].totalRegScore = 0;
+            gameData.players[i].totalRegAssist = 0;
+            gameData.players[i].totalRegSteal = 0;
+            gameData.players[i].totalRegBlock = 0;
+            gameData.players[i].totalRegRebound = 0;
+            gameData.players[i].totalRegTurnover = 0;
             gameData.players[i].seasonRegScore = 0;
+            gameData.players[i].seasonRegAssist = 0;
+            gameData.players[i].seasonRegSteal = 0;
+            gameData.players[i].seasonRegBlock = 0;
+            gameData.players[i].seasonRegRebound = 0;
+            gameData.players[i].seasonRegTurnover = 0;
             gameData.players[i].totalOffScore = 0;
+            gameData.players[i].totalOffAssist = 0;
+            gameData.players[i].totalOffSteal = 0;
+            gameData.players[i].totalOffBlock = 0;
+            gameData.players[i].totalOffRebound = 0;
+            gameData.players[i].totalOffTurnover = 0;
             gameData.players[i].seasonOffScore = 0;
+            gameData.players[i].seasonOffAssist = 0;
+            gameData.players[i].seasonOffSteal = 0;
+            gameData.players[i].seasonOffBlock = 0;
+            gameData.players[i].seasonOffRebound = 0;
+            gameData.players[i].seasonOffTurnover = 0;
             gameData.players[i].seasonRegClose = 0;
             gameData.players[i].seasonRegCloseIn = 0;
             gameData.players[i].seasonRegMiddle = 0;
@@ -13358,6 +13388,8 @@ class Game {
     private static playGameAndGetResult(homeTeamId: any, visitorId: any, gameData: any): GameResult {
         let htStat = this.calcTeamScores(homeTeamId, gameData);
         let viStat = this.calcTeamScores(visitorId, gameData);
+        this.calcTeamStats(homeTeamId, gameData);
+        this.calcTeamStats(visitorId, gameData);
         while(htStat.total == viStat.total) {
             let otHome = this.calcTeamScores(homeTeamId, gameData, 15);
             htStat.total += otHome.total;
@@ -13452,6 +13484,142 @@ class Game {
         }
     }
 
+    private static calcTeamStats(teamId: any, gameData: any): any {
+        const starter = TeamMatchUtil.getStarters(teamId, gameData);
+        const bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
+        if(starter.length != 5) {
+            alert("球队首发阵容错误！请检查！");
+        }
+        //Steal, Block, Reboud, Assist, Turnover
+        function stealModifier(place: number, skill: number): number {
+            if(place == 0) {
+                return 0.03 * skill + 0.02;
+            }else if(place == 1) {
+                return 0.02 * skill + 0.02;
+            }else if(place == 2) {
+                return 0.02 * skill + 0.02;
+            }else if(place == 3) {
+                return 0.01 * skill + 0.01;
+            }else {
+                return 0.01 * skill + 0.01;
+            }
+        }
+        function blockModifier(place: number, skill: number) {
+            if(place == 0) {
+                return 0.01 * skill + 0.01;
+            }else if(place == 1) {
+                return 0.01 * skill + 0.01;
+            }else if(place == 2) {
+                return 0.02 * skill + 0.01;
+            }else if(place == 3) {
+                return 0.03 * skill + 0.01;
+            }else {
+                return 0.04 * skill + 0.01;
+            }
+        }
+        function reboundModifier(place: number, skill: number) {
+            if(place == 0) {
+                return 0.01 * skill + 0.01;
+            }else if(place == 1) {
+                return 0.01 * skill + 0.02;
+            }else if(place == 2) {
+                return 0.02 * skill + 0.03;
+            }else if(place == 3) {
+                return 0.03 * skill + 0.05;
+            }else {
+                return 0.04 * skill + 0.1;
+            }
+        }
+        function assistModifier(place: number, skill: number) {
+            if(place == 0) {
+                return 0.06 * skill + 0.1;
+            }else if(place == 1) {
+                return 0.05 * skill + 0.5;
+            }else if(place == 2) {
+                return 0.04 * skill + 0.3;
+            }else if(place == 3) {
+                return 0.03 * skill + 0.2;
+            }else {
+                return 0.02 * skill + 0.1;
+            }
+        }
+        function turnoverModifier(place: number, skill: number) {
+            if(place == 0) {
+                return 0.02 * skill + 0.01;
+            }else if(place == 1) {
+                return 0.02 * skill + 0.01;
+            }else if(place == 2) {
+                return 0.02 * skill + 0.01;
+            }else if(place == 3) {
+                return 0.02 * skill + 0.01;
+            }else {
+                return 0.02 * skill + 0.01;
+            }
+        }
+        for(let i = 0; i < 5; i ++) {
+            const p = gameData.players[starter[i]];
+            const ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            const rbd = Math.round(reboundModifier(i, p.skillPass) * RandomUtil.random(0, 12));
+            const tov = Math.round(turnoverModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            const stl = Math.round(stealModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            const blk = Math.round(blockModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            if(gameData.currentDay <= this.regularEndDay) {
+                p.seasonRegAssist += ast;
+                p.seasonRegRebound += rbd;
+                p.seasonRegSteal += stl;
+                p.seasonRegTurnover += tov;
+                p.seasonRegBlock += blk;
+                p.totalRegAssist += ast;
+                p.totalRegRebound += rbd;
+                p.totalRegSteal += stl;
+                p.totalRegTurnover += tov;
+                p.totalRegBlock += blk;
+            }else {
+                p.seasonOffAssist += ast;
+                p.seasonOffRebound += rbd;
+                p.seasonOffSteal += stl;
+                p.seasonOffTurnover += tov;
+                p.seasonOffBlock += blk;
+                p.totalOffAssist += ast;
+                p.totalOffRebound += rbd;
+                p.totalOffSteal += stl;
+                p.totalOffTurnover += tov;
+                p.totalOffBlock += blk;
+            }
+        }
+        for(let i = 0; i < bench.length; i ++) {
+            const p = gameData.players[bench[i]];
+            const ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 20)*RandomUtil.random(0, 0.4));
+            const rbd = Math.round(reboundModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 25)*RandomUtil.random(0, 0.4));
+            const tov = Math.round(turnoverModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 10)*RandomUtil.random(0, 0.4));
+            const stl = Math.round(stealModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 10)*RandomUtil.random(0, 0.4));
+            const blk = Math.round(blockModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 10)*RandomUtil.random(0, 0.4));
+            if(gameData.currentDay <= gameData.regularEndDay) {
+                p.seasonRegAssist += ast;
+                p.seasonRegRebound += rbd;
+                p.seasonRegSteal += stl;
+                p.seasonRegTurnover += tov;
+                p.seasonRegBlock += blk;
+                p.totalRegAssist += ast;
+                p.totalRegRebound += rbd;
+                p.totalRegSteal += stl;
+                p.totalRegTurnover += tov;
+                p.totalRegBlock += blk;
+            }else {
+                p.seasonOffAssist += ast;
+                p.seasonOffRebound += rbd;
+                p.seasonOffSteal += stl;
+                p.seasonOffTurnover += tov;
+                p.seasonOffBlock += blk;
+                p.totalOffAssist += ast;
+                p.totalOffRebound += rbd;
+                p.totalOffSteal += stl;
+                p.totalOffTurnover += tov;
+                p.totalOffBlock += blk;
+            }
+        }
+    }
+
     private static calcTeamScores(teamId: any, gameData: any, baseNum = 100): any {
         const playerAndNum: any = {};
         const players = gameData.teams[teamId].players;
@@ -13530,6 +13698,12 @@ class Game {
         };
     }
 
+    /**
+     * Calc All Stats here
+     * @param playerId the player id
+     * @param num number of shoot total
+     * @param gameData global game data
+     */
     private static calcScoreWithTimes(playerId: any, num: any, gameData: any) {
         if(num == 0) {
             return {
@@ -14103,6 +14277,11 @@ class TemplateUtil {
         const tripleRate = player.seasonRegThreeIn / player.seasonRegThree;
         const score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFree;
         const avgScore = (score / player.seasonRegGameNum).toFixed(2);
+        const avgBlock = (player.seasonRegBlock / player.seasonRegGameNum).toFixed(2);
+        const avgRebound = (player.seasonRegRebound / player.seasonRegGameNum).toFixed(2);
+        const avgAssist = (player.seasonRegAssist / player.seasonRegGameNum).toFixed(2);
+        const avgSteal = (player.seasonRegSteal / player.seasonRegGameNum).toFixed(2);
+        const avgTurnover = (player.seasonRegTurnover / player.seasonRegGameNum).toFixed(2);
         let extra = '';
         if(player.team == gameData.userTeamId) {
             extra = `
@@ -14202,10 +14381,10 @@ class TemplateUtil {
                 <div class='statsTitle'>盖帽</div>
                 <div class='statsTitle'>抢断</div>
                 <div class='statsTitle'>助攻</div>
-                <div class='statsContent'>0.0</div>
-                <div class='statsContent'>0.0</div>
-                <div class='statsContent'>0.0</div>
-                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>${avgRebound}</div>
+                <div class='statsContent'>${avgBlock}</div>
+                <div class='statsContent'>${avgSteal}</div>
+                <div class='statsContent'>${avgAssist}</div>
                 <div class='statsTitle'>场次</div>
                 <div class='statsTitle'>时间</div>
                 <div class='statsTitle'>犯规</div>
@@ -14213,7 +14392,7 @@ class TemplateUtil {
                 <div class='statsContent'>${player.seasonRegGameNum}</div>
                 <div class='statsContent'>0.0</div>
                 <div class='statsContent'>0.0</div>
-                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>${avgTurnover}</div>
             </div>
             <div class='playerTitle'>
                 <div>属性(${player.skillAverage})</div>
@@ -14814,15 +14993,45 @@ class PlayerGenerator {
         gameData.players[id].skillAttack = SkillCalculator.getAverageForPosition(positionFirst, true, false, id, gameData);
         gameData.players[id].skillDefense = SkillCalculator.getAverageForPosition(positionFirst, false, true, id, gameData);
         gameData.players[id].regMaxScore = 0;
+        gameData.players[id].regMaxAssist = 0;
+        gameData.players[id].regMaxSteal = 0;
+        gameData.players[id].regMaxBlock = 0;
+        gameData.players[id].regMaxRebound = 0;
+        gameData.players[id].regMaxTurnover = 0;
         gameData.players[id].offMaxScore = 0;
+        gameData.players[id].offMaxAssist = 0;
+        gameData.players[id].offMaxSteal = 0;
+        gameData.players[id].offMaxBlock = 0;
+        gameData.players[id].offMaxRebound = 0;
+        gameData.players[id].offMaxTurnover = 0;
         gameData.players[id].totalRegGameNum = 0;
         gameData.players[id].seasonRegGameNum = 0;
         gameData.players[id].totalOffGameNum = 0;
         gameData.players[id].seasonOffGameNum = 0;
         gameData.players[id].totalRegScore = 0;
+        gameData.players[id].totalRegAssist = 0;
+        gameData.players[id].totalRegSteal = 0;
+        gameData.players[id].totalRegBlock = 0;
+        gameData.players[id].totalRegRebound = 0;
+        gameData.players[id].totalRegTurnover = 0;
         gameData.players[id].seasonRegScore = 0;
+        gameData.players[id].seasonRegAssist = 0;
+        gameData.players[id].seasonRegSteal = 0;
+        gameData.players[id].seasonRegBlock = 0;
+        gameData.players[id].seasonRegRebound = 0;
+        gameData.players[id].seasonRegTurnover = 0;
         gameData.players[id].totalOffScore = 0;
+        gameData.players[id].totalOffAssist = 0;
+        gameData.players[id].totalOffSteal = 0;
+        gameData.players[id].totalOffBlock = 0;
+        gameData.players[id].totalOffRebound = 0;
+        gameData.players[id].totalOffTurnover = 0;
         gameData.players[id].seasonOffScore = 0;
+        gameData.players[id].seasonOffAssist = 0;
+        gameData.players[id].seasonOffSteal = 0;
+        gameData.players[id].seasonOffBlock = 0;
+        gameData.players[id].seasonOffRebound = 0;
+        gameData.players[id].seasonOffTurnover = 0;
         gameData.players[id].seasonRegClose = 0;
         gameData.players[id].seasonRegCloseIn = 0;
         gameData.players[id].seasonRegMiddle = 0;
