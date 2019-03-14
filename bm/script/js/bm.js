@@ -13578,11 +13578,11 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < bench.length; i++) {
             var p = gameData.players[bench[i]];
-            var ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5) * RandomUtil.random(0, 0.4));
-            var rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12) * RandomUtil.random(0, 0.4));
-            var tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5) * RandomUtil.random(0, 0.4));
-            var stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5) * RandomUtil.random(0, 0.4));
-            var blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5) * RandomUtil.random(0, 0.4));
+            var ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5) * 0.3);
+            var rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12) * 0.3);
+            var tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5) * 0.3);
+            var stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5) * 0.3);
+            var blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5) * 0.3);
             if (gameData.currentDay <= gameData.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;

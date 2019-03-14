@@ -13599,11 +13599,11 @@ class Game {
         }
         for(let i = 0; i < bench.length; i ++) {
             const p = gameData.players[bench[i]];
-            const ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5)*RandomUtil.random(0, 0.4));
-            const rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12)*RandomUtil.random(0, 0.4));
-            const tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5)*RandomUtil.random(0, 0.4));
-            const stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5)*RandomUtil.random(0, 0.4));
-            const blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5)*RandomUtil.random(0, 0.4));
+            const ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5)*0.3);
+            const rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12)*0.3);
+            const tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5)*0.3);
+            const stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5)*0.3);
+            const blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5)*0.3);
             if(gameData.currentDay <= gameData.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
