@@ -13496,10 +13496,10 @@ var Game = /** @class */ (function () {
                 return 0.02 * skill + 0.01;
             }
             else if (place == 3) {
-                return 0.03 * skill + 0.01;
+                return 0.02 * skill + 0.015;
             }
             else {
-                return 0.04 * skill + 0.01;
+                return 0.02 * skill + 0.02;
             }
         }
         function reboundModifier(place, skill) {
@@ -13555,8 +13555,8 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < 5; i++) {
             var p = gameData.players[starter[i]];
-            var ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
-            var rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 12));
+            var ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 4));
+            var rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 11));
             var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
             var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
             var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
