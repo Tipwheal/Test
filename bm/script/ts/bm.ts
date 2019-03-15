@@ -14127,11 +14127,35 @@ class TemplateUtil {
         let homeSteals = 0;
         let homeBlocks = 0;
         let homeTurnovers = 0;
+        let homeMaxScore = 0;
+        let homeMaxScoreP = 0;
+        let homeMaxRebound = 0;
+        let homeMaxReboundP = 0;
+        let homeMaxAssist = 0;
+        let homeMaxAssistP = 0;
+        let homeMaxSteal = 0;
+        let homeMaxStealP = 0;
+        let homeMaxBlock = 0;
+        let homeMaxBlockP = 0;
+        let homeMaxTurnover = 0;
+        let homeMaxTurnoverP = 0;
         let visitorRebounds = 0;
         let visitorAssists = 0;
         let visitorSteals = 0;
         let visitorBlocks = 0;
         let visitorTurnovers = 0;
+        let visitorMaxScore = 0;
+        let visitorMaxScoreP = 0;
+        let visitorMaxRebound = 0;
+        let visitorMaxReboundP = 0;
+        let visitorMaxAssist = 0;
+        let visitorMaxAssistP = 0;
+        let visitorMaxSteal = 0;
+        let visitorMaxStealP = 0;
+        let visitorMaxBlock = 0;
+        let visitorMaxBlockP = 0;
+        let visitorMaxTurnover = 0;
+        let visitorMaxTurnoverP = 0;
         for(let i in homeStats) {
             let p = (<any>homeStats)[i];
             let playername = gameData.players[i].name;
@@ -14148,6 +14172,26 @@ class TemplateUtil {
             homeSteals += p.steal;
             homeBlocks += p.block;
             homeTurnovers += p.turnover;
+            if(p.score > homeMaxScore) {
+                homeMaxScore = p.score;
+                homeMaxScoreP = playername;
+            }
+            if(p.rebound > homeMaxRebound) {
+                homeMaxRebound = p.rebound;
+                homeMaxReboundP = playername;
+            }
+            if(p.assist > homeMaxAssist) {
+                homeMaxAssist = p.assist;
+                homeMaxAssistP = playername;
+            }
+            if(p.steal > homeMaxSteal) {
+                homeMaxSteal = p.steal;
+                homeMaxStealP = playername;
+            }
+            if(p.block > homeMaxBlock) {
+                homeMaxBlock = p.block;
+                homeMaxBlockP = playername;
+            }
         }
         homePlayers += `<tr>
             <td>总计</td>
@@ -14173,6 +14217,26 @@ class TemplateUtil {
             visitorSteals += p.steal;
             visitorBlocks += p.block;
             visitorTurnovers += p.turnover;
+            if(p.score > visitorMaxScore) {
+                visitorMaxScore = p.score;
+                visitorMaxScoreP = playername;
+            }
+            if(p.rebound > visitorMaxRebound) {
+                visitorMaxRebound = p.rebound;
+                visitorMaxReboundP = playername;
+            }
+            if(p.assist > visitorMaxAssist) {
+                visitorMaxAssist = p.assist;
+                visitorMaxAssistP = playername;
+            }
+            if(p.steal > visitorMaxSteal) {
+                visitorMaxSteal = p.steal;
+                visitorMaxStealP = playername;
+            }
+            if(p.block > visitorMaxBlock) {
+                visitorMaxBlock = p.block;
+                visitorMaxBlockP = playername;
+            }
         }
         visitorPlayers += `<tr>
             <td>总计</td>
@@ -14187,12 +14251,39 @@ class TemplateUtil {
             <span class='growSpan'>
                 <table>
                     <tr>
+                        <td>球队</td>
                         <td>(主)${homeTeamName}</td>
                         <td>${visitorName}(客)</td>
                     </tr>
                     <tr>
+                        <td>比分</td>
                         <td>${homeTeamScore}</td>
                         <td>${visitorScore}</td>
+                    </tr>
+                    <tr>
+                        <td>最高得分</td>
+                        <td>${homeMaxScoreP}:&nbsp;${homeMaxScore}</td>
+                        <td>${visitorMaxScoreP}:&nbsp;${visitorMaxScore}</td>
+                    </tr>
+                    <tr>
+                        <td>最高篮板</td>
+                        <td>${homeMaxReboundP}:&nbsp;${homeMaxRebound}</td>
+                        <td>${visitorMaxReboundP}:&nbsp;${visitorMaxRebound}</td>
+                    </tr>
+                    <tr>
+                        <td>最高助攻</td>
+                        <td>${homeMaxAssistP}:&nbsp;${homeMaxAssist}</td>
+                        <td>${visitorMaxAssistP}:&nbsp;${visitorMaxAssist}</td>
+                    </tr>
+                    <tr>
+                        <td>最高抢断</td>
+                        <td>${homeMaxStealP}:&nbsp;${homeMaxSteal}</td>
+                        <td>${visitorMaxStealP}:&nbsp;${visitorMaxSteal}</td>
+                    </tr>
+                    <tr>
+                        <td>最高盖帽</td>
+                        <td>${homeMaxBlockP}:&nbsp;${homeMaxBlock}</td>
+                        <td>${visitorMaxBlockP}:&nbsp;${visitorMaxBlock}</td>
                     </tr>
                 </table>
                 <table>
