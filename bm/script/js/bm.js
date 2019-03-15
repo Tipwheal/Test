@@ -277,6 +277,7 @@ var Game = /** @class */ (function () {
                 },
             },
             news: [],
+            matches: [],
             players: {
                 '1': {
                     age: 31,
@@ -12697,6 +12698,7 @@ var Game = /** @class */ (function () {
             currentDay: 1,
             showState: ShowState.News,
             nextPlayerId: 474,
+            matchNum: 0,
         };
         this.prepareGameData(result);
         return result;
@@ -13005,6 +13007,10 @@ var Game = /** @class */ (function () {
         gameData.offSeason.round1.pairs[7].up.team = rank[2].id;
         gameData.offSeason.round1.pairs[7].down.team = rank[13].id;
     };
+    Game.saveGameResult = function (gameResult, gameData) {
+        gameData.matches.push(gameResult);
+        return gameData.matchNum++;
+    };
     Game.nextDay = function (gameData) {
         gameData.showState = ShowState.News;
         if (gameData.currentDay <= Game.regularEndDay) {
@@ -13016,6 +13022,7 @@ var Game = /** @class */ (function () {
                 var homeTeamId = games[i][0];
                 var visitorId = games[i][1];
                 var gameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+                var matchId = this.saveGameResult(gameResult, gameData);
                 var homeTeam = gameData.teams[homeTeamId];
                 var visitor = gameData.teams[visitorId];
                 var homeTeamName = homeTeam.name;
@@ -13052,7 +13059,7 @@ var Game = /** @class */ (function () {
                         maxId = s;
                     }
                 }
-                dailyNews.push(homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName);
+                dailyNews.push(homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName + "\n                            <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
             }
             if (maxId != 0) {
                 dailyNews.push("\u4ECA\u65E5\u6570\u636E: " + gameData.players[maxId].name + "\u72C2\u780D" + maxScore + "\u5206\uFF01");
@@ -13103,6 +13110,8 @@ var Game = /** @class */ (function () {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            gameData.matches = [];
+            gameData.matchNum = 0;
             this.resetOffSeasonData(gameData);
             this.resetSeasonStats(gameData);
             gameData.news.push({
@@ -13355,8 +13364,8 @@ var Game = /** @class */ (function () {
     Game.playGameAndGetResult = function (homeTeamId, visitorId, gameData) {
         var htStat = this.calcTeamScores(homeTeamId, gameData);
         var viStat = this.calcTeamScores(visitorId, gameData);
-        this.calcTeamStats(homeTeamId, gameData);
-        this.calcTeamStats(visitorId, gameData);
+        this.calcTeamStats(homeTeamId, gameData, htStat);
+        this.calcTeamStats(visitorId, gameData, viStat);
         while (htStat.total == viStat.total) {
             var otHome = this.calcTeamScores(homeTeamId, gameData, 15);
             htStat.total += otHome.total;
@@ -13446,13 +13455,13 @@ var Game = /** @class */ (function () {
             }
         }
         if (htStat.total > viStat.total) {
-            return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
+            return new GameResult(homeTeamId, homeTeamId, visitorId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }
         else {
-            return new GameResult(visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
+            return new GameResult(visitorId, homeTeamId, visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
         }
     };
-    Game.calcTeamStats = function (teamId, gameData) {
+    Game.calcTeamStats = function (teamId, gameData, stat) {
         var starter = TeamMatchUtil.getStarters(teamId, gameData);
         var bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if (starter.length != 5) {
@@ -13551,6 +13560,11 @@ var Game = /** @class */ (function () {
             var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 5));
             var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 5));
             var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 5));
+            stat.pScores[starter[i]].assist = ast;
+            stat.pScores[starter[i]].rebound = rbd;
+            stat.pScores[starter[i]].turnover = tov;
+            stat.pScores[starter[i]].steal = stl;
+            stat.pScores[starter[i]].block = blk;
             if (gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
@@ -13578,11 +13592,16 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < bench.length; i++) {
             var p = gameData.players[bench[i]];
-            var ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5) * 0.3);
-            var rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12) * 0.3);
-            var tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5) * 0.3);
-            var stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5) * 0.3);
-            var blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5) * 0.3);
+            var ast = Math.ceil(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5) * 0.3);
+            var rbd = Math.ceil(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12) * 0.3);
+            var tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5) * 0.3);
+            var stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5) * 0.3);
+            var blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5) * 0.3);
+            stat.pScores[bench[i]].assist = ast;
+            stat.pScores[bench[i]].rebound = rbd;
+            stat.pScores[bench[i]].turnover = tov;
+            stat.pScores[bench[i]].steal = stl;
+            stat.pScores[bench[i]].block = blk;
             if (gameData.currentDay <= gameData.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
@@ -14129,6 +14148,45 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
+    TemplateUtil.createGameResultPane = function (matchId, gameData) {
+        var result = gameData.matches[matchId];
+        var winner = result.winnerId;
+        var homeTeamId = result.homeTeamId;
+        var visitorId = result.visitorId;
+        var homeTeamName = gameData.teams[homeTeamId].name;
+        var visitorName = gameData.teams[visitorId].name;
+        var homeTeamScore = 0;
+        var visitorScore = 0;
+        var homeStats, visitorStats;
+        if (winner == homeTeamId) {
+            homeTeamScore = result.winnerPoint;
+            visitorScore = result.loserPoint;
+            homeStats = result.winnerScores;
+            visitorStats = result.loserScores;
+        }
+        else {
+            homeTeamScore = result.loserPoint;
+            visitorScore = result.winnerPoint;
+            homeStats = result.loserScores;
+            visitorStats = result.winnerScores;
+        }
+        var homePlayers = "";
+        var visitorPlayers = "";
+        console.log(homeStats);
+        for (var i in homeStats) {
+            var p = homeStats[i];
+            var playername = gameData.players[i].name;
+            homePlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n                <td>" + p.turnover + "</td>\n            </tr>";
+        }
+        for (var i in visitorStats) {
+            var p = visitorStats[i];
+            var playername = gameData.players[i].name;
+            visitorPlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n                <td>" + p.turnover + "</td>\n            </tr>";
+        }
+        var template = "\n        <div class='matchPane'>\n            <span class='growSpan'>\n                <table>\n                    <tr>\n                        <td>(\u4E3B)" + homeTeamName + "</td>\n                        <td>" + visitorName + "(\u5BA2)</td>\n                    </tr>\n                    <tr>\n                        <td>" + homeTeamScore + "</td>\n                        <td>" + visitorScore + "</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <td>" + homeTeamName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + homePlayers + "\n                </table>\n                <table>\n                    <tr>\n                        <td>" + visitorName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + visitorPlayers + "\n                </table>\n            </span>\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.matchPane');
+        return newNode;
+    };
     TemplateUtil.createNewsLine = function (day, season, content) {
         var template = "\n        <div class='leftLine'>\n            <span class='growSpan'>\n                <span>\u7B2C" + season + "\u8D5B\u5B63</span><span>\u7B2C" + day + "\u5929&nbsp;</span>\n                <br />\n                " + content + "\n            </span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.leftLine');
@@ -14368,8 +14426,10 @@ var TemplateUtil = /** @class */ (function () {
     return TemplateUtil;
 }());
 var GameResult = /** @class */ (function () {
-    function GameResult(winnerId, winnerPoint, loserPoint, winnerScores, loserScores) {
+    function GameResult(winnerId, homeTeamId, visitorId, winnerPoint, loserPoint, winnerScores, loserScores) {
         this.winnerId = winnerId;
+        this.homeTeamId = homeTeamId;
+        this.visitorId = visitorId;
         this.winnerPoint = winnerPoint;
         this.loserPoint = loserPoint;
         this.winnerScores = winnerScores;

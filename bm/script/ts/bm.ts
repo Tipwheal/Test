@@ -335,6 +335,8 @@ class Game {
             },
             news: [
             ],
+            matches: [
+            ],
             players: {
                 '1': {
                     age: 31,
@@ -12755,6 +12757,7 @@ class Game {
             currentDay: 1,
             showState: ShowState.News,
             nextPlayerId: 474,
+            matchNum: 0,
         }
         this.prepareGameData(result);
         return result;
@@ -13057,6 +13060,11 @@ class Game {
         gameData.offSeason.round1.pairs[7].down.team = rank[13].id;
     }
 
+    private static saveGameResult(gameResult: GameResult, gameData: any): any {
+        gameData.matches.push(gameResult);
+        return gameData.matchNum++;
+    }
+
     public static nextDay(gameData: any): any {
         gameData.showState = ShowState.News;
         if(gameData.currentDay <= Game.regularEndDay) {
@@ -13068,6 +13076,7 @@ class Game {
                 let homeTeamId = games[i][0];
                 let visitorId = games[i][1];
                 let gameResult: GameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+                let matchId = this.saveGameResult(gameResult, gameData);
                 let homeTeam = gameData.teams[homeTeamId];
                 let visitor = gameData.teams[visitorId];
                 const homeTeamName = homeTeam.name;
@@ -13103,7 +13112,8 @@ class Game {
                         maxId = s;
                     }
                 }
-                dailyNews.push(`${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}`);
+                dailyNews.push(`${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}
+                            <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
             }
             if(maxId != 0) {
                 dailyNews.push(`今日数据: ${gameData.players[maxId].name}狂砍${maxScore}分！`);
@@ -13149,6 +13159,8 @@ class Game {
                 gameData.teams[i].gameNum = 0;
             }
             gameData.news = [];
+            gameData.matches = [];
+            gameData.matchNum = 0;
             this.resetOffSeasonData(gameData);
             this.resetSeasonStats(gameData);
             gameData.news.push({
@@ -13398,8 +13410,8 @@ class Game {
     private static playGameAndGetResult(homeTeamId: any, visitorId: any, gameData: any): GameResult {
         let htStat = this.calcTeamScores(homeTeamId, gameData);
         let viStat = this.calcTeamScores(visitorId, gameData);
-        this.calcTeamStats(homeTeamId, gameData);
-        this.calcTeamStats(visitorId, gameData);
+        this.calcTeamStats(homeTeamId, gameData, htStat);
+        this.calcTeamStats(visitorId, gameData, viStat);
         while(htStat.total == viStat.total) {
             let otHome = this.calcTeamScores(homeTeamId, gameData, 15);
             htStat.total += otHome.total;
@@ -13488,13 +13500,13 @@ class Game {
             }
         }
         if(htStat.total > viStat.total) {
-            return new GameResult(homeTeamId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
+            return new GameResult(homeTeamId, homeTeamId, visitorId, htStat.total, viStat.total, htStat.pScores, viStat.pScores);
         }else {
-            return new GameResult(visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
+            return new GameResult(visitorId, homeTeamId, visitorId, viStat.total, htStat.total, viStat.pScores, htStat.pScores);
         }
     }
 
-    private static calcTeamStats(teamId: any, gameData: any): any {
+    private static calcTeamStats(teamId: any, gameData: any, stat: any): any {
         const starter = TeamMatchUtil.getStarters(teamId, gameData);
         const bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if(starter.length != 5) {
@@ -13573,6 +13585,11 @@ class Game {
             const tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 5));
             const stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 5));
             const blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 5));
+            stat.pScores[starter[i]].assist = ast;
+            stat.pScores[starter[i]].rebound = rbd;
+            stat.pScores[starter[i]].turnover = tov;
+            stat.pScores[starter[i]].steal = stl;
+            stat.pScores[starter[i]].block = blk;
             if(gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
@@ -13599,11 +13616,16 @@ class Game {
         }
         for(let i = 0; i < bench.length; i ++) {
             const p = gameData.players[bench[i]];
-            const ast = Math.round(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5)*0.3);
-            const rbd = Math.round(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12)*0.3);
-            const tov = Math.round(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5)*0.3);
-            const stl = Math.round(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5)*0.3);
-            const blk = Math.round(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5)*0.3);
+            const ast = Math.ceil(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5)*0.3);
+            const rbd = Math.ceil(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12)*0.3);
+            const tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5)*0.3);
+            const stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5)*0.3);
+            const blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5)*0.3);
+            stat.pScores[bench[i]].assist = ast;
+            stat.pScores[bench[i]].rebound = rbd;
+            stat.pScores[bench[i]].turnover = tov;
+            stat.pScores[bench[i]].steal = stl;
+            stat.pScores[bench[i]].block = blk;
             if(gameData.currentDay <= gameData.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
@@ -14071,6 +14093,106 @@ class TemplateUtil {
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
+        return newNode;
+    }
+
+    public static createGameResultPane(matchId: any, gameData: any): any {
+        let result: GameResult = gameData.matches[matchId];
+        let winner = result.winnerId;
+        let homeTeamId = result.homeTeamId;
+        let visitorId = result.visitorId;
+        let homeTeamName = gameData.teams[homeTeamId].name;
+        let visitorName = gameData.teams[visitorId].name;
+        let homeTeamScore = 0;
+        let visitorScore = 0;
+        let homeStats, visitorStats;
+        if(winner == homeTeamId) {
+            homeTeamScore = result.winnerPoint;
+            visitorScore = result.loserPoint;
+            homeStats = result.winnerScores;
+            visitorStats = result.loserScores;
+        }else {
+            homeTeamScore = result.loserPoint;
+            visitorScore = result.winnerPoint;
+            homeStats = result.loserScores;
+            visitorStats = result.winnerScores;
+        }
+        let homePlayers = ""
+        let visitorPlayers = ""
+        console.log(homeStats);
+        for(let i in homeStats) {
+            let p = (<any>homeStats)[i];
+            let playername = gameData.players[i].name;
+            homePlayers += `<tr>
+                <td>${playername}</td>
+                <td>${p.score}</td>
+                <td>${p.rebound}</td>
+                <td>${p.steal}</td>
+                <td>${p.block}</td>
+                <td>${p.turnover}</td>
+            </tr>`;
+        }
+        for(let i in visitorStats) {
+            let p = (<any>visitorStats)[i];
+            let playername = gameData.players[i].name;
+            visitorPlayers += `<tr>
+                <td>${playername}</td>
+                <td>${p.score}</td>
+                <td>${p.rebound}</td>
+                <td>${p.steal}</td>
+                <td>${p.block}</td>
+                <td>${p.turnover}</td>
+            </tr>`;
+        }
+        const template = `
+        <div class='matchPane'>
+            <span class='growSpan'>
+                <table>
+                    <tr>
+                        <td>(主)${homeTeamName}</td>
+                        <td>${visitorName}(客)</td>
+                    </tr>
+                    <tr>
+                        <td>${homeTeamScore}</td>
+                        <td>${visitorScore}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>${homeTeamName}球员</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>姓名</th>
+                        <th>得分</th>
+                        <th>篮板</th>
+                        <th>助攻</th>
+                        <th>抢断</th>
+                        <th>盖帽</th>
+                    </tr>
+                    ${homePlayers}
+                </table>
+                <table>
+                    <tr>
+                        <td>${visitorName}球员</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>姓名</th>
+                        <th>得分</th>
+                        <th>篮板</th>
+                        <th>助攻</th>
+                        <th>抢断</th>
+                        <th>盖帽</th>
+                    </tr>
+                    ${visitorPlayers}
+                </table>
+            </span>
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.matchPane');
         return newNode;
     }
 
@@ -14640,13 +14762,17 @@ class TemplateUtil {
 
 class GameResult {
     winnerId: number;
+    homeTeamId: number;
+    visitorId: number;
     winnerPoint: number;
     loserPoint: number;
     winnerScores: {};
     loserScores: {};
 
-    constructor(winnerId: number, winnerPoint: number, loserPoint: number, winnerScores: any, loserScores: any) {
+    constructor(winnerId: number, homeTeamId: number, visitorId: number, winnerPoint: number, loserPoint: number, winnerScores: any, loserScores: any) {
         this.winnerId = winnerId;
+        this.homeTeamId = homeTeamId;
+        this.visitorId = visitorId;
         this.winnerPoint = winnerPoint;
         this.loserPoint = loserPoint;
         this.winnerScores = winnerScores;
