@@ -13345,19 +13345,24 @@ class Game {
                 visitorId = thePair.up.team;
             }
             let gameResult: GameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+            let matchId = this.saveGameResult(gameResult, gameData);
             let homeTeamName = gameData.teams[homeTeamId].name;
             let visitorName = gameData.teams[visitorId].name;
             if(homeTeamId == gameResult.winnerId) {
                 if(homeTeamId == thePair.up.team) {
-                    dailyNews.push(`${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}`);
+                    dailyNews.push(`${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}
+                    <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }else {
-                    dailyNews.push(`${visitorName}(客)${gameResult.loserPoint}:${gameResult.winnerPoint}(主)${homeTeamName}`);
+                    dailyNews.push(`${visitorName}(客)${gameResult.loserPoint}:${gameResult.winnerPoint}(主)${homeTeamName}
+                    <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }
             }else {
                 if(homeTeamId == thePair.up.team) {
-                    dailyNews.push(`${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}`);
+                    dailyNews.push(`${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}
+                    <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }else {
-                    dailyNews.push(`${visitorName}(客)${gameResult.winnerPoint}:${gameResult.loserPoint}(主)${homeTeamName}`);
+                    dailyNews.push(`${visitorName}(客)${gameResult.winnerPoint}:${gameResult.loserPoint}(主)${homeTeamName}
+                    <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }
             }
             if(thePair.up.team == gameResult.winnerId) {

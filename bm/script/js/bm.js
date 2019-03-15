@@ -13294,22 +13294,23 @@ var Game = /** @class */ (function () {
                 visitorId = thePair.up.team;
             }
             var gameResult = this.playGameAndGetResult(homeTeamId, visitorId, gameData);
+            var matchId = this.saveGameResult(gameResult, gameData);
             var homeTeamName = gameData.teams[homeTeamId].name;
             var visitorName = gameData.teams[visitorId].name;
             if (homeTeamId == gameResult.winnerId) {
                 if (homeTeamId == thePair.up.team) {
-                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u5BA2)" + visitorName);
+                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u5BA2)" + visitorName + "\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
                 else {
-                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u4E3B)" + homeTeamName);
+                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u4E3B)" + homeTeamName + "\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
             }
             else {
                 if (homeTeamId == thePair.up.team) {
-                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u5BA2)" + visitorName);
+                    dailyNews.push(homeTeamName + "(\u4E3B)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u5BA2)" + visitorName + "\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
                 else {
-                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u4E3B)" + homeTeamName);
+                    dailyNews.push(visitorName + "(\u5BA2)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u4E3B)" + homeTeamName + "\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
             }
             if (thePair.up.team == gameResult.winnerId) {
