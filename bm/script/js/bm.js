@@ -13510,27 +13510,27 @@ var Game = /** @class */ (function () {
                 return 0.01 * skill + 0.02;
             }
             else if (place == 2) {
-                return 0.02 * skill + 0.03;
+                return 0.015 * skill + 0.03;
             }
             else if (place == 3) {
-                return 0.03 * skill + 0.05;
+                return 0.02 * skill + 0.03;
             }
             else {
-                return 0.04 * skill + 0.1;
+                return 0.02 * skill + 0.03;
             }
         }
         function assistModifier(place, skill) {
             if (place == 0) {
-                return 0.06 * skill + 0.1;
+                return 0.05 * skill + 0.3;
             }
             else if (place == 1) {
-                return 0.05 * skill + 0.5;
-            }
-            else if (place == 2) {
                 return 0.04 * skill + 0.3;
             }
+            else if (place == 2) {
+                return 0.02 * skill + 0.3;
+            }
             else if (place == 3) {
-                return 0.03 * skill + 0.2;
+                return 0.02 * skill + 0.2;
             }
             else {
                 return 0.02 * skill + 0.1;
@@ -13557,9 +13557,9 @@ var Game = /** @class */ (function () {
             var p = gameData.players[starter[i]];
             var ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
             var rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 12));
-            var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 5));
-            var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 5));
-            var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 5));
+            var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
+            var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
+            var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
             stat.pScores[starter[i]].assist = ast;
             stat.pScores[starter[i]].rebound = rbd;
             stat.pScores[starter[i]].turnover = tov;
@@ -13594,9 +13594,12 @@ var Game = /** @class */ (function () {
             var p = gameData.players[bench[i]];
             var ast = Math.ceil(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5) * 0.3);
             var rbd = Math.ceil(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12) * 0.3);
-            var tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5) * 0.3);
-            var stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5) * 0.3);
-            var blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5) * 0.3);
+            var tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 3) * 0.3);
+            var stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 3) * 0.3);
+            var blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 3) * 0.3);
+            if (!(bench[i] in stat.pScores)) {
+                stat.pScores[bench[i]] = {};
+            }
             stat.pScores[bench[i]].assist = ast;
             stat.pScores[bench[i]].rebound = rbd;
             stat.pScores[bench[i]].turnover = tov;
@@ -14172,17 +14175,38 @@ var TemplateUtil = /** @class */ (function () {
         }
         var homePlayers = "";
         var visitorPlayers = "";
-        console.log(homeStats);
+        var homeRebounds = 0;
+        var homeAssists = 0;
+        var homeSteals = 0;
+        var homeBlocks = 0;
+        var homeTurnovers = 0;
+        var visitorRebounds = 0;
+        var visitorAssists = 0;
+        var visitorSteals = 0;
+        var visitorBlocks = 0;
+        var visitorTurnovers = 0;
         for (var i in homeStats) {
             var p = homeStats[i];
             var playername = gameData.players[i].name;
-            homePlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n                <td>" + p.turnover + "</td>\n            </tr>";
+            homePlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.assist + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n            </tr>";
+            homeRebounds += p.rebound;
+            homeAssists += p.assist;
+            homeSteals += p.steal;
+            homeBlocks += p.block;
+            homeTurnovers += p.turnover;
         }
+        homePlayers += "<tr>\n            <td>\u603B\u8BA1</td>\n            <td>" + homeTeamScore + "</td>\n            <td>" + homeRebounds + "</td>\n            <td>" + homeAssists + "</td>\n            <td>" + homeSteals + "</td>\n            <td>" + homeBlocks + "</td>\n        </tr>";
         for (var i in visitorStats) {
             var p = visitorStats[i];
             var playername = gameData.players[i].name;
-            visitorPlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n                <td>" + p.turnover + "</td>\n            </tr>";
+            visitorPlayers += "<tr>\n                <td>" + playername + "</td>\n                <td>" + p.score + "</td>\n                <td>" + p.rebound + "</td>\n                <td>" + p.assist + "</td>\n                <td>" + p.steal + "</td>\n                <td>" + p.block + "</td>\n            </tr>";
+            visitorRebounds += p.rebound;
+            visitorAssists += p.assist;
+            visitorSteals += p.steal;
+            visitorBlocks += p.block;
+            visitorTurnovers += p.turnover;
         }
+        visitorPlayers += "<tr>\n            <td>\u603B\u8BA1</td>\n            <td>" + visitorScore + "</td>\n            <td>" + visitorRebounds + "</td>\n            <td>" + visitorAssists + "</td>\n            <td>" + visitorSteals + "</td>\n            <td>" + visitorBlocks + "</td>\n        </tr>";
         var template = "\n        <div class='matchPane'>\n            <span class='growSpan'>\n                <table>\n                    <tr>\n                        <td>(\u4E3B)" + homeTeamName + "</td>\n                        <td>" + visitorName + "(\u5BA2)</td>\n                    </tr>\n                    <tr>\n                        <td>" + homeTeamScore + "</td>\n                        <td>" + visitorScore + "</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <td>" + homeTeamName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + homePlayers + "\n                </table>\n                <table>\n                    <tr>\n                        <td>" + visitorName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + visitorPlayers + "\n                </table>\n            </span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.matchPane');
         return newNode;

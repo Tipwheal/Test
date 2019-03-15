@@ -115,7 +115,8 @@ br {
 .growSpan {
   flex-grow: 1; }
   .growSpan table {
-    font-size: 12px; }
+    font-size: 12px;
+    line-height: 8px; }
 
 .leftLine {
   justify-content: start;

@@ -13545,22 +13545,22 @@ class Game {
             }else if(place == 1) {
                 return 0.01 * skill + 0.02;
             }else if(place == 2) {
-                return 0.02 * skill + 0.03;
+                return 0.015 * skill + 0.03;
             }else if(place == 3) {
-                return 0.03 * skill + 0.05;
+                return 0.02 * skill + 0.03;
             }else {
-                return 0.04 * skill + 0.1;
+                return 0.02 * skill + 0.03;
             }
         }
         function assistModifier(place: number, skill: number) {
             if(place == 0) {
-                return 0.06 * skill + 0.1;
+                return 0.05 * skill + 0.3;
             }else if(place == 1) {
-                return 0.05 * skill + 0.5;
-            }else if(place == 2) {
                 return 0.04 * skill + 0.3;
+            }else if(place == 2) {
+                return 0.02 * skill + 0.3;
             }else if(place == 3) {
-                return 0.03 * skill + 0.2;
+                return 0.02 * skill + 0.2;
             }else {
                 return 0.02 * skill + 0.1;
             }
@@ -13582,9 +13582,9 @@ class Game {
             const p = gameData.players[starter[i]];
             const ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
             const rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 12));
-            const tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 5));
-            const stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 5));
-            const blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 5));
+            const tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
+            const stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
+            const blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
             stat.pScores[starter[i]].assist = ast;
             stat.pScores[starter[i]].rebound = rbd;
             stat.pScores[starter[i]].turnover = tov;
@@ -13618,9 +13618,12 @@ class Game {
             const p = gameData.players[bench[i]];
             const ast = Math.ceil(assistModifier(p.positionFirst, p.skillPass) * RandomUtil.random(0, 5)*0.3);
             const rbd = Math.ceil(reboundModifier(p.positionFirst, p.skillRebound) * RandomUtil.random(0, 12)*0.3);
-            const tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 5)*0.3);
-            const stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 5)*0.3);
-            const blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 5)*0.3);
+            const tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 3)*0.3);
+            const stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 3)*0.3);
+            const blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 3)*0.3);
+            if(!(bench[i] in stat.pScores)) {
+                 stat.pScores[bench[i]] = {};
+            }
             stat.pScores[bench[i]].assist = ast;
             stat.pScores[bench[i]].rebound = rbd;
             stat.pScores[bench[i]].turnover = tov;
@@ -14119,7 +14122,16 @@ class TemplateUtil {
         }
         let homePlayers = ""
         let visitorPlayers = ""
-        console.log(homeStats);
+        let homeRebounds = 0;
+        let homeAssists = 0;
+        let homeSteals = 0;
+        let homeBlocks = 0;
+        let homeTurnovers = 0;
+        let visitorRebounds = 0;
+        let visitorAssists = 0;
+        let visitorSteals = 0;
+        let visitorBlocks = 0;
+        let visitorTurnovers = 0;
         for(let i in homeStats) {
             let p = (<any>homeStats)[i];
             let playername = gameData.players[i].name;
@@ -14127,11 +14139,24 @@ class TemplateUtil {
                 <td>${playername}</td>
                 <td>${p.score}</td>
                 <td>${p.rebound}</td>
+                <td>${p.assist}</td>
                 <td>${p.steal}</td>
                 <td>${p.block}</td>
-                <td>${p.turnover}</td>
             </tr>`;
+            homeRebounds += p.rebound;
+            homeAssists += p.assist;
+            homeSteals += p.steal;
+            homeBlocks += p.block;
+            homeTurnovers += p.turnover;
         }
+        homePlayers += `<tr>
+            <td>总计</td>
+            <td>${homeTeamScore}</td>
+            <td>${homeRebounds}</td>
+            <td>${homeAssists}</td>
+            <td>${homeSteals}</td>
+            <td>${homeBlocks}</td>
+        </tr>`;
         for(let i in visitorStats) {
             let p = (<any>visitorStats)[i];
             let playername = gameData.players[i].name;
@@ -14139,11 +14164,24 @@ class TemplateUtil {
                 <td>${playername}</td>
                 <td>${p.score}</td>
                 <td>${p.rebound}</td>
+                <td>${p.assist}</td>
                 <td>${p.steal}</td>
                 <td>${p.block}</td>
-                <td>${p.turnover}</td>
             </tr>`;
+            visitorRebounds += p.rebound;
+            visitorAssists += p.assist;
+            visitorSteals += p.steal;
+            visitorBlocks += p.block;
+            visitorTurnovers += p.turnover;
         }
+        visitorPlayers += `<tr>
+            <td>总计</td>
+            <td>${visitorScore}</td>
+            <td>${visitorRebounds}</td>
+            <td>${visitorAssists}</td>
+            <td>${visitorSteals}</td>
+            <td>${visitorBlocks}</td>
+        </tr>`;
         const template = `
         <div class='matchPane'>
             <span class='growSpan'>

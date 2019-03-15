@@ -133,7 +133,6 @@ br {
 
 .offSeasonColumn {
     flex-grow: 1;
-    // text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -169,6 +168,7 @@ br {
 
     table {
         font-size: 12px;
+        line-height: 8px;
     }
 }
 
