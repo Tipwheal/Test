@@ -13663,7 +13663,9 @@ class Game {
         function average(players: any) {
             let total = 0;
             for(let i in players) {
-                total += gameData.players[players[i]].skillAverage;
+                if(players[i] in gameData.players) {
+                    total += gameData.players[players[i]].skillAverage;
+                }
             }
             return total / players.length;
         }
@@ -14139,6 +14141,8 @@ class TemplateUtil {
         let homeMaxBlockP = 0;
         let homeMaxTurnover = 0;
         let homeMaxTurnoverP = 0;
+        let homeMvpNum = 0;
+        let homeMvpP = 0;
         let visitorRebounds = 0;
         let visitorAssists = 0;
         let visitorSteals = 0;
@@ -14156,6 +14160,8 @@ class TemplateUtil {
         let visitorMaxBlockP = 0;
         let visitorMaxTurnover = 0;
         let visitorMaxTurnoverP = 0;
+        let visitorMvpNum = 0;
+        let visitorMvpP = 0;
         for(let i in homeStats) {
             let p = (<any>homeStats)[i];
             let playername = gameData.players[i].name;
@@ -14191,6 +14197,11 @@ class TemplateUtil {
             if(p.block > homeMaxBlock) {
                 homeMaxBlock = p.block;
                 homeMaxBlockP = playername;
+            }
+            let total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+            if(total > homeMvpNum) {
+                homeMvpNum = total;
+                homeMvpP = playername;
             }
         }
         homePlayers += `<tr>
@@ -14237,6 +14248,11 @@ class TemplateUtil {
                 visitorMaxBlock = p.block;
                 visitorMaxBlockP = playername;
             }
+            let total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+            if(total > visitorMvpNum) {
+                visitorMvpNum = total;
+                visitorMvpP = playername;
+            }
         }
         visitorPlayers += `<tr>
             <td>总计</td>
@@ -14259,6 +14275,11 @@ class TemplateUtil {
                         <td>比分</td>
                         <td>${homeTeamScore}</td>
                         <td>${visitorScore}</td>
+                    </tr>
+                    <tr>
+                        <td>最佳球员</td>
+                        <td>${homeMvpP}&nbsp;评分：${homeMvpNum}</td>
+                        <td>${visitorMvpP}&nbsp;评分：${visitorMvpNum}</td>
                     </tr>
                     <tr>
                         <td>最高得分</td>

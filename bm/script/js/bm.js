@@ -13640,7 +13640,9 @@ var Game = /** @class */ (function () {
         function average(players) {
             var total = 0;
             for (var i in players) {
-                total += gameData.players[players[i]].skillAverage;
+                if (players[i] in gameData.players) {
+                    total += gameData.players[players[i]].skillAverage;
+                }
             }
             return total / players.length;
         }
@@ -14192,6 +14194,8 @@ var TemplateUtil = /** @class */ (function () {
         var homeMaxBlockP = 0;
         var homeMaxTurnover = 0;
         var homeMaxTurnoverP = 0;
+        var homeMvpNum = 0;
+        var homeMvpP = 0;
         var visitorRebounds = 0;
         var visitorAssists = 0;
         var visitorSteals = 0;
@@ -14209,6 +14213,8 @@ var TemplateUtil = /** @class */ (function () {
         var visitorMaxBlockP = 0;
         var visitorMaxTurnover = 0;
         var visitorMaxTurnoverP = 0;
+        var visitorMvpNum = 0;
+        var visitorMvpP = 0;
         for (var i in homeStats) {
             var p = homeStats[i];
             var playername = gameData.players[i].name;
@@ -14237,6 +14243,11 @@ var TemplateUtil = /** @class */ (function () {
             if (p.block > homeMaxBlock) {
                 homeMaxBlock = p.block;
                 homeMaxBlockP = playername;
+            }
+            var total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+            if (total > homeMvpNum) {
+                homeMvpNum = total;
+                homeMvpP = playername;
             }
         }
         homePlayers += "<tr>\n            <td>\u603B\u8BA1</td>\n            <td>" + homeTeamScore + "</td>\n            <td>" + homeRebounds + "</td>\n            <td>" + homeAssists + "</td>\n            <td>" + homeSteals + "</td>\n            <td>" + homeBlocks + "</td>\n        </tr>";
@@ -14269,9 +14280,14 @@ var TemplateUtil = /** @class */ (function () {
                 visitorMaxBlock = p.block;
                 visitorMaxBlockP = playername;
             }
+            var total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+            if (total > visitorMvpNum) {
+                visitorMvpNum = total;
+                visitorMvpP = playername;
+            }
         }
         visitorPlayers += "<tr>\n            <td>\u603B\u8BA1</td>\n            <td>" + visitorScore + "</td>\n            <td>" + visitorRebounds + "</td>\n            <td>" + visitorAssists + "</td>\n            <td>" + visitorSteals + "</td>\n            <td>" + visitorBlocks + "</td>\n        </tr>";
-        var template = "\n        <div class='matchPane'>\n            <span class='growSpan'>\n                <table>\n                    <tr>\n                        <td>\u7403\u961F</td>\n                        <td>(\u4E3B)" + homeTeamName + "</td>\n                        <td>" + visitorName + "(\u5BA2)</td>\n                    </tr>\n                    <tr>\n                        <td>\u6BD4\u5206</td>\n                        <td>" + homeTeamScore + "</td>\n                        <td>" + visitorScore + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u5F97\u5206</td>\n                        <td>" + homeMaxScoreP + ":&nbsp;" + homeMaxScore + "</td>\n                        <td>" + visitorMaxScoreP + ":&nbsp;" + visitorMaxScore + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u7BEE\u677F</td>\n                        <td>" + homeMaxReboundP + ":&nbsp;" + homeMaxRebound + "</td>\n                        <td>" + visitorMaxReboundP + ":&nbsp;" + visitorMaxRebound + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u52A9\u653B</td>\n                        <td>" + homeMaxAssistP + ":&nbsp;" + homeMaxAssist + "</td>\n                        <td>" + visitorMaxAssistP + ":&nbsp;" + visitorMaxAssist + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u62A2\u65AD</td>\n                        <td>" + homeMaxStealP + ":&nbsp;" + homeMaxSteal + "</td>\n                        <td>" + visitorMaxStealP + ":&nbsp;" + visitorMaxSteal + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u76D6\u5E3D</td>\n                        <td>" + homeMaxBlockP + ":&nbsp;" + homeMaxBlock + "</td>\n                        <td>" + visitorMaxBlockP + ":&nbsp;" + visitorMaxBlock + "</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <td>" + homeTeamName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + homePlayers + "\n                </table>\n                <table>\n                    <tr>\n                        <td>" + visitorName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + visitorPlayers + "\n                </table>\n            </span>\n        </div>\n        ";
+        var template = "\n        <div class='matchPane'>\n            <span class='growSpan'>\n                <table>\n                    <tr>\n                        <td>\u7403\u961F</td>\n                        <td>(\u4E3B)" + homeTeamName + "</td>\n                        <td>" + visitorName + "(\u5BA2)</td>\n                    </tr>\n                    <tr>\n                        <td>\u6BD4\u5206</td>\n                        <td>" + homeTeamScore + "</td>\n                        <td>" + visitorScore + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u4F73\u7403\u5458</td>\n                        <td>" + homeMvpP + "&nbsp;\u8BC4\u5206\uFF1A" + homeMvpNum + "</td>\n                        <td>" + visitorMvpP + "&nbsp;\u8BC4\u5206\uFF1A" + visitorMvpNum + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u5F97\u5206</td>\n                        <td>" + homeMaxScoreP + ":&nbsp;" + homeMaxScore + "</td>\n                        <td>" + visitorMaxScoreP + ":&nbsp;" + visitorMaxScore + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u7BEE\u677F</td>\n                        <td>" + homeMaxReboundP + ":&nbsp;" + homeMaxRebound + "</td>\n                        <td>" + visitorMaxReboundP + ":&nbsp;" + visitorMaxRebound + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u52A9\u653B</td>\n                        <td>" + homeMaxAssistP + ":&nbsp;" + homeMaxAssist + "</td>\n                        <td>" + visitorMaxAssistP + ":&nbsp;" + visitorMaxAssist + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u62A2\u65AD</td>\n                        <td>" + homeMaxStealP + ":&nbsp;" + homeMaxSteal + "</td>\n                        <td>" + visitorMaxStealP + ":&nbsp;" + visitorMaxSteal + "</td>\n                    </tr>\n                    <tr>\n                        <td>\u6700\u9AD8\u76D6\u5E3D</td>\n                        <td>" + homeMaxBlockP + ":&nbsp;" + homeMaxBlock + "</td>\n                        <td>" + visitorMaxBlockP + ":&nbsp;" + visitorMaxBlock + "</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <td>" + homeTeamName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + homePlayers + "\n                </table>\n                <table>\n                    <tr>\n                        <td>" + visitorName + "\u7403\u5458</td>\n                    </tr>\n                </table>\n                <table>\n                    <tr>\n                        <th>\u59D3\u540D</th>\n                        <th>\u5F97\u5206</th>\n                        <th>\u7BEE\u677F</th>\n                        <th>\u52A9\u653B</th>\n                        <th>\u62A2\u65AD</th>\n                        <th>\u76D6\u5E3D</th>\n                    </tr>\n                    " + visitorPlayers + "\n                </table>\n            </span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.matchPane');
         return newNode;
     };
