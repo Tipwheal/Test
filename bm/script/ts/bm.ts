@@ -12897,9 +12897,7 @@ class Game {
             gameData.teams[teamId].starterC = -1;
         }else if(team.dnp.includes(playerId + '')) {
             gameData.teams[teamId].dnp.splice(team.dnp.indexOf(playerId + ''), 1)
-            console.log('remove dnp')
         }else if(team.bench.includes(playerId + '')) {
-            console.log('remove bench')
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1)
         }
         console.log(team.dnp)
@@ -14233,32 +14231,49 @@ class TemplateUtil {
             const box = <HTMLInputElement>(<HTMLElement>sColumn.children[i]).children[0];
             sPlayers.push(box.value);
         }
-        let fTeam = gameData.teams[gameData.players[fPlayers[0]].team];
-        let sTeam = gameData.teams[gameData.players[sPlayers[0]].team];
+        let fId = gameData.players[fPlayers[0]].team;
+        let fTeam = gameData.teams[fId];
+        let sId = gameData.players[sPlayers[0]].team;
+        let sTeam = gameData.teams[sId];
         function remove(array: string[], item: string) {
             let index = -1;
             for (var i = 0; i < array.length; i++) { 
                 if (array[i] == item) {
                     index = i;
                     break;
-                }; 
+                };
             }
             if (index > -1) { 
                 array.splice(index, 1); 
             } 
         }
-        console.log(fTeam);
+        console.log(JSON.stringify(fTeam));
         for (let i = 0; i < fPlayers.length; i++) {
             remove(fTeam.cores, fPlayers[i]);
             remove(fTeam.dnp, fPlayers[i]);
             remove(fTeam.players, fPlayers[i]);
+            remove(fTeam.bench, fPlayers[i]);
+            fTeam.starterPG="";
+            fTeam.starterSG="";
+            fTeam.starterSF="";
+            fTeam.starterPF="";
+            fTeam.starterC="";
             sTeam.players.push(fPlayers[i]);
+            gameData.players[fPlayers[i]].team = sId;
         }
+        console.log(JSON.stringify(fTeam));
         for (let i = 0; i < sPlayers.length; i++) {
             remove(sTeam.cores, sPlayers[i]);
             remove(sTeam.dnp, sPlayers[i]);
             remove(sTeam.players, sPlayers[i]);
+            remove(sTeam.bench, sPlayers[i]);
+            sTeam.starterPG="";
+            sTeam.starterSG="";
+            sTeam.starterSF="";
+            sTeam.starterPF="";
+            sTeam.starterC="";
             fTeam.players.push(sPlayers[i]);
+            gameData.players[sPlayers[i]].team = fId;
         }
         (<HTMLSelectElement>document.getElementById('secondTradePlayers')).innerHTML = "";
         (<HTMLSelectElement>document.getElementById('tradePlayers')).innerHTML = "";
