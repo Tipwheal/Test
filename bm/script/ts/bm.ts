@@ -14150,7 +14150,7 @@ class TemplateUtil {
         const template = `
         <div class='tradePane'>
             <div class='tradeTeamTitle'>
-                <select class='gameSelect' id='tradeSelect' onchange=''>
+                <select class='gameSelect' id='tradeSelect' onchange='TemplateUtil.showTradePlayers(gameState)'>
                     <option value='-1'>请选择球队</option>
                     <option value='0'>雄鹿</option>
                     <option value='1'>猛龙</option>
@@ -14184,15 +14184,247 @@ class TemplateUtil {
                     <option value='29'>太阳</option>
                 </select>
             </div>
-            <div class='tradePlayers'>
+            <div class='tradePlayers' id='tradePlayers'>
             </div>
             <div class='controlLine'>
-                <button>发现合同报价</button>
-                <button>接受交易</button>
+                <button onclick='TemplateUtil.searchTrade(gameState)'>发现合同报价</button>
+                <button onclick='TemplateUtil.acceptTrade(gameState)'>接受交易</button>
+            </div>
+            <div class='tradePlayers' id='secondTradePlayers'>
             </div>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradePane');
+        return newNode;
+    }
+
+    public static showTradePlayers(gameData: any) {
+        (<HTMLSelectElement>document.getElementById('secondTradePlayers')).innerHTML = "";
+        const select = <HTMLSelectElement>document.getElementById('tradeSelect');
+        const pane = <HTMLElement>document.getElementById('tradePlayers');
+        const teamValue = <string>select.value;
+        if(teamValue == '-1') {
+            pane.innerHTML = "";
+            return;
+        }
+        const team = gameData.teams[teamValue];
+        const players = team.players;
+        pane.innerHTML = "";
+        const line = <HTMLElement>TemplateUtil.createTradeLine(players, gameData);
+        pane.appendChild(line);
+    }
+
+    public static acceptTrade(gameData: any) {
+        let fColumn = document.getElementById('selectColumn');
+        let sColumn = document.getElementById('secondSelectColumn');
+        if(fColumn == null || sColumn == null) {
+            alert("都没有球员跟你交易想什么呢……");
+            return;
+        }
+        let fPlayers = [];
+        let sPlayers = [];
+        for(let i = 1; i < fColumn.children.length; i++) {
+            const box = <HTMLInputElement>(<HTMLElement>fColumn.children[i]).children[0];
+            if(box.checked) {
+                fPlayers.push(box.value);
+            }
+        }
+        for(let i = 1; i < sColumn.children.length; i++) {
+            const box = <HTMLInputElement>(<HTMLElement>sColumn.children[i]).children[0];
+            sPlayers.push(box.value);
+        }
+        let fTeam = gameData.teams[gameData.players[fPlayers[0]].team];
+        let sTeam = gameData.teams[gameData.players[sPlayers[0]].team];
+        function remove(array: string[], item: string) {
+            let index = -1;
+            for (var i = 0; i < array.length; i++) { 
+                if (array[i] == item) {
+                    index = i;
+                    break;
+                }; 
+            }
+            if (index > -1) { 
+                array.splice(index, 1); 
+            } 
+        }
+        console.log(fTeam);
+        for (let i = 0; i < fPlayers.length; i++) {
+            remove(fTeam.cores, fPlayers[i]);
+            remove(fTeam.dnp, fPlayers[i]);
+            remove(fTeam.players, fPlayers[i]);
+            sTeam.players.push(fPlayers[i]);
+        }
+        for (let i = 0; i < sPlayers.length; i++) {
+            remove(sTeam.cores, sPlayers[i]);
+            remove(sTeam.dnp, sPlayers[i]);
+            remove(sTeam.players, sPlayers[i]);
+            fTeam.players.push(sPlayers[i]);
+        }
+        (<HTMLSelectElement>document.getElementById('secondTradePlayers')).innerHTML = "";
+        (<HTMLSelectElement>document.getElementById('tradePlayers')).innerHTML = "";
+    }
+
+    public static searchTrade(gameData: any) {
+        const select = <HTMLSelectElement>document.getElementById('tradeSelect');
+        const teamValue = <string>select.value;
+        let pane = document.getElementById('selectColumn');
+        if(pane == null) {
+            alert("都没有球员跟你交易想什么呢……");
+            return;
+        }
+        let num = 0;
+        const firstTradeP = []
+        for(let i = 1; i < pane.children.length; i++) {
+            const box = <HTMLInputElement>(<HTMLElement>pane.children[i]).children[0];
+            if(box.checked) {
+                num += 1;
+                firstTradeP.push(box.value);
+            }
+        }
+        if(num == 0) {
+            alert("都没选球员跟你交易想什么呢……")
+            return;
+        }else if(num > 3) {
+            alert("最多只能选三个球员啦！")
+            return;
+        }
+        if(pane.children.length - 1 - num < 10) {
+            alert("交易完球队人数会少于10人，不可以哦");
+            return;
+        }
+        let belowPlayers;
+        if(gameData.userTeamId == teamValue) {
+            let rand = <string>RandomUtil.random(0, 30);
+            while(rand == gameData.userTeamId) {
+                rand = <string>RandomUtil.random(0, 30);
+            }
+            belowPlayers = gameData.teams[rand].players;
+        }else {
+            belowPlayers = gameData.teams[gameData.userTeamId].players;
+        }
+        let totalSalary = 0;
+        let totalSkill = 0;
+        let totalAge = 0;
+        let size = firstTradeP.length;
+        for(let i = 0; i < size; i++) {
+            let tempP = gameData.players[firstTradeP[i]];
+            totalSalary += tempP.salary;
+            totalSkill += tempP.skillAverage;
+            totalAge += tempP.age;
+        }
+        let avgSkill = totalSkill / size;
+        let avgAge = totalAge / size;
+        let match = false;
+        let secondTradeP: string[] = [];
+        for(let o = 0; o < 50; o++) {
+            let tempTradeP:string[] = [];
+            let randPickNum = RandomUtil.random(1,4);
+            for(let i = 0; i < randPickNum; i++) {
+                let randP = RandomUtil.random(0, belowPlayers.length);
+                let pId = <string>belowPlayers[randP];
+                let inP = false;
+                for (let i = 0; i < tempTradeP.length; i++) {
+                    if(tempTradeP[i] == pId) {
+                        inP = true;
+                        break;
+                    }
+                }
+                if(inP) {
+                    continue;
+                }
+                tempTradeP.push(pId);
+            }
+            let tTotalSalary = 0;
+            let tTotalSkill = 0;
+            let tTotalAge = 0;
+            let tSize = tempTradeP.length;
+            for(let i = 0; i < tSize; i++) {
+                let tempP = gameData.players[tempTradeP[i]];
+                tTotalSalary += tempP.salary;
+                tTotalSkill += tempP.skillAverage;
+                tTotalAge += tempP.age;
+            }
+            let tAvgSkill = tTotalSkill / tSize;
+            let tAvgAge = tTotalAge / tSize;
+            console.log("dad" + totalSalary);
+            console.log("dads" + tTotalSalary);
+            console.log(Math.abs(totalSalary - tTotalSalary));
+            if(Math.abs(totalSalary - tTotalSalary) <= 5000000) {
+                if(Math.abs(avgAge - tAvgAge) <= 2) {
+                    if(Math.abs(avgSkill - tAvgSkill) <= 4) {
+                        match = true;
+                    }
+                }
+            }
+            if(match) {
+                secondTradeP = tempTradeP;
+                break;
+            }
+        }
+        console.log(belowPlayers.length);
+        console.log(secondTradeP.length);
+        if(match && (belowPlayers.length - secondTradeP.length >= 10)) {
+            const pane = <HTMLElement>document.getElementById('secondTradePlayers');
+            pane.innerHTML = "";
+            const line = <HTMLElement>TemplateUtil.createTradeLine(secondTradeP, gameData, false);
+            pane.appendChild(line);
+        }else {
+            alert("似乎找不到什么好的交易呢…");
+        }
+    }
+
+    public static createTradeLine(players: any, gameData: any, hasBox=true) {
+        console.log(players);
+        let names = ''
+        let avgs = ''
+        let salaries = ''
+        let years = ''
+        let boxes = ''
+        for(let i = 0; i < players.length; i++) {
+            const player = gameData.players[players[i]];
+            names += `<span>${player.name}</span>`
+            avgs += `<span>${player.skillAverage}</span>`
+            salaries += `<span>${player.salary}</span>`
+            years += `<span>${player.yearsContract}</span>`
+            boxes += `<span><input type='checkbox' value='${players[i]}'></input></span>`
+        }
+        let template = `
+        <div class='tradeLine'>
+            <div class='tradeColumn' id='firstColumn'>
+                <span>球员</span>
+                ${names}
+            </div>
+            <div class='tradeColumn'>
+                <span>能力</span>
+                ${avgs}
+            </div>
+            <div class='tradeColumn'>
+                <span>薪水</span>
+                ${salaries}
+            </div>
+            <div class='tradeColumn'>
+                <span>合同</span>
+                ${years}
+            </div>
+        `;
+        if(hasBox) {
+            template += `
+            <div class='tradeColumn' id='selectColumn'>
+                <span>选择</span>
+                ${boxes}
+            </div>
+        </div>
+            `
+        }else {
+            template += `
+            <div class='tradeColumn' id='secondSelectColumn' style="display: none !important">
+                <span>选择</span>
+                ${boxes}
+            </div>
+        </div>
+            `
+        }
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradeLine');
         return newNode;
     }
 

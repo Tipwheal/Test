@@ -14195,8 +14195,210 @@ var TemplateUtil = /** @class */ (function () {
         //雄鹿 猛龙 步行者 76人 凯尔特人 热火 篮网 黄蜂 活塞 魔术 奇才 老鹰 尼克斯 公牛 骑士
         //15   16   17  18     19   20  21   22   23  24   25    26   27    28   29
         //勇士 掘金 雷霆 开拓者 火箭 马刺 快船 爵士 湖人 国王 森林狼 鹈鹕 独行侠 灰熊 太阳
-        var template = "\n        <div class='tradePane'>\n            <div class='tradeTeamTitle'>\n                <select class='gameSelect' id='tradeSelect' onchange=''>\n                    <option value='-1'>\u8BF7\u9009\u62E9\u7403\u961F</option>\n                    <option value='0'>\u96C4\u9E7F</option>\n                    <option value='1'>\u731B\u9F99</option>\n                    <option value='2'>\u6B65\u884C\u8005</option>\n                    <option value='3'>76\u4EBA</option>\n                    <option value='4'>\u51EF\u5C14\u7279\u4EBA</option>\n                    <option value='5'>\u70ED\u706B</option>\n                    <option value='6'>\u7BEE\u7F51</option>\n                    <option value='7'>\u9EC4\u8702</option>\n                    <option value='8'>\u6D3B\u585E</option>\n                    <option value='9'>\u9B54\u672F</option>\n                    <option value='10'>\u5947\u624D</option>\n                    <option value='11'>\u8001\u9E70</option>\n                    <option value='12'>\u5C3C\u514B\u65AF</option>\n                    <option value='13'>\u516C\u725B</option>\n                    <option value='14'>\u9A91\u58EB</option>\n                    <option value='15'>\u52C7\u58EB</option>\n                    <option value='16'>\u6398\u91D1</option>\n                    <option value='17'>\u96F7\u9706</option>\n                    <option value='18'>\u5F00\u62D3\u8005</option>\n                    <option value='19'>\u706B\u7BAD</option>\n                    <option value='20'>\u9A6C\u523A</option>\n                    <option value='21'>\u5FEB\u8239</option>\n                    <option value='22'>\u7235\u58EB</option>\n                    <option value='23'>\u6E56\u4EBA</option>\n                    <option value='24'>\u56FD\u738B</option>\n                    <option value='25'>\u68EE\u6797\u72FC</option>\n                    <option value='26'>\u9E48\u9E55</option>\n                    <option value='27'>\u72EC\u884C\u4FA0</option>\n                    <option value='28'>\u7070\u718A</option>\n                    <option value='29'>\u592A\u9633</option>\n                </select>\n            </div>\n            <div class='tradePlayers'>\n            </div>\n            <div class='controlLine'>\n                <button>\u53D1\u73B0\u5408\u540C\u62A5\u4EF7</button>\n                <button>\u63A5\u53D7\u4EA4\u6613</button>\n            </div>\n        </div>\n        ";
+        var template = "\n        <div class='tradePane'>\n            <div class='tradeTeamTitle'>\n                <select class='gameSelect' id='tradeSelect' onchange='TemplateUtil.showTradePlayers(gameState)'>\n                    <option value='-1'>\u8BF7\u9009\u62E9\u7403\u961F</option>\n                    <option value='0'>\u96C4\u9E7F</option>\n                    <option value='1'>\u731B\u9F99</option>\n                    <option value='2'>\u6B65\u884C\u8005</option>\n                    <option value='3'>76\u4EBA</option>\n                    <option value='4'>\u51EF\u5C14\u7279\u4EBA</option>\n                    <option value='5'>\u70ED\u706B</option>\n                    <option value='6'>\u7BEE\u7F51</option>\n                    <option value='7'>\u9EC4\u8702</option>\n                    <option value='8'>\u6D3B\u585E</option>\n                    <option value='9'>\u9B54\u672F</option>\n                    <option value='10'>\u5947\u624D</option>\n                    <option value='11'>\u8001\u9E70</option>\n                    <option value='12'>\u5C3C\u514B\u65AF</option>\n                    <option value='13'>\u516C\u725B</option>\n                    <option value='14'>\u9A91\u58EB</option>\n                    <option value='15'>\u52C7\u58EB</option>\n                    <option value='16'>\u6398\u91D1</option>\n                    <option value='17'>\u96F7\u9706</option>\n                    <option value='18'>\u5F00\u62D3\u8005</option>\n                    <option value='19'>\u706B\u7BAD</option>\n                    <option value='20'>\u9A6C\u523A</option>\n                    <option value='21'>\u5FEB\u8239</option>\n                    <option value='22'>\u7235\u58EB</option>\n                    <option value='23'>\u6E56\u4EBA</option>\n                    <option value='24'>\u56FD\u738B</option>\n                    <option value='25'>\u68EE\u6797\u72FC</option>\n                    <option value='26'>\u9E48\u9E55</option>\n                    <option value='27'>\u72EC\u884C\u4FA0</option>\n                    <option value='28'>\u7070\u718A</option>\n                    <option value='29'>\u592A\u9633</option>\n                </select>\n            </div>\n            <div class='tradePlayers' id='tradePlayers'>\n            </div>\n            <div class='controlLine'>\n                <button onclick='TemplateUtil.searchTrade(gameState)'>\u53D1\u73B0\u5408\u540C\u62A5\u4EF7</button>\n                <button onclick='TemplateUtil.acceptTrade(gameState)'>\u63A5\u53D7\u4EA4\u6613</button>\n            </div>\n            <div class='tradePlayers' id='secondTradePlayers'>\n            </div>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradePane');
+        return newNode;
+    };
+    TemplateUtil.showTradePlayers = function (gameData) {
+        document.getElementById('secondTradePlayers').innerHTML = "";
+        var select = document.getElementById('tradeSelect');
+        var pane = document.getElementById('tradePlayers');
+        var teamValue = select.value;
+        if (teamValue == '-1') {
+            pane.innerHTML = "";
+            return;
+        }
+        var team = gameData.teams[teamValue];
+        var players = team.players;
+        pane.innerHTML = "";
+        var line = TemplateUtil.createTradeLine(players, gameData);
+        pane.appendChild(line);
+    };
+    TemplateUtil.acceptTrade = function (gameData) {
+        var fColumn = document.getElementById('selectColumn');
+        var sColumn = document.getElementById('secondSelectColumn');
+        if (fColumn == null || sColumn == null) {
+            alert("都没有球员跟你交易想什么呢……");
+            return;
+        }
+        var fPlayers = [];
+        var sPlayers = [];
+        for (var i = 1; i < fColumn.children.length; i++) {
+            var box = fColumn.children[i].children[0];
+            if (box.checked) {
+                fPlayers.push(box.value);
+            }
+        }
+        for (var i = 1; i < sColumn.children.length; i++) {
+            var box = sColumn.children[i].children[0];
+            sPlayers.push(box.value);
+        }
+        var fTeam = gameData.teams[gameData.players[fPlayers[0]].team];
+        var sTeam = gameData.teams[gameData.players[sPlayers[0]].team];
+        function remove(array, item) {
+            var index = -1;
+            for (var i = 0; i < array.length; i++) {
+                if (array[i] == item) {
+                    index = i;
+                    break;
+                }
+                ;
+            }
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+        }
+        console.log(fTeam);
+        for (var i = 0; i < fPlayers.length; i++) {
+            remove(fTeam.cores, fPlayers[i]);
+            remove(fTeam.dnp, fPlayers[i]);
+            remove(fTeam.players, fPlayers[i]);
+            sTeam.players.push(fPlayers[i]);
+        }
+        for (var i = 0; i < sPlayers.length; i++) {
+            remove(sTeam.cores, sPlayers[i]);
+            remove(sTeam.dnp, sPlayers[i]);
+            remove(sTeam.players, sPlayers[i]);
+            fTeam.players.push(sPlayers[i]);
+        }
+        document.getElementById('secondTradePlayers').innerHTML = "";
+        document.getElementById('tradePlayers').innerHTML = "";
+    };
+    TemplateUtil.searchTrade = function (gameData) {
+        var select = document.getElementById('tradeSelect');
+        var teamValue = select.value;
+        var pane = document.getElementById('selectColumn');
+        if (pane == null) {
+            alert("都没有球员跟你交易想什么呢……");
+            return;
+        }
+        var num = 0;
+        var firstTradeP = [];
+        for (var i = 1; i < pane.children.length; i++) {
+            var box = pane.children[i].children[0];
+            if (box.checked) {
+                num += 1;
+                firstTradeP.push(box.value);
+            }
+        }
+        if (num == 0) {
+            alert("都没选球员跟你交易想什么呢……");
+            return;
+        }
+        else if (num > 3) {
+            alert("最多只能选三个球员啦！");
+            return;
+        }
+        if (pane.children.length - 1 - num < 10) {
+            alert("交易完球队人数会少于10人，不可以哦");
+            return;
+        }
+        var belowPlayers;
+        if (gameData.userTeamId == teamValue) {
+            var rand = RandomUtil.random(0, 30);
+            while (rand == gameData.userTeamId) {
+                rand = RandomUtil.random(0, 30);
+            }
+            belowPlayers = gameData.teams[rand].players;
+        }
+        else {
+            belowPlayers = gameData.teams[gameData.userTeamId].players;
+        }
+        var totalSalary = 0;
+        var totalSkill = 0;
+        var totalAge = 0;
+        var size = firstTradeP.length;
+        for (var i = 0; i < size; i++) {
+            var tempP = gameData.players[firstTradeP[i]];
+            totalSalary += tempP.salary;
+            totalSkill += tempP.skillAverage;
+            totalAge += tempP.age;
+        }
+        var avgSkill = totalSkill / size;
+        var avgAge = totalAge / size;
+        var match = false;
+        var secondTradeP = [];
+        for (var o = 0; o < 50; o++) {
+            var tempTradeP = [];
+            var randPickNum = RandomUtil.random(1, 4);
+            for (var i = 0; i < randPickNum; i++) {
+                var randP = RandomUtil.random(0, belowPlayers.length);
+                var pId = belowPlayers[randP];
+                var inP = false;
+                for (var i_1 = 0; i_1 < tempTradeP.length; i_1++) {
+                    if (tempTradeP[i_1] == pId) {
+                        inP = true;
+                        break;
+                    }
+                }
+                if (inP) {
+                    continue;
+                }
+                tempTradeP.push(pId);
+            }
+            var tTotalSalary = 0;
+            var tTotalSkill = 0;
+            var tTotalAge = 0;
+            var tSize = tempTradeP.length;
+            for (var i = 0; i < tSize; i++) {
+                var tempP = gameData.players[tempTradeP[i]];
+                tTotalSalary += tempP.salary;
+                tTotalSkill += tempP.skillAverage;
+                tTotalAge += tempP.age;
+            }
+            var tAvgSkill = tTotalSkill / tSize;
+            var tAvgAge = tTotalAge / tSize;
+            console.log("dad" + totalSalary);
+            console.log("dads" + tTotalSalary);
+            console.log(Math.abs(totalSalary - tTotalSalary));
+            if (Math.abs(totalSalary - tTotalSalary) <= 5000000) {
+                if (Math.abs(avgAge - tAvgAge) <= 2) {
+                    if (Math.abs(avgSkill - tAvgSkill) <= 4) {
+                        match = true;
+                    }
+                }
+            }
+            if (match) {
+                secondTradeP = tempTradeP;
+                break;
+            }
+        }
+        console.log(belowPlayers.length);
+        console.log(secondTradeP.length);
+        if (match && (belowPlayers.length - secondTradeP.length >= 10)) {
+            var pane_1 = document.getElementById('secondTradePlayers');
+            pane_1.innerHTML = "";
+            var line = TemplateUtil.createTradeLine(secondTradeP, gameData, false);
+            pane_1.appendChild(line);
+        }
+        else {
+            alert("似乎找不到什么好的交易呢…");
+        }
+    };
+    TemplateUtil.createTradeLine = function (players, gameData, hasBox) {
+        if (hasBox === void 0) { hasBox = true; }
+        console.log(players);
+        var names = '';
+        var avgs = '';
+        var salaries = '';
+        var years = '';
+        var boxes = '';
+        for (var i = 0; i < players.length; i++) {
+            var player = gameData.players[players[i]];
+            names += "<span>" + player.name + "</span>";
+            avgs += "<span>" + player.skillAverage + "</span>";
+            salaries += "<span>" + player.salary + "</span>";
+            years += "<span>" + player.yearsContract + "</span>";
+            boxes += "<span><input type='checkbox' value='" + players[i] + "'></input></span>";
+        }
+        var template = "\n        <div class='tradeLine'>\n            <div class='tradeColumn' id='firstColumn'>\n                <span>\u7403\u5458</span>\n                " + names + "\n            </div>\n            <div class='tradeColumn'>\n                <span>\u80FD\u529B</span>\n                " + avgs + "\n            </div>\n            <div class='tradeColumn'>\n                <span>\u85AA\u6C34</span>\n                " + salaries + "\n            </div>\n            <div class='tradeColumn'>\n                <span>\u5408\u540C</span>\n                " + years + "\n            </div>\n        ";
+        if (hasBox) {
+            template += "\n            <div class='tradeColumn' id='selectColumn'>\n                <span>\u9009\u62E9</span>\n                " + boxes + "\n            </div>\n        </div>\n            ";
+        }
+        else {
+            template += "\n            <div class='tradeColumn' id='secondSelectColumn' style=\"display: none !important\">\n                <span>\u9009\u62E9</span>\n                " + boxes + "\n            </div>\n        </div>\n            ";
+        }
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradeLine');
         return newNode;
     };
     TemplateUtil.createGameResultPane = function (matchId, gameData) {

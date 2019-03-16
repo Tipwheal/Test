@@ -22,6 +22,34 @@ br {
   display: flex;
   justify-content: center; }
 
+.tradePane {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch; }
+  .tradePane .tradeTeamTitle {
+    display: flex; }
+  .tradePane select {
+    margin: 10px 5px;
+    flex-grow: 1;
+    border: 1px solid #AE4E26; }
+  .tradePane .controlLine {
+    display: flex; }
+  .tradePane button {
+    margin: 10px 5px;
+    background-color: #9BC595;
+    border: 1px solid #AE4E26;
+    flex-grow: 1; }
+  .tradePane .tradePlayers {
+    display: flex; }
+  .tradePane .tradeLine {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px; }
+  .tradePane .tradeColumn {
+    display: flex;
+    flex-direction: column; }
+
 .playerPane .playerTitle {
   padding: 0 5px;
   color: #AE4E26; }

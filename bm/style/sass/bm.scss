@@ -39,6 +39,49 @@ br {
     justify-content: center;
 }
 
+.tradePane {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+
+    .tradeTeamTitle {
+        display: flex;
+    }
+
+    select {
+        margin: 10px 5px;
+        flex-grow: 1;
+        border: 1px solid $youth3;
+    }
+
+    .controlLine {
+        display: flex;
+    }
+
+    button {
+        margin: 10px 5px;
+        background-color: $youth2;
+        border: 1px solid $youth3;
+        flex-grow: 1;
+    }
+
+    .tradePlayers {
+        display: flex;
+    }
+
+    .tradeLine {
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+    }
+
+    .tradeColumn {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .playerPane {
     .playerTitle {
         padding: 0 5px;
