@@ -166,7 +166,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-15T07:44:06.119Z">
+<meta property="og:updated_time" content="2019-03-15T11:42:10.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -452,7 +452,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-15 15:44:06" itemprop="dateModified" datetime="2019-03-15T15:44:06+08:00">2019-03-15</time>
+                <time title="修改时间：2019-03-15 19:42:10" itemprop="dateModified" datetime="2019-03-15T19:42:10+08:00">2019-03-15</time>
               
             
           </span>
@@ -561,6 +561,7 @@
             <div class="navLine" onclick="next30Day()" id="sim30Btn"><span>模拟30天</span></div>
             <div class="navLine" onclick="refreshPane(ShowState.News)"><span>新闻查看</span></div>
             <div class="navLine" onclick="showFollowList()">关注列表</div>
+            <div class="navLine" onclick="showTrade()">球员交易</div>
         </div>
         <div id="contentDiv"></div>
     </div>
@@ -694,6 +695,13 @@ function showTeamRank() {
         let line = TemplateUtil.createTeamLine(i + 1, teams[i].id, gameState);
         mainDiv.appendChild(line);
     }
+}
+
+function showTrade() {
+    const mainDiv = document.getElementById('contentDiv');
+    mainDiv.innerHTML = "";
+    let pane = TemplateUtil.createTradePane(gameState);
+    mainDiv.appendChild(pane);
 }
 
 function showNews() {

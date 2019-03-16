@@ -12788,6 +12788,8 @@ class Game {
             gameData.players[i].totalRegBlock = 0;
             gameData.players[i].totalRegRebound = 0;
             gameData.players[i].totalRegTurnover = 0;
+            gameData.players[i].totalRegTime = 0;
+            gameData.players[i].totalRegFoul = 0;
             gameData.players[i].seasonRegScore = 0;
             gameData.players[i].seasonRegAssist = 0;
             gameData.players[i].seasonRegSteal = 0;
@@ -12800,12 +12802,16 @@ class Game {
             gameData.players[i].totalOffBlock = 0;
             gameData.players[i].totalOffRebound = 0;
             gameData.players[i].totalOffTurnover = 0;
+            gameData.players[i].totalOffTime = 0;
+            gameData.players[i].totalOffFoul = 0;
             gameData.players[i].seasonOffScore = 0;
             gameData.players[i].seasonOffAssist = 0;
             gameData.players[i].seasonOffSteal = 0;
             gameData.players[i].seasonOffBlock = 0;
             gameData.players[i].seasonOffRebound = 0;
             gameData.players[i].seasonOffTurnover = 0;
+            gameData.players[i].seasonRegTime = 0;
+            gameData.players[i].seasonRegFoul = 0;
             gameData.players[i].seasonRegClose = 0;
             gameData.players[i].seasonRegCloseIn = 0;
             gameData.players[i].seasonRegMiddle = 0;
@@ -12822,6 +12828,8 @@ class Game {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].seasonOffTime = 0;
+            gameData.players[i].seasonOffFoul = 0;
             gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
@@ -13242,6 +13250,8 @@ class Game {
             gameData.players[id].seasonRegAssist = 0;
             gameData.players[id].seasonRegTurnover = 0;
             gameData.players[id].seasonRegBlock = 0;
+            gameData.players[id].seasonRegTime = 0;
+            gameData.players[id].seasonRegFoul = 0;
             gameData.players[id].seasonOffClose = 0;
             gameData.players[id].seasonOffCloseIn = 0;
             gameData.players[id].seasonOffMiddle = 0;
@@ -13257,6 +13267,8 @@ class Game {
             gameData.players[id].seasonOffAssist = 0;
             gameData.players[id].seasonOffTurnover = 0;
             gameData.players[id].seasonOffBlock = 0;
+            gameData.players[id].seasonOffTime = 0;
+            gameData.players[id].seasonOffFoul = 0;
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     }
@@ -13590,33 +13602,45 @@ class Game {
             const tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
             const stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
             const blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
+            const time = Math.round(RandomUtil.random(30, 44));
+            const foul = Math.round(RandomUtil.random(0, 6));
             stat.pScores[starter[i]].assist = ast;
             stat.pScores[starter[i]].rebound = rbd;
             stat.pScores[starter[i]].turnover = tov;
             stat.pScores[starter[i]].steal = stl;
             stat.pScores[starter[i]].block = blk;
+            stat.pScores[starter[i]].time = time;
+            stat.pScores[starter[i]].foul = foul;
             if(gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
                 p.seasonRegSteal += stl;
                 p.seasonRegTurnover += tov;
                 p.seasonRegBlock += blk;
+                p.seasonRegTime += time;
+                p.seasonRegFoul += foul;
                 p.totalRegAssist += ast;
                 p.totalRegRebound += rbd;
                 p.totalRegSteal += stl;
                 p.totalRegTurnover += tov;
                 p.totalRegBlock += blk;
+                p.totalRegTime += time;
+                p.totalRegFoul += foul;
             }else {
                 p.seasonOffAssist += ast;
                 p.seasonOffRebound += rbd;
                 p.seasonOffSteal += stl;
                 p.seasonOffTurnover += tov;
                 p.seasonOffBlock += blk;
+                p.seasonOffTime += time;
+                p.seasonOffFoul += foul;
                 p.totalOffAssist += ast;
                 p.totalOffRebound += rbd;
                 p.totalOffSteal += stl;
                 p.totalOffTurnover += tov;
                 p.totalOffBlock += blk;
+                p.totalOffTime += time;
+                p.totalOffFoul += foul;
             }
         }
         for(let i = 0; i < bench.length; i ++) {
@@ -13626,6 +13650,8 @@ class Game {
             const tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 3)*0.3);
             const stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 3)*0.3);
             const blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 3)*0.3);
+            const time = Math.round(RandomUtil.random(2, 14));
+            const foul = Math.round(RandomUtil.random(0, 6));
             if(!(bench[i] in stat.pScores)) {
                  stat.pScores[bench[i]] = {};
             }
@@ -13634,28 +13660,38 @@ class Game {
             stat.pScores[bench[i]].turnover = tov;
             stat.pScores[bench[i]].steal = stl;
             stat.pScores[bench[i]].block = blk;
-            if(gameData.currentDay <= gameData.regularEndDay) {
+            stat.pScores[bench[i]].time = time;
+            stat.pScores[bench[i]].foul = foul;
+            if(gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
                 p.seasonRegSteal += stl;
                 p.seasonRegTurnover += tov;
                 p.seasonRegBlock += blk;
+                p.seasonRegTime += time;
+                p.seasonRegFoul += foul;
                 p.totalRegAssist += ast;
                 p.totalRegRebound += rbd;
                 p.totalRegSteal += stl;
                 p.totalRegTurnover += tov;
                 p.totalRegBlock += blk;
+                p.totalRegTime += time;
+                p.totalRegFoul += foul;
             }else {
                 p.seasonOffAssist += ast;
                 p.seasonOffRebound += rbd;
                 p.seasonOffSteal += stl;
                 p.seasonOffTurnover += tov;
                 p.seasonOffBlock += blk;
+                p.seasonOffTime += time;
+                p.seasonOffFoul += foul;
                 p.totalOffAssist += ast;
                 p.totalOffRebound += rbd;
                 p.totalOffSteal += stl;
                 p.totalOffTurnover += tov;
                 p.totalOffBlock += blk;
+                p.totalOffTime += time;
+                p.totalOffFoul += foul;
             }
         }
     }
@@ -14103,6 +14139,60 @@ class TemplateUtil {
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
+        return newNode;
+    }
+
+    public static createTradePane(gameData: any):any {
+        //0    1    2     3    4       5    6    7   8    9    10  11   12    13   14
+        //雄鹿 猛龙 步行者 76人 凯尔特人 热火 篮网 黄蜂 活塞 魔术 奇才 老鹰 尼克斯 公牛 骑士
+        //15   16   17  18     19   20  21   22   23  24   25    26   27    28   29
+        //勇士 掘金 雷霆 开拓者 火箭 马刺 快船 爵士 湖人 国王 森林狼 鹈鹕 独行侠 灰熊 太阳
+        const template = `
+        <div class='tradePane'>
+            <div class='tradeTeamTitle'>
+                <select class='gameSelect' id='tradeSelect' onchange=''>
+                    <option value='-1'>请选择球队</option>
+                    <option value='0'>雄鹿</option>
+                    <option value='1'>猛龙</option>
+                    <option value='2'>步行者</option>
+                    <option value='3'>76人</option>
+                    <option value='4'>凯尔特人</option>
+                    <option value='5'>热火</option>
+                    <option value='6'>篮网</option>
+                    <option value='7'>黄蜂</option>
+                    <option value='8'>活塞</option>
+                    <option value='9'>魔术</option>
+                    <option value='10'>奇才</option>
+                    <option value='11'>老鹰</option>
+                    <option value='12'>尼克斯</option>
+                    <option value='13'>公牛</option>
+                    <option value='14'>骑士</option>
+                    <option value='15'>勇士</option>
+                    <option value='16'>掘金</option>
+                    <option value='17'>雷霆</option>
+                    <option value='18'>开拓者</option>
+                    <option value='19'>火箭</option>
+                    <option value='20'>马刺</option>
+                    <option value='21'>快船</option>
+                    <option value='22'>爵士</option>
+                    <option value='23'>湖人</option>
+                    <option value='24'>国王</option>
+                    <option value='25'>森林狼</option>
+                    <option value='26'>鹈鹕</option>
+                    <option value='27'>独行侠</option>
+                    <option value='28'>灰熊</option>
+                    <option value='29'>太阳</option>
+                </select>
+            </div>
+            <div class='tradePlayers'>
+            </div>
+            <div class='controlLine'>
+                <button>发现合同报价</button>
+                <button>接受交易</button>
+            </div>
+        </div>
+        `;
+        let newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradePane');
         return newNode;
     }
 
@@ -14569,6 +14659,8 @@ class TemplateUtil {
         const avgAssist = (player.seasonRegAssist / player.seasonRegGameNum).toFixed(2);
         const avgSteal = (player.seasonRegSteal / player.seasonRegGameNum).toFixed(2);
         const avgTurnover = (player.seasonRegTurnover / player.seasonRegGameNum).toFixed(2);
+        const avgTime = (player.seasonRegTime / player.seasonRegGameNum).toFixed(2);
+        const avgFoul = (player.seasonRegFoul / player.seasonRegGameNum).toFixed(2);
         let extra = '';
         if(player.team == gameData.userTeamId) {
             extra = `
@@ -14618,7 +14710,7 @@ class TemplateUtil {
             }
             extra += `
             </select>
-            <button>培养方向</button>
+            <button onclick='alert("此功能还在开发中")'>培养方向</button>
             `;
             if((<any>team).cores.includes(playerId + "")) {
                 extra += `<button onclick='Game.unsetCore(${playerId}, gameState)'>取消核心</button>`;
@@ -14677,8 +14769,8 @@ class TemplateUtil {
                 <div class='statsTitle'>犯规</div>
                 <div class='statsTitle'>失误</div>
                 <div class='statsContent'>${player.seasonRegGameNum}</div>
-                <div class='statsContent'>0.0</div>
-                <div class='statsContent'>0.0</div>
+                <div class='statsContent'>${avgTime}</div>
+                <div class='statsContent'>${avgFoul}</div>
                 <div class='statsContent'>${avgTurnover}</div>
             </div>
             <div class='playerTitle'>
@@ -15305,24 +15397,32 @@ class PlayerGenerator {
         gameData.players[id].totalRegBlock = 0;
         gameData.players[id].totalRegRebound = 0;
         gameData.players[id].totalRegTurnover = 0;
+        gameData.players[id].totalRegTime = 0;
+        gameData.players[id].totalRegFoul = 0;
         gameData.players[id].seasonRegScore = 0;
         gameData.players[id].seasonRegAssist = 0;
         gameData.players[id].seasonRegSteal = 0;
         gameData.players[id].seasonRegBlock = 0;
         gameData.players[id].seasonRegRebound = 0;
         gameData.players[id].seasonRegTurnover = 0;
+        gameData.players[id].seasonRegTime = 0;
+        gameData.players[id].seasonRegFoul = 0;
         gameData.players[id].totalOffScore = 0;
         gameData.players[id].totalOffAssist = 0;
         gameData.players[id].totalOffSteal = 0;
         gameData.players[id].totalOffBlock = 0;
         gameData.players[id].totalOffRebound = 0;
         gameData.players[id].totalOffTurnover = 0;
+        gameData.players[id].totalOffTime = 0;
+        gameData.players[id].totalOffFoul = 0;
         gameData.players[id].seasonOffScore = 0;
         gameData.players[id].seasonOffAssist = 0;
         gameData.players[id].seasonOffSteal = 0;
         gameData.players[id].seasonOffBlock = 0;
         gameData.players[id].seasonOffRebound = 0;
         gameData.players[id].seasonOffTurnover = 0;
+        gameData.players[id].seasonOffTime = 0;
+        gameData.players[id].seasonOffFoul = 0;
         gameData.players[id].seasonRegClose = 0;
         gameData.players[id].seasonRegCloseIn = 0;
         gameData.players[id].seasonRegMiddle = 0;

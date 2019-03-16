@@ -12729,6 +12729,8 @@ var Game = /** @class */ (function () {
             gameData.players[i].totalRegBlock = 0;
             gameData.players[i].totalRegRebound = 0;
             gameData.players[i].totalRegTurnover = 0;
+            gameData.players[i].totalRegTime = 0;
+            gameData.players[i].totalRegFoul = 0;
             gameData.players[i].seasonRegScore = 0;
             gameData.players[i].seasonRegAssist = 0;
             gameData.players[i].seasonRegSteal = 0;
@@ -12741,12 +12743,16 @@ var Game = /** @class */ (function () {
             gameData.players[i].totalOffBlock = 0;
             gameData.players[i].totalOffRebound = 0;
             gameData.players[i].totalOffTurnover = 0;
+            gameData.players[i].totalOffTime = 0;
+            gameData.players[i].totalOffFoul = 0;
             gameData.players[i].seasonOffScore = 0;
             gameData.players[i].seasonOffAssist = 0;
             gameData.players[i].seasonOffSteal = 0;
             gameData.players[i].seasonOffBlock = 0;
             gameData.players[i].seasonOffRebound = 0;
             gameData.players[i].seasonOffTurnover = 0;
+            gameData.players[i].seasonRegTime = 0;
+            gameData.players[i].seasonRegFoul = 0;
             gameData.players[i].seasonRegClose = 0;
             gameData.players[i].seasonRegCloseIn = 0;
             gameData.players[i].seasonRegMiddle = 0;
@@ -12763,6 +12769,8 @@ var Game = /** @class */ (function () {
             gameData.players[i].seasonOffThreeIn = 0;
             gameData.players[i].seasonOffFree = 0;
             gameData.players[i].seasonOffFreeIn = 0;
+            gameData.players[i].seasonOffTime = 0;
+            gameData.players[i].seasonOffFoul = 0;
             gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
@@ -13192,6 +13200,8 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonRegAssist = 0;
             gameData.players[id].seasonRegTurnover = 0;
             gameData.players[id].seasonRegBlock = 0;
+            gameData.players[id].seasonRegTime = 0;
+            gameData.players[id].seasonRegFoul = 0;
             gameData.players[id].seasonOffClose = 0;
             gameData.players[id].seasonOffCloseIn = 0;
             gameData.players[id].seasonOffMiddle = 0;
@@ -13207,6 +13217,8 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonOffAssist = 0;
             gameData.players[id].seasonOffTurnover = 0;
             gameData.players[id].seasonOffBlock = 0;
+            gameData.players[id].seasonOffTime = 0;
+            gameData.players[id].seasonOffFoul = 0;
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     };
@@ -13561,22 +13573,30 @@ var Game = /** @class */ (function () {
             var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
             var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
             var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
+            var time = Math.round(RandomUtil.random(30, 44));
+            var foul = Math.round(RandomUtil.random(0, 6));
             stat.pScores[starter[i]].assist = ast;
             stat.pScores[starter[i]].rebound = rbd;
             stat.pScores[starter[i]].turnover = tov;
             stat.pScores[starter[i]].steal = stl;
             stat.pScores[starter[i]].block = blk;
+            stat.pScores[starter[i]].time = time;
+            stat.pScores[starter[i]].foul = foul;
             if (gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
                 p.seasonRegSteal += stl;
                 p.seasonRegTurnover += tov;
                 p.seasonRegBlock += blk;
+                p.seasonRegTime += time;
+                p.seasonRegFoul += foul;
                 p.totalRegAssist += ast;
                 p.totalRegRebound += rbd;
                 p.totalRegSteal += stl;
                 p.totalRegTurnover += tov;
                 p.totalRegBlock += blk;
+                p.totalRegTime += time;
+                p.totalRegFoul += foul;
             }
             else {
                 p.seasonOffAssist += ast;
@@ -13584,11 +13604,15 @@ var Game = /** @class */ (function () {
                 p.seasonOffSteal += stl;
                 p.seasonOffTurnover += tov;
                 p.seasonOffBlock += blk;
+                p.seasonOffTime += time;
+                p.seasonOffFoul += foul;
                 p.totalOffAssist += ast;
                 p.totalOffRebound += rbd;
                 p.totalOffSteal += stl;
                 p.totalOffTurnover += tov;
                 p.totalOffBlock += blk;
+                p.totalOffTime += time;
+                p.totalOffFoul += foul;
             }
         }
         for (var i = 0; i < bench.length; i++) {
@@ -13598,6 +13622,8 @@ var Game = /** @class */ (function () {
             var tov = Math.ceil(turnoverModifier(p.positionFirst, 200 - p.skillPass) * RandomUtil.random(0, 3) * 0.3);
             var stl = Math.ceil(stealModifier(p.positionFirst, p.skillSteal) * RandomUtil.random(0, 3) * 0.3);
             var blk = Math.ceil(blockModifier(p.positionFirst, p.skillBlock) * RandomUtil.random(0, 3) * 0.3);
+            var time = Math.round(RandomUtil.random(2, 14));
+            var foul = Math.round(RandomUtil.random(0, 6));
             if (!(bench[i] in stat.pScores)) {
                 stat.pScores[bench[i]] = {};
             }
@@ -13606,17 +13632,23 @@ var Game = /** @class */ (function () {
             stat.pScores[bench[i]].turnover = tov;
             stat.pScores[bench[i]].steal = stl;
             stat.pScores[bench[i]].block = blk;
-            if (gameData.currentDay <= gameData.regularEndDay) {
+            stat.pScores[bench[i]].time = time;
+            stat.pScores[bench[i]].foul = foul;
+            if (gameData.currentDay <= this.regularEndDay) {
                 p.seasonRegAssist += ast;
                 p.seasonRegRebound += rbd;
                 p.seasonRegSteal += stl;
                 p.seasonRegTurnover += tov;
                 p.seasonRegBlock += blk;
+                p.seasonRegTime += time;
+                p.seasonRegFoul += foul;
                 p.totalRegAssist += ast;
                 p.totalRegRebound += rbd;
                 p.totalRegSteal += stl;
                 p.totalRegTurnover += tov;
                 p.totalRegBlock += blk;
+                p.totalRegTime += time;
+                p.totalRegFoul += foul;
             }
             else {
                 p.seasonOffAssist += ast;
@@ -13624,11 +13656,15 @@ var Game = /** @class */ (function () {
                 p.seasonOffSteal += stl;
                 p.seasonOffTurnover += tov;
                 p.seasonOffBlock += blk;
+                p.seasonOffTime += time;
+                p.seasonOffFoul += foul;
                 p.totalOffAssist += ast;
                 p.totalOffRebound += rbd;
                 p.totalOffSteal += stl;
                 p.totalOffTurnover += tov;
                 p.totalOffBlock += blk;
+                p.totalOffTime += time;
+                p.totalOffFoul += foul;
             }
         }
     };
@@ -14154,6 +14190,15 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };
+    TemplateUtil.createTradePane = function (gameData) {
+        //0    1    2     3    4       5    6    7   8    9    10  11   12    13   14
+        //雄鹿 猛龙 步行者 76人 凯尔特人 热火 篮网 黄蜂 活塞 魔术 奇才 老鹰 尼克斯 公牛 骑士
+        //15   16   17  18     19   20  21   22   23  24   25    26   27    28   29
+        //勇士 掘金 雷霆 开拓者 火箭 马刺 快船 爵士 湖人 国王 森林狼 鹈鹕 独行侠 灰熊 太阳
+        var template = "\n        <div class='tradePane'>\n            <div class='tradeTeamTitle'>\n                <select class='gameSelect' id='tradeSelect' onchange=''>\n                    <option value='-1'>\u8BF7\u9009\u62E9\u7403\u961F</option>\n                    <option value='0'>\u96C4\u9E7F</option>\n                    <option value='1'>\u731B\u9F99</option>\n                    <option value='2'>\u6B65\u884C\u8005</option>\n                    <option value='3'>76\u4EBA</option>\n                    <option value='4'>\u51EF\u5C14\u7279\u4EBA</option>\n                    <option value='5'>\u70ED\u706B</option>\n                    <option value='6'>\u7BEE\u7F51</option>\n                    <option value='7'>\u9EC4\u8702</option>\n                    <option value='8'>\u6D3B\u585E</option>\n                    <option value='9'>\u9B54\u672F</option>\n                    <option value='10'>\u5947\u624D</option>\n                    <option value='11'>\u8001\u9E70</option>\n                    <option value='12'>\u5C3C\u514B\u65AF</option>\n                    <option value='13'>\u516C\u725B</option>\n                    <option value='14'>\u9A91\u58EB</option>\n                    <option value='15'>\u52C7\u58EB</option>\n                    <option value='16'>\u6398\u91D1</option>\n                    <option value='17'>\u96F7\u9706</option>\n                    <option value='18'>\u5F00\u62D3\u8005</option>\n                    <option value='19'>\u706B\u7BAD</option>\n                    <option value='20'>\u9A6C\u523A</option>\n                    <option value='21'>\u5FEB\u8239</option>\n                    <option value='22'>\u7235\u58EB</option>\n                    <option value='23'>\u6E56\u4EBA</option>\n                    <option value='24'>\u56FD\u738B</option>\n                    <option value='25'>\u68EE\u6797\u72FC</option>\n                    <option value='26'>\u9E48\u9E55</option>\n                    <option value='27'>\u72EC\u884C\u4FA0</option>\n                    <option value='28'>\u7070\u718A</option>\n                    <option value='29'>\u592A\u9633</option>\n                </select>\n            </div>\n            <div class='tradePlayers'>\n            </div>\n            <div class='controlLine'>\n                <button>\u53D1\u73B0\u5408\u540C\u62A5\u4EF7</button>\n                <button>\u63A5\u53D7\u4EA4\u6613</button>\n            </div>\n        </div>\n        ";
+        var newNode = new DOMParser().parseFromString(template, 'text/html').querySelector('.tradePane');
+        return newNode;
+    };
     TemplateUtil.createGameResultPane = function (matchId, gameData) {
         var result = gameData.matches[matchId];
         var winner = result.winnerId;
@@ -14405,6 +14450,8 @@ var TemplateUtil = /** @class */ (function () {
         var avgAssist = (player.seasonRegAssist / player.seasonRegGameNum).toFixed(2);
         var avgSteal = (player.seasonRegSteal / player.seasonRegGameNum).toFixed(2);
         var avgTurnover = (player.seasonRegTurnover / player.seasonRegGameNum).toFixed(2);
+        var avgTime = (player.seasonRegTime / player.seasonRegGameNum).toFixed(2);
+        var avgFoul = (player.seasonRegFoul / player.seasonRegGameNum).toFixed(2);
         var extra = '';
         if (player.team == gameData.userTeamId) {
             extra = "\n            <select class='roleSelect' id='roleSelect' onchange='changeTeamRole(" + playerId + ")'>\n            ";
@@ -14457,7 +14504,7 @@ var TemplateUtil = /** @class */ (function () {
             else {
                 extra += "<option value='bench'>\u66FF\u8865</option>";
             }
-            extra += "\n            </select>\n            <button>\u57F9\u517B\u65B9\u5411</button>\n            ";
+            extra += "\n            </select>\n            <button onclick='alert(\"\u6B64\u529F\u80FD\u8FD8\u5728\u5F00\u53D1\u4E2D\")'>\u57F9\u517B\u65B9\u5411</button>\n            ";
             if (team.cores.includes(playerId + "")) {
                 extra += "<button onclick='Game.unsetCore(" + playerId + ", gameState)'>\u53D6\u6D88\u6838\u5FC3</button>";
             }
@@ -14469,7 +14516,7 @@ var TemplateUtil = /** @class */ (function () {
         if (gameData.followList.includes(playerId)) {
             follow = "\n            <button onclick='Game.unfollowPlayer(" + playerId + ", gameState)'>\u53D6\u5173\u7403\u5458</button>\n            ";
         }
-        var teamplate = "\n        <div class='playerPane'>\n            <div class='playerTitle'>\n                <div>\u57FA\u672C\u4FE1\u606F</div>\n            </div>\n            <hr />\n            <div class='playerContent'>\n                <div>\u59D3\u540D: " + player.name + "</div>\n                <div>\u7403\u961F: " + team.name + "</div>\n                <div>\u5E74\u9F84: " + player.age + "</div>\n                <div>\u4F4D\u7F6E: " + position + "</div>\n                <div>\u6F5C\u529B: " + player.potential + "</div>\n                <div>\u7403\u9F84: " + player.yearsLeague + "</div>\n                <div>\u85AA\u91D1: " + player.salary + "</div>\n                <div>\u5408\u540C\u5E74\u9650: " + player.yearsContract + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u6570\u636E\u7EDF\u8BA1</div>\n            </div>\n            <hr />\n            <div class='playerStats'>\n                <div class='statsTitle'>\u7F5A\u7403(" + player.seasonRegFreeIn + "/" + player.seasonRegFree + ")</div>\n                <div class='statsTitle'>2\u5206(" + (player.seasonRegCloseIn + player.seasonRegMiddleIn) + "/" + (player.seasonRegClose + player.seasonRegMiddle) + ")</div>\n                <div class='statsTitle'>3\u5206(" + player.seasonRegThreeIn + "/" + player.seasonRegThree + ")</div>\n                <div class='statsTitle'>\u5F97\u5206(" + score + ")</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(freeRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(doubleRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(tripleRate) + "</div>\n                <div class='statsContent'>" + avgScore + "</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u52A9\u653B</div>\n                <div class='statsContent'>" + avgRebound + "</div>\n                <div class='statsContent'>" + avgBlock + "</div>\n                <div class='statsContent'>" + avgSteal + "</div>\n                <div class='statsContent'>" + avgAssist + "</div>\n                <div class='statsTitle'>\u573A\u6B21</div>\n                <div class='statsTitle'>\u65F6\u95F4</div>\n                <div class='statsTitle'>\u72AF\u89C4</div>\n                <div class='statsTitle'>\u5931\u8BEF</div>\n                <div class='statsContent'>" + player.seasonRegGameNum + "</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>0.0</div>\n                <div class='statsContent'>" + avgTurnover + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u5C5E\u6027(" + player.skillAverage + ")</div>\n            </div>\n            <hr />\n            <div class='playerAttrs'>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F20\u7403</div>\n                <div class='statsTitle'>\u5185\u7EBF</div>\n                <div class='statsTitle'>\u5916\u7EBF</div>\n                <div class='statsTitle'>\u7F5A\u7403</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u8FDB\u653B</div>\n                <div class='statsContent'>" + player.skillPass + "</div>\n                <div class='statsContent'>" + player.skillShotInterior + "</div>\n                <div class='statsContent'>" + player.skillShotExterior + "</div>\n                <div class='statsContent'>" + player.skillShotFree + "</div>\n                <div class='statsContent'>" + player.skillAttack + "</div>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F53\u529B</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u9632\u5B88</div>\n                <div class='statsContent'>" + player.skillPhysique + "</div>\n                <div class='statsContent'>" + player.skillBlock + "</div>\n                <div class='statsContent'>" + player.skillRebound + "</div>\n                <div class='statsContent'>" + player.skillSteal + "</div>\n                <div class='statsContent'>" + player.skillDefense + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u64CD\u4F5C</div>\n            </div>\n            <hr />\n            <div class='controls'>\n                <button onclick='showTeamInfo(" + player.team + ")'>\u524D\u5F80\u7403\u961F</button>\n                " + follow + "\n                " + extra + "\n            </div>\n        </div>\n        ";
+        var teamplate = "\n        <div class='playerPane'>\n            <div class='playerTitle'>\n                <div>\u57FA\u672C\u4FE1\u606F</div>\n            </div>\n            <hr />\n            <div class='playerContent'>\n                <div>\u59D3\u540D: " + player.name + "</div>\n                <div>\u7403\u961F: " + team.name + "</div>\n                <div>\u5E74\u9F84: " + player.age + "</div>\n                <div>\u4F4D\u7F6E: " + position + "</div>\n                <div>\u6F5C\u529B: " + player.potential + "</div>\n                <div>\u7403\u9F84: " + player.yearsLeague + "</div>\n                <div>\u85AA\u91D1: " + player.salary + "</div>\n                <div>\u5408\u540C\u5E74\u9650: " + player.yearsContract + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u6570\u636E\u7EDF\u8BA1</div>\n            </div>\n            <hr />\n            <div class='playerStats'>\n                <div class='statsTitle'>\u7F5A\u7403(" + player.seasonRegFreeIn + "/" + player.seasonRegFree + ")</div>\n                <div class='statsTitle'>2\u5206(" + (player.seasonRegCloseIn + player.seasonRegMiddleIn) + "/" + (player.seasonRegClose + player.seasonRegMiddle) + ")</div>\n                <div class='statsTitle'>3\u5206(" + player.seasonRegThreeIn + "/" + player.seasonRegThree + ")</div>\n                <div class='statsTitle'>\u5F97\u5206(" + score + ")</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(freeRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(doubleRate) + "</div>\n                <div class='statsContent'>" + DataUtil.rateToVal(tripleRate) + "</div>\n                <div class='statsContent'>" + avgScore + "</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u52A9\u653B</div>\n                <div class='statsContent'>" + avgRebound + "</div>\n                <div class='statsContent'>" + avgBlock + "</div>\n                <div class='statsContent'>" + avgSteal + "</div>\n                <div class='statsContent'>" + avgAssist + "</div>\n                <div class='statsTitle'>\u573A\u6B21</div>\n                <div class='statsTitle'>\u65F6\u95F4</div>\n                <div class='statsTitle'>\u72AF\u89C4</div>\n                <div class='statsTitle'>\u5931\u8BEF</div>\n                <div class='statsContent'>" + player.seasonRegGameNum + "</div>\n                <div class='statsContent'>" + avgTime + "</div>\n                <div class='statsContent'>" + avgFoul + "</div>\n                <div class='statsContent'>" + avgTurnover + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u5C5E\u6027(" + player.skillAverage + ")</div>\n            </div>\n            <hr />\n            <div class='playerAttrs'>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F20\u7403</div>\n                <div class='statsTitle'>\u5185\u7EBF</div>\n                <div class='statsTitle'>\u5916\u7EBF</div>\n                <div class='statsTitle'>\u7F5A\u7403</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u8FDB\u653B</div>\n                <div class='statsContent'>" + player.skillPass + "</div>\n                <div class='statsContent'>" + player.skillShotInterior + "</div>\n                <div class='statsContent'>" + player.skillShotExterior + "</div>\n                <div class='statsContent'>" + player.skillShotFree + "</div>\n                <div class='statsContent'>" + player.skillAttack + "</div>\n                <div class='statsTitle' style='text-align: start;'>\u7C7B\u578B</div>\n                <div class='statsTitle'>\u4F53\u529B</div>\n                <div class='statsTitle'>\u76D6\u5E3D</div>\n                <div class='statsTitle'>\u7BEE\u677F</div>\n                <div class='statsTitle'>\u62A2\u65AD</div>\n                <div class='statsTitle'>\u7EFC\u5408</div>\n                <div class='statsContent' style='text-align: start;'>\u9632\u5B88</div>\n                <div class='statsContent'>" + player.skillPhysique + "</div>\n                <div class='statsContent'>" + player.skillBlock + "</div>\n                <div class='statsContent'>" + player.skillRebound + "</div>\n                <div class='statsContent'>" + player.skillSteal + "</div>\n                <div class='statsContent'>" + player.skillDefense + "</div>\n            </div>\n            <div class='playerTitle'>\n                <div>\u64CD\u4F5C</div>\n            </div>\n            <hr />\n            <div class='controls'>\n                <button onclick='showTeamInfo(" + player.team + ")'>\u524D\u5F80\u7403\u961F</button>\n                " + follow + "\n                " + extra + "\n            </div>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(teamplate, 'text/html').querySelector('.playerPane');
         return newNode;
     };
@@ -14866,24 +14913,32 @@ var PlayerGenerator = /** @class */ (function () {
         gameData.players[id].totalRegBlock = 0;
         gameData.players[id].totalRegRebound = 0;
         gameData.players[id].totalRegTurnover = 0;
+        gameData.players[id].totalRegTime = 0;
+        gameData.players[id].totalRegFoul = 0;
         gameData.players[id].seasonRegScore = 0;
         gameData.players[id].seasonRegAssist = 0;
         gameData.players[id].seasonRegSteal = 0;
         gameData.players[id].seasonRegBlock = 0;
         gameData.players[id].seasonRegRebound = 0;
         gameData.players[id].seasonRegTurnover = 0;
+        gameData.players[id].seasonRegTime = 0;
+        gameData.players[id].seasonRegFoul = 0;
         gameData.players[id].totalOffScore = 0;
         gameData.players[id].totalOffAssist = 0;
         gameData.players[id].totalOffSteal = 0;
         gameData.players[id].totalOffBlock = 0;
         gameData.players[id].totalOffRebound = 0;
         gameData.players[id].totalOffTurnover = 0;
+        gameData.players[id].totalOffTime = 0;
+        gameData.players[id].totalOffFoul = 0;
         gameData.players[id].seasonOffScore = 0;
         gameData.players[id].seasonOffAssist = 0;
         gameData.players[id].seasonOffSteal = 0;
         gameData.players[id].seasonOffBlock = 0;
         gameData.players[id].seasonOffRebound = 0;
         gameData.players[id].seasonOffTurnover = 0;
+        gameData.players[id].seasonOffTime = 0;
+        gameData.players[id].seasonOffFoul = 0;
         gameData.players[id].seasonRegClose = 0;
         gameData.players[id].seasonRegCloseIn = 0;
         gameData.players[id].seasonRegMiddle = 0;
