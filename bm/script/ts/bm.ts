@@ -13118,7 +13118,13 @@ class Game {
                         maxId = s;
                     }
                 }
-                dailyNews.push(`${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}
+                let insertText = ''
+                if(gameResult.winnerId == gameData.userTeamId) {
+                    insertText = 'style="color: green"';
+                }else if((gameResult.homeTeamId == gameData.userTeamId || gameResult.visitorId == gameData.userTeamId) && gameResult.winnerId != gameData.userTeamId){
+                    insertText = 'style="color: red"';
+                }
+                dailyNews.push(`<span ${insertText}>${homeTeamName}(主)${homeScore}:${visitorScore}(客)${visitorName}</span>
                             <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
             }
             if(maxId != 0) {

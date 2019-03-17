@@ -13065,7 +13065,14 @@ var Game = /** @class */ (function () {
                         maxId = s;
                     }
                 }
-                dailyNews.push(homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName + "\n                            <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
+                var insertText = '';
+                if (gameResult.winnerId == gameData.userTeamId) {
+                    insertText = 'style="color: green"';
+                }
+                else if ((gameResult.homeTeamId == gameData.userTeamId || gameResult.visitorId == gameData.userTeamId) && gameResult.winnerId != gameData.userTeamId) {
+                    insertText = 'style="color: red"';
+                }
+                dailyNews.push("<span " + insertText + ">" + homeTeamName + "(\u4E3B)" + homeScore + ":" + visitorScore + "(\u5BA2)" + visitorName + "</span>\n                            <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
             }
             if (maxId != 0) {
                 dailyNews.push("\u4ECA\u65E5\u6570\u636E: " + gameData.players[maxId].name + "\u72C2\u780D" + maxScore + "\u5206\uFF01");
