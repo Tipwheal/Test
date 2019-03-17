@@ -14767,35 +14767,35 @@ class TemplateUtil {
             <span>首发</span>
         </div>
         `
-        if(team.starterPG != -1) {
+        if(team.starterPG && team.starterPG != -1) {
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterPG})'>
                 <span class='growSpan'>PG:&nbsp;${gameData.players[team.starterPG].name}</span><span>年龄&nbsp;${gameData.players[team.starterPG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPG].skillAverage}</span>
             </div>
             `
         }
-        if(team.starterSG != -1) {
+        if(team.starterSG && team.starterSG != -1) {
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterSG})'>
                 <span class='growSpan'>SG:&nbsp;${gameData.players[team.starterSG].name}</span><span>年龄&nbsp;${gameData.players[team.starterSG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSG].skillAverage}</span>
             </div>
             `
         }
-        if(team.starterSF != -1) {
+        if(team.starterSF && team.starterSF != -1) {
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterSF})'>
                 <span class='growSpan'>SF:&nbsp;${gameData.players[team.starterSF].name}</span><span>年龄&nbsp;${gameData.players[team.starterSF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSF].skillAverage}</span>
             </div>
             `
         }
-        if(team.starterPF != -1) {
+        if(team.starterPF && team.starterPF != -1) {
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterPF})'>
                 <span class='growSpan'>PF:&nbsp;${gameData.players[team.starterPF].name}</span><span>年龄&nbsp;${gameData.players[team.starterPF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPF].skillAverage}</span>
             </div>
             `
         }
-        if(team.starterC != -1) {
+        if(team.starterC && team.starterC != -1) {
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterC})'>
                 <span class='growSpan'>C:&nbsp;${gameData.players[team.starterC].name}</span><span>年龄&nbsp;${gameData.players[team.starterC].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterC].skillAverage}</span>

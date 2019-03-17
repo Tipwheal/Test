@@ -14595,19 +14595,19 @@ var TemplateUtil = /** @class */ (function () {
             coreLine += line;
         }
         var starterLine = "\n        <div class='titleLine'>\n            <span>\u9996\u53D1</span>\n        </div>\n        ";
-        if (team.starterPG != -1) {
+        if (team.starterPG && team.starterPG != -1) {
             starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterPG + ")'>\n                <span class='growSpan'>PG:&nbsp;" + gameData.players[team.starterPG].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterPG].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterPG].skillAverage + "</span>\n            </div>\n            ";
         }
-        if (team.starterSG != -1) {
+        if (team.starterSG && team.starterSG != -1) {
             starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterSG + ")'>\n                <span class='growSpan'>SG:&nbsp;" + gameData.players[team.starterSG].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterSG].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterSG].skillAverage + "</span>\n            </div>\n            ";
         }
-        if (team.starterSF != -1) {
+        if (team.starterSF && team.starterSF != -1) {
             starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterSF + ")'>\n                <span class='growSpan'>SF:&nbsp;" + gameData.players[team.starterSF].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterSF].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterSF].skillAverage + "</span>\n            </div>\n            ";
         }
-        if (team.starterPF != -1) {
+        if (team.starterPF && team.starterPF != -1) {
             starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterPF + ")'>\n                <span class='growSpan'>PF:&nbsp;" + gameData.players[team.starterPF].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterPF].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterPF].skillAverage + "</span>\n            </div>\n            ";
         }
-        if (team.starterC != -1) {
+        if (team.starterC && team.starterC != -1) {
             starterLine += "\n            <div class='gameLine' onclick='showPlayerInfo(" + team.starterC + ")'>\n                <span class='growSpan'>C:&nbsp;" + gameData.players[team.starterC].name + "</span><span>\u5E74\u9F84&nbsp;" + gameData.players[team.starterC].age + "&nbsp;&nbsp;\u7EFC\u5408\u80FD\u529B&nbsp;" + gameData.players[team.starterC].skillAverage + "</span>\n            </div>\n            ";
         }
         var benchLine = "\n        <div class='titleLine'>\n            <span>\u66FF\u8865</span>\n        </div>\n        ";
