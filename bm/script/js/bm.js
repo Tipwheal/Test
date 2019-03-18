@@ -12826,9 +12826,7 @@ var Game = /** @class */ (function () {
         var team = gameData.teams[teamId];
         playerId += '';
         if (team.starterPG + '' == playerId + '') {
-            console.log('hhhhhher');
             gameData.teams[teamId].starterPG = -1;
-            console.log(gameData.teams[teamId].starterPG);
         }
         else if (team.starterSG == playerId) {
             gameData.teams[teamId].starterSG = -1;
@@ -12848,8 +12846,6 @@ var Game = /** @class */ (function () {
         else if (team.bench.includes(playerId + '')) {
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1);
         }
-        console.log(team.dnp);
-        console.log(team.bench);
     };
     Game.setPlayerRole = function (playerId, role, gameData) {
         playerId += '';
@@ -12895,15 +12891,54 @@ var Game = /** @class */ (function () {
         else if (role == 'bench') {
             gameData.teams[teamId].bench.push(playerId + '');
         }
-        console.log(gameData.teams[teamId]);
     };
     Game.playerGrow = function (id, gameData) {
         var potential = gameData.players[id].potential;
+        //2% up or down
+        if (RandomUtil.random(0, 50) == 0) {
+            var growRand = RandomUtil.random(0, 2);
+            if (growRand == 0 && potential < 11) {
+                potential += 1;
+                gameData.players[id].potential = potential;
+            }
+            else if (growRand == 1 && potential > 0) {
+                potential -= 1;
+                gameData.players[id].potential = potential;
+            }
+        }
         var ageSub = 30 - gameData.players[id].age;
         if (ageSub > 0) {
-            var mul = potential * ageSub;
-            var rand = RandomUtil.random(0, 1000);
-            if (rand < mul) {
+            //between 50~280 / 2?
+            var currentAbility = gameData.players[id].skillAverage;
+            var potentialTable = [150, 140, 135, 130, 115, 100, 75, 50, 40, 20, 10];
+            var posbi = potentialTable[potential - 1];
+            var age = gameData.players[id].age;
+            if (age <= 20) {
+                posbi += 20;
+            }
+            else if (age <= 25) {
+                posbi += 40;
+            }
+            else if (age < 30) {
+                posbi += 80;
+            }
+            if (currentAbility <= 60) {
+                posbi += 10;
+            }
+            else if (currentAbility <= 70) {
+                posbi += 20;
+            }
+            else if (currentAbility <= 80) {
+                posbi += 30;
+            }
+            else if (currentAbility <= 90) {
+                posbi += 40;
+            }
+            else {
+                posbi += 50;
+            }
+            var rand = RandomUtil.random(0, posbi);
+            if (rand <= 1) {
                 var rand_1 = RandomUtil.random(0, 5);
                 if (rand_1 == 0) {
                     gameData.players[id].skillBlock += 1;
@@ -12939,10 +12974,43 @@ var Game = /** @class */ (function () {
             }
         }
         else {
-            ageSub = -ageSub;
-            var mul = (20 - potential) * ageSub;
-            var rand = RandomUtil.random(0, 1000);
-            if (rand < mul) {
+            //40~280 / 2, 20~140
+            var currentAbility = gameData.players[id].skillAverage;
+            var potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 150];
+            var posbi = potentialTable[potential - 1];
+            var age = gameData.players[id].age;
+            if (age <= 33) {
+                posbi += 80;
+            }
+            else if (age <= 36) {
+                posbi += 40;
+            }
+            else if (age <= 40) {
+                posbi += 20;
+            }
+            else {
+                posbi += 10;
+            }
+            if (currentAbility <= 60) {
+                posbi += 50;
+            }
+            else if (currentAbility <= 70) {
+                posbi += 40;
+            }
+            else if (currentAbility <= 80) {
+                posbi += 30;
+            }
+            else if (currentAbility <= 90) {
+                posbi += 20;
+            }
+            else if (currentAbility <= 95) {
+                posbi += 15;
+            }
+            else {
+                posbi += 10;
+            }
+            var rand = RandomUtil.random(0, posbi);
+            if (rand <= 1) {
                 var rand_2 = RandomUtil.random(0, 5);
                 if (rand_2 == 0) {
                     gameData.players[id].skillBlock -= 1;
@@ -13040,6 +13108,13 @@ var Game = /** @class */ (function () {
     };
     Game.nextDay = function (gameData) {
         gameData.showState = ShowState.News;
+        var starter = TeamMatchUtil.getStarters(gameData.userTeamId, gameData);
+        for (var i = 0; i < 5; i++) {
+            if ((!starter[i]) || starter[i] == -1) {
+                alert("球队首发阵容错误！请检查！");
+                return;
+            }
+        }
         if (gameData.currentDay <= Game.regularEndDay) {
             var games = GameSchedule.gamesOfDay(gameData.currentDay);
             var dailyNews = [];
@@ -13248,7 +13323,6 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < maybeList.length; i++) {
             var id = maybeList[i];
-            console.log(id);
             var rand = RandomUtil.random(0, 3);
             if (rand == 0) {
                 var player = gameData.players[id];
@@ -13726,6 +13800,15 @@ var Game = /** @class */ (function () {
             var foul = Math.round(RandomUtil.random(0, 6));
             if (!(bench[i] in stat.pScores)) {
                 stat.pScores[bench[i]] = {};
+                stat.pScores[bench[i]].score = 0;
+                stat.pScores[bench[i]].closeNum = 0;
+                stat.pScores[bench[i]].closeIn = 0;
+                stat.pScores[bench[i]].middleNum = 0;
+                stat.pScores[bench[i]].middleIn = 0;
+                stat.pScores[bench[i]].outsideNum = 0;
+                stat.pScores[bench[i]].outsideIn = 0;
+                stat.pScores[bench[i]].freeNum = 0;
+                stat.pScores[bench[i]].freeIn = 0;
             }
             stat.pScores[bench[i]].assist = ast;
             stat.pScores[bench[i]].rebound = rbd;
@@ -13972,6 +14055,9 @@ var Game = /** @class */ (function () {
             }
             else if (optName == 'seasonRegAvgScore') {
                 if (a.seasonRegGameNum == 0) {
+                    if (b.seasonRegGameNum == 0) {
+                        return 0;
+                    }
                     return 1;
                 }
                 else if (b.seasonRegGameNum == 0) {
@@ -14357,7 +14443,6 @@ var TemplateUtil = /** @class */ (function () {
                 array.splice(index, 1);
             }
         }
-        console.log(JSON.stringify(fTeam));
         for (var i = 0; i < fPlayers.length; i++) {
             remove(fTeam.cores, fPlayers[i]);
             remove(fTeam.dnp, fPlayers[i]);
@@ -14371,7 +14456,6 @@ var TemplateUtil = /** @class */ (function () {
             sTeam.players.push(fPlayers[i]);
             gameData.players[fPlayers[i]].team = sId;
         }
-        console.log(JSON.stringify(fTeam));
         for (var i = 0; i < sPlayers.length; i++) {
             remove(sTeam.cores, sPlayers[i]);
             remove(sTeam.dnp, sPlayers[i]);
@@ -14472,9 +14556,6 @@ var TemplateUtil = /** @class */ (function () {
             }
             var tAvgSkill = tTotalSkill / tSize;
             var tAvgAge = tTotalAge / tSize;
-            console.log("dad" + totalSalary);
-            console.log("dads" + tTotalSalary);
-            console.log(Math.abs(totalSalary - tTotalSalary));
             if (Math.abs(totalSalary - tTotalSalary) <= 5000000) {
                 if (Math.abs(avgAge - tAvgAge) <= 2) {
                     if (Math.abs(avgSkill - tAvgSkill) <= 4) {
@@ -14487,8 +14568,6 @@ var TemplateUtil = /** @class */ (function () {
                 break;
             }
         }
-        console.log(belowPlayers.length);
-        console.log(secondTradeP.length);
         if (match && (belowPlayers.length - secondTradeP.length >= 10)) {
             var pane_1 = document.getElementById('secondTradePlayers');
             pane_1.innerHTML = "";
@@ -14505,7 +14584,6 @@ var TemplateUtil = /** @class */ (function () {
     };
     TemplateUtil.createTradeLine = function (players, gameData, hasBox) {
         if (hasBox === void 0) { hasBox = true; }
-        console.log(players);
         var names = '';
         var avgs = '';
         var salaries = '';
@@ -15235,7 +15313,7 @@ var PlayerGenerator = /** @class */ (function () {
         this.getRandomPlayerWithName(teamId, firstName + '-' + lastName, gameData);
     };
     PlayerGenerator.getRandomPlayerWithName = function (teamId, name, gameData) {
-        var age = RandomUtil.random(18, 23);
+        var age = RandomUtil.random(17, 22);
         var id = gameData.nextPlayerId;
         var positionFirst = RandomUtil.random(1, 6);
         var positionSecond = positionFirst;
@@ -15541,7 +15619,6 @@ var MatchSimulator = /** @class */ (function () {
     };
     MatchSimulator.prototype.describeState = function (match) {
         var des = ("" + MatchSimulator.statesMap[match.state].description).replace('O', this.getTeamName(match) + "\u7684" + this.getHandlerName(match));
-        console.log(des);
     };
     //需要重写一下，有一些是动作前的？有一些是动作后的？
     MatchSimulator.prototype.describeActionAndDoSideEffect = function (name, match) {

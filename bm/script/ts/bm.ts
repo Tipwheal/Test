@@ -12887,9 +12887,7 @@ class Game {
         const team = gameData.teams[teamId];
         playerId += '';
         if(team.starterPG + '' == playerId + '') {
-            console.log('hhhhhher')
             gameData.teams[teamId].starterPG = -1;
-            console.log(gameData.teams[teamId].starterPG)
         }else if(team.starterSG == playerId) {
             gameData.teams[teamId].starterSG = -1;
         }else if(team.starterSF == playerId) {
@@ -12903,8 +12901,6 @@ class Game {
         }else if(team.bench.includes(playerId + '')) {
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1)
         }
-        console.log(team.dnp)
-        console.log(team.bench)
     }
 
     public static setPlayerRole(playerId: any, role: any, gameData: any) {
@@ -12945,16 +12941,48 @@ class Game {
         }else if(role == 'bench') {
             gameData.teams[teamId].bench.push(playerId + '');
         }
-        console.log(gameData.teams[teamId]);
     }
 
     private static playerGrow(id: any, gameData: any): any {
         let potential = gameData.players[id].potential;
+        //2% up or down
+        if(RandomUtil.random(0, 50) == 0) {
+            let growRand = RandomUtil.random(0, 2);
+            if(growRand == 0 && potential < 11) {
+                potential += 1;
+                gameData.players[id].potential = potential;
+            }else if(growRand == 1 && potential > 0) {
+                potential -= 1;
+                gameData.players[id].potential = potential;
+            }
+        }
         let ageSub = 30 - gameData.players[id].age;
         if(ageSub > 0) {
-            let mul = potential * ageSub;
-            let rand = RandomUtil.random(0, 1000);
-            if(rand < mul) {
+            //between 50~280 / 2?
+            let currentAbility = gameData.players[id].skillAverage;
+            const potentialTable = [150, 140, 135, 130, 115, 100, 75, 50, 40, 20, 10];
+            let posbi = potentialTable[potential-1];
+            let age = gameData.players[id].age;
+            if(age <= 20) {
+                posbi += 20;
+            }else if(age <= 25) {
+                posbi += 40;
+            }else if(age < 30) {
+                posbi += 80;
+            }
+            if(currentAbility <= 60) {
+                posbi += 10;
+            }else if(currentAbility <= 70) {
+                posbi += 20;
+            }else if(currentAbility <= 80) {
+                posbi += 30;
+            }else if(currentAbility <= 90) {
+                posbi += 40;
+            }else {
+                posbi += 50;
+            }
+            let rand = RandomUtil.random(0, posbi);
+            if(rand <= 1) {
                 let rand = RandomUtil.random(0, 5);
                 if(rand == 0) {
                     gameData.players[id].skillBlock += 1;
@@ -12989,10 +13017,35 @@ class Game {
                 }
             }
         }else {
-            ageSub = -ageSub;
-            let mul = (20 - potential) * ageSub;
-            let rand = RandomUtil.random(0, 1000);
-            if(rand < mul) {
+            //40~280 / 2, 20~140
+            let currentAbility = gameData.players[id].skillAverage;
+            const potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 150];
+            let posbi = potentialTable[potential-1];
+            let age = gameData.players[id].age;
+            if(age <= 33) {
+                posbi += 80;
+            }else if(age <= 36) {
+                posbi += 40;
+            }else if(age <= 40) {
+                posbi += 20;
+            }else {
+                posbi += 10;
+            }
+            if(currentAbility <= 60) {
+                posbi += 50;
+            }else if(currentAbility <= 70) {
+                posbi += 40;
+            }else if(currentAbility <= 80) {
+                posbi += 30;
+            }else if(currentAbility <= 90) {
+                posbi += 20;
+            }else if(currentAbility <= 95){
+                posbi += 15;
+            }else {
+                posbi += 10;
+            }
+            let rand = RandomUtil.random(0, posbi);
+            if(rand <= 1) {
                 let rand = RandomUtil.random(0, 5);
                 if(rand == 0) {
                     gameData.players[id].skillBlock -= 1;
@@ -13094,6 +13147,13 @@ class Game {
 
     public static nextDay(gameData: any): any {
         gameData.showState = ShowState.News;
+        let starter = TeamMatchUtil.getStarters(gameData.userTeamId, gameData);
+        for(let i = 0; i<5;i++) {
+            if((!starter[i]) || starter[i] == -1) {
+                alert("球队首发阵容错误！请检查！");
+                return;
+            }
+        }
         if(gameData.currentDay <= Game.regularEndDay) {
             let games = GameSchedule.gamesOfDay(gameData.currentDay);
             let dailyNews = [];
@@ -13301,7 +13361,6 @@ class Game {
         }
         for(let i = 0; i < maybeList.length; i ++) {
             let id = maybeList[i];
-            console.log(id);
             let rand = RandomUtil.random(0, 3);
             if(rand == 0) {
                 const player = gameData.players[id];
@@ -13756,6 +13815,15 @@ class Game {
             const foul = Math.round(RandomUtil.random(0, 6));
             if(!(bench[i] in stat.pScores)) {
                  stat.pScores[bench[i]] = {};
+                 stat.pScores[bench[i]].score = 0;
+                 stat.pScores[bench[i]].closeNum = 0;
+                 stat.pScores[bench[i]].closeIn = 0;
+                 stat.pScores[bench[i]].middleNum = 0;
+                 stat.pScores[bench[i]].middleIn = 0;
+                 stat.pScores[bench[i]].outsideNum = 0;
+                 stat.pScores[bench[i]].outsideIn = 0;
+                 stat.pScores[bench[i]].freeNum = 0;
+                 stat.pScores[bench[i]].freeIn = 0;
             }
             stat.pScores[bench[i]].assist = ast;
             stat.pScores[bench[i]].rebound = rbd;
@@ -13991,6 +14059,9 @@ class Game {
                 return b[optName] - a[optName];
             }else if(optName == 'seasonRegAvgScore') {
                 if(a.seasonRegGameNum == 0) {
+                    if(b.seasonRegGameNum == 0) {
+                        return 0;
+                    }
                     return 1;
                 }else if(b.seasonRegGameNum == 0) {
                     return -1;
@@ -14358,7 +14429,6 @@ class TemplateUtil {
                 array.splice(index, 1); 
             } 
         }
-        console.log(JSON.stringify(fTeam));
         for (let i = 0; i < fPlayers.length; i++) {
             remove(fTeam.cores, fPlayers[i]);
             remove(fTeam.dnp, fPlayers[i]);
@@ -14372,7 +14442,6 @@ class TemplateUtil {
             sTeam.players.push(fPlayers[i]);
             gameData.players[fPlayers[i]].team = sId;
         }
-        console.log(JSON.stringify(fTeam));
         for (let i = 0; i < sPlayers.length; i++) {
             remove(sTeam.cores, sPlayers[i]);
             remove(sTeam.dnp, sPlayers[i]);
@@ -14472,9 +14541,6 @@ class TemplateUtil {
             }
             let tAvgSkill = tTotalSkill / tSize;
             let tAvgAge = tTotalAge / tSize;
-            console.log("dad" + totalSalary);
-            console.log("dads" + tTotalSalary);
-            console.log(Math.abs(totalSalary - tTotalSalary));
             if(Math.abs(totalSalary - tTotalSalary) <= 5000000) {
                 if(Math.abs(avgAge - tAvgAge) <= 2) {
                     if(Math.abs(avgSkill - tAvgSkill) <= 4) {
@@ -14487,8 +14553,6 @@ class TemplateUtil {
                 break;
             }
         }
-        console.log(belowPlayers.length);
-        console.log(secondTradeP.length);
         if(match && (belowPlayers.length - secondTradeP.length >= 10)) {
             const pane = <HTMLElement>document.getElementById('secondTradePlayers');
             pane.innerHTML = "";
@@ -14505,7 +14569,6 @@ class TemplateUtil {
     }
 
     public static createTradeLine(players: any, gameData: any, hasBox=true) {
-        console.log(players);
         let names = ''
         let avgs = ''
         let salaries = ''
@@ -15754,7 +15817,7 @@ class PlayerGenerator {
     }
 
     public static getRandomPlayerWithName(teamId: any, name: any, gameData: any): any {
-        let age = RandomUtil.random(18, 23);
+        let age = RandomUtil.random(17, 22);
         let id = gameData.nextPlayerId;
         let positionFirst = RandomUtil.random(1, 6);
         let positionSecond = positionFirst;
@@ -16728,7 +16791,6 @@ class MatchSimulator {
 
     public describeState(match: any) {
         let des = `${MatchSimulator.statesMap[match.state].description}`.replace('O', `${this.getTeamName(match)}的${this.getHandlerName(match)}`);
-        console.log(des);
     }
 
     //需要重写一下，有一些是动作前的？有一些是动作后的？
