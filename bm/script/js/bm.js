@@ -15181,17 +15181,32 @@ var PlayerGenerator = /** @class */ (function () {
         var age = RandomUtil.random(18, 23);
         var id = gameData.nextPlayerId;
         var positionFirst = RandomUtil.random(1, 6);
-        var positionSecond = RandomUtil.random(1, 6);
+        var positionSecond = positionFirst;
+        if (positionFirst == 1) {
+            positionSecond = RandomUtil.random(1, 3);
+        }
+        else if (positionFirst == 2) {
+            positionSecond = RandomUtil.random(1, 4);
+        }
+        else if (positionFirst == 3) {
+            positionSecond = RandomUtil.random(2, 5);
+        }
+        else if (positionFirst == 4) {
+            positionSecond = RandomUtil.random(3, 6);
+        }
+        else if (positionFirst == 5) {
+            positionSecond = RandomUtil.random(4, 6);
+        }
         var potential = RandomUtil.random(1, 11);
         gameData.nextPlayerId += 1;
-        var skillBlock = RandomUtil.random(50, 95);
-        var skillPass = RandomUtil.random(50, 95);
-        var skillPhysique = RandomUtil.random(50, 95);
-        var skillRebound = RandomUtil.random(50, 95);
-        var skillShotExterior = RandomUtil.random(50, 95);
-        var skillShotInterior = RandomUtil.random(50, 95);
-        var skillShotFree = RandomUtil.random(50, 95);
-        var skillSteal = RandomUtil.random(50, 95);
+        var skillBlock = RandomUtil.random(50, 80) + potential;
+        var skillPass = RandomUtil.random(50, 80) + potential;
+        var skillPhysique = RandomUtil.random(50, 80) + potential;
+        var skillRebound = RandomUtil.random(50, 80) + potential;
+        var skillShotExterior = RandomUtil.random(50, 80) + potential;
+        var skillShotInterior = RandomUtil.random(50, 80) + potential;
+        var skillShotFree = RandomUtil.random(50, 80) + potential;
+        var skillSteal = RandomUtil.random(50, 80) + potential;
         var player = {
             age: age,
             draft: 0,
