@@ -12789,6 +12789,8 @@ var Game = /** @class */ (function () {
             gameData.teams[i].starterC = -1;
             gameData.teams[i].bench = [];
             gameData.teams[i].dnp = [];
+            gameData.teams[i].currentWin = 0;
+            gameData.teams[i].currentLost = 0;
             gameData.lockLineup = false;
         }
         this.resetOffSeasonData(gameData);
@@ -13017,6 +13019,24 @@ var Game = /** @class */ (function () {
         gameData.matches.push(gameResult);
         return gameData.matchNum++;
     };
+    Game.teamWin = function (teamId, gameData) {
+        if (gameData.teams[teamId].currentWin > 0) {
+            gameData.teams[teamId].currentWin += 1;
+        }
+        else {
+            gameData.teams[teamId].currentWin = 1;
+            gameData.teams[teamId].currentLost = 0;
+        }
+    };
+    Game.teamLost = function (teamId, gameData) {
+        if (gameData.teams[teamId].currentLost > 0) {
+            gameData.teams[teamId].currentLost += 1;
+        }
+        else {
+            gameData.teams[teamId].currentWin = 0;
+            gameData.teams[teamId].currentLost = 1;
+        }
+    };
     Game.nextDay = function (gameData) {
         gameData.showState = ShowState.News;
         if (gameData.currentDay <= Game.regularEndDay) {
@@ -13041,6 +13061,8 @@ var Game = /** @class */ (function () {
                 var visitorPScores = void 0;
                 if (gameResult.winnerId == homeTeamId) {
                     gameData.teams[homeTeamId].winNum += 1;
+                    this.teamWin(homeTeamId, gameData);
+                    this.teamLost(visitorId, gameData);
                     homeScore = gameResult.winnerPoint;
                     visitorScore = gameResult.loserPoint;
                     homePScores = gameResult.winnerScores;
@@ -13048,6 +13070,8 @@ var Game = /** @class */ (function () {
                 }
                 else {
                     gameData.teams[visitorId].winNum += 1;
+                    this.teamLost(homeTeamId, gameData);
+                    this.teamWin(visitorId, gameData);
                     homeScore = gameResult.loserPoint;
                     visitorScore = gameResult.winnerPoint;
                     visitorPScores = gameResult.winnerScores;
@@ -13121,6 +13145,8 @@ var Game = /** @class */ (function () {
             for (var i = 0; i < 30; i++) {
                 gameData.teams[i].winNum = 0;
                 gameData.teams[i].gameNum = 0;
+                gameData.teams[i].currentWin = 0;
+                gameData.teams[i].currentLost = 0;
             }
             gameData.news = [];
             gameData.matches = [];
@@ -13322,6 +13348,8 @@ var Game = /** @class */ (function () {
                 insertText = 'style="color: red"';
             }
             if (homeTeamId == gameResult.winnerId) {
+                this.teamWin(homeTeamId, gameData);
+                this.teamLost(visitorId, gameData);
                 if (homeTeamId == thePair.up.team) {
                     dailyNews.push("<span " + insertText + ">" + homeTeamName + "(\u4E3B)" + gameResult.winnerPoint + ":" + gameResult.loserPoint + "(\u5BA2)" + visitorName + "</span>\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
@@ -13330,6 +13358,8 @@ var Game = /** @class */ (function () {
                 }
             }
             else {
+                this.teamLost(homeTeamId, gameData);
+                this.teamWin(visitorId, gameData);
                 if (homeTeamId == thePair.up.team) {
                     dailyNews.push("<span " + insertText + ">" + homeTeamName + "(\u4E3B)" + gameResult.loserPoint + ":" + gameResult.winnerPoint + "(\u5BA2)" + visitorName + "</span>\n                    <span style='color: blue;cursor: pointer;' onclick='showMatch(" + matchId + ")'>[\u67E5\u770B]</span>");
                 }
@@ -14657,7 +14687,21 @@ var TemplateUtil = /** @class */ (function () {
         var teamName = gameData.teams[teamId].name;
         var win = gameData.teams[teamId].winNum;
         var lost = gameData.teams[teamId].gameNum - win;
-        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span class='rankSpan'>" + rank + "</span><span class='growSpan'>" + teamName + "</span><span>&nbsp;" + win + "&nbsp;\u80DC&nbsp;" + lost + "&nbsp;\u8D1F</span>\n        </div>\n        ";
+        var insertText = '';
+        if (teamId == gameData.userTeamId) {
+            insertText = 'style="color: orange;"';
+        }
+        var tail = '';
+        if (gameData.teams[teamId].currentWin > 0) {
+            tail = "<span style=\"color: green\">" + gameData.teams[teamId].currentWin + "\u8FDE\u80DC</span>";
+        }
+        else if (gameData.teams[teamId].currentLost > 0) {
+            tail = "<span style=\"color: red\">" + gameData.teams[teamId].currentLost + "\u8FDE\u8D25</span>";
+        }
+        else {
+            tail = "<span " + insertText + ">\u672A\u6BD4\u8D5B</span>";
+        }
+        var lineTemplate = "\n        <div class='gameLine' onclick='showTeamInfo(" + teamId + ")'>\n            <span class='rankSpan' " + insertText + ">" + rank + "</span><span class='growSpan'  " + insertText + ">" + teamName + "</span><span  " + insertText + ">&nbsp;" + win + "&nbsp;\u80DC&nbsp;" + lost + "&nbsp;\u8D1F</span>&nbsp;" + tail + "\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };

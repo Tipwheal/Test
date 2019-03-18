@@ -12848,6 +12848,8 @@ class Game {
             gameData.teams[i].starterC = -1;
             gameData.teams[i].bench = [];
             gameData.teams[i].dnp = [];
+            gameData.teams[i].currentWin = 0;
+            gameData.teams[i].currentLost = 0;
             gameData.lockLineup = false;
         }
         this.resetOffSeasonData(gameData);
@@ -13071,6 +13073,24 @@ class Game {
         return gameData.matchNum++;
     }
 
+    private static teamWin(teamId: any, gameData: any) {
+        if(gameData.teams[teamId].currentWin > 0) {
+            gameData.teams[teamId].currentWin += 1;
+        }else {
+            gameData.teams[teamId].currentWin = 1;
+            gameData.teams[teamId].currentLost = 0;
+        }
+    }
+
+    private static teamLost(teamId: any, gameData: any) {
+        if(gameData.teams[teamId].currentLost > 0) {
+            gameData.teams[teamId].currentLost += 1;
+        }else {
+            gameData.teams[teamId].currentWin = 0;
+            gameData.teams[teamId].currentLost = 1;
+        }
+    }
+
     public static nextDay(gameData: any): any {
         gameData.showState = ShowState.News;
         if(gameData.currentDay <= Game.regularEndDay) {
@@ -13095,12 +13115,16 @@ class Game {
                 let visitorPScores: any;
                 if(gameResult.winnerId == homeTeamId) {
                     gameData.teams[homeTeamId].winNum += 1;
+                    this.teamWin(homeTeamId, gameData);
+                    this.teamLost(visitorId, gameData);
                     homeScore = gameResult.winnerPoint;
                     visitorScore = gameResult.loserPoint;
                     homePScores = gameResult.winnerScores;
                     visitorPScores = gameResult.loserScores;
                 }else {
                     gameData.teams[visitorId].winNum += 1;
+                    this.teamLost(homeTeamId, gameData);
+                    this.teamWin(visitorId, gameData);
                     homeScore = gameResult.loserPoint;
                     visitorScore = gameResult.winnerPoint;
                     visitorPScores = gameResult.winnerScores;
@@ -13169,6 +13193,8 @@ class Game {
             for(let i = 0; i<30;i++) {
                 gameData.teams[i].winNum = 0;
                 gameData.teams[i].gameNum = 0;
+                gameData.teams[i].currentWin = 0;
+                gameData.teams[i].currentLost = 0;
             }
             gameData.news = [];
             gameData.matches = [];
@@ -13371,6 +13397,8 @@ class Game {
                 insertText = 'style="color: red"';
             }
             if(homeTeamId == gameResult.winnerId) {
+                this.teamWin(homeTeamId, gameData);
+                this.teamLost(visitorId, gameData);
                 if(homeTeamId == thePair.up.team) {
                     dailyNews.push(`<span ${insertText}>${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
@@ -13379,6 +13407,8 @@ class Game {
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }
             }else {
+                this.teamLost(homeTeamId, gameData);
+                this.teamWin(visitorId, gameData);
                 if(homeTeamId == thePair.up.team) {
                     dailyNews.push(`<span ${insertText}>${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
@@ -14889,9 +14919,21 @@ class TemplateUtil {
         const teamName = gameData.teams[teamId].name;
         const win = gameData.teams[teamId].winNum;
         const lost = gameData.teams[teamId].gameNum - win;
+        let insertText = ''
+        if(teamId == gameData.userTeamId) {
+            insertText = 'style="color: orange;"';
+        }
+        let tail = ''
+        if(gameData.teams[teamId].currentWin > 0) {
+            tail = `<span style="color: green">${gameData.teams[teamId].currentWin}连胜</span>`
+        }else if(gameData.teams[teamId].currentLost > 0) {
+            tail = `<span style="color: red">${gameData.teams[teamId].currentLost}连败</span>`
+        }else {
+            tail = `<span ${insertText}>未比赛</span>`
+        }
         const lineTemplate = `
         <div class='gameLine' onclick='showTeamInfo(${teamId})'>
-            <span class='rankSpan'>${rank}</span><span class='growSpan'>${teamName}</span><span>&nbsp;${win}&nbsp;胜&nbsp;${lost}&nbsp;负</span>
+            <span class='rankSpan' ${insertText}>${rank}</span><span class='growSpan'  ${insertText}>${teamName}</span><span  ${insertText}>&nbsp;${win}&nbsp;胜&nbsp;${lost}&nbsp;负</span>&nbsp;${tail}
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
