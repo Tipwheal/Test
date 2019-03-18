@@ -12830,6 +12830,7 @@ class Game {
             gameData.players[i].seasonOffFreeIn = 0;
             gameData.players[i].seasonOffTime = 0;
             gameData.players[i].seasonOffFoul = 0;
+            gameData.players[i].carryWinNum = 0;
             gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
@@ -13142,6 +13143,31 @@ class Game {
                         maxId = s;
                     }
                 }
+                if(gameResult.winnerId == homeTeamId) {
+                    let homeMvpNum = 0;
+                    let homeMvpId = 0;
+                    for(let i = 0; i < homeTeam.players.length; i++) {
+                        let p = (<any>gameResult.winnerScores)[homeTeam.players[i]];
+                        let total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+                        if(total > homeMvpNum) {
+                            homeMvpNum = total;
+                            homeMvpId = homeTeam.players[i];
+                        }
+                    }
+                    gameData.players[homeMvpId].carryWinNum += 1;
+                }else {
+                    let visitorMvpNum = 0;
+                    let visitorMvpId = 0;
+                    for(let i = 0; i < visitor.players.length; i++) {
+                        let p = (<any>gameResult.winnerScores)[visitor.players[i]];
+                        let total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+                        if(total > visitorMvpNum) {
+                            visitorMvpNum = total;
+                            visitorMvpId = visitor.players[i];
+                        }
+                    }
+                    gameData.players[visitorMvpId].carryWinNum += 1;
+                }
                 let insertText = ''
                 if(gameResult.winnerId == gameData.userTeamId) {
                     insertText = 'style="color: green"';
@@ -13169,6 +13195,12 @@ class Game {
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
+            });
+            let mvpInfo = this.setRegularMvp(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: mvpInfo,
             });
             gameData.currentDay += 1;
         }else if(gameData.currentDay < Game.regularEndDay + 57) {
@@ -13210,6 +13242,35 @@ class Game {
         for(let id in gameData.players) {
             this.playerGrow(id, gameData);
         }
+    }
+
+    private static setRegularMvp(gameData: any) {
+        let rank = this.getTeamRank(gameData);
+        let max = -1;
+        let maxP;
+        let theTeam;
+        for(let i = 0; i < 6; i++) {
+            const team = rank[i];
+            const players = team.players;
+            for(let j = 0; j < players.length; j++) {
+                const player = gameData.players[players[j]];
+                if(player.carryWinNum > max) {
+                    max = player.carryWinNum;
+                    maxP = player;
+                    theTeam = i;
+                }
+            }
+        }
+        const avgScore = (maxP.seasonRegScore/maxP.seasonRegGameNum).toFixed(2);
+        const avgRebound = (maxP.seasonRegRebound/maxP.seasonRegGameNum).toFixed(2);
+        const avgAssist = (maxP.seasonRegAssist/maxP.seasonRegGameNum).toFixed(2);
+        const avgSteal = (maxP.seasonRegSteal/maxP.seasonRegGameNum).toFixed(2);
+        const avgBlock = (maxP.seasonRegBlock/maxP.seasonRegGameNum).toFixed(2);
+        return `
+        常规赛Mvp: ${maxP.name}!<br />
+        球队排名: ${theTeam + 1}<br/ >
+        数据：${avgScore}分${avgRebound}板${avgAssist}助${avgSteal}断${avgBlock}帽
+        `
     }
     
     public static followPlayer(playerId: any, gameData: any) {
@@ -13299,6 +13360,7 @@ class Game {
             gameData.players[id].seasonOffBlock = 0;
             gameData.players[id].seasonOffTime = 0;
             gameData.players[id].seasonOffFoul = 0;
+            gameData.players[id].carryWinNum = 0;
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     }
@@ -14953,7 +15015,7 @@ class TemplateUtil {
         const freeRate = player.seasonRegFreeIn / player.seasonRegFree;
         const doubleRate = (player.seasonRegCloseIn + player.seasonRegMiddleIn) / (player.seasonRegMiddle + player.seasonRegClose);
         const tripleRate = player.seasonRegThreeIn / player.seasonRegThree;
-        const score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFree;
+        const score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFreeIn;
         const avgScore = (score / player.seasonRegGameNum).toFixed(2);
         const avgBlock = (player.seasonRegBlock / player.seasonRegGameNum).toFixed(2);
         const avgRebound = (player.seasonRegRebound / player.seasonRegGameNum).toFixed(2);
@@ -15740,6 +15802,7 @@ class PlayerGenerator {
         gameData.players[id].seasonOffThreeIn = 0;
         gameData.players[id].seasonOffFree = 0;
         gameData.players[id].seasonOffFreeIn = 0;
+        gameData.players[id].carryWinNum = 0;
         gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     }
 }

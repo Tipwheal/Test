@@ -12771,6 +12771,7 @@ var Game = /** @class */ (function () {
             gameData.players[i].seasonOffFreeIn = 0;
             gameData.players[i].seasonOffTime = 0;
             gameData.players[i].seasonOffFoul = 0;
+            gameData.players[i].carryWinNum = 0;
             gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
@@ -13089,6 +13090,32 @@ var Game = /** @class */ (function () {
                         maxId = s;
                     }
                 }
+                if (gameResult.winnerId == homeTeamId) {
+                    var homeMvpNum = 0;
+                    var homeMvpId = 0;
+                    for (var i_1 = 0; i_1 < homeTeam.players.length; i_1++) {
+                        var p = gameResult.winnerScores[homeTeam.players[i_1]];
+                        var total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+                        if (total > homeMvpNum) {
+                            homeMvpNum = total;
+                            homeMvpId = homeTeam.players[i_1];
+                        }
+                    }
+                    gameData.players[homeMvpId].carryWinNum += 1;
+                }
+                else {
+                    var visitorMvpNum = 0;
+                    var visitorMvpId = 0;
+                    for (var i_2 = 0; i_2 < visitor.players.length; i_2++) {
+                        var p = gameResult.winnerScores[visitor.players[i_2]];
+                        var total = p.score + p.rebound + p.assist + p.steal + p.block - p.turnover;
+                        if (total > visitorMvpNum) {
+                            visitorMvpNum = total;
+                            visitorMvpId = visitor.players[i_2];
+                        }
+                    }
+                    gameData.players[visitorMvpId].carryWinNum += 1;
+                }
                 var insertText = '';
                 if (gameResult.winnerId == gameData.userTeamId) {
                     insertText = 'style="color: green"';
@@ -13117,6 +13144,12 @@ var Game = /** @class */ (function () {
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
                 content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
+            });
+            var mvpInfo = this.setRegularMvp(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: mvpInfo,
             });
             gameData.currentDay += 1;
         }
@@ -13162,6 +13195,30 @@ var Game = /** @class */ (function () {
         for (var id in gameData.players) {
             this.playerGrow(id, gameData);
         }
+    };
+    Game.setRegularMvp = function (gameData) {
+        var rank = this.getTeamRank(gameData);
+        var max = -1;
+        var maxP;
+        var theTeam;
+        for (var i = 0; i < 6; i++) {
+            var team = rank[i];
+            var players = team.players;
+            for (var j = 0; j < players.length; j++) {
+                var player = gameData.players[players[j]];
+                if (player.carryWinNum > max) {
+                    max = player.carryWinNum;
+                    maxP = player;
+                    theTeam = i;
+                }
+            }
+        }
+        var avgScore = (maxP.seasonRegScore / maxP.seasonRegGameNum).toFixed(2);
+        var avgRebound = (maxP.seasonRegRebound / maxP.seasonRegGameNum).toFixed(2);
+        var avgAssist = (maxP.seasonRegAssist / maxP.seasonRegGameNum).toFixed(2);
+        var avgSteal = (maxP.seasonRegSteal / maxP.seasonRegGameNum).toFixed(2);
+        var avgBlock = (maxP.seasonRegBlock / maxP.seasonRegGameNum).toFixed(2);
+        return "\n        \u5E38\u89C4\u8D5BMvp: " + maxP.name + "!<br />\n        \u7403\u961F\u6392\u540D: " + (theTeam + 1) + "<br/ >\n        \u6570\u636E\uFF1A" + avgScore + "\u5206" + avgRebound + "\u677F" + avgAssist + "\u52A9" + avgSteal + "\u65AD" + avgBlock + "\u5E3D\n        ";
     };
     Game.followPlayer = function (playerId, gameData) {
         gameData.followList.push(playerId);
@@ -13250,6 +13307,7 @@ var Game = /** @class */ (function () {
             gameData.players[id].seasonOffBlock = 0;
             gameData.players[id].seasonOffTime = 0;
             gameData.players[id].seasonOffFoul = 0;
+            gameData.players[id].carryWinNum = 0;
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     };
@@ -14384,8 +14442,8 @@ var TemplateUtil = /** @class */ (function () {
                 var randP = RandomUtil.random(0, belowPlayers.length);
                 var pId = belowPlayers[randP];
                 var inP = false;
-                for (var i_1 = 0; i_1 < tempTradeP.length; i_1++) {
-                    if (tempTradeP[i_1] == pId) {
+                for (var i_3 = 0; i_3 < tempTradeP.length; i_3++) {
+                    if (tempTradeP[i_3] == pId) {
                         inP = true;
                         break;
                     }
@@ -14718,7 +14776,7 @@ var TemplateUtil = /** @class */ (function () {
         var freeRate = player.seasonRegFreeIn / player.seasonRegFree;
         var doubleRate = (player.seasonRegCloseIn + player.seasonRegMiddleIn) / (player.seasonRegMiddle + player.seasonRegClose);
         var tripleRate = player.seasonRegThreeIn / player.seasonRegThree;
-        var score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFree;
+        var score = (player.seasonRegCloseIn + player.seasonRegMiddleIn) * 2 + player.seasonRegThreeIn * 3 + player.seasonRegFreeIn;
         var avgScore = (score / player.seasonRegGameNum).toFixed(2);
         var avgBlock = (player.seasonRegBlock / player.seasonRegGameNum).toFixed(2);
         var avgRebound = (player.seasonRegRebound / player.seasonRegGameNum).toFixed(2);
@@ -15230,6 +15288,7 @@ var PlayerGenerator = /** @class */ (function () {
         gameData.players[id].seasonOffThreeIn = 0;
         gameData.players[id].seasonOffFree = 0;
         gameData.players[id].seasonOffFreeIn = 0;
+        gameData.players[id].carryWinNum = 0;
         gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     };
     PlayerGenerator.usFirstNames = ['雅各布', '迈克尔', '伊桑', '约书亚', '亚历山大', '安东尼', '威廉', '克里斯托弗', '杰顿', '安德鲁',
