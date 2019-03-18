@@ -13834,7 +13834,7 @@ class Game {
                 }
             }
             for(let i = 0; i < 5; i ++) {
-                let times = RandomUtil.random(0, 13);
+                let times = RandomUtil.random(3, 14);
                 if(playerAndNum[starter[i] + ''] != undefined) {
                     playerAndNum[starter[i] + ''] += times;
                 }else {
