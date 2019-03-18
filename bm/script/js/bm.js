@@ -13796,19 +13796,19 @@ var Game = /** @class */ (function () {
         var bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if (baseNum > 50) {
             if (core.length == 1) {
-                var times = RandomUtil.random(12, 25);
+                var times = RandomUtil.random(10, 20);
                 playerAndNum[core[0] + ''] = times;
                 baseNum -= times;
             }
             else {
                 for (var i = 0; i < core.length; i++) {
-                    var times = RandomUtil.random(7, 16);
+                    var times = RandomUtil.random(5, 13);
                     playerAndNum[core[i] + ''] = times;
                     baseNum -= times;
                 }
             }
             for (var i = 0; i < 5; i++) {
-                var times = RandomUtil.random(0, 11);
+                var times = RandomUtil.random(0, 13);
                 if (playerAndNum[starter[i] + ''] != undefined) {
                     playerAndNum[starter[i] + ''] += times;
                 }

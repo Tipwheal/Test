@@ -13823,18 +13823,18 @@ class Game {
         let bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if(baseNum > 50) {
             if(core.length == 1) {
-                let times = RandomUtil.random(12, 25);
+                let times = RandomUtil.random(10, 20);
                 playerAndNum[core[0] + ''] = times;
                 baseNum -= times;
             }else {
                 for(let i = 0; i < core.length; i++) {
-                    let times = RandomUtil.random(7, 16);
+                    let times = RandomUtil.random(5, 13);
                     playerAndNum[core[i] + ''] = times;
                     baseNum -= times;
                 }
             }
             for(let i = 0; i < 5; i ++) {
-                let times = RandomUtil.random(0, 11);
+                let times = RandomUtil.random(0, 13);
                 if(playerAndNum[starter[i] + ''] != undefined) {
                     playerAndNum[starter[i] + ''] += times;
                 }else {
