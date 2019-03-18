@@ -13364,20 +13364,26 @@ class Game {
             let matchId = this.saveGameResult(gameResult, gameData);
             let homeTeamName = gameData.teams[homeTeamId].name;
             let visitorName = gameData.teams[visitorId].name;
+            let insertText = ''
+            if(gameResult.winnerId == gameData.userTeamId) {
+                insertText = 'style="color: green"';
+            }else if((gameResult.homeTeamId == gameData.userTeamId || gameResult.visitorId == gameData.userTeamId) && gameResult.winnerId != gameData.userTeamId){
+                insertText = 'style="color: red"';
+            }
             if(homeTeamId == gameResult.winnerId) {
                 if(homeTeamId == thePair.up.team) {
-                    dailyNews.push(`${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}
+                    dailyNews.push(`<span ${insertText}>${homeTeamName}(主)${gameResult.winnerPoint}:${gameResult.loserPoint}(客)${visitorName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }else {
-                    dailyNews.push(`${visitorName}(客)${gameResult.loserPoint}:${gameResult.winnerPoint}(主)${homeTeamName}
+                    dailyNews.push(`<span ${insertText}>${visitorName}(客)${gameResult.loserPoint}:${gameResult.winnerPoint}(主)${homeTeamName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }
             }else {
                 if(homeTeamId == thePair.up.team) {
-                    dailyNews.push(`${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}
+                    dailyNews.push(`<span ${insertText}>${homeTeamName}(主)${gameResult.loserPoint}:${gameResult.winnerPoint}(客)${visitorName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }else {
-                    dailyNews.push(`${visitorName}(客)${gameResult.winnerPoint}:${gameResult.loserPoint}(主)${homeTeamName}
+                    dailyNews.push(`<span ${insertText}>${visitorName}(客)${gameResult.winnerPoint}:${gameResult.loserPoint}(主)${homeTeamName}</span>
                     <span style='color: blue;cursor: pointer;' onclick='showMatch(${matchId})'>[查看]</span>`);
                 }
             }
