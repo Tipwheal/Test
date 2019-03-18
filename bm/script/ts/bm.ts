@@ -14235,9 +14235,16 @@ class FileUtil {
 
 class TemplateUtil {
     public static createPlayerLine(player: any): any {
+        function positionToC(position: number) {
+            return ['PG', 'SG', 'SF', 'PF', 'C'][position - 1];
+        }
+        let position = positionToC(player.positionFirst);
+        if(player.positionSecond != player.positionSecond) {
+            position += '/' + positionToC(player.positionSecond);
+        }
         const lineTemplate = `
         <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
-            <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+            <span class='growSpan'>${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
@@ -14492,6 +14499,11 @@ class TemplateUtil {
         }
     }
 
+    public static clearTrade() {
+        let pane = document.getElementById('secondTradePlayers');
+        pane.innerHTML = "";
+    }
+
     public static createTradeLine(players: any, gameData: any, hasBox=true) {
         console.log(players);
         let names = ''
@@ -14499,19 +14511,29 @@ class TemplateUtil {
         let salaries = ''
         let years = ''
         let boxes = ''
+        let pos = ''
         for(let i = 0; i < players.length; i++) {
             const player = gameData.players[players[i]];
+            let position = DataUtil.positionToName(player.positionFirst);
+            if(player.positionFirst != player.positionSecond) {
+                position += '/' + DataUtil.positionToName(player.positionSecond);
+            }
             names += `<span>${player.name}</span>`
             avgs += `<span>${player.skillAverage}</span>`
             salaries += `<span>${player.salary}</span>`
             years += `<span>${player.yearsContract}</span>`
-            boxes += `<span><input type='checkbox' value='${players[i]}'></input></span>`
+            boxes += `<span><input type='checkbox' value='${players[i]}' onclick='TemplateUtil.clearTrade()'></input></span>`
+            pos += `<span>${position}</span>`
         }
         let template = `
         <div class='tradeLine'>
             <div class='tradeColumn' id='firstColumn'>
                 <span>球员</span>
                 ${names}
+            </div>
+            <div class='tradeColumn'>
+                <span>位置</span>
+                ${pos}
             </div>
             <div class='tradeColumn'>
                 <span>能力</span>
@@ -14857,11 +14879,18 @@ class TemplateUtil {
             <span>核心球员</span>
         </div>
         `;
+        function positionToC(position: number) {
+            return DataUtil.positionToName(position)
+        }
         for(let i = 0; i < team.cores.length; i++) {
             let player = Game.getPlayerInfo(team.cores[i], gameData);
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond && player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             let line = `
             <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
-                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+                <span class='growSpan'>${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `;
             coreLine += line;
@@ -14872,37 +14901,62 @@ class TemplateUtil {
         </div>
         `
         if(team.starterPG && team.starterPG != -1) {
+            let player = gameData.players[team.starterPG];
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterPG})'>
-                <span class='growSpan'>PG:&nbsp;${gameData.players[team.starterPG].name}</span><span>年龄&nbsp;${gameData.players[team.starterPG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPG].skillAverage}</span>
+                <span class='growSpan'>PG:&nbsp;${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `
         }
         if(team.starterSG && team.starterSG != -1) {
+            let player = gameData.players[team.starterSG];
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterSG})'>
-                <span class='growSpan'>SG:&nbsp;${gameData.players[team.starterSG].name}</span><span>年龄&nbsp;${gameData.players[team.starterSG].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSG].skillAverage}</span>
+                <span class='growSpan'>SG:&nbsp;${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `
         }
         if(team.starterSF && team.starterSF != -1) {
+            let player = gameData.players[team.starterSF];
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterSF})'>
-                <span class='growSpan'>SF:&nbsp;${gameData.players[team.starterSF].name}</span><span>年龄&nbsp;${gameData.players[team.starterSF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterSF].skillAverage}</span>
+                <span class='growSpan'>SF:&nbsp;${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `
         }
         if(team.starterPF && team.starterPF != -1) {
+            let player = gameData.players[team.starterPF];
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterPF})'>
-                <span class='growSpan'>PF:&nbsp;${gameData.players[team.starterPF].name}</span><span>年龄&nbsp;${gameData.players[team.starterPF].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterPF].skillAverage}</span>
+                <span class='growSpan'>PF:&nbsp;${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `
         }
         if(team.starterC && team.starterC != -1) {
+            let player = gameData.players[team.starterC];
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             starterLine += `
             <div class='gameLine' onclick='showPlayerInfo(${team.starterC})'>
-                <span class='growSpan'>C:&nbsp;${gameData.players[team.starterC].name}</span><span>年龄&nbsp;${gameData.players[team.starterC].age}&nbsp;&nbsp;综合能力&nbsp;${gameData.players[team.starterC].skillAverage}</span>
+                <span class='growSpan'>C:&nbsp;${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `
         }
@@ -14913,9 +14967,13 @@ class TemplateUtil {
         `;
         for(let i = 0; i < team.bench.length; i++) {
             let player = Game.getPlayerInfo(team.bench[i], gameData);
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             let line = `
             <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
-                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+                <span class='growSpan'>${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `;
             benchLine += line;
@@ -14927,9 +14985,13 @@ class TemplateUtil {
         `;
         for(let i = 0; i < team.dnp.length; i++) {
             let player = Game.getPlayerInfo(team.dnp[i], gameData);
+            let position = positionToC(player.positionFirst);
+            if(player.positionSecond != player.positionFirst) {
+                position += '/' + positionToC(player.positionSecond);
+            }
             let line = `
             <div class='gameLine' onclick='showPlayerInfo(${player.id})'>
-                <span class='growSpan'>${player.name}</span><span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
+                <span class='growSpan'>${player.name}</span><span>位置&nbsp;${position}&nbsp;&nbsp;<span>年龄&nbsp;${player.age}&nbsp;&nbsp;综合能力&nbsp;${player.skillAverage}</span>
             </div>
             `;
             dnpLine += line;
