@@ -14098,6 +14098,10 @@ var Game = /** @class */ (function () {
         for (var i in players) {
             result.push(players[i + '']);
         }
+        var historyList = ['totalRegScore', 'totalOffScore', 'regMaxScore', 'offMaxScore'];
+        if (historyList.indexOf(optName) == -1) {
+            result = result.filter(function (p) { return p.team != -2; });
+        }
         result = result.sort(function (a, b) {
             if (optName in a) {
                 return b[optName] - a[optName];
@@ -15037,8 +15041,13 @@ var TemplateUtil = /** @class */ (function () {
         var newNode = new DOMParser().parseFromString(teamplate, 'text/html').querySelector('.playerPane');
         return newNode;
     };
-    TemplateUtil.createAttrLine = function (rank, attrName, playerId, playerName, value) {
-        var lineTemplate = "\n        <div class='gameLine' onclick='showPlayerInfo(" + playerId + ")'>\n            <span class='rankSpan'>" + rank + "</span><span class='growSpan'>" + playerName + "</span><span>" + attrName + "&nbsp;" + value + "</span>\n        </div>\n        ";
+    TemplateUtil.createAttrLine = function (rank, attrName, playerId, playerName, value, gameData) {
+        var player = gameData.players[playerId];
+        var insertText = '';
+        if (player.team == -2) {
+            insertText = "style='color: #e18b8b'";
+        }
+        var lineTemplate = "\n        <div class='gameLine' onclick='showPlayerInfo(" + playerId + ")'>\n            <span class='rankSpan' " + insertText + ">" + rank + "</span><span class='growSpan' " + insertText + ">" + playerName + "</span><span " + insertText + ">" + attrName + "&nbsp;" + value + "</span>\n        </div>\n        ";
         var newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
         return newNode;
     };

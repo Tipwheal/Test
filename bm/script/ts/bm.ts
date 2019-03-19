@@ -14101,6 +14101,10 @@ class Game {
         for(let i in players) {
             result.push(players[i + '']);
         }
+        const historyList = ['totalRegScore', 'totalOffScore', 'regMaxScore', 'offMaxScore'];
+        if(historyList.indexOf(optName) == -1) {
+            result = result.filter((p: any) => p.team != -2);
+        }
         result = result.sort((a: any, b: any) => {
             if(optName in a) {
                 return b[optName] - a[optName];
@@ -15353,10 +15357,15 @@ class TemplateUtil {
         return newNode;
     }
 
-    public static createAttrLine(rank: any, attrName: any, playerId: any, playerName: any, value: any): any {
+    public static createAttrLine(rank: any, attrName: any, playerId: any, playerName: any, value: any, gameData: any): any {
+        const player = gameData.players[playerId];
+        let insertText = '';
+        if(player.team == -2) {
+            insertText = "style='color: #e18b8b'";
+        }
         const lineTemplate = `
         <div class='gameLine' onclick='showPlayerInfo(${playerId})'>
-            <span class='rankSpan'>${rank}</span><span class='growSpan'>${playerName}</span><span>${attrName}&nbsp;${value}</span>
+            <span class='rankSpan' ${insertText}>${rank}</span><span class='growSpan' ${insertText}>${playerName}</span><span ${insertText}>${attrName}&nbsp;${value}</span>
         </div>
         `;
         let newNode = new DOMParser().parseFromString(lineTemplate, 'text/html').querySelector('.gameLine');
