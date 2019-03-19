@@ -15443,15 +15443,21 @@ var PlayerGenerator = /** @class */ (function () {
             positionSecond = RandomUtil.random(4, 6);
         }
         var potential = RandomUtil.random(1, 11);
+        if (potential < 5) {
+            potential = RandomUtil.random(1, 11);
+        }
+        if (potential < 3) {
+            potential = RandomUtil.random(1, 11);
+        }
         gameData.nextPlayerId += 1;
-        var skillBlock = RandomUtil.random(50, 80) + potential;
-        var skillPass = RandomUtil.random(50, 80) + potential;
-        var skillPhysique = RandomUtil.random(50, 80) + potential;
-        var skillRebound = RandomUtil.random(50, 80) + potential;
-        var skillShotExterior = RandomUtil.random(50, 80) + potential;
-        var skillShotInterior = RandomUtil.random(50, 80) + potential;
-        var skillShotFree = RandomUtil.random(50, 80) + potential;
-        var skillSteal = RandomUtil.random(50, 80) + potential;
+        var skillBlock = RandomUtil.random(50, 83) + potential;
+        var skillPass = RandomUtil.random(50, 83) + potential;
+        var skillPhysique = RandomUtil.random(50, 83) + potential;
+        var skillRebound = RandomUtil.random(50, 83) + potential;
+        var skillShotExterior = RandomUtil.random(50, 83) + potential;
+        var skillShotInterior = RandomUtil.random(50, 83) + potential;
+        var skillShotFree = RandomUtil.random(50, 83) + potential;
+        var skillSteal = RandomUtil.random(50, 83) + potential;
         var player = {
             age: age,
             draft: 0,
