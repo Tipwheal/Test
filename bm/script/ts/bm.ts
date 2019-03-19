@@ -15694,6 +15694,19 @@ class TeamMatchUtil {
 
     public static skillToOutside(skill: any, position: any) {
         //分段
+        if(position <= 2) {
+            if(skill >= 100) {
+                return 0.5 + (skill - 100) / 1000;
+            }else if(skill >= 90) {
+                return 0.4 + (skill - 90) / 100;
+            }else if(skill >= 80) {
+                return 0.32 + (skill - 80) * 0.008;
+            }else if(skill >= 60) {
+                return 0.24 + (skill - 60) * 0.004;
+            }else {
+                return 0.20 + (skill - 40) * 0.002;
+            }
+        }
         if(skill >= 100) {
             return 0.5 + (skill - 100) / 1000;
         }else if(skill >= 90) {
