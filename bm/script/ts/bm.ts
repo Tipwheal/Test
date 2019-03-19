@@ -13019,17 +13019,17 @@ class Game {
         }else {
             //40~280 / 2, 20~140
             let currentAbility = gameData.players[id].skillAverage;
-            const potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 150];
+            const potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 145];
             let posbi = potentialTable[potential-1];
             let age = gameData.players[id].age;
             if(age <= 33) {
-                posbi += 80;
+                posbi += 70;
             }else if(age <= 36) {
-                posbi += 40;
+                posbi += 35;
             }else if(age <= 40) {
-                posbi += 20;
+                posbi += 15;
             }else {
-                posbi += 10;
+                posbi += 5;
             }
             if(currentAbility <= 60) {
                 posbi += 50;
@@ -13346,6 +13346,7 @@ class Game {
     private static manageRetire(gameData: any) {
         const players = gameData.players;
         const maybeList = [];
+        const moreList = [];
         const retireNewsList = [];
         for(let id in players) {
             if(players[id].team == -2) {
@@ -13358,11 +13359,30 @@ class Game {
             }else if(players[id].skillAverage < 50 && players[id].team == -1) {
                 maybeList.push(id);
             }
+            if(players[id].age >= 40) {
+                moreList.push(id);
+            }
         }
         for(let i = 0; i < maybeList.length; i ++) {
             let id = maybeList[i];
             let rand = RandomUtil.random(0, 3);
             if(rand == 0) {
+                const player = gameData.players[id];
+                if(player.team != -1) {
+                    const team = gameData.teams[player.team];
+                    retireNewsList.push(`${team.name}的${player.name}退役，${player.age}岁`);
+                    gameData.teams[player.team].players.splice(team.players.indexOf(id), 1);
+                    this.removeRole(id, gameData);
+                }else {
+                    retireNewsList.push(`自由球员${player.name}退役，${player.age}岁`);
+                }
+                gameData.players[id].team = -2;
+            }
+        }
+        for(let i = 0; i < moreList.length; i ++) {
+            let id = moreList[i];
+            let rand = RandomUtil.random(0, 9);
+            if(rand <= 6) {
                 const player = gameData.players[id];
                 if(player.team != -1) {
                     const team = gameData.teams[player.team];
@@ -13975,27 +13995,52 @@ class Game {
         let outsideNum = 0;
         let freeNum = Math.floor(num * RandomUtil.random(0, 7) / 10);
         if(gameData.players[playerId].positionFirst <= 2) {
-            closeNum = Math.round(num * 0.3);
+            closeNum = Math.round(num * 0.25);
             let outsideRate = TeamMatchUtil.skillToThreeRate(exterior, player.positionFirst);
             outsideNum = Math.round(num * outsideRate);
             middleNum = num - closeNum - outsideNum;
         }else if(gameData.players[playerId].positionFirst == 3) {
-            closeNum = Math.round(num * 0.5);
-            middleNum = Math.round(num * 0.2);
+            closeNum = Math.round(num * 0.35);
+            middleNum = Math.round(num * 0.35);
             outsideNum = num - closeNum - middleNum;
         }else if(gameData.players[playerId].positionFirst == 4){
-            closeNum = Math.round(num * 0.65);
-            middleNum = Math.round(num * 0.3);
+            closeNum = Math.round(num * 0.5);
+            middleNum = Math.round(num * 0.4);
             outsideNum = num - closeNum - middleNum;
         }else {
-            closeNum = Math.round(num * 0.8);
-            middleNum = Math.round(num * 0.2);
+            closeNum = Math.round(num * 0.6);
+            middleNum = Math.round(num * 0.35);
             outsideNum = num - closeNum - middleNum;
         }
-        let closeIn = Math.round(closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst));
-        let middleIn = Math.round(middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst));
-        let outsideIn = Math.round(outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst));
-        let freeIn = Math.round(freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst));
+        let closeRate = TeamMatchUtil.skillToInside(interior, player.positionFirst);
+        let closeIn = 0;
+        for(let i = 0; i < closeNum; i++) {
+            if(RandomUtil.rawRandom() <= closeRate) {
+                closeIn += 1;
+            }
+        }
+        let middleRate = TeamMatchUtil.skillToMiddle((interior + exterior)/2, player.positionFirst);
+        let middleIn = 0;
+        for(let i = 0; i < middleNum; i++) {
+            if(RandomUtil.rawRandom() <= middleRate) {
+                middleIn += 1;
+            }
+        }
+        // let middleIn = Math.round(middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst));
+        let outsideRate = TeamMatchUtil.skillToOutside(exterior, player.positionFirst);
+        let outsideIn = 0;
+        for(let i = 0; i < outsideNum; i++) {
+            if(RandomUtil.rawRandom() <= outsideRate) {
+                outsideIn += 1;
+            }
+        }
+        let freeRate = TeamMatchUtil.skillToFree(free, player.positionFirst)
+        let freeIn = 0;
+        for(let i = 0; i < freeNum; i++) {
+            if(RandomUtil.rawRandom() <= freeRate) {
+                freeIn += 1;
+            }
+        }
         let score = Math.floor((closeIn + middleIn) * 2 + outsideIn * 3 + freeIn);
         return {
             score: score,
@@ -15611,32 +15656,68 @@ class TeamMatchUtil {
     }
 
     public static skillToInside(skill: any, position: any) {
+        if(skill >= 90) {
+            return 0.65 + (skill - 90) / 1000;
+        }else if(skill >= 80) {
+            return 0.55 + (skill - 80) / 100;
+        }else if(skill >= 60) {
+            return 0.45 + (skill - 60) / 200;
+        }else {
+            return 0.35 + (skill - 40) / 200;
+        }
         //中锋大前75时50%
         //小前80时
         //后卫85时
-        if(position >= 4) {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }else if(position >= 3) {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }else {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }
+        // if(position >= 4) {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }else if(position >= 3) {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }else {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }
         
     }
 
     public static skillToMiddle(skill: any, position: any) {
-        //一律85
-        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        //内线低一些？因为内线属性太高了,也许不用。
+        if(skill >= 90) {
+            return 0.6 + (skill - 90) / 1000;
+        }else if(skill >= 80) {
+            return 0.5 + (skill - 80) / 100;
+        }else if(skill >= 60) {
+            return 0.4 + (skill - 60) / 200;
+        }else {
+            return 0.3 + (skill - 40) / 200;
+        }
+        // return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
     }
 
     public static skillToOutside(skill: any, position: any) {
+        //分段
+        if(skill >= 100) {
+            return 0.5 + (skill - 100) / 1000;
+        }else if(skill >= 90) {
+            return 0.4 + (skill - 90) / 100;
+        }else if(skill >= 80) {
+            return 0.3 + (skill - 80) / 100;
+        }else if(skill >= 60) {
+            return 0.2 + (skill - 60) / 200;
+        }else {
+            return 0.15 + (skill - 40) / 400;
+        }
         //一律95
-        return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
+        // return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
     }
 
     public static skillToFree(skill: any, position: any) {
+        //按照能力来,最高99%
+        let t = skill / 100;
+        if(t > 0.98) {
+            t = 0.98;
+        }
+        return t;
         //一律65
-        return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
+        // return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
     }
 }
 
@@ -15652,6 +15733,10 @@ class RandomUtil {
         }
         rand /= 6;
         return rand * (end - start) + start;
+    }
+
+    public static rawRandom(): any {
+        return Math.random();
     }
 
     public static justRandom(start: number, end: number): any {

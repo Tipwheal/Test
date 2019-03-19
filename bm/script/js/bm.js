@@ -12976,20 +12976,20 @@ var Game = /** @class */ (function () {
         else {
             //40~280 / 2, 20~140
             var currentAbility = gameData.players[id].skillAverage;
-            var potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 150];
+            var potentialTable = [20, 30, 40, 50, 75, 100, 115, 130, 135, 140, 145];
             var posbi = potentialTable[potential - 1];
             var age = gameData.players[id].age;
             if (age <= 33) {
-                posbi += 80;
+                posbi += 70;
             }
             else if (age <= 36) {
-                posbi += 40;
+                posbi += 35;
             }
             else if (age <= 40) {
-                posbi += 20;
+                posbi += 15;
             }
             else {
-                posbi += 10;
+                posbi += 5;
             }
             if (currentAbility <= 60) {
                 posbi += 50;
@@ -13306,6 +13306,7 @@ var Game = /** @class */ (function () {
     Game.manageRetire = function (gameData) {
         var players = gameData.players;
         var maybeList = [];
+        var moreList = [];
         var retireNewsList = [];
         for (var id in players) {
             if (players[id].team == -2) {
@@ -13320,11 +13321,31 @@ var Game = /** @class */ (function () {
             else if (players[id].skillAverage < 50 && players[id].team == -1) {
                 maybeList.push(id);
             }
+            if (players[id].age >= 40) {
+                moreList.push(id);
+            }
         }
         for (var i = 0; i < maybeList.length; i++) {
             var id = maybeList[i];
             var rand = RandomUtil.random(0, 3);
             if (rand == 0) {
+                var player = gameData.players[id];
+                if (player.team != -1) {
+                    var team = gameData.teams[player.team];
+                    retireNewsList.push(team.name + "\u7684" + player.name + "\u9000\u5F79\uFF0C" + player.age + "\u5C81");
+                    gameData.teams[player.team].players.splice(team.players.indexOf(id), 1);
+                    this.removeRole(id, gameData);
+                }
+                else {
+                    retireNewsList.push("\u81EA\u7531\u7403\u5458" + player.name + "\u9000\u5F79\uFF0C" + player.age + "\u5C81");
+                }
+                gameData.players[id].team = -2;
+            }
+        }
+        for (var i = 0; i < moreList.length; i++) {
+            var id = moreList[i];
+            var rand = RandomUtil.random(0, 9);
+            if (rand <= 6) {
                 var player = gameData.players[id];
                 if (player.team != -1) {
                     var team = gameData.teams[player.team];
@@ -13966,30 +13987,55 @@ var Game = /** @class */ (function () {
         var outsideNum = 0;
         var freeNum = Math.floor(num * RandomUtil.random(0, 7) / 10);
         if (gameData.players[playerId].positionFirst <= 2) {
-            closeNum = Math.round(num * 0.3);
-            var outsideRate = TeamMatchUtil.skillToThreeRate(exterior, player.positionFirst);
-            outsideNum = Math.round(num * outsideRate);
+            closeNum = Math.round(num * 0.25);
+            var outsideRate_1 = TeamMatchUtil.skillToThreeRate(exterior, player.positionFirst);
+            outsideNum = Math.round(num * outsideRate_1);
             middleNum = num - closeNum - outsideNum;
         }
         else if (gameData.players[playerId].positionFirst == 3) {
-            closeNum = Math.round(num * 0.5);
-            middleNum = Math.round(num * 0.2);
+            closeNum = Math.round(num * 0.35);
+            middleNum = Math.round(num * 0.35);
             outsideNum = num - closeNum - middleNum;
         }
         else if (gameData.players[playerId].positionFirst == 4) {
-            closeNum = Math.round(num * 0.65);
-            middleNum = Math.round(num * 0.3);
+            closeNum = Math.round(num * 0.5);
+            middleNum = Math.round(num * 0.4);
             outsideNum = num - closeNum - middleNum;
         }
         else {
-            closeNum = Math.round(num * 0.8);
-            middleNum = Math.round(num * 0.2);
+            closeNum = Math.round(num * 0.6);
+            middleNum = Math.round(num * 0.35);
             outsideNum = num - closeNum - middleNum;
         }
-        var closeIn = Math.round(closeNum * TeamMatchUtil.skillToInside(interior, player.positionFirst));
-        var middleIn = Math.round(middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst));
-        var outsideIn = Math.round(outsideNum * TeamMatchUtil.skillToOutside(exterior, player.positionFirst));
-        var freeIn = Math.round(freeNum * TeamMatchUtil.skillToFree(free, player.positionFirst));
+        var closeRate = TeamMatchUtil.skillToInside(interior, player.positionFirst);
+        var closeIn = 0;
+        for (var i = 0; i < closeNum; i++) {
+            if (RandomUtil.rawRandom() <= closeRate) {
+                closeIn += 1;
+            }
+        }
+        var middleRate = TeamMatchUtil.skillToMiddle((interior + exterior) / 2, player.positionFirst);
+        var middleIn = 0;
+        for (var i = 0; i < middleNum; i++) {
+            if (RandomUtil.rawRandom() <= middleRate) {
+                middleIn += 1;
+            }
+        }
+        // let middleIn = Math.round(middleNum * TeamMatchUtil.skillToMiddle(exterior, player.positionFirst));
+        var outsideRate = TeamMatchUtil.skillToOutside(exterior, player.positionFirst);
+        var outsideIn = 0;
+        for (var i = 0; i < outsideNum; i++) {
+            if (RandomUtil.rawRandom() <= outsideRate) {
+                outsideIn += 1;
+            }
+        }
+        var freeRate = TeamMatchUtil.skillToFree(free, player.positionFirst);
+        var freeIn = 0;
+        for (var i = 0; i < freeNum; i++) {
+            if (RandomUtil.rawRandom() <= freeRate) {
+                freeIn += 1;
+            }
+        }
         var score = Math.floor((closeIn + middleIn) * 2 + outsideIn * 3 + freeIn);
         return {
             score: score,
@@ -15163,30 +15209,74 @@ var TeamMatchUtil = /** @class */ (function () {
         }
     };
     TeamMatchUtil.skillToInside = function (skill, position) {
+        if (skill >= 90) {
+            return 0.65 + (skill - 90) / 1000;
+        }
+        else if (skill >= 80) {
+            return 0.55 + (skill - 80) / 100;
+        }
+        else if (skill >= 60) {
+            return 0.45 + (skill - 60) / 200;
+        }
+        else {
+            return 0.35 + (skill - 40) / 200;
+        }
         //中锋大前75时50%
         //小前80时
         //后卫85时
-        if (position >= 4) {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }
-        else if (position >= 3) {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }
-        else {
-            return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
-        }
+        // if(position >= 4) {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }else if(position >= 3) {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }else {
+        //     return RandomUtil.randn_bm(0, 1, 1 + (85 - skill) / 100);
+        // }
     };
     TeamMatchUtil.skillToMiddle = function (skill, position) {
-        //一律85
-        return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
+        //内线低一些？因为内线属性太高了,也许不用。
+        if (skill >= 90) {
+            return 0.6 + (skill - 90) / 1000;
+        }
+        else if (skill >= 80) {
+            return 0.5 + (skill - 80) / 100;
+        }
+        else if (skill >= 60) {
+            return 0.4 + (skill - 60) / 200;
+        }
+        else {
+            return 0.3 + (skill - 40) / 200;
+        }
+        // return RandomUtil.randn_bm(0, 1, 1 + (80 - skill) / 100);
     };
     TeamMatchUtil.skillToOutside = function (skill, position) {
+        //分段
+        if (skill >= 100) {
+            return 0.5 + (skill - 100) / 1000;
+        }
+        else if (skill >= 90) {
+            return 0.4 + (skill - 90) / 100;
+        }
+        else if (skill >= 80) {
+            return 0.3 + (skill - 80) / 100;
+        }
+        else if (skill >= 60) {
+            return 0.2 + (skill - 60) / 200;
+        }
+        else {
+            return 0.15 + (skill - 40) / 400;
+        }
         //一律95
-        return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
+        // return RandomUtil.randn_bm(0, 1, 1 + (95 - skill) / 100);
     };
     TeamMatchUtil.skillToFree = function (skill, position) {
+        //按照能力来,最高99%
+        var t = skill / 100;
+        if (t > 0.98) {
+            t = 0.98;
+        }
+        return t;
         //一律65
-        return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
+        // return RandomUtil.randn_bm(0, 1, 1 + (60 - skill) / 80);
     };
     return TeamMatchUtil;
 }());
@@ -15203,6 +15293,9 @@ var RandomUtil = /** @class */ (function () {
         }
         rand /= 6;
         return rand * (end - start) + start;
+    };
+    RandomUtil.rawRandom = function () {
+        return Math.random();
     };
     RandomUtil.justRandom = function (start, end) {
         return Math.random() * (end - start) + start;
