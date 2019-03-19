@@ -166,7 +166,7 @@
 <meta property="og:site_name" content="小学生学习园地">
 <meta property="og:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-19T02:16:16.499Z">
+<meta property="og:updated_time" content="2019-03-19T03:05:37.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="篮球经理Web版测试">
 <meta name="twitter:description" content="建议使用Firefox或Chrome打开, Edge也不是不行，但IE真的是魔鬼  手机请到qq群 191376904 下载安装包">
@@ -452,7 +452,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-19 10:16:16" itemprop="dateModified" datetime="2019-03-19T10:16:16+08:00">2019-03-19</time>
+                <time title="修改时间：2019-03-19 11:05:37" itemprop="dateModified" datetime="2019-03-19T11:05:37+08:00">2019-03-19</time>
               
             
           </span>
@@ -536,8 +536,8 @@
 <br>
 <span>当前存档名：&nbsp;<span id="state"></span></span>
 <br>
-<button class="btn" onclick="load()">读取</button>
-<button class="btn" onclick="save()">保存</button>
+<button class="btn" onclick="loadLocal()">读取</button>
+<button class="btn" onclick="saveLocal()">保存</button>
 <button class="btn" onclick="init()">开始新游戏</button>
 <!-- <button class='btn' onclick='test()'>测试</button> -->
 
@@ -572,6 +572,7 @@
 <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="https://cdn.bootcss.com/localforage/1.7.3/localforage.min.js"></script>
 <script src="/blog/bm/script/js/bm.js"></script>
 <script src="/blog/bm/script/js/simulator.js"></script>
 
@@ -888,13 +889,31 @@ function next30Day() {
 }
 
 function saveLocal() {
-    localStorage.setItem('gameData', JSON.stringify(gameState));
+    localforage.setItem('gameData', gameState).then(function (value) {
+    // Do other things once the value has been saved.
+        console.log(value);
+        // alert("存档成功！");
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+        alert("存档发生错误，请联系开发者");
+    });
+    // localStorage.setItem('gameData', JSON.stringify(gameState));
 }
 
 function loadLocal() {
-    let loadData = localStorage.getItem('gameData');
-    gameState = JSON.parse(loadData);
-    initGameData();
+    localforage.getItem('gameData').then(function(value) {
+        // This code runs once the value has been loaded
+        // from the offline store.
+        gameState = value;
+        initGameData();
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        // console.log(err);
+        alert("读档发生错误，请联系开发者");
+    });
+    // let loadData = localStorage.getItem('gameData');
+    // gameState = JSON.parse(loadData);
 }
 
 function changeTeamRole(playerId) {
