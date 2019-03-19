@@ -12901,6 +12901,9 @@ class Game {
         }else if(team.bench.includes(playerId + '')) {
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1)
         }
+        if(team.cores && team.cores.indexOf(playerId + '') > -1) {
+            gameData.teams[teamId].cores.splice(team.cores.indexOf(playerId + ''), 1)
+        }
     }
 
     public static setPlayerRole(playerId: any, role: any, gameData: any) {
@@ -12951,7 +12954,7 @@ class Game {
             if(growRand == 0 && potential < 11) {
                 potential += 1;
                 gameData.players[id].potential = potential;
-            }else if(growRand == 1 && potential > 0) {
+            }else if(growRand == 1 && potential > 1) {
                 potential -= 1;
                 gameData.players[id].potential = potential;
             }
@@ -13352,15 +13355,14 @@ class Game {
             if(players[id].team == -2) {
                 continue;
             }
-            if(players[id].skillAverage < 75 && players[id].age >= 36) {
+            if(players[id].age >= 40) {
+                moreList.push(id);
+            }else if(players[id].skillAverage < 75 && players[id].age >= 36) {
                 maybeList.push(id);
             }else if(players[id].skillAverage < 70 && players[id].age >= 30) {
                 maybeList.push(id);
             }else if(players[id].skillAverage < 50 && players[id].team == -1) {
                 maybeList.push(id);
-            }
-            if(players[id].age >= 40) {
-                moreList.push(id);
             }
         }
         for(let i = 0; i < maybeList.length; i ++) {
@@ -15932,10 +15934,10 @@ class PlayerGenerator {
         }
         let potential = RandomUtil.random(1, 11);
         if(potential < 5) {
-            potential = RandomUtil.random(1, 11);
+            potential = RandomUtil.random(1, 10);
         }
         if(potential < 3) {
-            potential = RandomUtil.random(1, 11);
+            potential = RandomUtil.random(1, 8);
         }
         gameData.nextPlayerId += 1;
         let skillBlock = RandomUtil.random(50, 83) + potential;

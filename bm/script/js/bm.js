@@ -12846,6 +12846,9 @@ var Game = /** @class */ (function () {
         else if (team.bench.includes(playerId + '')) {
             gameData.teams[teamId].bench.splice(team.bench.indexOf(playerId + ''), 1);
         }
+        if (team.cores && team.cores.indexOf(playerId + '') > -1) {
+            gameData.teams[teamId].cores.splice(team.cores.indexOf(playerId + ''), 1);
+        }
     };
     Game.setPlayerRole = function (playerId, role, gameData) {
         playerId += '';
@@ -12901,7 +12904,7 @@ var Game = /** @class */ (function () {
                 potential += 1;
                 gameData.players[id].potential = potential;
             }
-            else if (growRand == 1 && potential > 0) {
+            else if (growRand == 1 && potential > 1) {
                 potential -= 1;
                 gameData.players[id].potential = potential;
             }
@@ -13312,7 +13315,10 @@ var Game = /** @class */ (function () {
             if (players[id].team == -2) {
                 continue;
             }
-            if (players[id].skillAverage < 75 && players[id].age >= 36) {
+            if (players[id].age >= 40) {
+                moreList.push(id);
+            }
+            else if (players[id].skillAverage < 75 && players[id].age >= 36) {
                 maybeList.push(id);
             }
             else if (players[id].skillAverage < 70 && players[id].age >= 30) {
@@ -13320,9 +13326,6 @@ var Game = /** @class */ (function () {
             }
             else if (players[id].skillAverage < 50 && players[id].team == -1) {
                 maybeList.push(id);
-            }
-            if (players[id].age >= 40) {
-                moreList.push(id);
             }
         }
         for (var i = 0; i < maybeList.length; i++) {
@@ -15444,10 +15447,10 @@ var PlayerGenerator = /** @class */ (function () {
         }
         var potential = RandomUtil.random(1, 11);
         if (potential < 5) {
-            potential = RandomUtil.random(1, 11);
+            potential = RandomUtil.random(1, 10);
         }
         if (potential < 3) {
-            potential = RandomUtil.random(1, 11);
+            potential = RandomUtil.random(1, 8);
         }
         gameData.nextPlayerId += 1;
         var skillBlock = RandomUtil.random(50, 83) + potential;
