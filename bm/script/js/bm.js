@@ -13142,6 +13142,36 @@ var Game = /** @class */ (function () {
                 day: gameData.currentDay,
                 content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
             });
+            var blockKing = this.setBlockKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: blockKing,
+            });
+            var stealKing = this.setStealKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: stealKing,
+            });
+            var assistKing = this.setAssistKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: assistKing,
+            });
+            var reboundKing = this.setReboundKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: reboundKing,
+            });
+            var scoreKing = this.setScoreKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: scoreKing,
+            });
             var mvpInfo = this.setRegularMvp(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
@@ -13193,11 +13223,171 @@ var Game = /** @class */ (function () {
             this.playerGrow(id, gameData);
         }
     };
+    Game.setScoreKing = function (gameData) {
+        function avgScore(player) {
+            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(2);
+        }
+        var array = [];
+        var gamePlayers = [];
+        for (var i in gameData.players) {
+            if (gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        var heap = new MinHeap('seasonRegScore');
+        heap.build(array, 0);
+        for (var i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        var resultRank = [];
+        for (var i = 0; i < 5; i++) {
+            resultRank.push(heap.peek(array));
+        }
+        var king = resultRank[4];
+        var insertText = "\n        \u5F97\u5206\u738B: " + gameData.teams[king.team].name + "\u961F\u7684<strong>" + king.name + "</strong>&nbsp;\u573A\u5747\u5F97\u5206\uFF1A" + avgScore(king) + "<br />\n        ";
+        for (var i = 3; i >= 0; i--) {
+            var player = resultRank[i];
+            insertText += "\n            \u7B2C" + (5 - i) + "\u540D: " + gameData.teams[player.team].name + "\u961F\u7684" + player.name + "&nbsp;\u573A\u5747\u5F97\u5206\uFF1A" + avgScore(player) + "<br />\n            ";
+        }
+        var result = "\n        \u5E38\u89C4\u8D5B\u5F97\u5206\u699C\uFF1A<br />\n        " + insertText + "\n        ";
+        return result;
+    };
+    Game.setReboundKing = function (gameData) {
+        function avgRebound(player) {
+            return (player.seasonRegRebound / player.seasonRegGameNum).toFixed(2);
+        }
+        var array = [];
+        var gamePlayers = [];
+        for (var i in gameData.players) {
+            if (gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        var heap = new MinHeap('seasonRegRebound');
+        heap.build(array, 0);
+        for (var i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        var resultRank = [];
+        for (var i = 0; i < 5; i++) {
+            resultRank.push(heap.peek(array));
+        }
+        var king = resultRank[4];
+        var insertText = "\n        \u7BEE\u677F\u738B: " + gameData.teams[king.team].name + "\u961F\u7684<strong>" + king.name + "</strong>&nbsp;\u573A\u5747\u7BEE\u677F\uFF1A" + avgRebound(king) + "<br />\n        ";
+        for (var i = 3; i >= 0; i--) {
+            var player = resultRank[i];
+            insertText += "\n            \u7B2C" + (5 - i) + "\u540D: " + gameData.teams[player.team].name + "\u961F\u7684" + player.name + "&nbsp;\u573A\u5747\u7BEE\u677F\uFF1A" + avgRebound(player) + "<br />\n            ";
+        }
+        var result = "\n        \u5E38\u89C4\u8D5B\u7BEE\u677F\u699C\uFF1A<br />\n        " + insertText + "\n        ";
+        return result;
+    };
+    Game.setAssistKing = function (gameData) {
+        function avgAssist(player) {
+            return (player.seasonRegAssist / player.seasonRegGameNum).toFixed(2);
+        }
+        var array = [];
+        var gamePlayers = [];
+        for (var i in gameData.players) {
+            if (gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        var heap = new MinHeap('seasonRegAssist');
+        heap.build(array, 0);
+        for (var i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        var resultRank = [];
+        for (var i = 0; i < 5; i++) {
+            resultRank.push(heap.peek(array));
+        }
+        var king = resultRank[4];
+        var insertText = "\n        \u52A9\u653B\u738B: " + gameData.teams[king.team].name + "\u961F\u7684<strong>" + king.name + "</strong>&nbsp;\u573A\u5747\u52A9\u653B\uFF1A" + avgAssist(king) + "<br />\n        ";
+        for (var i = 3; i >= 0; i--) {
+            var player = resultRank[i];
+            insertText += "\n            \u7B2C" + (5 - i) + "\u540D: " + gameData.teams[player.team].name + "\u961F\u7684" + player.name + "&nbsp;\u573A\u5747\u52A9\u653B\uFF1A" + avgAssist(player) + "<br />\n            ";
+        }
+        var result = "\n        \u5E38\u89C4\u8D5B\u52A9\u653B\u699C\uFF1A<br />\n        " + insertText + "\n        ";
+        return result;
+    };
+    Game.setStealKing = function (gameData) {
+        function avgSteal(player) {
+            return (player.seasonRegSteal / player.seasonRegGameNum).toFixed(2);
+        }
+        var array = [];
+        var gamePlayers = [];
+        for (var i in gameData.players) {
+            if (gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        var heap = new MinHeap('seasonRegSteal');
+        heap.build(array, 0);
+        for (var i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        var resultRank = [];
+        for (var i = 0; i < 5; i++) {
+            resultRank.push(heap.peek(array));
+        }
+        var king = resultRank[4];
+        var insertText = "\n        \u62A2\u65AD\u738B: " + gameData.teams[king.team].name + "\u961F\u7684<strong>" + king.name + "</strong>&nbsp;\u573A\u5747\u62A2\u65AD\uFF1A" + avgSteal(king) + "<br />\n        ";
+        for (var i = 3; i >= 0; i--) {
+            var player = resultRank[i];
+            insertText += "\n            \u7B2C" + (5 - i) + "\u540D: " + gameData.teams[player.team].name + "\u961F\u7684" + player.name + "&nbsp;\u573A\u5747\u62A2\u65AD\uFF1A" + avgSteal(player) + "<br />\n            ";
+        }
+        var result = "\n        \u5E38\u89C4\u8D5B\u62A2\u65AD\u699C\uFF1A<br />\n        " + insertText + "\n        ";
+        return result;
+    };
+    Game.setBlockKing = function (gameData) {
+        function avgBlock(player) {
+            return (player.seasonRegBlock / player.seasonRegGameNum).toFixed(2);
+        }
+        var array = [];
+        var gamePlayers = [];
+        for (var i in gameData.players) {
+            if (gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        var heap = new MinHeap('seasonRegBlock');
+        heap.build(array, 0);
+        for (var i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        var resultRank = [];
+        for (var i = 0; i < 5; i++) {
+            resultRank.push(heap.peek(array));
+        }
+        var king = resultRank[4];
+        var insertText = "\n        \u76D6\u5E3D\u738B: " + gameData.teams[king.team].name + "\u961F\u7684<strong>" + king.name + "</strong>&nbsp;\u573A\u5747\u76D6\u5E3D\uFF1A" + avgBlock(king) + "<br />\n        ";
+        for (var i = 3; i >= 0; i--) {
+            var player = resultRank[i];
+            insertText += "\n            \u7B2C" + (5 - i) + "\u540D: " + gameData.teams[player.team].name + "\u961F\u7684" + player.name + "&nbsp;\u573A\u5747\u76D6\u5E3D\uFF1A" + avgBlock(player) + "<br />\n            ";
+        }
+        var result = "\n        \u5E38\u89C4\u8D5B\u76D6\u5E3D\u699C\uFF1A<br />\n        " + insertText + "\n        ";
+        return result;
+    };
     Game.setRegularMvp = function (gameData) {
         var rank = this.getTeamRank(gameData);
         var max = -1;
         var maxP;
-        var theTeam;
+        var theTeam = 0;
         for (var i = 0; i < 6; i++) {
             var team = rank[i];
             var players = team.players;
@@ -13215,7 +13405,7 @@ var Game = /** @class */ (function () {
         var avgAssist = (maxP.seasonRegAssist / maxP.seasonRegGameNum).toFixed(2);
         var avgSteal = (maxP.seasonRegSteal / maxP.seasonRegGameNum).toFixed(2);
         var avgBlock = (maxP.seasonRegBlock / maxP.seasonRegGameNum).toFixed(2);
-        return "\n        \u5E38\u89C4\u8D5BMvp: " + maxP.name + "!<br />\n        \u7403\u961F\u6392\u540D: " + (theTeam + 1) + "<br/ >\n        \u6570\u636E\uFF1A" + avgScore + "\u5206" + avgRebound + "\u677F" + avgAssist + "\u52A9" + avgSteal + "\u65AD" + avgBlock + "\u5E3D\n        ";
+        return "\n        \u5E38\u89C4\u8D5BMvp: <strong>" + maxP.name + "</strong>!<br />\n        \u7403\u961F\u6392\u540D: " + (theTeam + 1) + "<br/ >\n        \u6570\u636E\uFF1A" + avgScore + "\u5206" + avgRebound + "\u677F" + avgAssist + "\u52A9" + avgSteal + "\u65AD" + avgBlock + "\u5E3D\n        ";
     };
     Game.followPlayer = function (playerId, gameData) {
         gameData.followList.push(playerId);
@@ -13646,7 +13836,7 @@ var Game = /** @class */ (function () {
                 return 0.02 * skill + 0.03;
             }
             else {
-                return 0.02 * skill + 0.03;
+                return 0.025 * skill + 0.03;
             }
         }
         function assistModifier(place, skill) {
@@ -13654,7 +13844,7 @@ var Game = /** @class */ (function () {
                 return 0.05 * skill + 0.3;
             }
             else if (place == 1) {
-                return 0.04 * skill + 0.3;
+                return 0.03 * skill + 0.3;
             }
             else if (place == 2) {
                 return 0.02 * skill + 0.3;
@@ -13685,8 +13875,8 @@ var Game = /** @class */ (function () {
         }
         for (var i = 0; i < 5; i++) {
             var p = gameData.players[starter[i]];
-            var ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 4));
-            var rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 11));
+            var ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            var rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 12));
             var tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
             var stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
             var blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));

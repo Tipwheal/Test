@@ -13178,6 +13178,36 @@ class Game {
                 day: gameData.currentDay,
                 content: '常规赛冠军是' + chamName + '!, 请查看季后赛名单',
             });
+            let blockKing = this.setBlockKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: blockKing,
+            });
+            let stealKing = this.setStealKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: stealKing,
+            });
+            let assistKing = this.setAssistKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: assistKing,
+            });
+            let reboundKing = this.setReboundKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: reboundKing,
+            });
+            let scoreKing = this.setScoreKing(gameData);
+            gameData.news.push({
+                season: gameData.currentSeason,
+                day: gameData.currentDay,
+                content: scoreKing,
+            });
             let mvpInfo = this.setRegularMvp(gameData);
             gameData.news.push({
                 season: gameData.currentSeason,
@@ -13226,11 +13256,211 @@ class Game {
         }
     }
 
+    private static setScoreKing(gameData: any) {
+        function avgScore(player: any) {
+            return (player.seasonRegScore / player.seasonRegGameNum).toFixed(2);
+        }
+        let array = [];
+        let gamePlayers = [];
+        for(let i in gameData.players) {
+            if(gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for(let i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        let heap = new MinHeap('seasonRegScore');
+        heap.build(array, 0);
+        for(let i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        let resultRank = [];
+        for(let i = 0; i < 5; i ++) {
+            resultRank.push(heap.peek(array));
+        }
+        let king = resultRank[4];
+        let insertText = `
+        得分王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均得分：${avgScore(king)}<br />
+        `
+        for(let i = 3; i >= 0; i--) {
+            let player = resultRank[i];
+            insertText += `
+            第${5-i}名: ${gameData.teams[player.team].name}队的${player.name}&nbsp;场均得分：${avgScore(player)}<br />
+            `;
+        }
+        let result = `
+        常规赛得分榜：<br />
+        ${insertText}
+        `
+        return result;
+    }
+
+    private static setReboundKing(gameData: any) {
+        function avgRebound(player: any) {
+            return (player.seasonRegRebound / player.seasonRegGameNum).toFixed(2);
+        }
+        let array = [];
+        let gamePlayers = [];
+        for(let i in gameData.players) {
+            if(gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for(let i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        let heap = new MinHeap('seasonRegRebound');
+        heap.build(array, 0);
+        for(let i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        let resultRank = [];
+        for(let i = 0; i < 5; i ++) {
+            resultRank.push(heap.peek(array));
+        }
+        let king = resultRank[4];
+        let insertText = `
+        篮板王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均篮板：${avgRebound(king)}<br />
+        `
+        for(let i = 3; i >= 0; i--) {
+            let player = resultRank[i];
+            insertText += `
+            第${5-i}名: ${gameData.teams[player.team].name}队的${player.name}&nbsp;场均篮板：${avgRebound(player)}<br />
+            `;
+        }
+        let result = `
+        常规赛篮板榜：<br />
+        ${insertText}
+        `
+        return result;
+    }
+
+    private static setAssistKing(gameData: any) {
+        function avgAssist(player: any) {
+            return (player.seasonRegAssist / player.seasonRegGameNum).toFixed(2);
+        }
+        let array = [];
+        let gamePlayers = [];
+        for(let i in gameData.players) {
+            if(gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for(let i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        let heap = new MinHeap('seasonRegAssist');
+        heap.build(array, 0);
+        for(let i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        let resultRank = [];
+        for(let i = 0; i < 5; i ++) {
+            resultRank.push(heap.peek(array));
+        }
+        let king = resultRank[4];
+        let insertText = `
+        助攻王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均助攻：${avgAssist(king)}<br />
+        `
+        for(let i = 3; i >= 0; i--) {
+            let player = resultRank[i];
+            insertText += `
+            第${5-i}名: ${gameData.teams[player.team].name}队的${player.name}&nbsp;场均助攻：${avgAssist(player)}<br />
+            `;
+        }
+        let result = `
+        常规赛助攻榜：<br />
+        ${insertText}
+        `
+        return result;
+    }
+
+    private static setStealKing(gameData: any) {
+        function avgSteal(player: any) {
+            return (player.seasonRegSteal / player.seasonRegGameNum).toFixed(2);
+        }
+        let array = [];
+        let gamePlayers = [];
+        for(let i in gameData.players) {
+            if(gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for(let i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        let heap = new MinHeap('seasonRegSteal');
+        heap.build(array, 0);
+        for(let i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        let resultRank = [];
+        for(let i = 0; i < 5; i ++) {
+            resultRank.push(heap.peek(array));
+        }
+        let king = resultRank[4];
+        let insertText = `
+        抢断王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均抢断：${avgSteal(king)}<br />
+        `
+        for(let i = 3; i >= 0; i--) {
+            let player = resultRank[i];
+            insertText += `
+            第${5-i}名: ${gameData.teams[player.team].name}队的${player.name}&nbsp;场均抢断：${avgSteal(player)}<br />
+            `;
+        }
+        let result = `
+        常规赛抢断榜：<br />
+        ${insertText}
+        `
+        return result;
+    }
+
+    private static setBlockKing(gameData: any) {
+        function avgBlock(player: any) {
+            return (player.seasonRegBlock / player.seasonRegGameNum).toFixed(2);
+        }
+        let array = [];
+        let gamePlayers = [];
+        for(let i in gameData.players) {
+            if(gameData.players[i].team != -2) {
+                gamePlayers.push(gameData.players[i]);
+            }
+        }
+        for(let i = 0; i < 5; i++) {
+            array.push(gamePlayers[i]);
+        }
+        let heap = new MinHeap('seasonRegBlock');
+        heap.build(array, 0);
+        for(let i = 5; i < gamePlayers.length; i++) {
+            heap.removeMin(array, gamePlayers[i]);
+        }
+        let resultRank = [];
+        for(let i = 0; i < 5; i ++) {
+            resultRank.push(heap.peek(array));
+        }
+        let king = resultRank[4];
+        let insertText = `
+        盖帽王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均盖帽：${avgBlock(king)}<br />
+        `
+        for(let i = 3; i >= 0; i--) {
+            let player = resultRank[i];
+            insertText += `
+            第${5-i}名: ${gameData.teams[player.team].name}队的${player.name}&nbsp;场均盖帽：${avgBlock(player)}<br />
+            `;
+        }
+        let result = `
+        常规赛盖帽榜：<br />
+        ${insertText}
+        `
+        return result;
+    }
+
     private static setRegularMvp(gameData: any) {
         let rank = this.getTeamRank(gameData);
         let max = -1;
         let maxP;
-        let theTeam;
+        let theTeam = 0;
         for(let i = 0; i < 6; i++) {
             const team = rank[i];
             const players = team.players;
@@ -13249,7 +13479,7 @@ class Game {
         const avgSteal = (maxP.seasonRegSteal/maxP.seasonRegGameNum).toFixed(2);
         const avgBlock = (maxP.seasonRegBlock/maxP.seasonRegGameNum).toFixed(2);
         return `
-        常规赛Mvp: ${maxP.name}!<br />
+        常规赛Mvp: <strong>${maxP.name}</strong>!<br />
         球队排名: ${theTeam + 1}<br/ >
         数据：${avgScore}分${avgRebound}板${avgAssist}助${avgSteal}断${avgBlock}帽
         `
@@ -13668,14 +13898,14 @@ class Game {
             }else if(place == 3) {
                 return 0.02 * skill + 0.03;
             }else {
-                return 0.02 * skill + 0.03;
+                return 0.025 * skill + 0.03;
             }
         }
         function assistModifier(place: number, skill: number) {
             if(place == 0) {
                 return 0.05 * skill + 0.3;
             }else if(place == 1) {
-                return 0.04 * skill + 0.3;
+                return 0.03 * skill + 0.3;
             }else if(place == 2) {
                 return 0.02 * skill + 0.3;
             }else if(place == 3) {
@@ -13699,8 +13929,8 @@ class Game {
         }
         for(let i = 0; i < 5; i ++) {
             const p = gameData.players[starter[i]];
-            const ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 4));
-            const rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 11));
+            const ast = Math.round(assistModifier(i, p.skillPass) * RandomUtil.random(0, 5));
+            const rbd = Math.round(reboundModifier(i, p.skillRebound) * RandomUtil.random(0, 12));
             const tov = Math.round(turnoverModifier(i, 200 - p.skillPass) * RandomUtil.random(0, 3));
             const stl = Math.round(stealModifier(i, p.skillSteal) * RandomUtil.random(0, 3));
             const blk = Math.round(blockModifier(i, p.skillBlock) * RandomUtil.random(0, 3));
