@@ -11131,7 +11131,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 14,
                     yearsContract: 1,
-                    yearsLeague: 66,
+                    yearsLeague: 4,
                 },
                 '403': {
                     age: 24,
@@ -11158,7 +11158,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 4,
                     yearsContract: 2,
-                    yearsLeague: 60,
+                    yearsLeague: 1,
                 },
                 '404': {
                     age: 23,
@@ -11185,7 +11185,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 4,
                     yearsContract: 6,
-                    yearsLeague: 60,
+                    yearsLeague: 2,
                 },
                 '405': {
                     age: 27,
@@ -11212,7 +11212,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 4,
                     yearsContract: 1,
-                    yearsLeague: 74,
+                    yearsLeague: 16,
                 },
                 '406': {
                     age: 28,
@@ -11239,7 +11239,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: -1,
                     yearsContract: 1,
-                    yearsLeague: 60,
+                    yearsLeague: 17,
                 },
                 '407': {
                     age: 22,
@@ -11266,7 +11266,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: -1,
                     yearsContract: 2,
-                    yearsLeague: 60,
+                    yearsLeague: 1,
                 },
                 '408': {
                     age: 36,
@@ -11293,7 +11293,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: -1,
                     yearsContract: 1,
-                    yearsLeague: 74,
+                    yearsLeague: 15,
                 },
                 '409': {
                     age: 31,
@@ -11320,7 +11320,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: -1,
                     yearsContract: 1,
-                    yearsLeague: 70,
+                    yearsLeague: 5,
                 },
                 '410': {
                     age: 36,
@@ -11347,7 +11347,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 25,
                     yearsContract: 1,
-                    yearsLeague: 72,
+                    yearsLeague: 14,
                 },
                 '411': {
                     age: 26,
@@ -11374,7 +11374,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 25,
                     yearsContract: 1,
-                    yearsLeague: 60,
+                    yearsLeague: 5,
                 },
                 '412': {
                     age: 29,
@@ -11401,7 +11401,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 25,
                     yearsContract: 3,
-                    yearsLeague: 60,
+                    yearsLeague: 8,
                 },
                 '413': {
                     age: 36,
@@ -11428,7 +11428,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 19,
                     yearsContract: 2,
-                    yearsLeague: 70,
+                    yearsLeague: 16,
                 },
                 '414': {
                     age: 26,
@@ -11455,7 +11455,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 19,
                     yearsContract: 1,
-                    yearsLeague: 74,
+                    yearsLeague: 2,
                 },
                 '415': {
                     age: 35,
@@ -11482,7 +11482,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 5,
                     yearsContract: 1,
-                    yearsLeague: 66,
+                    yearsLeague: 15,
                 },
                 '416': {
                     age: 32,
@@ -11509,7 +11509,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 5,
                     yearsContract: 3,
-                    yearsLeague: 64,
+                    yearsLeague: 9,
                 },
                 '417': {
                     age: 27,
@@ -11536,7 +11536,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 5,
                     yearsContract: 3,
-                    yearsLeague: 61,
+                    yearsLeague: 6,
                 },
                 '418': {
                     age: 26,
@@ -11563,7 +11563,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 5,
                     yearsContract: 1,
-                    yearsLeague: 67,
+                    yearsLeague: 2,
                 },
                 '419': {
                     age: 32,
@@ -11590,7 +11590,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 8,
                     yearsContract: 2,
-                    yearsLeague: 70,
+                    yearsLeague: 14,
                 },
                 '420': {
                     age: 33,
@@ -11617,7 +11617,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 12,
                     yearsContract: 2,
-                    yearsLeague: 78,
+                    yearsLeague: 11,
                 },
                 '421': {
                     age: 33,
@@ -11644,7 +11644,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 12,
                     yearsContract: 2,
-                    yearsLeague: 60,
+                    yearsLeague: 10,
                 },
                 '422': {
                     age: 23,
@@ -11671,7 +11671,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 12,
                     yearsContract: 1,
-                    yearsLeague: 80,
+                    yearsLeague: 3,
                 },
                 '423': {
                     age: 27,
@@ -11698,7 +11698,7 @@ var Game = /** @class */ (function () {
                     stateInjury: 0,
                     team: 17,
                     yearsContract: 2,
-                    yearsLeague: 67,
+                    yearsLeague: 5,
                 },
                 '424': {
                     age: 30,
