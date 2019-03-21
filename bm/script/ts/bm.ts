@@ -1424,7 +1424,7 @@ class Game {
                     experience: 0,
                     id: 41,
                     loyalty: 3,
-                    name: '卡里斯-勒夫特',
+                    name: '卡里斯-勒韦尔',
                     numsChampion: 0,
                     positionFirst: 2,
                     positionSecond: 1,
@@ -2072,7 +2072,7 @@ class Game {
                     experience: 0,
                     id: 65,
                     loyalty: 2,
-                    name: '鲁迪-戈波特',
+                    name: '鲁迪-戈贝尔',
                     numsChampion: 0,
                     positionFirst: 5,
                     positionSecond: 4,
@@ -12685,71 +12685,9 @@ class Game {
     public static prepareGameData(gameData: any): any {
         const players = gameData.players;
         for(let i in players) {
-            gameData.players[i].regMaxScore = 0;
-            gameData.players[i].regMaxAssist = 0;
-            gameData.players[i].regMaxSteal = 0;
-            gameData.players[i].regMaxBlock = 0;
-            gameData.players[i].regMaxRebound = 0;
-            gameData.players[i].regMaxTurnover = 0;
-            gameData.players[i].offMaxScore = 0;
-            gameData.players[i].offMaxAssist = 0;
-            gameData.players[i].offMaxSteal = 0;
-            gameData.players[i].offMaxBlock = 0;
-            gameData.players[i].offMaxRebound = 0;
-            gameData.players[i].offMaxTurnover = 0;
-            gameData.players[i].totalRegGameNum = 0;
-            gameData.players[i].seasonRegGameNum = 0;
-            gameData.players[i].totalOffGameNum = 0;
-            gameData.players[i].seasonOffGameNum = 0;
-            gameData.players[i].totalRegScore = 0;
-            gameData.players[i].totalRegAssist = 0;
-            gameData.players[i].totalRegSteal = 0;
-            gameData.players[i].totalRegBlock = 0;
-            gameData.players[i].totalRegRebound = 0;
-            gameData.players[i].totalRegTurnover = 0;
-            gameData.players[i].totalRegTime = 0;
-            gameData.players[i].totalRegFoul = 0;
-            gameData.players[i].seasonRegScore = 0;
-            gameData.players[i].seasonRegAssist = 0;
-            gameData.players[i].seasonRegSteal = 0;
-            gameData.players[i].seasonRegBlock = 0;
-            gameData.players[i].seasonRegRebound = 0;
-            gameData.players[i].seasonRegTurnover = 0;
-            gameData.players[i].totalOffScore = 0;
-            gameData.players[i].totalOffAssist = 0;
-            gameData.players[i].totalOffSteal = 0;
-            gameData.players[i].totalOffBlock = 0;
-            gameData.players[i].totalOffRebound = 0;
-            gameData.players[i].totalOffTurnover = 0;
-            gameData.players[i].totalOffTime = 0;
-            gameData.players[i].totalOffFoul = 0;
-            gameData.players[i].seasonOffScore = 0;
-            gameData.players[i].seasonOffAssist = 0;
-            gameData.players[i].seasonOffSteal = 0;
-            gameData.players[i].seasonOffBlock = 0;
-            gameData.players[i].seasonOffRebound = 0;
-            gameData.players[i].seasonOffTurnover = 0;
-            gameData.players[i].seasonRegTime = 0;
-            gameData.players[i].seasonRegFoul = 0;
-            gameData.players[i].seasonRegClose = 0;
-            gameData.players[i].seasonRegCloseIn = 0;
-            gameData.players[i].seasonRegMiddle = 0;
-            gameData.players[i].seasonRegMiddleIn = 0;
-            gameData.players[i].seasonRegThree = 0;
-            gameData.players[i].seasonRegThreeIn = 0;
-            gameData.players[i].seasonRegFree = 0;
-            gameData.players[i].seasonRegFreeIn = 0;
-            gameData.players[i].seasonOffClose = 0;
-            gameData.players[i].seasonOffCloseIn = 0;
-            gameData.players[i].seasonOffMiddle = 0;
-            gameData.players[i].seasonOffMiddleIn = 0;
-            gameData.players[i].seasonOffThree = 0;
-            gameData.players[i].seasonOffThreeIn = 0;
-            gameData.players[i].seasonOffFree = 0;
-            gameData.players[i].seasonOffFreeIn = 0;
-            gameData.players[i].seasonOffTime = 0;
-            gameData.players[i].seasonOffFoul = 0;
-            gameData.players[i].carryWinNum = 0;
+            Helper.initMaxData(gameData, i);
+            Helper.initTotalData(gameData, i);
+            Helper.resetSeasonData(gameData, i);
             gameData.players[i].lastSkillAverage = gameData.players[i].skillAverage;
             gameData.players[i].skillAttack = SkillCalculator.getAverageForPosition(players[i].positionFirst, true, false, i, gameData);
             gameData.players[i].skillDefense = SkillCalculator.getAverageForPosition(players[i].positionFirst, false, true, i, gameData);
@@ -13556,41 +13494,7 @@ class Game {
     private static resetSeasonStats(gameData: any) {
         for(let id in gameData.players) {
             gameData.players[id].age += 1;
-            gameData.players[id].seasonRegClose = 0;
-            gameData.players[id].seasonRegCloseIn = 0;
-            gameData.players[id].seasonRegMiddle = 0;
-            gameData.players[id].seasonRegMiddleIn = 0;
-            gameData.players[id].seasonRegThree = 0;
-            gameData.players[id].seasonRegThreeIn = 0;
-            gameData.players[id].seasonRegFree = 0;
-            gameData.players[id].seasonRegFreeIn = 0;
-            gameData.players[id].seasonRegScore = 0;
-            gameData.players[id].seasonRegGameNum = 0;
-            gameData.players[id].seasonRegRebound = 0;
-            gameData.players[id].seasonRegSteal = 0;
-            gameData.players[id].seasonRegAssist = 0;
-            gameData.players[id].seasonRegTurnover = 0;
-            gameData.players[id].seasonRegBlock = 0;
-            gameData.players[id].seasonRegTime = 0;
-            gameData.players[id].seasonRegFoul = 0;
-            gameData.players[id].seasonOffClose = 0;
-            gameData.players[id].seasonOffCloseIn = 0;
-            gameData.players[id].seasonOffMiddle = 0;
-            gameData.players[id].seasonOffMiddleIn = 0;
-            gameData.players[id].seasonOffThree = 0;
-            gameData.players[id].seasonOffThreeIn = 0;
-            gameData.players[id].seasonOffFree = 0; 
-            gameData.players[id].seasonOffFreeIn = 0;
-            gameData.players[id].seasonOffScore = 0;
-            gameData.players[id].seasonOffGameNum = 0;
-            gameData.players[id].seasonOffRebound = 0;
-            gameData.players[id].seasonOffSteal = 0;
-            gameData.players[id].seasonOffAssist = 0;
-            gameData.players[id].seasonOffTurnover = 0;
-            gameData.players[id].seasonOffBlock = 0;
-            gameData.players[id].seasonOffTime = 0;
-            gameData.players[id].seasonOffFoul = 0;
-            gameData.players[id].carryWinNum = 0;
+            Helper.resetSeasonData(gameData, id);
             gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
         }
     }
@@ -13748,6 +13652,11 @@ class Game {
             gameData.offSeason['final'].pairs[nextPair][nextSide].team = teamId;
         }else if(round == 'final') {
             gameData.teams[teamId].championNum += 1;
+            const players = gameData.teams[teamId].players;
+            for(let i in players) {
+                const p = gameData.players[players[i]];
+                p.numsChampion += 1;
+            }
             gameData.news.push({
                 season: gameData.currentSeason,
                 day: gameData.currentDay,
@@ -16135,75 +16044,7 @@ class PlayerGenerator {
         }
         gameData.players[id + ''] = player;
         gameData.teams[teamId].players.push(id + '');
-        gameData.players[id].skillAverage = SkillCalculator.getAverageForPosition(positionFirst, true, true, id, gameData);
-        gameData.players[id].skillAttack = SkillCalculator.getAverageForPosition(positionFirst, true, false, id, gameData);
-        gameData.players[id].skillDefense = SkillCalculator.getAverageForPosition(positionFirst, false, true, id, gameData);
-        gameData.players[id].regMaxScore = 0;
-        gameData.players[id].regMaxAssist = 0;
-        gameData.players[id].regMaxSteal = 0;
-        gameData.players[id].regMaxBlock = 0;
-        gameData.players[id].regMaxRebound = 0;
-        gameData.players[id].regMaxTurnover = 0;
-        gameData.players[id].offMaxScore = 0;
-        gameData.players[id].offMaxAssist = 0;
-        gameData.players[id].offMaxSteal = 0;
-        gameData.players[id].offMaxBlock = 0;
-        gameData.players[id].offMaxRebound = 0;
-        gameData.players[id].offMaxTurnover = 0;
-        gameData.players[id].totalRegGameNum = 0;
-        gameData.players[id].seasonRegGameNum = 0;
-        gameData.players[id].totalOffGameNum = 0;
-        gameData.players[id].seasonOffGameNum = 0;
-        gameData.players[id].totalRegScore = 0;
-        gameData.players[id].totalRegAssist = 0;
-        gameData.players[id].totalRegSteal = 0;
-        gameData.players[id].totalRegBlock = 0;
-        gameData.players[id].totalRegRebound = 0;
-        gameData.players[id].totalRegTurnover = 0;
-        gameData.players[id].totalRegTime = 0;
-        gameData.players[id].totalRegFoul = 0;
-        gameData.players[id].seasonRegScore = 0;
-        gameData.players[id].seasonRegAssist = 0;
-        gameData.players[id].seasonRegSteal = 0;
-        gameData.players[id].seasonRegBlock = 0;
-        gameData.players[id].seasonRegRebound = 0;
-        gameData.players[id].seasonRegTurnover = 0;
-        gameData.players[id].seasonRegTime = 0;
-        gameData.players[id].seasonRegFoul = 0;
-        gameData.players[id].totalOffScore = 0;
-        gameData.players[id].totalOffAssist = 0;
-        gameData.players[id].totalOffSteal = 0;
-        gameData.players[id].totalOffBlock = 0;
-        gameData.players[id].totalOffRebound = 0;
-        gameData.players[id].totalOffTurnover = 0;
-        gameData.players[id].totalOffTime = 0;
-        gameData.players[id].totalOffFoul = 0;
-        gameData.players[id].seasonOffScore = 0;
-        gameData.players[id].seasonOffAssist = 0;
-        gameData.players[id].seasonOffSteal = 0;
-        gameData.players[id].seasonOffBlock = 0;
-        gameData.players[id].seasonOffRebound = 0;
-        gameData.players[id].seasonOffTurnover = 0;
-        gameData.players[id].seasonOffTime = 0;
-        gameData.players[id].seasonOffFoul = 0;
-        gameData.players[id].seasonRegClose = 0;
-        gameData.players[id].seasonRegCloseIn = 0;
-        gameData.players[id].seasonRegMiddle = 0;
-        gameData.players[id].seasonRegMiddleIn = 0;
-        gameData.players[id].seasonRegThree = 0;
-        gameData.players[id].seasonRegThreeIn = 0;
-        gameData.players[id].seasonRegFree = 0;
-        gameData.players[id].seasonRegFreeIn = 0;
-        gameData.players[id].seasonOffClose = 0;
-        gameData.players[id].seasonOffCloseIn = 0;
-        gameData.players[id].seasonOffMiddle = 0;
-        gameData.players[id].seasonOffMiddleIn = 0;
-        gameData.players[id].seasonOffThree = 0;
-        gameData.players[id].seasonOffThreeIn = 0;
-        gameData.players[id].seasonOffFree = 0;
-        gameData.players[id].seasonOffFreeIn = 0;
-        gameData.players[id].carryWinNum = 0;
-        gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
+        Helper.initPlayerBasicData(gameData, id);
     }
 }
 
