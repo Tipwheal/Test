@@ -103,7 +103,7 @@ class Helper {
     }
 
     public static getAwards(gameData: any, id: any) {
-        let result = "还没有获得什么荣誉呢！";
+        let result = "";
         const player = gameData.players[id];
         if(player.numsChampion > 0) {
             result = `${player.numsChampion}x总冠军`;
@@ -128,6 +128,9 @@ class Helper {
         }
         if(player.numsBlockTop > 0) {
             result += `,${player.numsBlockTop}x盖帽王`;
+        }
+        if(result == "") {
+            result = "还没有获得什么荣誉呢！";
         }
         return result;
     }

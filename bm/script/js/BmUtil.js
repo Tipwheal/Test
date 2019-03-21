@@ -100,7 +100,7 @@ var Helper = /** @class */ (function () {
         gameData.players[id].carryWinNum = 0;
     };
     Helper.getAwards = function (gameData, id) {
-        var result = "还没有获得什么荣誉呢！";
+        var result = "";
         var player = gameData.players[id];
         if (player.numsChampion > 0) {
             result = player.numsChampion + "x\u603B\u51A0\u519B";
@@ -125,6 +125,9 @@ var Helper = /** @class */ (function () {
         }
         if (player.numsBlockTop > 0) {
             result += "," + player.numsBlockTop + "x\u76D6\u5E3D\u738B";
+        }
+        if (result == "") {
+            result = "还没有获得什么荣誉呢！";
         }
         return result;
     };
