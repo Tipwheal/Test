@@ -17,7 +17,7 @@ var Helper = /** @class */ (function () {
         gameData.players[id].skillDefense = SkillCalculator.getAverageForPosition(positionFirst, false, true, id, gameData);
         gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     };
-    //初始化生涯数据
+    //初始化生涯数据 荣誉数据
     Helper.initTotalData = function (gameData, id) {
         gameData.players[id].totalRegGameNum = 0;
         gameData.players[id].totalOffGameNum = 0;
@@ -37,6 +37,14 @@ var Helper = /** @class */ (function () {
         gameData.players[id].totalOffTurnover = 0;
         gameData.players[id].totalOffTime = 0;
         gameData.players[id].totalOffFoul = 0;
+        gameData.players[id].numsChampion = gameData.players[id].numsChampion || 0;
+        gameData.players[id].numsMvp = 0;
+        gameData.players[id].numsFMvp = 0;
+        gameData.players[id].numsScoreTop = 0;
+        gameData.players[id].numsReboundTop = 0;
+        gameData.players[id].numsAssistTop = 0;
+        gameData.players[id].numsStealTop = 0;
+        gameData.players[id].numsBlockTop = 0;
     };
     //生涯最高数据
     Helper.initMaxData = function (gameData, id) {
@@ -90,6 +98,35 @@ var Helper = /** @class */ (function () {
         gameData.players[id].seasonRegTime = 0;
         gameData.players[id].seasonRegFoul = 0;
         gameData.players[id].carryWinNum = 0;
+    };
+    Helper.getAwards = function (gameData, id) {
+        var result = "还没有获得什么荣誉呢！";
+        var player = gameData.players[id];
+        if (player.numsChampion > 0) {
+            result = player.numsChampion + "x\u603B\u51A0\u519B";
+        }
+        if (player.numsMvp > 0) {
+            result += "," + player.numsMvp + "xMVP";
+        }
+        if (player.numsFMvp > 0) {
+            result += "," + player.numsFMvp + "xFMMP";
+        }
+        if (player.numsScoreTop > 0) {
+            result += "," + player.numsScoreTop + "x\u5F97\u5206\u738B";
+        }
+        if (player.numsReboundTop > 0) {
+            result += "," + player.numsReboundTop + "x\u7BEE\u677F\u738B";
+        }
+        if (player.numsAssistTop > 0) {
+            result += "," + player.numsAssistTop + "x\u52A9\u653B\u738B";
+        }
+        if (player.numsStealTop > 0) {
+            result += "," + player.numsStealTop + "x\u62A2\u65AD\u738B";
+        }
+        if (player.numsBlockTop > 0) {
+            result += "," + player.numsBlockTop + "x\u76D6\u5E3D\u738B";
+        }
+        return result;
     };
     return Helper;
 }());

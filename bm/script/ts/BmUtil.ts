@@ -17,7 +17,7 @@ class Helper {
         gameData.players[id].lastSkillAverage = gameData.players[id].skillAverage;
     }
 
-    //初始化生涯数据
+    //初始化生涯数据 荣誉数据
     public static initTotalData(gameData: any, id: any) {
         gameData.players[id].totalRegGameNum = 0;
         gameData.players[id].totalOffGameNum = 0;
@@ -37,6 +37,14 @@ class Helper {
         gameData.players[id].totalOffTurnover = 0;
         gameData.players[id].totalOffTime = 0;
         gameData.players[id].totalOffFoul = 0;
+        gameData.players[id].numsChampion = gameData.players[id].numsChampion || 0;
+        gameData.players[id].numsMvp = 0;
+        gameData.players[id].numsFMvp = 0;
+        gameData.players[id].numsScoreTop = 0;
+        gameData.players[id].numsReboundTop = 0;
+        gameData.players[id].numsAssistTop = 0;
+        gameData.players[id].numsStealTop = 0;
+        gameData.players[id].numsBlockTop = 0;
     }
 
     //生涯最高数据
@@ -92,5 +100,35 @@ class Helper {
         gameData.players[id].seasonRegTime = 0;
         gameData.players[id].seasonRegFoul = 0;
         gameData.players[id].carryWinNum = 0;
+    }
+
+    public static getAwards(gameData: any, id: any) {
+        let result = "还没有获得什么荣誉呢！";
+        const player = gameData.players[id];
+        if(player.numsChampion > 0) {
+            result = `${player.numsChampion}x总冠军`;
+        }
+        if(player.numsMvp > 0) {
+            result += `,${player.numsMvp}xMVP`;
+        }
+        if(player.numsFMvp > 0) {
+            result += `,${player.numsFMvp}xFMMP`;
+        }
+        if(player.numsScoreTop > 0) {
+            result += `,${player.numsScoreTop}x得分王`;
+        }
+        if(player.numsReboundTop > 0) {
+            result += `,${player.numsReboundTop}x篮板王`;
+        }
+        if(player.numsAssistTop > 0) {
+            result += `,${player.numsAssistTop}x助攻王`;
+        }
+        if(player.numsStealTop > 0) {
+            result += `,${player.numsStealTop}x抢断王`;
+        }
+        if(player.numsBlockTop > 0) {
+            result += `,${player.numsBlockTop}x盖帽王`;
+        }
+        return result;
     }
 }

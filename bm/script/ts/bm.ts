@@ -13218,6 +13218,7 @@ class Game {
             resultRank.push(heap.peek(array));
         }
         let king = resultRank[4];
+        king.numsScoreTop += 1;
         let insertText = `
         得分王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均得分：${avgScore(king)}<br />
         `
@@ -13258,6 +13259,7 @@ class Game {
             resultRank.push(heap.peek(array));
         }
         let king = resultRank[4];
+        king.numsReboundTop += 1;
         let insertText = `
         篮板王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均篮板：${avgRebound(king)}<br />
         `
@@ -13298,6 +13300,7 @@ class Game {
             resultRank.push(heap.peek(array));
         }
         let king = resultRank[4];
+        king.numsAssistTop += 1;
         let insertText = `
         助攻王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均助攻：${avgAssist(king)}<br />
         `
@@ -13338,6 +13341,7 @@ class Game {
             resultRank.push(heap.peek(array));
         }
         let king = resultRank[4];
+        king.numsStealTop += 1;
         let insertText = `
         抢断王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均抢断：${avgSteal(king)}<br />
         `
@@ -13378,6 +13382,7 @@ class Game {
             resultRank.push(heap.peek(array));
         }
         let king = resultRank[4];
+        king.numsBlockTop += 1;
         let insertText = `
         盖帽王: ${gameData.teams[king.team].name}队的<strong>${king.name}</strong>&nbsp;场均盖帽：${avgBlock(king)}<br />
         `
@@ -13416,6 +13421,7 @@ class Game {
         const avgAssist = (maxP.seasonRegAssist/maxP.seasonRegGameNum).toFixed(2);
         const avgSteal = (maxP.seasonRegSteal/maxP.seasonRegGameNum).toFixed(2);
         const avgBlock = (maxP.seasonRegBlock/maxP.seasonRegGameNum).toFixed(2);
+        maxP.numsMvp += 1;
         return `
         常规赛Mvp: <strong>${maxP.name}</strong>!<br />
         球队排名: ${theTeam + 1}<br/ >
@@ -15339,6 +15345,13 @@ class TemplateUtil {
                 <div>球龄: ${player.yearsLeague}</div>
                 <div>薪金: ${player.salary}</div>
                 <div>合同年限: ${player.yearsContract}</div>
+            </div>
+            <div class='playerTitle'>
+                <div>球员荣誉</div>
+            </div>
+            <hr />
+            <div class='playerContent'>
+                <p>${Helper.getAwards(gameData, playerId)}</p>
             </div>
             <div class='playerTitle'>
                 <div>数据统计</div>
