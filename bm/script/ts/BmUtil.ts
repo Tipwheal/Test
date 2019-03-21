@@ -106,7 +106,7 @@ class Helper {
         let result = "";
         const player = gameData.players[id];
         if(player.numsChampion > 0) {
-            result = `${player.numsChampion}x总冠军`;
+            result += `,${player.numsChampion}x总冠军`;
         }
         if(player.numsMvp > 0) {
             result += `,${player.numsMvp}xMVP`;
@@ -131,7 +131,43 @@ class Helper {
         }
         if(result == "") {
             result = "还没有获得什么荣誉呢！";
+        }else {
+            result = result.slice(1);
         }
         return result;
     }
+}
+
+class UIHelper {
+
+    public static createAlert(message: string, id: string|null) {
+        let rootElement = document.body;
+        function setSize(container: HTMLElement) {
+            let width = window.innerWidth+"px";
+            let height = window.innerHeight+"px";
+            if(id) {
+                rootElement = document.getElementById(id) || document.body;
+                if(rootElement != document.body) {
+                    let computedStyle = window.getComputedStyle(rootElement);
+                    width = computedStyle.width || width;
+                    height = computedStyle.height || height;
+                }
+            }
+            rootElement.style.position = "relative";
+            container.style.width = "100%";
+            container.style.height = "100%";
+        }
+        let container = document.createElement("div");
+        setSize(container);
+        container.style.background = "#233333";
+        container.style.zIndex = "9999";
+        container.style.position = "absolute";
+        container.style.opacity = "0.1";
+        container.style.display = "flex";
+        rootElement.appendChild(container);
+    }
+}
+
+class Style {
+    
 }

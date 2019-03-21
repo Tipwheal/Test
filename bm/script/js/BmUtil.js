@@ -103,7 +103,7 @@ var Helper = /** @class */ (function () {
         var result = "";
         var player = gameData.players[id];
         if (player.numsChampion > 0) {
-            result = player.numsChampion + "x\u603B\u51A0\u519B";
+            result += "," + player.numsChampion + "x\u603B\u51A0\u519B";
         }
         if (player.numsMvp > 0) {
             result += "," + player.numsMvp + "xMVP";
@@ -129,7 +129,46 @@ var Helper = /** @class */ (function () {
         if (result == "") {
             result = "还没有获得什么荣誉呢！";
         }
+        else {
+            result = result.slice(1);
+        }
         return result;
     };
     return Helper;
+}());
+var UIHelper = /** @class */ (function () {
+    function UIHelper() {
+    }
+    UIHelper.createAlert = function (message, id) {
+        var rootElement = document.body;
+        function setSize(container) {
+            var width = window.innerWidth + "px";
+            var height = window.innerHeight + "px";
+            if (id) {
+                rootElement = document.getElementById(id) || document.body;
+                if (rootElement != document.body) {
+                    var computedStyle = window.getComputedStyle(rootElement);
+                    width = computedStyle.width || width;
+                    height = computedStyle.height || height;
+                }
+            }
+            rootElement.style.position = "relative";
+            container.style.width = "100%";
+            container.style.height = "100%";
+        }
+        var container = document.createElement("div");
+        setSize(container);
+        container.style.background = "#233333";
+        container.style.zIndex = "9999";
+        container.style.position = "absolute";
+        container.style.opacity = "0.1";
+        container.style.display = "flex";
+        rootElement.appendChild(container);
+    };
+    return UIHelper;
+}());
+var Style = /** @class */ (function () {
+    function Style() {
+    }
+    return Style;
 }());
