@@ -141,28 +141,33 @@ var UIHelper = /** @class */ (function () {
     }
     UIHelper.createAlert = function (message, id) {
         var rootElement = document.body;
-        function setSize(container) {
-            var width = window.innerWidth + "px";
-            var height = window.innerHeight + "px";
-            if (id) {
-                rootElement = document.getElementById(id) || document.body;
-                if (rootElement != document.body) {
-                    var computedStyle = window.getComputedStyle(rootElement);
-                    width = computedStyle.width || width;
-                    height = computedStyle.height || height;
-                }
-            }
-            rootElement.style.position = "relative";
-            container.style.width = "100%";
-            container.style.height = "100%";
-        }
         var container = document.createElement("div");
-        setSize(container);
-        container.style.background = "#233333";
-        container.style.zIndex = "9999";
-        container.style.position = "absolute";
-        container.style.opacity = "0.1";
-        container.style.display = "flex";
+        var transparentPane = document.createElement("div");
+        transparentPane.style.cssText = Style.transparentStyle;
+        if (id) {
+            rootElement = document.getElementById(id) || document.body;
+        }
+        rootElement.style.position = "relative";
+        container.style.cssText = Style.coverLayer;
+        var removeLayer = function () {
+            rootElement.removeChild(container);
+        };
+        container.addEventListener('click', removeLayer);
+        var innerPane = document.createElement("div");
+        innerPane.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+        innerPane.style.cssText = Style.innerPaneStyle;
+        var pText = document.createElement("p");
+        pText.textContent = message;
+        var confirm = document.createElement("button");
+        confirm.textContent = "确定";
+        confirm.addEventListener('click', removeLayer);
+        confirm.style.cssText = Style.basicButton;
+        innerPane.appendChild(pText);
+        innerPane.appendChild(confirm);
+        container.appendChild(transparentPane);
+        container.appendChild(innerPane);
         rootElement.appendChild(container);
     };
     return UIHelper;
@@ -170,5 +175,14 @@ var UIHelper = /** @class */ (function () {
 var Style = /** @class */ (function () {
     function Style() {
     }
+    Style.titleGreen = "#9BC595";
+    Style.borderRed = "#AE4E26";
+    Style.lightBlue = "#79E8D0";
+    Style.lightGreen = "#A2CEB3";
+    Style.paneYellow = "#FDFFD0";
+    Style.coverLayer = "\n    z-index: 999;\n    position: absolute;\n    display: flex;\n    width: 100%;\n    height: 100%;\n    justify-content: center;\n    align-items: center;\n    ";
+    Style.innerPaneStyle = "\n    width: 50%;\n    height: 50%;\n    background: " + Style.paneYellow + ";\n    z-index: 9999;\n    text-align: center;\n    border: 1px solid " + Style.borderRed + ";\n    display: flex;\n    flex-direction: column;\n    justify-content: space-around;\n    align-items: center;\n    padding: 5px;\n    ";
+    Style.transparentStyle = "\n    background: #233333;\n    opacity: 0.1;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    ";
+    Style.basicButton = "\n    background: " + Style.titleGreen + ";\n    border: 1px solid " + Style.borderRed + ";\n    ";
     return Style;
 }());

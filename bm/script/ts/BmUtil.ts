@@ -142,32 +142,79 @@ class UIHelper {
 
     public static createAlert(message: string, id: string|null) {
         let rootElement = document.body;
-        function setSize(container: HTMLElement) {
-            let width = window.innerWidth+"px";
-            let height = window.innerHeight+"px";
-            if(id) {
-                rootElement = document.getElementById(id) || document.body;
-                if(rootElement != document.body) {
-                    let computedStyle = window.getComputedStyle(rootElement);
-                    width = computedStyle.width || width;
-                    height = computedStyle.height || height;
-                }
-            }
-            rootElement.style.position = "relative";
-            container.style.width = "100%";
-            container.style.height = "100%";
+        const container = document.createElement("div");
+        const transparentPane = document.createElement("div");
+        transparentPane.style.cssText = Style.transparentStyle;
+        if(id) {
+            rootElement = document.getElementById(id) || document.body;
         }
-        let container = document.createElement("div");
-        setSize(container);
-        container.style.background = "#233333";
-        container.style.zIndex = "9999";
-        container.style.position = "absolute";
-        container.style.opacity = "0.1";
-        container.style.display = "flex";
+        rootElement.style.position = "relative";
+        container.style.cssText = Style.coverLayer;
+        const removeLayer = function() {
+            rootElement.removeChild(container);
+        }
+        container.addEventListener('click', removeLayer);
+        const innerPane = document.createElement("div");
+        innerPane.addEventListener('click', function(event: Event) {
+            event.stopPropagation();
+        });
+        innerPane.style.cssText = Style.innerPaneStyle;
+        const pText = document.createElement("p");
+        pText.textContent = message;
+        const confirm = document.createElement("button");
+        confirm.textContent = "确定";
+        confirm.addEventListener('click', removeLayer);
+        confirm.style.cssText = Style.basicButton;
+        innerPane.appendChild(pText);
+        innerPane.appendChild(confirm);
+        container.appendChild(transparentPane);
+        container.appendChild(innerPane);
         rootElement.appendChild(container);
     }
 }
 
 class Style {
-    
+
+    public static titleGreen = "#9BC595";
+    public static borderRed = "#AE4E26";
+    public static lightBlue = "#79E8D0";
+    public static lightGreen = "#A2CEB3";
+    public static paneYellow = "#FDFFD0";
+
+    public static coverLayer = `
+    z-index: 999;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    `;
+
+    public static innerPaneStyle = `
+    width: 50%;
+    height: 50%;
+    background: ${Style.paneYellow};
+    z-index: 9999;
+    text-align: center;
+    border: 1px solid ${Style.borderRed};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    `;
+
+    public static transparentStyle = `
+    background: #233333;
+    opacity: 0.1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    `;
+
+    public static basicButton = `
+    background: ${Style.titleGreen};
+    border: 1px solid ${Style.borderRed};
+    `;
 }
