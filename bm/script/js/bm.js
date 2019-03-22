@@ -12971,7 +12971,7 @@ var Game = /** @class */ (function () {
         var starter = TeamMatchUtil.getStarters(gameData.userTeamId, gameData);
         for (var i = 0; i < 5; i++) {
             if ((!starter[i]) || starter[i] == -1) {
-                alert("球队首发阵容错误！请检查！");
+                UIHelper.createAlert("球队首发阵容错误！请检查！", "mainWrapper");
                 return;
             }
         }
@@ -13700,7 +13700,7 @@ var Game = /** @class */ (function () {
         var starter = TeamMatchUtil.getStarters(teamId, gameData);
         var bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if (starter.length != 5) {
-            alert("球队首发阵容错误！请检查！");
+            UIHelper.createAlert("球队首发阵容错误！请检查！", "mainWrapper");
         }
         //Steal, Block, Reboud, Assist, Turnover
         function stealModifier(place, skill) {
@@ -14488,7 +14488,7 @@ var TemplateUtil = /** @class */ (function () {
         var fColumn = document.getElementById('selectColumn');
         var sColumn = document.getElementById('secondSelectColumn');
         if (fColumn == null || sColumn == null) {
-            alert("都没有球员跟你交易想什么呢……");
+            UIHelper.createAlert("都没有球员你想交易什么呢", "mainWrapper");
             return;
         }
         var fPlayers = [];
@@ -14554,7 +14554,7 @@ var TemplateUtil = /** @class */ (function () {
         var teamValue = select.value;
         var pane = document.getElementById('selectColumn');
         if (pane == null) {
-            alert("都没有球员跟你交易想什么呢……");
+            UIHelper.createAlert("都没有球员跟你交易想什么呢……", "mainWrapper");
             return;
         }
         var num = 0;
@@ -14567,15 +14567,15 @@ var TemplateUtil = /** @class */ (function () {
             }
         }
         if (num == 0) {
-            alert("都没选球员跟你交易想什么呢……");
+            UIHelper.createAlert("都没选球员跟你交易想什么呢……", "mainWrapper");
             return;
         }
         else if (num > 3) {
-            alert("最多只能选三个球员啦！");
+            UIHelper.createAlert("最多只能选三个球员啦！", "mainWrapper");
             return;
         }
         if (pane.children.length - 1 - num < 10) {
-            alert("交易完球队人数会少于10人，不可以哦");
+            UIHelper.createAlert("交易完球队人数会少于10人，不可以哦", "mainWrapper");
             return;
         }
         var belowPlayers;
@@ -14652,7 +14652,7 @@ var TemplateUtil = /** @class */ (function () {
             pane_1.appendChild(line);
         }
         else {
-            alert("似乎找不到什么好的交易呢…");
+            UIHelper.createAlert("似乎找不到什么好的交易呢…", "mainWrapper");
         }
     };
     TemplateUtil.clearTrade = function () {
@@ -15049,7 +15049,7 @@ var TemplateUtil = /** @class */ (function () {
             else {
                 extra += "<option value='bench'>\u66FF\u8865</option>";
             }
-            extra += "\n            </select>\n            <button onclick='alert(\"\u6B64\u529F\u80FD\u8FD8\u5728\u5F00\u53D1\u4E2D\")'>\u57F9\u517B\u65B9\u5411</button>\n            ";
+            extra += "\n            </select>\n            <button onclick='UIHelper.createAlert(\"\u6B64\u529F\u80FD\u8FD8\u5728\u5F00\u53D1\u4E2D\", \"mainWrapper\")'>\u57F9\u517B\u65B9\u5411</button>\n            ";
             if (team.cores.includes(playerId + "")) {
                 extra += "<button onclick='Game.unsetCore(" + playerId + ", gameState)'>\u53D6\u6D88\u6838\u5FC3</button>";
             }

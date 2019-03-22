@@ -13010,7 +13010,7 @@ class Game {
         let starter = TeamMatchUtil.getStarters(gameData.userTeamId, gameData);
         for(let i = 0; i<5;i++) {
             if((!starter[i]) || starter[i] == -1) {
-                alert("球队首发阵容错误！请检查！");
+                UIHelper.createAlert("球队首发阵容错误！请检查！", "mainWrapper");
                 return;
             }
         }
@@ -13774,7 +13774,7 @@ class Game {
         const starter = TeamMatchUtil.getStarters(teamId, gameData);
         const bench = TeamMatchUtil.getBenchPlayers(teamId, gameData);
         if(starter.length != 5) {
-            alert("球队首发阵容错误！请检查！");
+            UIHelper.createAlert("球队首发阵容错误！请检查！", "mainWrapper");
         }
         //Steal, Block, Reboud, Assist, Turnover
         function stealModifier(place: number, skill: number): number {
@@ -14513,7 +14513,7 @@ class TemplateUtil {
         let fColumn = document.getElementById('selectColumn');
         let sColumn = document.getElementById('secondSelectColumn');
         if(fColumn == null || sColumn == null) {
-            alert("都没有球员跟你交易想什么呢……");
+            UIHelper.createAlert("都没有球员你想交易什么呢", "mainWrapper");
             return;
         }
         let fPlayers = [];
@@ -14579,7 +14579,7 @@ class TemplateUtil {
         const teamValue = <string>select.value;
         let pane = document.getElementById('selectColumn');
         if(pane == null) {
-            alert("都没有球员跟你交易想什么呢……");
+            UIHelper.createAlert("都没有球员跟你交易想什么呢……", "mainWrapper");
             return;
         }
         let num = 0;
@@ -14592,14 +14592,14 @@ class TemplateUtil {
             }
         }
         if(num == 0) {
-            alert("都没选球员跟你交易想什么呢……")
+            UIHelper.createAlert("都没选球员跟你交易想什么呢……", "mainWrapper");
             return;
         }else if(num > 3) {
-            alert("最多只能选三个球员啦！")
+            UIHelper.createAlert("最多只能选三个球员啦！", "mainWrapper");
             return;
         }
         if(pane.children.length - 1 - num < 10) {
-            alert("交易完球队人数会少于10人，不可以哦");
+            UIHelper.createAlert("交易完球队人数会少于10人，不可以哦", "mainWrapper");
             return;
         }
         let belowPlayers;
@@ -14674,7 +14674,7 @@ class TemplateUtil {
             const line = <HTMLElement>TemplateUtil.createTradeLine(secondTradeP, gameData, false);
             pane.appendChild(line);
         }else {
-            alert("似乎找不到什么好的交易呢…");
+            UIHelper.createAlert("似乎找不到什么好的交易呢…", "mainWrapper");
         }
     }
 
@@ -15313,7 +15313,7 @@ class TemplateUtil {
             }
             extra += `
             </select>
-            <button onclick='alert("此功能还在开发中")'>培养方向</button>
+            <button onclick='UIHelper.createAlert("此功能还在开发中", "mainWrapper")'>培养方向</button>
             `;
             if((<any>team).cores.includes(playerId + "")) {
                 extra += `<button onclick='Game.unsetCore(${playerId}, gameState)'>取消核心</button>`;
