@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[产能规划问题相关]]></title>
+    <url>%2Fblog%2F2019%2F03%2F22%2Fabout-capacity-planning%2F</url>
+    <content type="text"><![CDATA[把内容关起来 相关的几个问题：性能分析问题(performance analysis question):CPU速度为x MIPS时，500/s的HTTP请求，响应时间是多少？ 也就是给出： 一个有特定产量的计算机 工作负载 输出： 系统性能（响应时间，吞吐量） 单个任务的响应时间计算： Response Time = Departure time - Arrival TimeResponse Time = Waiting Time + Processing Time （利用率）Utilisation: 系统在忙的时间比例 单服务器先进先出队列问题： 只有一个收银台的超市 单个处理器先进先出 硬盘相关的先进先出任务 如果给定每个任务进入系统的时间和需要的处理时间，我们可以计算每个任务的等待时间，每个人物的响应时间(Response Time) 这一类问题可能需要知道的东西： arrival rate inter-arrival time statistical distribution the time required to process the job 服务时间(Service Time) 在某个资源上处理一个请求所需的时间。 问题举例： 通过10kbps的连接发送一个1000byte的包，服务时间是1000*8/10000=0.8s 在硬盘上读取一个X byte的文件，所需时间是： seek time + X / transfer rate 我们有： Service Time = Overhead + Job size / Processing Rate 产能规划一个产能规划问题可以通过解决一系列的性能分析问题而被解决 性能度量： 响应时间、等待时间、吞吐量 单服务器队列建模 对计算系统的建模单服务队列仅考虑计算机系统中的一个组件，可以是CPU,硬盘，或者是一个传输通道 一个请求可能需要多个资源，比如上述多个中的一个。 我们通过队列网络(Queueing Networks)来建模一个有很多资源的计算机系统。 两者的不同记录一下但服务队列就是一堆任务进来，比如它们只需要使用CPU，然后给定它们来的时间和处理所需的时间，然后计算相关的度量。 队列网络则是比如现在一个计算机有一个CPU和硬盘，而不同的任务给定了到达的时间和所需要的CPU和硬盘的时间的序列，然后我们计算相关的度量。显然更复杂了。 开放队列网络和封闭队列网络一个可以接受外部的请求，工作负载来自于arrival rate另一个则是封闭的，不是很理解 开放队列网络可能在负载平衡的状态下吞吐率即为arrival rate封闭队列网络的吞吐率取决于用户或者用户规模？ 在开放队列网络里面的工作叫事务，在封闭队列网络里面叫任务。 计算两种网络需要不同的技术，然后像数据库这样的系统可能结合了两种不同的网络。 DBMS即Database Server Management System DBMS中设定了活动的事务的最大值，成为Multi-programming level。（MPL） 操作分析Operation Analysis（OA）又提出了一个新的概念。 “Operational”指收集在每天的操作中收集性能数据 应用： 使用这些数据来建立队列网络模型 进行瓶颈分析 进行改进分析 我们以一个单任务队列为例： A指Arrival Requests，C指Completed，B只服务器的Busy状态，T指观察的这一段时间 Arrival Rate $\lambda=\frac{A}{T}$Output Rate $X=\frac{C}{T}$Utilisation $U=\frac{B}{T}$每个完成的请求的平均服务时间=B/C 举个例子： 观察一分钟，那么T=1 minCPU: busy时间36s 1790 requests arrived 1800 requests completed可以计算： MeanSTPC = B/C = 36s / 1800 = 0.02s U = 36/60=60% Arrival Rate = 1790/60 = 29.83 requests/s Output Rate = 1800/60 = 30 requests/s 利用率法则既然U=B/TMSTPC S=B/COR X=C/T 我们可以得到U=SX，即利用率等于每个完成的任务的平均服务时间*完成率 利用率法则是操作法则的一部分。 操作分析的应用 不需要观察每一个数值，比如可以用B来推断U 一致性检查，如果U!=SX,那一定有地方出问题了 可以用于性能分析： 瓶颈分析，平均值分析 平衡总结？这标题可能不太对OA makes the assumption that: C=A或者至少是接近的 这意味着系统是在平衡状态。 QNs里的操作分析这个就比较复杂了。]]></content>
+      <tags>
+        <tag>计算机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[在这里放一些我觉得有用的Vue组件]]></title>
     <url>%2Fblog%2F2019%2F03%2F18%2Fvue-test%2F</url>
     <content type="text"><![CDATA[在这一页收藏一些可能会有用的Vue组件，没事的时候塞一点进来。 .coloredDiv { padding: 5px; background: #A2CEB3; margin-bottom: 10px; border-radius: 2px; } Vue.component('wrapper', { props: ['title'], template: ` {{ title }} ` }); {{ text }} Vue.component('test-input', { props: [ 'value' ], template: ` ` }); let vm_c0 = new Vue({ el: "#c0", data: function() { return { text: '' } } }) {{ text }} Vue.component('test-text-area', { props: [ 'value' ], template: ` ` }); let vm_c1 = new Vue({ el: "#c1", data: function() { return { text: '' } } }) Vue.component('md-text-area', { props: [ 'value' ], template: ` `, computed: { markedText: function() { return marked(this.value) } } }); let vm_c2 = new Vue({ el: "#c2", data: function() { return { text: '' } }, }) Vue.component('sort-table', { props: [ 'data', 'config' ], template: ` {{ key }} {{ item }} `, methods: { computedWidth: function(raw) { return raw*10+'px'; } } }); let vm_c3 = new Vue({ el: "#c3", data: function() { return { displayConfig: { columns: { name: 17, age: 6, ability: 6, } }, players: [ { name: 'Tom', age: 3, ability: 4, }, { name: 'Jerry', age: 2, ability: 5, }, { name: 'Bi', age: 6, ability: 1, }, { name: 'Boom', age: 2, ability: 4, } ] } }, })]]></content>
@@ -360,8 +368,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>学习</tag>
+        <tag>算法</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
