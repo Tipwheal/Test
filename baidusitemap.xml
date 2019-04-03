@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/cpp-learning/</loc>
+    <lastmod>2019-04-03T01:35:41.876Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/Green-Formula/</loc>
     <lastmod>2019-04-02T14:59:32.076Z</lastmod>
   </url>  <url>
@@ -42,9 +45,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/chinese-learning/</loc>
     <lastmod>2019-02-06T14:34:27.696Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/cpp-learning/</loc>
-    <lastmod>2019-01-31T12:00:36.010Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/12/03/threejs-lab/</loc>
     <lastmod>2019-01-18T07:09:43.150Z</lastmod>
