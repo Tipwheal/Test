@@ -386,6 +386,250 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/01/15/tfjs-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="红色鲱鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小学生学习园地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/01/15/tfjs-test/" itemprop="url">
+                  试一试tensorflowjs
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-15 23:55:35" itemprop="dateCreated datePublished" datetime="2019-01-15T23:55:35+08:00">2019-01-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-01-17 12:59:18" itemprop="dateModified" datetime="2019-01-17T12:59:18+08:00">2019-01-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+<div id="aaa"></div>
+<button class="btn" onclick="fit()">开始训练</button>
+<button class="btn" onclick="test()">测试</button>
+
+<script src="https://cdn.bootcss.com/tensorflow/0.14.1/tf.js"></script>
+
+<script>
+const model = tf.sequential();
+model.add(tf.layers.dense({
+    units: 100,
+    activation: 'relu', 
+    inputDim: 10,
+}));
+model.add(tf.layers.dense({
+    units: 1,
+    activation: 'linear',
+}));
+model.compile({
+    optimizer: 'sgd', 
+    loss: 'meanSquaredError',
+});
+
+function fit() {
+    const xs = tf.randomNormal([100, 10]);
+    const ys = tf.randomNormal([100, 1]);
+    model.fit(xs, ys, {
+        epochs: 10,
+        callbacks: { 
+            onEpochEnd: (epoch, log) => {
+                console.log("epoch: " + epoch + " loss: " + log.loss); 
+            }
+        },
+    });
+    model.predict(tf.randomNormal([1, 10])).print();
+}
+
+function test() {
+    const md = tf.sequential();
+    let img = new Image();
+    img.src = 'http://localhost:4000/blog/images/avatar.jpg';
+    let tfimg = tf.fromPixels(img);
+    console.log(tfimg.shape);
+    let ttt = tfimg.expandDims();
+    let fltimg = tfimg.flatten();
+    const xs = tf.randomNormal(ttt.shape);
+
+    md.add(tf.layers.conv2d({
+        inputShape: tfimg.shape,
+        filters: 5,
+        kernelSize: [3, 3],
+    }));
+    // md.add(tf.layers.flatten({
+    //     inputShape: tfimg.shape
+    // }));
+
+    // md.add(tf.layers.dense({
+    //     units: 100,
+    //     activation: 'sigmoid',
+    // }));
+
+    md.add(tf.layers.dense({
+        units: 100,
+        activation: 'sigmoid',
+    }));
+
+    md.add(tf.layers.dense({
+        units: fltimg,
+        activation: 'sigmoid',
+    }));
+
+    md.add(tf.layers.reshape({
+        targetShape: tfimg.shape
+    }));
+
+    md.summary();
+    md.compile({
+        optimizer: 'sgd', 
+        loss: 'meanSquaredError',
+    });
+    md.fit(xs, ttt, {
+        epochs: 10,
+        callbacks: {
+            onEpochEnd: (epoch, log) => {
+                console.log("epoch: " + epoch + " loss: " + log.loss);
+            }
+        },
+    });
+}
+</script>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2019/01/13/synth-piano/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -978,7 +1222,7 @@ function getS(value) {
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-04 19:12:06" itemprop="dateModified" datetime="2019-04-04T19:12:06+08:00">2019-04-04</time>
+                <time title="修改时间：2019-04-05 13:36:43" itemprop="dateModified" datetime="2019-04-05T13:36:43+08:00">2019-04-05</time>
               
             
           </span>
@@ -2742,188 +2986,6 @@ function loadShader(gl, type, source) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tipwheal.github.io/blog/blog/2018/11/29/transformation-metrix/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="红色鲱鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小学生学习园地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/11/29/transformation-metrix/" itemprop="url">
-                  收集一些变换矩阵
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-29 13:22:27" itemprop="dateCreated datePublished" datetime="2018-11-29T13:22:27+08:00">2018-11-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-11-30 22:29:15" itemprop="dateModified" datetime="2018-11-30T22:29:15+08:00">2018-11-30</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/计算机图形学/" itemprop="url" rel="index"><span itemprop="name">计算机图形学</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>下面的内容主要是收集一些二维/三维图形变换的矩阵，并尝试理解一下为什么。</p>
-<h2 id="二维图形变换"><a href="#二维图形变换" class="headerlink" title="二维图形变换"></a>二维图形变换</h2><p>显然，对一个二维图形做几何变换，就是对图形上的每一个点做相应的几何变换。<br>虽然有时候实际上我们并不需要全部做，比如一个直线段我们只需要把端点变换过去然后连起来就可以了。</p>
-<p>常见的二维图形几何变换有：</p>
-<ul>
-<li>平移</li>
-<li>缩放</li>
-<li>旋转</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/11/29/transformation-metrix/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2975,7 +3037,7 @@ function loadShader(gl, type, source) {
                 
                   <a href="/blog/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3030,7 +3092,9 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -3187,7 +3251,11 @@ function loadShader(gl, type, source) {
                     
                       
                     
-                    <span class="site-state-item-count">63</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3788,9 +3856,9 @@ function loadShader(gl, type, source) {
       
     
       
-        
-      
     
+      
+        
       
     
       

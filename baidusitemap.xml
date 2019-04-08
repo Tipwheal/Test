@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/04/08/js-promise/</loc>
+    <lastmod>2019-04-08T02:20:40.197Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
+    <lastmod>2019-04-06T06:40:36.087Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/05/red-black-tree/</loc>
-    <lastmod>2019-04-04T11:12:06.684Z</lastmod>
+    <lastmod>2019-04-05T05:36:43.757Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/09/Green-Formula/</loc>
     <lastmod>2019-04-03T08:05:05.246Z</lastmod>
@@ -21,9 +27,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/03/18/vue-test/</loc>
     <lastmod>2019-03-20T10:17:06.124Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2018/10/09/english-learning/</loc>
-    <lastmod>2019-03-14T12:19:52.855Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2018/10/10/sort/</loc>
     <lastmod>2019-02-28T06:55:32.242Z</lastmod>
