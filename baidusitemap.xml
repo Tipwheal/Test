@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/02/10/encrypt-js-code/</loc>
+    <lastmod>2019-04-08T10:32:38.852Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/04/08/js-promise/</loc>
     <lastmod>2019-04-08T06:28:29.321Z</lastmod>
   </url>  <url>
@@ -42,9 +45,6 @@
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/02/06/union-find/</loc>
     <lastmod>2019-02-16T01:51:40.005Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2019/02/10/encrypt-js-code/</loc>
-    <lastmod>2019-02-10T13:44:35.622Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/02/05/vis-random/</loc>
     <lastmod>2019-02-07T01:14:51.642Z</lastmod>
