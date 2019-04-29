@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2019/01/17/bm-test/</loc>
+    
+    <lastmod>2019-04-29T07:30:56.390Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2019/04/09/leetcode-category/</loc>
     
     <lastmod>2019-04-09T10:32:19.864Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>https://tipwheal.github.io/blog/2018/10/09/cpp-learning/</loc>
     
     <lastmod>2019-04-03T01:37:14.804Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2019/01/17/bm-test/</loc>
-    
-    <lastmod>2019-03-22T04:27:23.036Z</lastmod>
     
   </url>
   
