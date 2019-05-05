@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于泰勒公式的知识]]></title>
+    <url>%2Fblog%2F2019%2F05%2F05%2Ftaylor-expansion%2F</url>
+    <content type="text"><![CDATA[关于泰勒公式的一些知识。 泰勒展开的介绍 几个余项 （最好有个证明啦） 常见应用 公式泰勒公式是一个非常有用的工具，了解泰勒公式会非常有帮助。 公式的形式如下： $$f(x)=\frac{f(x_0)}{0!}+\frac{f’(x_0)}{1!}(x-x_0)+\frac{f’’(x_0)}{2!}(x-x_0)^2+\dots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+R_n(x)$$ 左边是我们需要进行展开的函数，右边是它的展开式，显然我们需要满足一些条件，那就是式子中的值是存在的。比如对于$e^x$，它在$x_0$处的n阶导数总是可以取到值，那么我们就可以在$x_0$处将它按照我们的需要不停地展开。最后一项$R_n(x)$是余项，可以写成很多种形式，我们需要知道的是它是$(x-x_0)^n$的高阶无穷小。 常见应用我们可以用泰勒公式来展开一些常见的函数，在$x=0$处展开时，称为麦克劳林公式。 $$\begin{aligned}&amp;e^x=1+x+\frac{1}{2!}x^2+\frac{1}{3!}x^3+o(x^3) \\&amp;\ln{(1+x)}=x-\frac{1}{2}x^2+\frac{1}{3}x^3+o(x^3) \\&amp;\sin{x}=x-\frac{1}{3!}x^3+\frac{1}{5!}x^5+o(x^5) \\&amp;\arcsin{x}=x+\frac{1}{2}·\frac{x^3}{3}+\frac{1*3}{2*4}·\frac{x^5}{5}+\frac{1*3*5}{2*4*6}·\frac{x^7}{7}+o(x^7) \\&amp;\cos{x}=1-\frac{1}{2!}x^2+\frac{1}{4!}x^4+o(x^4) \\&amp;\frac{1}{1-x}=1+x+x^2+x^3+o(x^3) \\&amp;(1+x)^a=1+ax+\frac{a(a-1)}{2!}x^2+\frac{a(a-1)(a-2)}{3!}x^3+o(x^3) \\\end{aligned}$$]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>泰勒展开</tag>
+        <tag>泰勒公式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode解题目录]]></title>
     <url>%2Fblog%2F2019%2F04%2F09%2Fleetcode-category%2F</url>
     <content type="text"><![CDATA[做过的题目的解法分析 虽然没有做过什么题 只是一个放链接的地方 Two Sum Add Two Numbers Longest Substring Without Repeating Characters Median of Two Sorted Arrays]]></content>
@@ -225,8 +238,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>隐马尔可夫模型</tag>
+        <tag>自然语言处理</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -238,10 +251,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
+        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
-        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -396,8 +409,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
