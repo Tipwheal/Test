@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
+    
+    <lastmod>2019-05-06T02:14:35.106Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2019/05/05/taylor-expansion/</loc>
     
-    <lastmod>2019-05-05T15:59:15.791Z</lastmod>
+    <lastmod>2019-05-06T02:14:10.569Z</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>https://tipwheal.github.io/blog/2019/02/10/encrypt-js-code/</loc>
     
     <lastmod>2019-04-08T10:32:38.852Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tipwheal.github.io/blog/2018/10/09/english-learning/</loc>
-    
-    <lastmod>2019-04-06T06:40:36.087Z</lastmod>
     
   </url>
   
