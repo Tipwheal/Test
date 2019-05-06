@@ -158,18 +158,18 @@
 
 
 
-  <meta name="description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 模拟一个泊松分布">
+  <meta name="description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 实现一个泊松分布">
 <meta name="keywords" content="泊松分布,概率论">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于泊松分布">
 <meta property="og:url" content="https://tipwheal.github.io/blog/2019/05/06/poisson-distribution/index.html">
 <meta property="og:site_name" content="小学生学习园地">
-<meta property="og:description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 模拟一个泊松分布">
+<meta property="og:description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 实现一个泊松分布">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-06T03:30:11.747Z">
+<meta property="og:updated_time" content="2019-05-06T05:39:53.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于泊松分布">
-<meta name="twitter:description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 模拟一个泊松分布">
+<meta name="twitter:description" content="关于泊松分布的一些知识。  什么是泊松分布 应用场景 为什么这样子 实现一个泊松分布">
 
 
 
@@ -435,7 +435,7 @@
                 
               
 
-              <time title="创建时间：2019-05-06 10:21:20 / 修改时间：11:30:11" itemprop="dateCreated datePublished" datetime="2019-05-06T10:21:20+08:00">2019-05-06</time>
+              <time title="创建时间：2019-05-06 10:21:20 / 修改时间：13:39:53" itemprop="dateCreated datePublished" datetime="2019-05-06T10:21:20+08:00">2019-05-06</time>
             
 
             
@@ -511,7 +511,7 @@
 <li>什么是泊松分布</li>
 <li>应用场景</li>
 <li>为什么这样子</li>
-<li>模拟一个泊松分布</li>
+<li>实现一个泊松分布</li>
 </ul>
 <a id="more"></a>
 <h3 id="泊松分布的概率函数"><a href="#泊松分布的概率函数" class="headerlink" title="泊松分布的概率函数"></a>泊松分布的概率函数</h3><p>$$<br>P(X=k)=\frac{\lambda^k}{k!}e^{-\lambda},k=0,1,\dots<br>$$</p>
@@ -531,6 +531,77 @@
 <p>那么我们可以慢慢算：</p>
 <p>$$<br>\begin{aligned}<br>S(N)&amp;=\sum_{k=0}^NP(X=k) \\<br>&amp;=\sum_{k=0}^N\frac{6^k}{k!}e^{-6} \\<br>\end{aligned}<br>$$</p>
 <p>那么S(9)时正好满足S(9)&gt;0.9，我们可以得到只需要准备9个土豆就可以了。</p>
+<h3 id="用JS模拟一个泊松分布"><a href="#用JS模拟一个泊松分布" class="headerlink" title="用JS模拟一个泊松分布"></a>用JS模拟一个泊松分布</h3>
+
+<div id="rootDiv" style="display: flex; justify-content: center;">
+    <div>
+        <div style="margin-bottom: 10px">
+            <span v-for="n in nums" style="margin-right: 2px;">{{ n }}</span>
+        </div>
+        <div style="margin-bottom: 10px">
+            <span style="display: inline-block;width: 60px">均值</span>
+            <input class="btn" v-model="lambda">
+        </div>
+        <div style="margin-bottom: 10px">
+            <span style="display: inline-block;width: 60px">实验次数</span>
+            <input class="btn" v-model="num">
+        </div>
+        <div style="display: flex; justify-content: end; margin-bottom: 10px">
+            <button class="btn" @click="generate">生成</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+
+<script>
+function fact(num) {
+    if(Math.round(num) <= 1) {
+        return 1;
+    }
+    return num * fact(num - 1);
+}
+
+const vm = new Vue({
+    el: "#rootDiv",
+    data() {
+        return {
+            lambda: 3,
+            num: 10,
+            nums: [],
+        }
+    },
+    mounted() {
+        this.generate();
+    },
+    methods: {
+        random_p() {
+            const lambda = this.lambda;
+            let rand = Math.random();
+            let current = 0;
+            let index = 0;
+            while(true) {
+                const cdf = Math.pow(Math.E, -lambda) * Math.pow(lambda, index) / fact(index);
+                current += cdf;
+                if(current > rand) {
+                    break;
+                }else {
+                    index ++;
+                }
+            }
+            return index;
+        },
+        generate() {
+            const result = [];
+            for(let i = 0; i < this.num; i++) {
+                result.push(this.random_p());
+            }
+            this.nums =  result;
+        }
+    }
+});
+</script>
+
 
       
     </div>
@@ -954,7 +1025,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布的概率函数"><span class="nav-number">1.</span> <span class="nav-text">泊松分布的概率函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布的作用"><span class="nav-number">2.</span> <span class="nav-text">泊松分布的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题一："><span class="nav-number">2.1.</span> <span class="nav-text">问题一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题二："><span class="nav-number">2.2.</span> <span class="nav-text">问题二：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布的概率函数"><span class="nav-number">1.</span> <span class="nav-text">泊松分布的概率函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布的作用"><span class="nav-number">2.</span> <span class="nav-text">泊松分布的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题一："><span class="nav-number">2.1.</span> <span class="nav-text">问题一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题二："><span class="nav-number">2.2.</span> <span class="nav-text">问题二：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用JS模拟一个泊松分布"><span class="nav-number">3.</span> <span class="nav-text">用JS模拟一个泊松分布</span></a></li></ol></div>
             
 
           </div>
