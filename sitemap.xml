@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2019/05/06/command-pattern/</loc>
+    
+    <lastmod>2019-05-07T10:43:01.558Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2019/05/06/poisson-distribution/</loc>
     
     <lastmod>2019-05-06T05:42:27.554Z</lastmod>
