@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tipwheal.github.io/blog/2019/05/18/predict-helper/</loc>
+    
+    <lastmod>2019-05-18T03:54:54.673Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tipwheal.github.io/blog/lib/index.html</loc>
+    
+    <lastmod>2019-05-17T08:36:48.425Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tipwheal.github.io/blog/2019/05/06/command-pattern/</loc>
     
-    <lastmod>2019-05-07T10:43:01.558Z</lastmod>
+    <lastmod>2019-05-07T13:32:03.918Z</lastmod>
     
   </url>
   
