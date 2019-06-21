@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LeetCode 2 Add Two Numbers]]></title>
+    <url>%2Fblog%2F2019%2F06%2F21%2Fleetcode-2%2F</url>
+    <content type="text"><![CDATA[第二题是把用链表表示的两个数相加。 大概就是操作链表的问题。 题目大意题目需要将用链表表示的两个数相加。 链表的形式如下： 2 -&gt; 4 -&gt; 3表示342，5 -&gt; 6 -&gt; 4表示564，需要对此输出的是7 -&gt; 0 -&gt; 8，也就是807。 注意事项：一个数除非是0，不会以0开头。也就是不用担心2 -&gt; 4 -&gt; 3 -&gt; 0或者2 -&gt; 4 -&gt; 3 -&gt; 0 -&gt; 0都表示342这种神奇的情况。并且数组总不是空的。 解决方案我觉得这并不是一道算法题，只是对链表操作的考察。 加法需要考虑的就是进位。 比如上面的例子，低位在链表开头，高位在末端，我们直接往后面加就可以。 首先是2+5，结果是7，进位是0。4+6，在这一位的结果是0，进位是1。那么最后是3+4+1，结果是8。后面都没有了，结束。 我们可以直接修改某个链表上的数值，节省额外的空间。 总之只需要跑完两个链表中较短的长度，结果就出来了。设短的一个链表长度为N，算法的复杂度为$O(N)$。 算法 输入为l1, l2两个链表。 将结果result指向l1。将进位值inc置为0。新建两个节点s1和s2，并将它们的后继指向l1和l2。 s1和s2后继节点的值和inc相加，结果存到s1后继节点，后继为空时视为0，如果l1当前是空则创建一个新节点。 如果s1后继的值&gt;=0，值取与10的模，inc置为1。否则inc置为0。 s1和s2分别指向后继节点。 如果inc为1或者s1和s2的后继都不为空，到2。否则继续。 如果s1后继为空，将它指向s2的后继。 返回result。]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode 1 Two Sum]]></title>
     <url>%2Fblog%2F2019%2F06%2F21%2Fleetcode-1%2F</url>
-    <content type="text"><![CDATA[第一题总是比较简单的。 题目大意题目给的是一个数组和一个目标数。 要求找到数组中和为目标数的两个数的下标。 同时告诉我们，解只有一个，同一个数不能使用两次。 举个例子： 输入： 12nums = [2, 7, 11, 15];target = 9; 那么结果应该是： 1[0, 1] 解决方案我们可以非常简单地得到一个暴力算法，用两层循环，外面一层找第一个数，第二层找第二个数，找到了就ok了。 每个循环中我们需要遍历整个数组，因此时间复杂度是$O(N^2)$。 既然是一个$O(N^2)$的算法，我们可以考虑通过排序来优化，毕竟排序只需要$O(\log{N})$的时间。 我们对数组排序之后，里面的一层循环就不需要遍历了，既然数组是有序的，我们可以用二分查找来找target和第一个数的差，如果是一个有效的并且和第一个数下标不同的位置，就说明我们找到了。 那么我们可以首先对数组进行排序，然后遍历数组中的元素，记这一次遍历下标为i，那么在遍历每个数的同时，我们在数组中二分查找target-nums[i]即可。 通过这种方式，我们可以将复杂度降低到$O(N\log{N})$。 代码实现随便写一写，反正也跑不了。 123456789function twoSum(nums, target) &#123; const sorted = nums.sort(); for(let i in sorted) &#123; const j = binarySearch(sorted, target - sorted[i]); if(j &gt;= 0 &amp;&amp; i !== j) &#123; return [i, j]; &#125; &#125;&#125;]]></content>
+    <content type="text"><![CDATA[第一题总是比较简单的。 题目大意题目给的是一个数组和一个目标数。 要求找到数组中和为目标数的两个数的下标。 同时告诉我们，解只有一个，同一个数不能使用两次。 举个例子： 输入： 12nums = [2, 7, 11, 15];target = 9; 那么结果应该是： 1[0, 1] 解决方案我们可以非常简单地得到一个暴力算法，用两层循环，外面一层找第一个数，第二层找第二个数，找到了就ok了。 每个循环中我们需要遍历整个数组，因此时间复杂度是$O(N^2)$。 既然是一个$O(N^2)$的算法，我们可以考虑通过排序来优化，毕竟排序只需要$O(\log{N})$的时间。 我们对数组排序之后，里面的一层循环就不需要遍历了，既然数组是有序的，我们可以用二分查找来找target和第一个数的差，如果是一个有效的并且和第一个数下标不同的位置，就说明我们找到了。 那么我们可以首先对数组进行排序，然后遍历数组中的元素，记这一次遍历下标为i，那么在遍历每个数的同时，我们在数组中二分查找target-nums[i]即可。 通过这种方式，我们可以将复杂度降低到$O(N\log{N})$。 还有更快的办法吗？想不出来了。 代码实现随便写一写，反正也跑不了。实现一个二分查找就可以了。 123456789function twoSum(nums, target) &#123; const sorted = nums.sort(); for(let i in sorted) &#123; const j = binarySearch(sorted, target - sorted[i]); if(j &gt;= 0 &amp;&amp; i !== j) &#123; return [i, j]; &#125; &#125;&#125;]]></content>
       <tags>
         <tag>算法</tag>
         <tag>LeetCode</tag>
@@ -292,8 +301,8 @@
         <category>隐马尔可夫模型</category>
       </categories>
       <tags>
-        <tag>自然语言处理</tag>
         <tag>隐马尔可夫模型</tag>
+        <tag>自然语言处理</tag>
         <tag>HMM</tag>
       </tags>
   </entry>
@@ -305,10 +314,10 @@
         <category>自然语言处理</category>
       </categories>
       <tags>
+        <tag>自然语言处理</tag>
         <tag>神经网络</tag>
         <tag>LSTM</tag>
         <tag>深度学习</tag>
-        <tag>自然语言处理</tag>
       </tags>
   </entry>
   <entry>
@@ -417,9 +426,9 @@
         <category>c++</category>
       </categories>
       <tags>
+        <tag>c++</tag>
         <tag>opengl</tag>
         <tag>图形学</tag>
-        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -463,8 +472,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>学习</tag>
         <tag>算法</tag>
+        <tag>学习</tag>
         <tag>PageRank</tag>
       </tags>
   </entry>
