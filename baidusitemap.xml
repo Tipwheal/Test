@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/04/09/leetcode-category/</loc>
+    <lastmod>2019-06-22T07:16:22.940Z</lastmod>
+  </url>  <url>
+    <loc>https://tipwheal.github.io/blog/blog/2019/06/22/leetcode-3/</loc>
+    <lastmod>2019-06-22T07:15:36.770Z</lastmod>
+  </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/06/21/leetcode-2/</loc>
     <lastmod>2019-06-21T15:20:24.005Z</lastmod>
-  </url>  <url>
-    <loc>https://tipwheal.github.io/blog/blog/2019/04/09/leetcode-category/</loc>
-    <lastmod>2019-06-21T14:48:05.284Z</lastmod>
   </url>  <url>
     <loc>https://tipwheal.github.io/blog/blog/2019/01/09/nav-page/</loc>
     <lastmod>2019-06-21T14:45:20.641Z</lastmod>
